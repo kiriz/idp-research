@@ -246,7 +246,7 @@ OpenIDM's security posture requires attention in several areas:
 
 - **Script execution.** As noted above, JavaScript and Groovy scripts in managed object hooks and sync transformations execute within the JVM with access to the full Java runtime. Input validation in scripts is the operator's responsibility; OpenIDM does not sandbox script execution beyond OSGi bundle isolation.
 
-- **CVE exposure.** The security commit analysis (see Chapter 6) shows 17 CVE-related commits and 77 security-keyword commits in the OpenIDM repository. Notable vulnerabilities include CVE-2019-17495 (Swagger UI XSS) and CVE-2023-22102 (MySQL Connector compromise). The dependency on OpenICF adds CVE-2024-47554 (Commons IO DoS) and CVE-2024-38999 (RequireJS prototype pollution) to the exposure surface. OIP has patched these in their respective repositories.
+- **CVE exposure.** The security commit analysis (see [security-cve-history extract](../extracts/security-cve-history.md)) shows 17 CVE-related commits and 77 security-keyword commits in the OpenIDM repository. Notable vulnerabilities include CVE-2019-17495 (Swagger UI XSS) and CVE-2023-22102 (MySQL Connector compromise). The dependency on OpenICF adds CVE-2024-47554 (Commons IO DoS) and CVE-2024-38999 (RequireJS prototype pollution) to the exposure surface. OIP has patched these in their respective repositories.
 
 - **Remote connector server authentication.** The Protobuf RPC connection between OpenIDM and remote connector servers uses HMAC-SHA256 with a shared key for authentication. The shared key must be protected; compromise of the key allows an attacker to impersonate either endpoint. Mutual TLS is recommended as an additional layer for production deployments.
 

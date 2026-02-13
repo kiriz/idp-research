@@ -368,7 +368,7 @@ OpenDJ's security posture is generally strong, reflecting its maturity as a prod
 - **Password policy.** Configurable password complexity, history, lockout, expiration, and notification. Multiple storage schemes (SHA-256, SHA-512, bcrypt, PBKDF2).
 - **Audit logging.** All operations can be logged to access logs and audit logs for forensic analysis.
 
-However, OpenDJ shares the broader OIP suite's CVE exposure. The security commit analysis (see Chapter 6) shows 10 CVE-related commits and 153 security-keyword commits in the OpenDJ repository, reflecting active security maintenance. Specific vulnerabilities affecting OpenDJ include CVE-2016-3092 and CVE-2016-1000031 (Commons FileUpload DoS/RCE), CVE-2025-27497 (alias loop DoS affecting all OIP components), and CVE-2026-1225 (Logback arbitrary class instantiation). The frozen ForgeRock CE embeds OpenDJ 2.6.4, which is unpatched against all post-2017 vulnerabilities and should not be operated in any environment.
+However, OpenDJ shares the broader OIP suite's CVE exposure. The security commit analysis (see [security-cve-history extract](../extracts/security-cve-history.md)) shows 10 CVE-related commits and 153 security-keyword commits in the OpenDJ repository, reflecting active security maintenance. Specific vulnerabilities affecting OpenDJ include CVE-2016-3092 and CVE-2016-1000031 (Commons FileUpload DoS/RCE), CVE-2025-27497 (alias loop DoS affecting all OIP components), and CVE-2026-1225 (Logback arbitrary class instantiation). The frozen ForgeRock CE embeds OpenDJ 2.6.4, which is unpatched against all post-2017 vulnerabilities and should not be operated in any environment.
 
 ---
 

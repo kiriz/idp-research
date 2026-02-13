@@ -1,6 +1,6 @@
 # Chapter 2: Authentication Protocols
 
-Authentication protocols in the Open Identity Platform represent three decades of identity verification evolution, from LDAP bind operations to phishing-resistant FIDO2 credentials. OpenAM implements 31 distinct authentication modules spanning directory-based, certificate-based, one-time password, legacy token, modern passwordless, social, and adaptive authentication mechanisms. This chapter examines each protocol family, its technical implementation, current relevance, migration paths, and position in the broader industry shift toward zero-trust architectures.
+Authentication protocols in the Open Identity Platform represent three decades of identity verification evolution, from LDAP bind operations to phishing-resistant FIDO2 credentials. OpenAM implements 34+ distinct authentication modules spanning directory-based, certificate-based, one-time password, legacy token, modern passwordless, social, and adaptive authentication mechanisms. This chapter examines each protocol family, its technical implementation, current relevance, migration paths, and position in the broader industry shift toward zero-trust architectures.
 
 ## Directory-Based Authentication
 
@@ -654,5 +654,5 @@ Similar to OAuth2 social login with ID token addition:
 
 - **Token Formats:** See Chapter 6 for JWT, SAML assertion, and CTS token implementation details
 - **Federation Protocols:** See Chapter 3 for SAML 2.0, OIDC as federation protocol (vs. authentication module)
-- **Authorization:** See Chapter 5 for OAuth2 authorization flows, XACML policy evaluation
-- **Zero Trust Architecture:** See Chapter 8 for authentication's role in continuous verification model
+- **Authorization:** See Chapter 4 for OAuth2 authorization flows, XACML policy evaluation
+- **Modern Architecture:** See Chapter 12 for authentication's role in zero-trust continuous verification

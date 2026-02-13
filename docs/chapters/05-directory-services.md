@@ -37,7 +37,7 @@ LDAPv3 is a client-server protocol using a request-response model over TCP port 
 - **Replace**: Replace all values of an attribute with new values
 - **Increment**: Atomic increment for integer attributes (RFC 4525)
 
-**Delete**: Remove an entry. Entry must be a leaf (no children) unless server supports subtree delete control (RFC 3829).
+**Delete**: Remove an entry. Entry must be a leaf (no children) unless server supports the subtree delete control (OID 1.2.840.113556.1.4.805, defined in draft-armijo-ldap-treedelete).
 
 **ModifyDN**: Rename or move an entry. Parameters:
 

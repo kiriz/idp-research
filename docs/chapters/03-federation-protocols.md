@@ -874,6 +874,6 @@ ID token is signed JWT (JWS) containing claims about authenticated user.
 
 - **Authentication Protocols:** See Chapter 2 for SAML/OIDC as authentication modules (consuming federation assertions)
 - **Token Formats:** See Chapter 6 for SAML assertion XML schema, JWT structure, signature algorithms
-- **Authorization:** See Chapter 5 for OAuth2 authorization flows, scope-based access control
-- **API Gateways:** See Chapter 7 for OpenIG protocol translation (SAML→OIDC, WS-Security→OAuth2)
-- **Zero Trust:** See Chapter 8 for federation's role in continuous verification, CAEP session revocation
+- **Authorization:** See Chapter 4 for OAuth2 authorization flows, scope-based access control
+- **API Gateways:** See Chapter 10 for OpenIG protocol translation (SAML→OIDC, WS-Security→OAuth2)
+- **Modern Architecture:** See Chapter 12 for federation's role in continuous verification, CAEP session revocation

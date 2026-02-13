@@ -84,7 +84,7 @@ All open-source. All integrated. All under active development.
 
 ForgeRock's business model was working. By 2015, the company had raised $15M in Series A funding, opened an office in San Francisco, and was signing support contracts with Fortune 500 customers. The company published a **Community Edition** as a stable, supported-but-feature-frozen branch. In March 2015, ForgeRock tagged **OpenAM Community Edition 11.0.3** as the last freely redistributable, fully open binary. This would prove to be a fateful decision.
 
-2015 also saw a surge in standards evolution. OAuth 2.0 was mature, but PKCE (RFC 7636) had just been published to secure mobile apps. OpenID Connect 1.0 became the new federation darling, eclipsing SAML 2.0 in the consumer space. SCIM 2.0 (RFC 7642-7644) was finalized, replacing the failed SPML standard. ForgeRock was tracking all of it—OpenAM 13.0.0 (released January 2016) added full OIDC Provider support, SCIM 2.0 endpoints, and UMA 2.0 for user-managed consent.
+2015 also saw a surge in standards evolution. OAuth 2.0 was mature, but PKCE (RFC 7636) had just been published to secure mobile apps. OpenID Connect 1.0 became the new federation darling, eclipsing SAML 2.0 in the consumer space. SCIM 2.0 (RFC 7642-7644) was finalized, replacing the failed SPML standard. ForgeRock was tracking all of it—OpenAM 13.0.0 (released January 2016) added full OIDC Provider support, SCIM 2.0 endpoints, and UMA 1.0 for user-managed consent.
 
 The git logs show sustained momentum through mid-2016. OpenAM saw **1,816 commits** in 2016. OpenDJ had 1,148. OpenIDM had 1,218. Then, in October 2016, something changed.
 
@@ -364,7 +364,7 @@ This is the nature of open-source infrastructure: it endures not because of corp
 **Sources:**
 - Git commit history analysis (58,112 commits across 7 repositories, 2006-2026)
 - Version evolution extract (ForgeRock CE 11.0.3 → OIP OpenAM 16.0.5 → Wren:AM 16.0.0-M1)
-- Security CVE history (120+ vulnerabilities tracked across all forks)
+- Security CVE history (30+ CVEs tracked across all forks, 120+ security-related commits including dependency patches)
 - Identity standards timeline (LDAP RFC 4510, SAML 2.0, OAuth 2.0 RFC 6749, OIDC Core 1.0)
 
 **File references:**

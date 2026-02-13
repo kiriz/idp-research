@@ -56,7 +56,7 @@ Session storage is pluggable through backend adapters:
 
 | Backend | Module | Use Case |
 |---------|--------|----------|
-| JPA (default) | `openam-core/` | Single-node or small cluster |
+| CTS/LDAP (default) | `openam-core/` | Single-node or small cluster, backed by OpenDJ |
 | Cassandra | `openam-cassandra/` | Horizontally scalable, multi-datacenter HA |
 | Redis | OIP extensions | High-throughput caching layer |
 | Custom | `SessionStore` interface | Organization-specific backends |
@@ -123,7 +123,7 @@ The evolution across forks is significant. ForgeRock CE 11.0.3 shipped 20 module
 
 ### Fork Divergence in Dependencies
 
-The three forks diverge significantly in their technology stacks, as detailed in Chapter 5. The most architecturally consequential divergence is Guice dependency injection:
+The three forks diverge significantly in their technology stacks, as detailed in [Chapter 1](01-history.md) and the [version-evolution extract](../extracts/version-evolution.md). The most architecturally consequential divergence is Guice dependency injection:
 
 - **ForgeRock CE 11.0.3:** Guice 3.0
 - **OIP 16.0.5:** Guice 7.0.0 (modern DI, breaking changes vs 3.0)
@@ -137,7 +137,7 @@ Other notable dependency differences include Jackson (OIP conservative at 2.3.x,
 
 ## 3. Strengths
 
-**Breadth of authentication modules.** With 34+ authentication modules spanning LDAP, Kerberos, OAuth 2.0, OIDC, SAML 2.0, WebAuthn, HOTP/TOTP, push notifications, device fingerprinting, QR codes, scripted logic, and adaptive risk scoring, OpenAM covers more authentication scenarios in a single platform than any other open-source IAM system. The OIP fork (16.0.5) added 11 modules beyond the CE baseline, including WebAuthn/FIDO2, OIDC as an authentication method, SAML 2.0 as an authentication chain module, and push notification approval (see Chapter 5 for fork evolution details).
+**Breadth of authentication modules.** With 34+ authentication modules spanning LDAP, Kerberos, OAuth 2.0, OIDC, SAML 2.0, WebAuthn, HOTP/TOTP, push notifications, device fingerprinting, QR codes, scripted logic, and adaptive risk scoring, OpenAM covers more authentication scenarios in a single platform than any other open-source IAM system. The OIP fork (16.0.5) added 11 modules beyond the CE baseline, including WebAuthn/FIDO2, OIDC as an authentication method, SAML 2.0 as an authentication chain module, and push notification approval (see [version-evolution extract](../extracts/version-evolution.md) for fork details).
 
 **Protocol convergence.** OpenAM combines SAML 2.0 IdP/SP, OAuth 2.0 authorization server, OIDC provider, UMA 2.0, and WS-Federation in one deployment. Organizations operating in heterogeneous federation environments -- where partners require SAML while internal APIs use OIDC -- can serve both from a single system without deploying separate products.
 
@@ -163,11 +163,11 @@ Other notable dependency differences include Jackson (OIP conservative at 2.3.x,
 
 **Steep learning curve.** The combination of JAAS-based authentication chains, LDAP-backed configuration, realm/sub-realm hierarchy, agent profiles, policy definitions, and OAuth 2.0 client configuration creates a steep learning curve. Documentation for the OIP fork is sparse compared to Keycloak's official guides or Auth0's developer tutorials. New operators must often consult the ForgeRock-era documentation (e.g., the OpenAM 12 Reference PDF in this workspace) for context that the OIP community documentation omits.
 
-**CVE history.** OpenAM's most serious vulnerability, CVE-2021-35464 (CVSS 9.8), enabled pre-authentication remote code execution via Java deserialization in the Jato framework's `/ccversion/*` endpoint. CISA issued advisory AA21-193A, and a Metasploit module exists. The OIP fork applied a workaround (PR #372), and Wren:AM patched it (PR #123), but the frozen ForgeRock CE 11.0.3 remains permanently unpatched. CVE-2021-29156 (CVSS 7.5) demonstrated LDAP injection via the Webfinger protocol, enabling character-by-character extraction of password hashes from the backing directory. Beyond these OpenAM-specific vulnerabilities, the deep Java dependency tree has accumulated CVEs in Commons FileUpload, Lodash, SnakeYAML, Apache Commons Text, Netty, and RequireJS (see Chapter 6 for the complete CVE history).
+**CVE history.** OpenAM's most serious vulnerability, CVE-2021-35464 (CVSS 9.8), enabled pre-authentication remote code execution via Java deserialization in the Jato framework's `/ccversion/*` endpoint. CISA issued advisory AA21-193A, and a Metasploit module exists. The OIP fork applied a workaround (PR #372), and Wren:AM patched it (PR #123), but the frozen ForgeRock CE 11.0.3 remains permanently unpatched. CVE-2021-29156 (CVSS 7.5) demonstrated LDAP injection via the Webfinger protocol, enabling character-by-character extraction of password hashes from the backing directory. Beyond these OpenAM-specific vulnerabilities, the deep Java dependency tree has accumulated CVEs in Commons FileUpload, Lodash, SnakeYAML, Apache Commons Text, Netty, and RequireJS (see [security-cve-history extract](../extracts/security-cve-history.md) for the complete CVE history).
 
 **Small maintainer community.** The OIP fork is maintained primarily by 3A Systems, LLC, with a small contributor base compared to Keycloak's ~1,100 contributors backed by Red Hat's engineering resources. Wren Security (Orchitech Solutions, Czech Republic) maintains an even smaller team. Critical vulnerability patches can lag weeks to months behind disclosure, and the pace of feature development cannot match commercially backed alternatives.
 
-**No stateless session option.** Modern IAM platforms increasingly support stateless JWT-based sessions (or sender-constrained tokens via DPoP/mTLS) that eliminate server-side session storage entirely (see Chapter 12). OpenAM's session model is fundamentally server-side: sessions are stored in CTS (backed by JPA, Cassandra, or Redis), and the SSOToken is an opaque reference, not a self-contained JWT. While the `StatelessSessionActivator` exists as an interface in the codebase, stateless sessions are not the production-recommended path, and most deployments require the full CTS infrastructure. This architectural decision was appropriate in 2005 but adds operational burden in 2025 where stateless session models reduce infrastructure requirements.
+**Limited stateless session support.** Modern IAM platforms increasingly support stateless JWT-based sessions (or sender-constrained tokens via DPoP/mTLS) that eliminate server-side session storage entirely (see Chapter 12). OpenAM's session model is fundamentally server-side: sessions are stored in CTS (backed by JPA, Cassandra, or Redis), and the SSOToken is an opaque reference, not a self-contained JWT. While the `StatelessSessionActivator` exists as an interface in the codebase, stateless sessions are not the production-recommended path, and most deployments require the full CTS infrastructure. This architectural decision was appropriate in 2005 but adds operational burden in 2025 where stateless session models reduce infrastructure requirements.
 
 **Legacy CDDL license.** The Common Development and Distribution License 1.0, created by Sun Microsystems for OpenSolaris, is a weak copyleft license that is not GPL-compatible. While CDDL is OSI-approved, it is less familiar to developers and legal teams than Apache 2.0, MIT, or GPL. Keycloak (Apache 2.0), Ory (Apache 2.0), and Zitadel (Apache 2.0) all use licenses with broader compatibility and better-understood obligations. The CDDL license is not a practical barrier to adoption but adds a minor friction point during legal review.
 
@@ -356,7 +356,7 @@ The inverse is also true. OpenAM does not implement SCIM 2.0, Zanzibar-style rel
 
 ### When OpenAM Makes Sense
 
-- **Existing ForgeRock deployment migration.** Organizations running ForgeRock CE 11.0.3 (which must be abandoned immediately due to unpatched critical CVEs -- see Chapter 6) or earlier ForgeRock versions can migrate to OIP OpenAM 16.0.5 or Wren:AM 16.0.0-M1 with relative architectural continuity. The module structure, authentication chains, and session management model are familiar.
+- **Existing ForgeRock deployment migration.** Organizations running ForgeRock CE 11.0.3 (which must be abandoned immediately due to unpatched critical CVEs -- see [security-cve-history extract](../extracts/security-cve-history.md)) or earlier ForgeRock versions can migrate to OIP OpenAM 16.0.5 or Wren:AM 16.0.0-M1 with relative architectural continuity. The module structure, authentication chains, and session management model are familiar.
 
 - **Complex SAML federation environments.** Organizations with dozens of SAML 2.0 partners, custom metadata handling, and deep SAML attribute mapping requirements benefit from OpenAM's 20+ years of SAML maturity. Newer platforms support SAML but have not been tested across the same breadth of partner implementations.
 

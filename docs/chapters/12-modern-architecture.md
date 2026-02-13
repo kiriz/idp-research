@@ -31,7 +31,7 @@ The following table summarizes all fourteen architectural shifts covered in this
 
 ### The Monolithic Era
 
-The OIP stack represents the canonical monolithic IAM architecture of the 2005-2016 period. OpenAM deploys as a single WAR file containing authentication engines (34+ modules), OAuth 2.0/OIDC provider, SAML 2.0 IdP/SP, XACML policy engine, session management, and an administrative console (see [Chapter 7: OpenAM Analysis](07-openam-analysis.md)). OpenIDM runs as a monolithic OSGi application bundling sync engine, reconciliation, workflow (Activiti BPMN), and connector orchestration (see [Chapter 10: OpenIDM Analysis](10-openidm-analysis.md)). Each component carries the full weight of its capabilities whether or not a given deployment uses them all.
+The OIP stack represents the canonical monolithic IAM architecture of the 2005-2016 period. OpenAM deploys as a single WAR file containing authentication engines (34+ modules), OAuth 2.0/OIDC provider, SAML 2.0 IdP/SP, XACML policy engine, session management, and an administrative console (see [Chapter 7: OpenAM Analysis](07-openam-analysis.md)). OpenIDM runs as a monolithic OSGi application bundling sync engine, reconciliation, workflow (Activiti BPMN), and connector orchestration (see [Chapter 9: OpenIDM Analysis](09-openidm-analysis.md)). Each component carries the full weight of its capabilities whether or not a given deployment uses them all.
 
 This model had clear strengths: a single deployment artifact, unified configuration, and well-tested internal integration paths. It also had structural weaknesses. Scaling required scaling the entire application; a bug in the SAML engine could take down the OAuth 2.0 provider; upgrading one capability required redeploying the whole system; and the monolith's memory footprint grew with every feature added.
 
@@ -107,7 +107,7 @@ SAML 2.0 is not being replaced overnight. Virtually every enterprise IdP (Okta, 
 
 ### The Agent Model
 
-The OIP stack enforces access policy through dedicated agents and gateways. OpenIG operates as an identity-aware reverse proxy with a filter/handler pipeline (39 filter types, 16 handler types) that intercepts HTTP requests, evaluates policies against OpenAM, and either permits or blocks access (see [Chapter 9: OpenIG Analysis](09-openig-analysis.md)). OpenAM also provided J2EE and web server policy agents -- lightweight modules embedded directly in Apache, IIS, or Tomcat that intercepted requests at the container level.
+The OIP stack enforces access policy through dedicated agents and gateways. OpenIG operates as an identity-aware reverse proxy with a filter/handler pipeline (50+ filter types, 16 handler types) that intercepts HTTP requests, evaluates policies against OpenAM, and either permits or blocks access (see [Chapter 10: OpenIG Analysis](10-openig-analysis.md)). OpenAM also provided J2EE and web server policy agents -- lightweight modules embedded directly in Apache, IIS, or Tomcat that intercepted requests at the container level.
 
 This model assumed a known set of web applications running on known infrastructure. The agent must be installed and configured on each application server. Scaling meant deploying agents everywhere. Updates required touching every agent instance.
 

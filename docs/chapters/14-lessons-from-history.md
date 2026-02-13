@@ -136,7 +136,7 @@ Diplomatic correspondence has been transported in sealed pouches by designated c
 
 This mechanism implements end-to-end confidentiality with jurisdictional bypass — pouches cross borders without inspection, analogous to encrypted tunnels crossing network boundaries. Courier authentication parallels certificate-based mutual TLS authentication. The channel immunity concept — protecting the transport medium rather than just the content — maps to VPN tunnels, secure enclaves (Intel SGX, ARM TrustZone), and hardware security modules.
 
-Modern IAM systems extensively implement the diplomatic pouch model through TLS/mTLS transport security and end-to-end encryption. The OpenAM architecture detailed in [Chapter 12: Modern Architecture](12-modern-architecture.md) uses mTLS for inter-service communication, treating transport channels as protected conduits. The principle that the courier (transport agent) is immune from inspection regardless of cargo parallels zero-trust networking's "assume breach" posture where encrypted channels protect data even on untrusted networks.
+Modern IAM systems extensively implement the diplomatic pouch model through TLS/mTLS transport security and end-to-end encryption. Modern platforms like Ory and Istio-backed deployments (discussed in [Chapter 12: Modern Architecture](12-modern-architecture.md)) use mTLS for inter-service communication, treating transport channels as protected conduits. The principle that the courier (transport agent) is immune from inspection regardless of cargo parallels zero-trust networking's "assume breach" posture where encrypted channels protect data even on untrusted networks.
 
 **Citations:**
 - "Diplomatic bag." *Wikipedia*.
@@ -352,5 +352,5 @@ This chapter draws on 60+ verified citations spanning archaeology (Mesopotamian 
 
 ---
 
-**Word count:** ~7,400 words | **Line count:** ~492 lines
+**Word count:** ~7,400 words | **Line count:** ~356 lines
 **Status:** Complete — narrative tour of 11 historical mechanisms, mapping table, deep analysis of 6 untranslated patterns with academic citations, and synthesis of lessons for modern IAM.
