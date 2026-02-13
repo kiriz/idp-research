@@ -133,6 +133,39 @@ OIP's upgrade to Guice 7.0.0 modernizes the DI container but breaks backward com
 
 Other notable dependency differences include Jackson (OIP conservative at 2.3.x, Wren modern at 2.15.2), SLF4J (OIP on 1.7.x, Wren on 2.0.17), Restlet (OIP 2.4.4, Wren 2.6.0), and Jakarta EE level (OIP partial jakarta.servlet 4.0+, Wren full jakarta.servlet 5.0.0). Wren's aggressive dependency modernization, combined with its conservative Guice strategy, reflects a deliberate architectural choice: update everything except the plugin contract surface.
 
+### Production Deployment Topology
+
+A production OpenAM deployment follows a well-established topology pattern that has evolved since the ForgeRock era. The reference architecture consists of three tiers: a load balancer layer, an application layer running multiple OpenAM instances, and a data layer backed by replicated OpenDJ.
+
+**High-availability deployment.** The minimum HA configuration runs two or more OpenAM instances (Tomcat/Jetty) behind a load balancer configured for sticky sessions (cookie-based affinity using the `amlbcookie`). Each OpenAM instance points to a shared OpenDJ topology -- typically two OpenDJ instances in multi-master replication -- for configuration, identity, and CTS data. The load balancer must be configured to route the initial authentication request and all subsequent callback exchanges to the same OpenAM node, since authentication state (`LoginState`) is held in-memory during the JAAS chain execution. After authentication completes and a session is created, the session is persisted to CTS, and subsequent requests can be routed to any node.
+
+```
+                        ┌─── OpenAM-1 (Tomcat) ───┐
+Internet → LB (sticky) ─┤                          ├─→ OpenDJ-1 ⟷ OpenDJ-2
+                        └─── OpenAM-2 (Tomcat) ───┘      (multi-master replication)
+```
+
+Horizontal scaling beyond two nodes is straightforward: add OpenAM instances behind the load balancer and point them at the same OpenDJ topology. The practical scaling limit is determined by the OpenDJ backend's throughput -- each authentication event, session creation, and policy evaluation triggers LDAP operations against the directory.
+
+**Session failover via CTS.** The Core Token Service stores sessions, OAuth 2.0 tokens, and SAML 2.0 assertions in the OpenDJ backend. CTS enables session failover: if an OpenAM node crashes, active sessions are recoverable from the CTS store by any surviving node. CTS replication follows OpenDJ's multi-master replication protocol, providing consistency guarantees across nodes. The CTS token store schema is defined in `OpenAM/openam-core/` and uses LDAP entries with TTL-based expiration managed by OpenDJ's entry-expiration plugin. For CTS to function correctly in a multi-node deployment, all OpenAM instances must share the same CTS backend (either a common OpenDJ instance or a replicated OpenDJ topology), and the `com.iplanet.am.session.failover.cluster.stateCheck.timeout` property must be tuned to balance failover speed against false-positive node-down detection.
+
+**Multi-datacenter active-active topology.** For geo-distributed deployments, the reference architecture extends to two or more data centers, each running its own OpenAM + OpenDJ pair. OpenDJ's multi-master replication synchronizes identity and configuration data across sites. The CTS store must also replicate across data centers -- either via OpenDJ replication (for LDAP-backed CTS) or via Cassandra's multi-datacenter replication (for Cassandra-backed CTS). DNS-based global load balancing (e.g., Route 53, Cloudflare) directs users to the nearest data center. The key architectural constraint is that authentication state (`LoginState`) is not replicated during a multi-step flow -- if a user starts authentication at DC-1 and gets routed to DC-2 mid-flow, the flow fails. Global load balancing must therefore use session-persistent routing during authentication, relaxing to round-robin or latency-based routing for authenticated session validation.
+
+```
+DC-1                                    DC-2
+┌────────────────────────┐              ┌────────────────────────┐
+│ LB → OpenAM-1, OpenAM-2│              │ LB → OpenAM-3, OpenAM-4│
+│ OpenDJ-1 ⟷─────────────┼──replication─┼─⟷ OpenDJ-2             │
+│ Cassandra-DC1 ⟷────────┼──replication─┼─⟷ Cassandra-DC2        │
+└────────────────────────┘              └────────────────────────┘
+          ↑               Global DNS LB                ↑
+          └──────────────── Users ─────────────────────┘
+```
+
+**Cassandra as alternative session store.** For deployments requiring horizontal scaling beyond what OpenDJ can serve, the `openam-cassandra/` module (`openam-cassandra-cts`, `openam-cassandra-datastore`, `openam-cassandra-embedded`) provides a Cassandra-backed CTS implementation. The `ConnectionFactoryProvider` and `TokenStorageAdapter` classes in `openam-cassandra-cts` wire OpenAM's token lifecycle to Cassandra's distributed storage. Key advantages over the LDAP-backed CTS: Cassandra supports multi-datacenter replication with tunable consistency (ONE, QUORUM, LOCAL_QUORUM), TTL-based row expiration without a background cleanup thread, and linear horizontal scaling by adding Cassandra nodes. The trade-off is operational complexity -- Cassandra requires its own cluster management, compaction tuning, and monitoring infrastructure.
+
+**Docker and container deployment.** The OIP project ships a Dockerfile at `OpenAM/openam-distribution/openam-distribution-docker/Dockerfile` that builds an image based on `tomcat:11-jre25`. The image downloads the OpenAM WAR, SSO Configurator Tools, and SSO Admin Tools from GitHub Releases at build time. It configures a non-root user (`openam`, UID 1001), exposes port 8080, and includes a health check against `/openam/isAlive.jsp`. The `RemoteIpValve` is injected into Tomcat's `server.xml` to support `X-Forwarded-*` headers from upstream load balancers or ingress controllers. For Kubernetes deployments, the image can be wrapped in a Deployment with a `PersistentVolumeClaim` for `/usr/openam/config` (the configuration directory), though no official Helm chart or Kubernetes Operator exists -- a gap compared to Keycloak's official Operator. Multi-node Kubernetes deployments require an external OpenDJ StatefulSet and careful handling of the `amlbcookie` affinity at the Ingress layer.
+
 ---
 
 ## 3. Strengths
@@ -307,6 +340,33 @@ Zitadel is a cloud-native identity platform built on event sourcing and CQRS, wr
 
 **Where OpenAM retains advantage.** Zitadel's authorization model is RBAC, not ABAC/XACML. Organizations needing fine-grained, attribute-based policies with environment conditions and deny-overrides must implement this logic externally when using Zitadel. OpenAM's entitlement engine handles this natively.
 
+### 5.6 Migration Cost Analysis
+
+Organizations currently running OpenAM and evaluating a platform migration face effort that varies dramatically depending on the target. The following estimates assume a mid-complexity deployment: 10-20 SAML partners, 5-10 custom authentication chains, 3-5 custom `AMLoginModule` implementations, XACML policies, and an OAuth 2.0/OIDC provider serving 20+ relying parties.
+
+**Migration to Keycloak (estimated 3-6 months, medium effort).** Keycloak is the closest architectural analog. Realm mapping is relatively direct: OpenAM realms map to Keycloak realms, though sub-realm hierarchy may need flattening. Authentication chains must be reconstructed as Keycloak authentication flows -- the JAAS control flags (REQUIRED, SUFFICIENT, OPTIONAL, REQUISITE) map approximately to Keycloak's flow execution requirements (REQUIRED, ALTERNATIVE, CONDITIONAL, DISABLED), but complex chains with REQUISITE short-circuiting need careful redesign. SAML 2.0 metadata can be imported into Keycloak's Identity Provider and Client configurations, though attribute mapping rules must be manually recreated. OAuth 2.0/OIDC clients migrate by re-registering each client in Keycloak with matching `client_id`, `redirect_uri`, and scope configurations; token format differences (opaque vs JWT, claim naming) require client-side adjustments. Custom `AMLoginModule` implementations must be rewritten as Keycloak SPI `Authenticator` implementations -- the SPI contract is different but conceptually similar. XACML policies have no Keycloak equivalent; organizations must either adopt Keycloak's UMA-based authorization services (less expressive), integrate an external policy engine (OPA, Cedar), or port policies to application-level RBAC. User data migration from OpenDJ to Keycloak's database is straightforward via LDIF export and SCIM/REST import, though password hashes require hash-algorithm compatibility verification.
+
+**Migration to Auth0/Okta (estimated 4-8 months, high effort).** The shift from self-hosted to SaaS introduces architectural constraints beyond code migration. User export from OpenDJ (LDIF) must be transformed to Auth0's bulk import JSON format; password hashes can be imported if the hash algorithm is supported (bcrypt, PBKDF2), but some OpenAM-era hash schemes (SHA-256 with salt in a non-standard format) may require users to reset passwords on first login. SAML partner metadata must be recreated as Auth0 Enterprise Connections (SAML) or OIDC connections, with each partner requiring coordinated metadata exchange. Authentication chains must be rebuilt as Auth0 Actions (Node.js) -- a fundamentally different programming model from Java JAAS modules. Social login connections are easier: Auth0's 70+ pre-built social connections replace OpenAM's `openam-auth-oauth2` module with less custom code. XACML policies cannot be migrated to Auth0; authorization must move to Auth0's RBAC, custom claims in tokens via Actions, or an external policy engine. The per-MAU pricing model must be validated against actual user volumes -- organizations with millions of users may find Auth0 cost-prohibitive at scale. Okta's workforce identity features (lifecycle management, provisioning) can replace some OpenIDM functionality, potentially simplifying the overall IAM stack.
+
+**Migration to Ory Stack (estimated 6-12 months, highest effort).** The Ory migration demands the most effort due to a fundamentally different paradigm. OpenAM is a monolithic, UI-inclusive, Java-based platform; Ory is a decomposed, headless, Go-based microservices suite. There is no realm concept in Ory -- multi-tenancy must be implemented via separate Ory deployments or Ory Network projects. Authentication chains must be completely rearchitected: Ory Kratos uses self-service flows with webhooks and JSONNET-based data mapping, not JAAS modules. Every login and registration UI screen must be built from scratch since Ory provides no built-in UI (only reference implementations). SAML federation is the critical blocker: Ory Hydra does not support SAML 2.0, so organizations with SAML requirements must add a SAML bridge (e.g., Satosa, Shibboleth) in front of Hydra, adding operational complexity. OAuth 2.0/OIDC client migration to Hydra is relatively clean -- Hydra is a certified OIDC provider with standard client registration. XACML policies must be translated to Ory Keto's Zanzibar-style relationship tuples, which is a different authorization paradigm entirely (ReBAC vs ABAC); no automated tooling exists for this conversion, and policies with complex environment conditions (IP range, time window) have no direct Keto equivalent. User data migration from OpenDJ to Kratos's identity schema requires JSON Schema definition for each identity type and data transformation from LDAP attributes to Kratos traits.
+
+**Key risk across all migrations.** OpenAM's 34+ authentication modules have no single-platform equivalent. Each module represents a protocol integration (RADIUS, MSISDN, SecurID, X.509) or authentication pattern (adaptive risk scoring, device fingerprinting, QR code) that must be individually evaluated: does the target platform support it natively, via extension, via third-party integration, or not at all? Modules with no equivalent on the target platform -- such as RADIUS authentication, the adaptive risk scoring engine, or the Security Token Service -- require custom development or architectural workarounds. This per-module assessment is the most time-consuming component of migration planning and is frequently underestimated.
+
+**Migration effort summary.**
+
+| Dimension | Keycloak | Auth0/Okta | Ory Stack |
+|-----------|----------|------------|-----------|
+| **Estimated timeline** | 3-6 months | 4-8 months | 6-12 months |
+| **Realm/tenant mapping** | Direct (realm-to-realm) | Tenant-to-tenant | No realm concept; separate deployments |
+| **Auth chain migration** | Moderate (flow redesign) | High (Node.js Actions rewrite) | Highest (Kratos self-service flows + custom UI) |
+| **SAML partner migration** | Metadata import + manual attr mapping | Enterprise Connection recreation | Requires SAML bridge (Satosa/Shibboleth) |
+| **OAuth2/OIDC client migration** | Client re-registration | Client re-registration | Hydra client registration (clean) |
+| **XACML policy migration** | No equivalent (UMA or external OPA) | No equivalent (RBAC + Actions) | No equivalent (Keto ReBAC, different paradigm) |
+| **User data migration** | LDIF export → SCIM import | LDIF → JSON bulk import | LDIF → Kratos identity JSON Schema |
+| **Password hash compatibility** | Verify algorithm support | Partial (may force resets) | Verify algorithm support |
+| **Custom module rewrite** | Keycloak SPI Authenticator | Auth0 Actions (Node.js) | Kratos webhooks + custom services |
+| **SAML blocker** | No | No | Yes (no native SAML) |
+
 ---
 
 ## 6. Feature Gap Analysis
@@ -401,3 +461,44 @@ These costs are nontrivial but must be weighed against the ongoing operational c
 ## 8. Verdict
 
 OpenAM remains the most feature-complete open-source access management platform in terms of raw protocol and authentication breadth. Its XACML 3.0 policy engine, 34+ authentication modules, and combined SAML/OIDC/OAuth2/UMA support are unmatched in the open-source ecosystem. However, its monolithic WAR architecture, Jato legacy UI, LDAP-backed configuration model, CVE history (including a CISA-flagged pre-auth RCE), and small maintainer community place it at a significant disadvantage against Keycloak and cloud-native alternatives for new deployments. OpenAM's strongest use case is brownfield: organizations migrating from ForgeRock, operating in complex SAML federation environments, or requiring XACML compliance in air-gapped settings. For greenfield projects, the risk-adjusted choice is Keycloak for self-hosted or Auth0/Zitadel Cloud for managed, unless specific OpenAM capabilities (XACML, deep SAML, RADIUS) are genuine requirements rather than checkbox items.
+
+---
+
+## 9. Codebase Navigation Guide
+
+For developers and architects examining the OIP OpenAM source tree (`OpenAM/`), the following paths serve as entry points into the major subsystems.
+
+**Authentication modules** -- `OpenAM/openam-authentication/`. Each authentication module lives in its own Maven submodule. For example, `openam-auth-ldap/` contains the LDAP bind module, `openam-auth-oauth2/` handles social login via OAuth 2.0, and `openam-auth-webauthn/` implements FIDO2/WebAuthn passkey authentication. Each submodule contains the module implementation class (extending `AMLoginModule`), an XML service schema definition (e.g., `amAuthLDAP.xml`), and resource bundles for callback prompts. To add a new authentication module, create a new submodule following the pattern of an existing module, implement the `init()`/`login()`/`commit()`/`abort()`/`logout()` lifecycle methods, and register the service schema in the OpenAM configuration store.
+
+**JAAS authentication chain orchestration** -- `OpenAM/openam-core/src/main/java/com/sun/identity/authentication/`. This package contains the core authentication engine. Start with `AuthContext.java` (client-facing API), follow to `AMLoginContext.java` (chain orchestration and JAAS `LoginContext` management), then `AMAuthenticationManager.java` (service locator for chain and module configurations). The `server/` subdirectory holds server-side authentication processing, `spi/` contains the `AMLoginModule` base class, `service/` manages authentication service configuration, and `config/` handles authentication chain definitions. The `LoginState.java` class tracks stateful context across multi-step flows and is essential reading for understanding how OpenAM maintains authentication state during conversational callback exchanges.
+
+**OAuth 2.0 / OpenID Connect provider** -- `OpenAM/openam-oauth2/src/main/java/org/forgerock/oauth2/core/`. This package implements the OAuth 2.0 authorization server. `AuthorizationService.java` handles the `/authorize` endpoint, `AccessTokenService.java` handles the `/token` endpoint, and grant type handlers (`AuthorizationCodeGrantTypeHandler.java`, `ClientCredentialsGrantTypeHandler.java`, etc.) implement individual grant flows. The `TokenStore` interface defines the SPI for pluggable token persistence. OIDC-specific extensions (ID Token issuance, UserInfo endpoint, discovery) are layered on top of the OAuth 2.0 core. The `ScopeValidator` interface enables custom scope validation logic for organizations that need to enforce business-specific scope semantics.
+
+**SAML 2.0 federation** -- `OpenAM/openam-federation/openam-federation-library/`. This module contains the SAML 2.0 protocol implementation shared between IdP and SP roles. Metadata parsing, assertion generation and validation, artifact resolution, attribute mapping, and single logout propagation live here. The `OpenFM/` sibling module integrates the federation library with OpenAM's runtime (realm configuration, session bridging). The `openam-idpdiscovery/` module implements the SAML IdP Discovery Profile for multi-IdP environments. When debugging SAML interoperability issues with partner organizations, the federation library is the starting point -- particularly the assertion validation and signature verification code paths.
+
+**XACML 3.0 policy engine** -- `OpenAM/openam-entitlements/src/main/java/org/forgerock/openam/entitlement/`. The entitlement subsystem implements the PEP/PDP architecture. The `conditions/` package contains subject, resource, and environment condition evaluators. The `service/` package manages policy storage and retrieval from the OpenDJ backend. The `rest/` package exposes policy evaluation and management via REST endpoints. The `indextree/` package implements the resource pattern matching tree that enables efficient policy lookup by URI pattern. Extension points for custom conditions live in `conditions/` -- extend `EntitlementCondition` for new environment evaluators or `SubjectImplementation` for custom subject matchers.
+
+**Cassandra session/token store** -- `OpenAM/openam-cassandra/`. Three submodules: `openam-cassandra-cts` (Core Token Service backed by Cassandra, containing `TokenStorageAdapter.java` and `ConnectionFactoryProvider.java`), `openam-cassandra-datastore` (identity data store backed by Cassandra), and `openam-cassandra-embedded` (embedded Cassandra for development/testing). The CTS module's `QueryFilterVisitor.java` translates OpenAM's internal query filter DSL to CQL queries.
+
+**Session management** -- `OpenAM/openam-core/src/main/java/com/iplanet/dpro/session/service/SessionService.java`. This is the central class for session lifecycle management. It handles session creation after authentication, session retrieval by token ID, idle timeout enforcement, maximum session time enforcement, and session destruction on logout. The `InternalSession` class holds session state, and the `SessionConstraint` class enforces per-user concurrent session limits. Understanding session management is critical for troubleshooting SSO issues, session timeout behavior, and CTS failover.
+
+**REST API endpoints** -- `OpenAM/openam-rest/`. This module exposes OpenAM's capabilities via REST. Authentication endpoints (`/json/authenticate`), session endpoints (`/json/sessions`), user self-service endpoints, and realm management endpoints are defined here. The REST layer delegates to the core authentication and session services, providing the programmatic interface that modern applications use instead of the Jato admin console.
+
+**Audit subsystem** -- `OpenAM/openam-audit/`. Four submodules handle audit event capture, streaming, configuration, and REST querying. The audit framework generates structured JSON events for authentication attempts, authorization decisions, session lifecycle changes, and configuration modifications -- essential for compliance reporting.
+
+**Distribution and packaging** -- `OpenAM/openam-distribution/`. Contains the WAR packaging (`openam-distribution-kit`), Docker image (`openam-distribution-docker/`), admin tools (`openam-distribution-ssoadmintools/`), and configurator tools (`openam-distribution-ssoconfiguratortools/`). The `Dockerfile` in `openam-distribution-docker/` is the canonical reference for containerized deployment.
+
+**Quick-reference path table.**
+
+| Subsystem | Path | Key Classes / Artifacts |
+|-----------|------|------------------------|
+| Auth modules | `openam-authentication/openam-auth-*/` | Module class extending `AMLoginModule`, XML service schema |
+| JAAS chain engine | `openam-core/.../com/sun/identity/authentication/` | `AuthContext`, `AMLoginContext`, `LoginState` |
+| Session management | `openam-core/.../com/iplanet/dpro/session/service/` | `SessionService`, `InternalSession`, `SessionConstraint` |
+| OAuth 2.0 / OIDC | `openam-oauth2/.../org/forgerock/oauth2/core/` | `AuthorizationService`, `AccessTokenService`, `TokenStore` |
+| SAML 2.0 | `openam-federation/openam-federation-library/` | Assertion builders, metadata parsers, signature validators |
+| XACML policy engine | `openam-entitlements/.../org/forgerock/openam/entitlement/` | `conditions/`, `service/`, `indextree/` |
+| Cassandra CTS | `openam-cassandra/openam-cassandra-cts/` | `TokenStorageAdapter`, `ConnectionFactoryProvider` |
+| REST API | `openam-rest/` | Authentication, session, and management REST endpoints |
+| Audit | `openam-audit/` | Event capture, streaming, REST query |
+| Docker image | `openam-distribution/openam-distribution-docker/` | `Dockerfile` (Tomcat 11 + JRE 25) |

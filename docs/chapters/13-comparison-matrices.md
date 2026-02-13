@@ -1,6 +1,6 @@
 # Chapter 13: Comparison Matrices
 
-This chapter consolidates the component-level analyses from earlier chapters into structured comparison tables across five IAM functional domains: access management, directory services, identity governance, API/identity gateways, and connector/integration frameworks. Each table compares the Open Identity Platform (OIP) component against its modern alternatives on dimensions relevant to architectural decision-making. Following the tables, a decision framework provides structured guidance for selecting between options based on deployment model, budget, team size, compliance requirements, and existing technology stack. Data reflects the state of the market as of early 2025; version numbers and feature sets should be verified against current sources before use in procurement decisions.
+This chapter consolidates the component-level analyses from earlier chapters into structured comparison tables across eight IAM functional domains: access management (Table 1), directory services (Table 2), identity governance (Table 3), API/identity gateways (Table 4), connector/integration frameworks (Table 5), privileged access management (Table 6), identity threat detection and response (Table 7), and workload identity (Table 8). Tables 1-5 compare OIP components against modern alternatives. Tables 6-8 cover adjacent domains not addressed by the OIP stack but critical to modern IAM architectures. A Tier 2 access management section tracks emerging OSS alternatives (Casdoor, SuperTokens). Following the tables, decision frameworks and cross-cutting considerations provide guidance for selecting between options. Data reflects the state of the market as of early 2026; version numbers and feature sets should be verified against current sources before use in procurement decisions.
 
 ---
 
@@ -359,6 +359,131 @@ START: What are your integration targets?
   +-- Non-technical team, low-code preferred
         +-- iPaaS (Workato, Tray.io, Mulesoft)
         +-- Note: iPaaS lacks reconciliation; supplement with IGA platform if needed
+```
+
+---
+
+## Table 6: Privileged Access Management (PAM)
+
+PAM products secure, monitor, and audit access to high-privilege accounts -- root/admin credentials, service accounts, database superuser roles, and cloud console access. This domain was not historically addressed by the OIP stack (OpenAM handles user authentication, not privileged session brokering). PAM is included here because modern IAM architectures increasingly treat privileged access as a distinct control plane layered on top of the identity foundation.
+
+| Feature | CyberArk PAM | Delinea Secret Server | BeyondTrust Password Safe | HashiCorp Vault + Boundary |
+|---------|-------------|----------------------|--------------------------|---------------------------|
+| **License** | Proprietary | Proprietary | Proprietary | BSL 1.1 (OSS fork: OpenBao, MPL 2.0) |
+| **Deployment** | On-prem; Privilege Cloud (SaaS) | On-prem; SaaS (Azure-hosted); Delinea Platform | On-prem (virtual/physical); Cloud (AWS, Azure) | Self-managed; HCP Vault Dedicated; HCP Vault Secrets (multi-tenant) |
+| **Credential Vaulting** | Yes -- Vault Technology (AES-256, FIPS 140-2) | Yes -- centralized encrypted vault (AES-256) | Yes -- auto-discovery and onboarding | Yes -- secrets engine (dynamic + static) |
+| **Dynamic Secrets** | Conjur (DevOps) + Credential Provider | Limited (rotation-based) | Limited (rotation-based) | Yes -- core strength; generates short-lived DB creds, cloud IAM, PKI certs |
+| **Session Recording** | PSM: video + keystroke logging | Advanced Session Recording (RDP, SSH, PuTTY) | Live monitoring, recording, lock/terminate | Boundary Enterprise: session recording to object store |
+| **JIT Access** | Time-limited with approval (Slack, Teams, ServiceNow) | JIT elevation, automated credential rotation | Auto-rotate, JIT credential checkout | Boundary injects single-use credentials; no standing access |
+| **MFA Integration** | Adaptive MFA; integrates with external IdPs | MFA at secret checkout | MFA integrated | Delegates to OIDC/SAML IdP |
+| **Endpoint Privilege Mgmt** | EPM for Windows/Mac | Privilege Manager (Windows/Mac) | EPM for Windows/Mac/Linux | No |
+| **Cloud PAM** | Privilege Cloud; multi-cloud IaaS/SaaS | SaaS platform; Azure-hosted | AWS/Azure appliance deployment | Cloud-native (HCP); strong in IaC/cloud workloads |
+| **Target Market** | Large enterprise, regulated industries | Mid-market to enterprise | Mid-market to enterprise | DevOps/platform engineering, cloud-native orgs |
+| **OSS Alternative** | None direct | None direct | None direct | OpenBao (MPL 2.0 Vault fork) |
+
+### PAM Decision Guidance
+
+```
+What are you protecting?
++-- Human admin/root access to servers/databases
+|     +-- Regulated industry (finance, healthcare)? --> CyberArk (broadest compliance coverage)
+|     +-- Mid-market, simpler requirements? --> Delinea or BeyondTrust
+|     +-- Already CyberArk customer? --> Extend to Privilege Cloud for hybrid
+|
++-- Machine/application secrets (API keys, DB creds, TLS certs)
+|     +-- Cloud-native / Kubernetes? --> HashiCorp Vault (or OpenBao for OSS)
+|     +-- Mixed environment? --> Vault + CyberArk Conjur (both have strengths)
+|
++-- Both human + machine
+      +-- Single vendor preference? --> CyberArk (Conjur + PAM) or Delinea Platform
+      +-- Best-of-breed? --> CyberArk/Delinea for human PAM + Vault for secrets
+```
+
+---
+
+## Tier 2 Access Management: Emerging OSS Alternatives
+
+The Table 1 comparison covers established access management platforms. Two newer open-source projects merit tracking as emerging alternatives, particularly for organizations seeking modern developer experience without the legacy weight of OpenAM or the Java dependency of Keycloak.
+
+| Attribute | Casdoor | SuperTokens |
+|-----------|---------|-------------|
+| **Language** | Go (backend), React (frontend) | Java (core), Node.js (middleware), React (prebuilt UI) |
+| **License** | Apache 2.0 | Apache 2.0 |
+| **GitHub Stars** | ~13k | ~15k |
+| **OIDC/OAuth 2.0** | Full OIDC Provider and Consumer | OAuth 2.0 / OIDC provider |
+| **SAML 2.0** | Yes -- IdP and SP | No (OIDC-first design) |
+| **Social Login** | 50+ providers | Major providers via recipes |
+| **Deployment** | Docker, K8s, binary; Casdoor SaaS | Docker, binary; supertokens.com (managed) |
+| **Key Differentiator** | UI-first; Casbin RBAC/ABAC integration; supports CAS, LDAP, SCIM, RADIUS, Kerberos, WebAuthn | Developer-first drop-in; prebuilt UI components; session mgmt as first-class; no user limits self-hosted |
+| **Maturity** | Part of Casbin ecosystem; growing adoption in APAC | Auth0/Firebase replacement positioning; strong developer community |
+
+Neither yet matches Keycloak's feature breadth or enterprise adoption, but both demonstrate the market trend toward lightweight, API-first, Go/Node-based identity platforms -- a trajectory relevant when evaluating whether to invest in modernizing an OIP deployment versus migrating to a newer platform.
+
+---
+
+## Table 7: Identity Threat Detection and Response (ITDR)
+
+ITDR is an emerging security category (Gartner coined the term in 2022) focused on detecting identity-based attacks -- credential stuffing, lateral movement via stolen tokens, MFA fatigue attacks, Kerberos ticket manipulation, and identity store compromise. ITDR products complement the IAM infrastructure analyzed in earlier chapters by adding a detection-and-response layer on top of the authentication and authorization foundation.
+
+| Feature | CrowdStrike Falcon Identity Protection | Silverfort | Microsoft Entra ID Protection |
+|---------|---------------------------------------|-----------|-------------------------------|
+| **Deployment** | Cloud-native (Falcon agent + cloud analytics) | Agentless, proxyless -- inline with AD/IdPs via API | Cloud-native (Entra / Defender XDR suite) |
+| **Credential Stuffing Detection** | Cross-domain telemetry; correlates endpoint + identity signals | Protocol anomaly inspection; baseline deviation detection | ML-based risk from 100T+ daily signals; leaked credential detection |
+| **Lateral Movement Detection** | Maps identity attack paths; blocks privilege escalation | Monitors every auth request in hybrid environments; ticket misuse, credential replay | Identity-centric correlation across accounts; Defender for Identity on-prem |
+| **MFA Fatigue Attack Detection** | Phishing-resistant FIDO2 MFA; MFA bypass detection | Inline MFA challenge/block before auth completes; anomalous MFA patterns | Risk-based Conditional Access; token theft detection |
+| **Identity Risk Scoring** | AI-driven per-user risk scoring | Real-time risk per authentication attempt | Per-user risk levels (low/medium/high); feeds Conditional Access |
+| **Integration Points** | Falcon XDR, SIEM, SOAR; AD + Entra ID + Okta | AD, Entra ID, Okta, ADFS, RADIUS; SIEM/SOAR/XDR via API | Defender XDR, Sentinel SIEM, Conditional Access; Okta + third-party IdPs |
+| **Unique Strength** | Unified endpoint + identity platform; inline AD/Entra prevention | Only solution operating inline within the authentication flow; no agents/proxies; fastest time-to-value | Native Microsoft ecosystem integration; massive signal corpus; included in E5 license |
+| **OIP Relevance** | Can protect OpenAM-fronted AD environments | Can wrap OpenAM's AD authentication with risk-based MFA without modifying OpenAM | Limited (requires Entra ID as primary IdP) |
+
+### ITDR Selection Guidance
+
+ITDR products add the most value when deployed alongside, not instead of, a well-configured IAM stack. For organizations running the OIP suite:
+
+- **Silverfort** has the lowest integration friction: it intercepts AD authentication requests without requiring changes to OpenAM or OpenDJ, making it the most practical ITDR overlay for legacy IAM deployments.
+- **CrowdStrike Falcon** provides the broadest signal correlation if the organization already uses Falcon for endpoint protection.
+- **Microsoft Entra ID Protection** is cost-effective for Microsoft-centric environments (E5 license) but assumes Entra ID as the primary IdP.
+
+---
+
+## Table 8: Workload Identity (SPIFFE/SPIRE)
+
+Workload identity addresses how services authenticate to each other -- a problem orthogonal to human identity (OpenAM's domain) but increasingly critical in microservices and zero-trust architectures. SPIFFE (Secure Production Identity Framework for Everyone) is a CNCF-graduated standard; SPIRE is its reference implementation.
+
+| Dimension | SPIFFE/SPIRE | Traditional Service Accounts / Static mTLS |
+|-----------|-------------|---------------------------------------------|
+| **Credential Lifetime** | Short-lived (minutes); auto-rotated | Long-lived; manual rotation |
+| **Identity Format** | SVID: X.509 cert or JWT with SPIFFE ID URI (`spiffe://domain/service-a`) | Platform-specific (K8s ServiceAccount, AWS IAM Role, GCP SA) |
+| **Identity Granularity** | Per-workload, per-node attestation | Per-service-account (often shared across instances) |
+| **Secret Distribution** | No static secrets; identity derived from platform attestation | Requires secrets distribution (K8s secrets, env vars, mounted files) |
+| **Cross-Platform** | Single model across cloud, K8s, VMs, bare-metal | Platform-specific approaches |
+| **Certificate Management** | Fully automated issuance + rotation via SPIRE | Manual or requires separate CA (cert-manager, Vault PKI) |
+| **Zero Trust Alignment** | Strong -- identity verified at every hop | Weak -- often relies on network perimeter or long-lived tokens |
+| **Adoption** | GitHub, Netflix, Pinterest, Uber, Square, TransferWise; CNCF graduated (2022) | Universal but increasingly seen as legacy for service-to-service auth |
+| **OIP Relevance** | Complements OpenAM: SPIFFE handles east-west (service-to-service), OpenAM handles north-south (user-to-app) | OpenAM's OAuth 2.0 client credentials grant is the traditional approach |
+
+### Key Concepts
+
+- **SPIFFE ID**: URI-format identity (`spiffe://trust-domain/workload`) assigned to each workload
+- **SVID (SPIFFE Verifiable Identity Document)**: Short-lived X.509 certificate or JWT proving workload identity
+- **Node Attestation**: SPIRE Server verifies node identity via platform attestors (AWS IID, GCP, K8s, bare-metal TPM)
+- **Workload Attestation**: SPIRE Agent verifies workload process via kernel metadata, K8s pod info, Docker labels
+
+### Workload Identity Decision Guidance
+
+```
+How do your services authenticate to each other?
++-- Kubernetes-only
+|     +-- Simple setup? --> K8s ServiceAccount tokens + network policies
+|     +-- Zero trust / cross-cluster? --> SPIFFE/SPIRE with K8s attestor
+|
++-- Multi-platform (K8s + VMs + cloud functions)
+|     +-- Need unified identity model? --> SPIFFE/SPIRE (purpose-built)
+|     +-- Already use HashiCorp Vault? --> Vault Agent + PKI engine
+|
++-- Legacy / monolithic
+      +-- OpenAM OAuth 2.0 client credentials grant (sufficient for coarse service auth)
+      +-- Plan SPIFFE adoption for future microservices decomposition
 ```
 
 ---

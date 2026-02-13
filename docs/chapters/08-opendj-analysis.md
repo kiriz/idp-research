@@ -388,6 +388,109 @@ These characteristics compare favorably to 389 DS for Java-tuned environments bu
 
 ---
 
+### Production Deployment Topology
+
+Beyond the basic deployment patterns described above, production OpenDJ deployments require deliberate topology decisions, backup strategies, and integration planning.
+
+**Multi-master replication topology (2-4 nodes).** The standard production topology uses two to four OpenDJ instances with bi-directional multi-master replication across availability zones or data centers. Two-node deployments provide basic HA but risk split-brain during network partitions; three-node deployments with a dedicated replication server (acting as a hub, not a data-serving node) reduce the risk by providing a coordination point. Four-node deployments -- two per data center, each pair replicating locally with cross-site replication via dedicated replication servers -- represent the typical enterprise configuration for organizations requiring geographic redundancy. The replication server reduces the connection topology from O(N^2) full mesh to O(N) star, which matters operationally when managing firewall rules and monitoring replication lag across data centers. Each node should have its `server-id` (1-127 range) carefully assigned and documented, as replication troubleshooting depends on identifying which server originated which change via CSN analysis.
+
+**External changelog for downstream sync.** OpenDJ's changelog doubles as an External Change Log (ECL) that external systems can poll to detect identity changes. OpenIDM's LiveSync connector reads the ECL to trigger provisioning workflows when users are created, modified, or deleted in the directory (see Chapter 9). The ECL is exposed as a virtual LDAP suffix (`cn=changelog`) and supports persistent search (RFC 4533 content synchronization) for push-style notification. In production, the changelog retention period (configured via `conflicts-historical-purge-delay`, typically 30 days) must balance disk consumption against the need for downstream systems to recover from extended outages without requiring a full resynchronization. Organizations deploying OpenIDM LiveSync or custom sync consumers should monitor ECL consumer lag and alert when a consumer falls behind the retention window.
+
+**REST-to-LDAP gateway deployment for SCIM-like access.** While OpenDJ does not natively implement SCIM 2.0, the `rest2ldap` gateway can be deployed as a standalone HTTP service fronting one or more OpenDJ instances, providing REST/JSON access to directory data. In production, this gateway is typically deployed behind a reverse proxy (Nginx, OpenIG) that handles TLS termination, rate limiting, and authentication token validation. The gateway's JSON-to-LDAP attribute mapping is configured declaratively, enabling clean REST APIs (e.g., `GET /users/jsmith` returning a JSON object) over legacy LDAP schemas without modifying the directory's native schema. For organizations seeking SCIM-compatible provisioning endpoints without deploying OpenIDM, the rest2ldap gateway provides a partial solution -- it supports CRUD and query operations but lacks SCIM's bulk operations, `/Me` endpoint, and standardized error format.
+
+**Backup and restore procedures.** OpenDJ provides two complementary backup mechanisms:
+
+- **`dsbackup` (binary backup).** Creates a point-in-time binary backup of the Berkeley DB JE backend. Supports full and incremental backups, local and remote storage targets, and encryption. Binary backups are faster to restore than LDIF imports but are version-specific -- a backup taken on OpenDJ 5.0.3 may not restore cleanly on a different patch version. Production environments should schedule nightly full backups with periodic incremental backups between them, retaining at least 7 days of backup history.
+
+- **`export-ldif` (LDIF export).** Exports the directory content as LDIF (LDAP Data Interchange Format), a portable text format. LDIF exports are version-independent and can be imported into any LDAPv3-compliant server (389 DS, OpenLDAP, another OpenDJ instance). They are slower to restore (requiring full import and index rebuilding) but serve as the universal migration and disaster recovery format. For directories with millions of entries, LDIF exports can take hours; schedule them during maintenance windows and direct output to a separate filesystem to avoid I/O contention with the running server.
+
+- **Restore procedure.** `dsbackup --restore` for binary backups; `import-ldif` for LDIF restores. Both require the server to be stopped (or the target backend to be disabled). After restore, replication state must be reinitialized -- the restored server's changelog is stale, so peer servers must reinitialize replication to the restored node. This reinitialization step is the most common source of post-restore errors; operators should have a documented, tested runbook that includes replication reinitialization.
+
+**OpenDJ as embedded datastore within OpenAM vs standalone.** OpenAM can embed an OpenDJ instance for configuration and identity storage, eliminating the need for a separate directory deployment. This embedded mode is appropriate for development, testing, and small-scale production (single-server or two-server HA). However, embedded mode carries operational limitations:
+
+- The embedded OpenDJ shares the same JVM heap as OpenAM, increasing memory pressure and garbage collection pause risk. A directory with 100,000 entries competing for heap with OpenAM's session cache and authentication pipeline can produce multi-second GC pauses.
+- The directory's lifecycle is coupled to OpenAM's -- restarting OpenAM restarts the directory, and an OpenAM crash takes down the directory with it.
+- Monitoring the embedded directory requires JMX access through OpenAM's JVM rather than through a dedicated management interface, complicating operational visibility.
+- Backup and restore of the embedded directory must be coordinated with OpenAM's own state, adding operational complexity.
+
+For deployments exceeding approximately 50,000 user entries or requiring independent directory scaling, standalone OpenDJ instances are strongly recommended. The hybrid pattern -- embedded OpenDJ for OpenAM configuration, external OpenDJ cluster for identity data -- provides the best balance of simplicity and operational flexibility.
+
+A summary of production topology options:
+
+| Topology | Nodes | HA | Use Case |
+|----------|-------|-----|----------|
+| Embedded (single) | 1 | None | Development, testing |
+| Two-node replication | 2 | Basic | Small production, single site |
+| Three-node with replication server | 3 | Good | Medium production, single site |
+| Four-node cross-site | 4+ | Strong | Enterprise, multi-data center |
+| Hybrid (embedded config + external identity) | 3+ | Good | OpenAM deployments needing scale |
+
+---
+
+### Migration Cost Analysis
+
+Migrating away from OpenDJ is a question every organization evaluating the OIP stack must consider, if only as a contingency plan. The migration cost varies dramatically depending on the target platform and the depth of LDAP integration in downstream applications.
+
+**OpenDJ to 389 Directory Server.** This is the lowest-friction migration path because both servers implement full LDAPv3 and share architectural heritage (both descend from Sun's directory lineage). The migration procedure is: (1) export the directory using `export-ldif` to produce a standard LDIF file; (2) review and adapt schema definitions, as OpenDJ custom schema files (in `opendj-config/` LDIF format) must be converted to 389 DS schema format (also LDIF-based, but with different `dn` conventions for schema entries under `cn=schema`); (3) import the LDIF into 389 DS using `ldif2db` or `dsconf backend import`; (4) reconfigure replication using 389 DS's native multi-supplier replication, which uses a different configuration model (replication agreements defined per suffix per supplier, rather than OpenDJ's centralized replication server topology); (5) update client configurations to point to the new server(s). Schema compatibility is generally high -- both servers support the standard LDAP schema (inetOrgPerson, groupOfNames, posixAccount, etc.) -- but custom object classes and attributes defined in OpenDJ require manual schema definition in 389 DS. Access control rules (ACIs) are syntactically compatible in most cases, as both implement the same ACI model, but must be reviewed for OpenDJ-specific extensions. The primary risk is replication reconfiguration: organizations with complex multi-site topologies must redesign their replication agreements for 389 DS's supplier-consumer model, which differs structurally from OpenDJ's replication server hub approach. Estimated effort: 2-4 weeks for a typical enterprise directory with custom schema and multi-site replication.
+
+**OpenDJ to PostgreSQL (for Keycloak/Zitadel).** This migration represents a protocol-level shift from LDAP to SQL and is significantly more complex. The core challenge is LDAP-to-relational schema mapping: LDAP's hierarchical DIT, multi-valued attributes, and object class inheritance have no direct relational equivalents. A `uid=jsmith,ou=engineering,dc=example,dc=com` entry with object classes `inetOrgPerson`, `posixAccount`, and a custom `employeeExtension` must be decomposed into relational tables -- typically a `users` table for core attributes, junction tables for multi-valued attributes (email addresses, group memberships), and separate tables for each custom extension. This mapping must be implemented in the migration tooling (custom scripts or ETL pipelines) and replicated in the target application's data model (Keycloak's `USER_ENTITY`, `USER_ATTRIBUTE`, and `USER_GROUP_MEMBERSHIP` tables, or Zitadel's equivalent structures). Beyond data migration, every application that performs LDAP bind operations, LDAP searches with complex filters (substring, approximate, extensible match), or relies on LDAP-specific features (referrals, persistent search, controls) must be modified to use the target platform's API (Keycloak Admin REST API, Zitadel gRPC/REST). Password hashes stored in OpenDJ's LDAP format (`{PBKDF2}...`, `{SSHA512}...`) may require conversion or a first-login password reset depending on the target platform's hash support. Estimated effort: 2-6 months depending on the number of LDAP-integrated applications and custom schema complexity.
+
+**OpenDJ to Microsoft Entra ID.** This migration replaces an on-premises, self-hosted directory with a cloud-managed one and involves both a protocol translation (LDAP to Microsoft Graph API) and a data model transformation. Entra ID's user model is flatter than LDAP's hierarchical DIT: there are no organizational units, no custom object classes, and limited support for custom attributes (via `extensionAttributes` or `schemaExtensions`, which have naming and type constraints). Multi-valued attributes behave differently -- LDAP allows arbitrary multi-valued attributes on any entry, while Entra ID restricts multi-valued attributes to specific schema properties. Group membership models differ: LDAP uses `memberOf`/`member` attributes with DN-valued references, while Entra ID uses the Graph API's group membership endpoints with object ID references. Applications must be migrated from LDAP bind authentication to OIDC/OAuth 2.0 (via Entra ID's identity platform), which is a positive architectural change but requires application-level modifications. Custom LDAP schema -- the attributes and object classes specific to the organization's identity model -- will be partially lost; only attributes that map to Entra ID's fixed schema or extensionAttribute slots can be preserved. For organizations with heavily customized LDAP schemas (common in telecommunications and government), this data loss is the primary blocker. Entra Domain Services provides an LDAP compatibility layer, but at additional cost and with limited schema customization. Estimated effort: 3-9 months, heavily dependent on custom schema complexity and number of LDAP-dependent applications.
+
+**Key risk: deep LDAP integration.** Across all migration paths, the hardest applications to migrate are those with deep LDAP protocol integration:
+
+- Applications that use LDAP bind operations for authentication (rather than delegating to an IdP).
+- Applications that issue complex LDAP search filters with server-side sorting and paged results controls.
+- Applications that rely on LDAP extended controls (proxied authorization, persistent search, content synchronization).
+- Applications that use LDAP referrals for cross-directory resolution.
+- Applications that depend on LDAP schema enforcement (object class validation, syntax checking) as a data integrity mechanism.
+
+These are the long-tail applications that make directory migrations take months instead of weeks. An inventory of LDAP-dependent applications, classified by integration depth (simple bind-only vs. complex filter/control usage), is a prerequisite for any migration planning. The OpenDJ access log (`logs/access`) is the best source for this inventory: it records every operation, filter, and control used by every client, enabling data-driven migration prioritization.
+
+A summary of migration paths and their relative costs:
+
+| Target | Protocol Change | Schema Effort | App Migration | Estimated Effort |
+|--------|----------------|---------------|---------------|------------------|
+| 389 DS | None (LDAP-to-LDAP) | Low (LDIF-compatible) | Minimal (connection config only) | 2-4 weeks |
+| PostgreSQL (Keycloak/Zitadel) | LDAP-to-SQL/REST | High (hierarchical-to-relational) | Significant (every LDAP client) | 2-6 months |
+| Microsoft Entra ID | LDAP-to-Graph API | High (custom schema loss) | Significant (protocol + auth model) | 3-9 months |
+
+---
+
+### Codebase Navigation Guide
+
+For developers and architects who need to read, modify, or extend OpenDJ, the codebase is organized into approximately 26 Maven modules. The following guide identifies the most important modules and their roles, providing an entry point for source-level analysis.
+
+**`opendj-core/` -- LDAPv3 client API.** This module contains the LDAP client library, including connection management (`LDAPConnectionFactory`, `Connection`), request/response types (`SearchRequest`, `ModifyRequest`, `BindRequest`, etc.), and the RxJava 3 reactive integration that provides `LdapPromise<T>`, `Flowable`-based search result streams, and backpressure-aware result processing. This is the module to read for understanding how applications interact with OpenDJ programmatically. It is also the module embedded by other OIP components (OpenAM, OpenIDM) as a client dependency. Key packages: `org.forgerock.opendj.ldap` (connection API), `org.forgerock.opendj.ldap.requests` (operation types), `org.forgerock.opendj.ldap.responses` (result types).
+
+**`opendj-server-legacy/` -- Main server implementation.** At 1,927 Java files, this is the largest module and contains the complete server runtime: backend implementations (Berkeley DB JE, JDBC, in-memory), the LDAP request processing pipeline, access control evaluation, replication protocol, password policy enforcement, plugin framework, and the `DirectoryServer` singleton that coordinates all components. The "legacy" suffix is a naming artifact, not a deprecation indicator -- this is the production server. Key packages: `org.opends.server.core` (operation processing, `DirectoryServer`), `org.opends.server.api` (SPI interfaces for backends, plugins, password storage schemes), `org.opends.server.replication` (multi-master replication protocol), `org.opends.server.backends` (storage implementations). The `DirectoryServer.java` class (approximately 2,000+ lines) is the entry point for understanding server startup, configuration loading, and component registration.
+
+**`opendj-rest2ldap/` -- REST gateway.** This module implements the HTTP/JSON to LDAP translation layer. The core classes are `Rest2Ldap` (configuration and factory), `Resource` (JSON-to-LDAP attribute mapping), and request handler classes that translate CREST operations (create, read, update, delete, query, action) into LDAP protocol operations. Reading this module is essential for understanding how the rest2ldap gateway maps JSON attribute names to LDAP attribute types, how CREST query filters are translated to LDAP search filters, and how pagination (cookie-based) is implemented over LDAP paged results controls. Key package: `org.forgerock.opendj.rest2ldap`.
+
+**`opendj-config/` -- Schema and configuration definitions.** This module defines the server's configuration schema using XML descriptors that generate Java configuration beans at build time. It also contains the LDAP schema definitions (attribute types, object classes, matching rules, syntaxes) that the server enforces. Developers adding new configuration parameters or custom schema elements should start here. The schema files follow the standard LDAP schema LDIF format and are loaded by the server at startup. Key directory: `src/main/resources/` contains the schema definition files and configuration XML descriptors.
+
+**`opendj-packages/` -- Distribution packaging.** This module produces the deployable artifacts: Docker images, DEB packages (Debian/Ubuntu), RPM packages (RHEL/CentOS), MSI installers (Windows), and OpenShift templates. For operations teams customizing the deployment packaging -- adding monitoring agents, custom startup scripts, or environment-specific configuration -- this is the starting point. The Docker build files define the base image, JVM arguments, volume mounts, and health check commands. Key subdirectories: `opendj-docker/` (Docker image build), `opendj-deb/` (Debian packaging), `opendj-rpm/` (RPM packaging).
+
+**`opendj-cli/` -- Command-line tools.** Contains the implementations of OpenDJ's administrative and operational CLI tools: `ldapsearch`, `ldapmodify`, `ldapdelete`, `dsconfig` (server configuration), `dsreplication` (replication management), `import-ldif`, `export-ldif`, `dsbackup`, and `verify-index`. Each tool is a standalone Java class with argument parsing and LDAP connection management. For operators writing automation scripts, understanding the CLI tool implementations can help diagnose unexpected behavior or extend tool functionality.
+
+**`opendj-embedded/` -- Embeddable server library.** This module provides the API for embedding OpenDJ within a Java application (the mechanism OpenAM uses for its embedded configuration store). The key class exposes methods to start, stop, and configure an in-process directory server. Developers building applications that need an embedded LDAP server -- for testing, for small-scale deployments, or for configuration storage -- should start with this module's API.
+
+**Quick reference table:**
+
+| Module | Primary Audience | Entry Point |
+|--------|-----------------|-------------|
+| `opendj-core/` | Application developers | `org.forgerock.opendj.ldap.LDAPConnectionFactory` |
+| `opendj-server-legacy/` | Server developers | `org.opends.server.core.DirectoryServer` |
+| `opendj-rest2ldap/` | REST integration developers | `org.forgerock.opendj.rest2ldap.Rest2Ldap` |
+| `opendj-config/` | Schema / config authors | `src/main/resources/` XML descriptors |
+| `opendj-packages/` | Operations / DevOps | `opendj-docker/`, `opendj-deb/`, `opendj-rpm/` |
+| `opendj-cli/` | Operators / automation | Individual tool classes |
+| `opendj-embedded/` | Embedding developers | Embedded server API class |
+
+**Navigation tips for new contributors.** When tracing a specific LDAP operation through the codebase, start in `opendj-server-legacy/src/main/java/org/opends/server/core/` where each operation type has a dedicated `*Operation.java` class (e.g., `SearchOperation.java`, `ModifyOperation.java`). These classes orchestrate the full pipeline: pre-operation plugin invocation, access control check, backend dispatch, post-operation plugins, and response serialization. For replication behavior, follow the `PostOperationPlugin` chain into `org.opends.server.replication`, where the `MultimasterReplication` class coordinates change propagation. For REST-to-LDAP translation, the `opendj-rest2ldap` module's request handler classes show exactly how each HTTP method maps to an LDAP operation sequence.
+
+---
+
 ## 7. Verdict
 
 OpenDJ is a mature, standards-compliant LDAPv3 server with genuine architectural strengths: multi-master replication, pluggable storage backends, REST-to-LDAP bridging, embeddable deployment, and a reactive client library. Within the OIP ecosystem, it is the indispensable foundation -- OpenAM cannot operate without it (see Chapter 7 for the triple-role dependency: configuration store, identity store, and optional CTS backend). As a standalone directory server, it competes credibly with 389 DS for Java-centric environments, though 389 DS holds advantages in memory efficiency, Red Hat ecosystem integration, and community size.

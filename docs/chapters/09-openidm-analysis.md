@@ -397,6 +397,181 @@ Users/Apps --> OpenIG (gateway) --> OpenAM (SSO/auth) --> OpenDJ (LDAP store)
 
 This integration model is coherent but tightly coupled to the OIP ecosystem. Organizations that adopt Keycloak instead of OpenAM, or PostgreSQL instead of OpenDJ, lose the integration benefits that justify OpenIDM's architectural complexity.
 
+### Production Deployment Topology
+
+A production OpenIDM deployment involves several infrastructure decisions that significantly affect reliability, performance, and operational complexity. The following diagram illustrates a typical production topology:
+
+```
+                          ┌─────────────────────────────┐
+                          │       Load Balancer          │
+                          │    (HAProxy / F5 / ALB)      │
+                          └──────────┬──────────────────-┘
+                                     │
+                    ┌────────────────┼────────────────┐
+                    │                │                 │
+              ┌─────▼─────┐   ┌─────▼─────┐    ┌─────▼─────┐
+              │  OpenIG    │   │  OpenIG    │    │  OpenIG    │
+              │ (gateway)  │   │ (gateway)  │    │ (gateway)  │
+              └─────┬──────┘   └─────┬──────┘    └─────┬──────┘
+                    │                │                  │
+              ┌─────▼──────────────-─▼─────────────────▼─────┐
+              │              OpenAM (SSO/AuthN)               │
+              └──────────────────┬───────────────────────────-┘
+                                 │ session validation
+              ┌──────────────────▼───────────────────────────-┐
+              │         OpenIDM (active instance)              │
+              │  ┌──────────┐ ┌──────────┐ ┌───────────────┐  │
+              │  │ SyncEngine│ │ Workflow │ │ Managed Objects│  │
+              │  │ (Recon)   │ │(Activiti)│ │  (CRUD+hooks) │  │
+              │  └─────┬─────┘ └────┬─────┘ └───────┬───────┘  │
+              └────────┼────────────┼───────────────┼──────────┘
+                       │            │               │
+         ┌─────────────▼────────────▼───────────────▼──────────┐
+         │          PostgreSQL (JDBC repository)                │
+         │  [managed objects] [links] [audit] [workflow state]  │
+         └──────────────────────────────────────────────────────┘
+                       │
+         ┌─────────────▼──────────────────────┐
+         │    OpenIDM (warm standby)           │
+         │    (shares same JDBC repository)    │
+         └────────────────────────────────────-┘
+
+              ┌────────────────────────────────┐
+              │  Remote OpenICF Connector       │
+              │  Server (corporate LAN zone)    │
+              │  ┌────────┐  ┌───────────────┐  │
+              │  │  LDAP   │  │ JDBC (HR DB) │  │
+              │  │connector│  │  connector    │  │
+              │  └────┬────┘  └──────┬────────┘  │
+              └───────┼──────────────┼───────────┘
+                      │              │
+                ┌─────▼────┐  ┌─────▼──────┐
+                │   Active  │  │  Oracle HR  │
+                │ Directory │  │  Database   │
+                └───────────┘  └────────────┘
+```
+
+#### OSGi Container: Single-Node vs Clustered
+
+OpenIDM runs as a single Apache Felix v5.x OSGi process. Unlike OpenAM, which supports session replication across a cluster of instances behind a load balancer, OpenIDM does not natively support active-active clustering. The reconciliation engine maintains in-memory state (current phase, processed object counts, link cache) that is not replicated between instances.
+
+Production deployments typically run OpenIDM as a single active instance with a warm standby for failover, using an external load balancer or DNS failover to redirect traffic. The warm standby shares the same JDBC repository, so managed objects and link records are immediately available on failover, but in-flight reconciliation jobs are lost and must be restarted.
+
+Organizations requiring higher availability can run multiple OpenIDM instances with partitioned workloads -- each instance owns a subset of sync mappings -- but this requires careful coordination to avoid duplicate processing and link store conflicts.
+
+#### JDBC Repository Backend
+
+The production-recommended repository is a relational database accessed via the JDBC module (`OpenIDM/openidm-repo-jdbc/`). The `DatabaseType` enum (`OpenIDM/openidm-repo-jdbc/src/main/java/org/forgerock/openidm/repo/jdbc/DatabaseType.java`) enumerates supported backends:
+
+| Database | TableHandler | Notes |
+|----------|-------------|-------|
+| PostgreSQL | `PostgreSQLTableHandler`, `PostgreSQLMappedTableHandler` | Native JSONB columns, strongest choice for new deployments |
+| MySQL | `MySQLTableHandler` | Second most common, JSON column support in 5.7+ |
+| SQL Server | `MSSQLTableHandler`, `MSSQLMappedTableHandler` | Windows-centric environments |
+| Oracle | `OracleTableHandler`, `OracleMappedTableHandler` | Enterprise Oracle shops |
+| DB2 | `DB2TableHandler` | IBM mainframe environments |
+| H2 | via `GenericTableHandler` | In-memory testing only |
+
+Each database has a dedicated `TableHandler` implementation that handles SQL dialect differences, JSON column types, and vendor-specific exception mapping via corresponding `SQLExceptionHandler` classes (`MySQLExceptionHandler`, `MSSQLExceptionHandler`, `DB2SQLExceptionHandler`, `DefaultSQLExceptionHandler`).
+
+Connection pooling is handled by HikariCP (`HikariCPDataSourceConfig`, `HikariCPDataSourceFactory`), with BoneCP available as a legacy alternative. The repository stores managed objects, link records, audit logs, configuration, and Activiti workflow state -- all in the same database unless explicitly separated.
+
+#### OrientDB for Development Only
+
+The OrientDB backend (`OpenIDM/openidm-repo-orientdb/`) runs as an embedded document database via `EmbeddedOServerService`, requiring zero external infrastructure. This makes it useful for local development and rapid prototyping: a single `./startup.sh` command starts OpenIDM with a fully functional repository.
+
+However, OrientDB lacks the transactional guarantees, replication maturity, backup tooling, and operational expertise that production deployments require. The `OrientDBRepoService` and associated query infrastructure (`ConfiguredQueries`, `PredefinedQueries`) implement a parallel code path to the JDBC module, meaning bugs fixed in one backend may not be fixed in the other. Production deployments should always use the JDBC backend.
+
+#### External OpenICF Connector Server
+
+For target systems that reside in network segments inaccessible from the OpenIDM host (e.g., Active Directory domain controllers in a corporate LAN, databases behind firewalls), OpenICF's remote connector server runs as a separate process on a host with network access to those targets. The remote server communicates with OpenIDM over Protobuf RPC (default port 8759), authenticated via HMAC-SHA256 shared key.
+
+This topology enables a "connector-near-target" deployment: the OpenICF connector server sits in the same network zone as the target system, avoiding firewall exceptions for every target. Multiple remote connector servers can run in parallel behind round-robin selection with circuit breaker failover.
+
+Sync failure handling supports multiple strategies for resilient processing of transient target failures:
+
+- `DeadLetterQueueHandler` -- persists failed sync events to a repository-backed queue for later manual or automated retry.
+- `InfiniteRetrySyncFailureHandler` -- retries the failed operation indefinitely with configurable backoff.
+- `SimpleRetrySyncFailureHandler` -- retries a configurable number of times before escalating.
+- `ScriptedSyncFailureHandler` -- executes a custom Groovy script on failure, enabling application-specific error handling (e.g., sending alerts, writing to external audit systems).
+
+#### Workflow Engine (Activiti BPMN)
+
+The embedded Activiti engine (`ActivitiServiceImpl`) uses the same JDBC data source as the OpenIDM repository for workflow state persistence (process instances, task assignments, history). In production, this means workflow state is transactionally consistent with managed object state -- an approval that completes and triggers account creation is atomic within the database.
+
+BPMN process definitions are deployed through REST or placed in a monitored directory. The `SharedIdentityService` bridges Activiti's user/group model with OpenIDM's managed objects, allowing workflow task assignment to reference managed users and roles without a separate identity store for the workflow engine. Common production workflow patterns include:
+
+- **Access request/approval.** User requests a role assignment via REST; workflow routes to the user's manager for approval; on approval, the role is assigned and downstream sync mappings propagate the entitlement to target systems.
+- **Onboarding sequences.** HR system creates a managed user via sync; workflow orchestrates sequential account creation across multiple target systems with wait states for manual verification at each step.
+- **Escalation chains.** Approval tasks left unactioned for a configurable period are escalated to a backup approver or auto-approved/denied based on policy.
+
+#### Integration with OpenAM for SSO-Protected Admin Console
+
+OpenIDM's REST API can be protected by OpenAM's policy agent or by configuring OpenIDM's authentication filter to validate OpenAM session tokens. In a production OIP deployment, the typical pattern is:
+
+1. OpenIG sits in front of OpenIDM's admin endpoint.
+2. OpenIG enforces authentication via OpenAM (SSO cookie validation).
+3. OpenIG passes the authenticated principal to OpenIDM in a header.
+4. OpenIDM's authorization filter evaluates RBAC policies against the authenticated user.
+
+This eliminates the need for separate admin credentials (`openidm-admin/openidm-admin`) in production and provides centralized audit of admin access through OpenAM's access logs.
+
+### Migration Cost Analysis
+
+Organizations considering migration away from OpenIDM face varying levels of effort depending on the target platform. The core challenge is that OpenIDM's configuration model -- JSON-based sync mappings, Groovy/JavaScript lifecycle hooks, OpenICF connector configurations, and Activiti BPMN workflows -- has no direct portable equivalent in any target platform.
+
+**OpenIDM to SailPoint IdentityNow (Identity Security Cloud).** SailPoint replaces OpenIDM's sync mappings with "identity profiles" and "transforms" for attribute computation. Each OpenIDM mapping (`sync.json` entry) must be recreated as a SailPoint source-to-identity-profile connection. Attribute transformations written as JavaScript or Groovy expressions in OpenIDM mappings must be rewritten as SailPoint transforms (a declarative JSON format with ~30 built-in transform types) or as SailPoint Rules (BeanShell scripts, requiring SailPoint Expert Services approval for cloud deployments). OpenICF connectors must be replaced with SailPoint connectors or the SaaS Connectivity Framework (TypeScript-based); LDAP and JDBC connectors have direct SailPoint equivalents, but custom Groovy scripted connectors require ground-up reimplementation. Activiti BPMN workflows must be redesigned using SailPoint's approval framework, which is less flexible than arbitrary BPMN but covers common access request/approval patterns. Estimated effort: 3-6 months for a deployment with 5-10 source/target systems, dominated by connector replacement and workflow redesign.
+
+**OpenIDM to Saviynt Enterprise Identity Cloud.** Saviynt's mapping model uses "connection" configurations with attribute mappings that are conceptually similar to OpenIDM's sync.json but use Saviynt's own expression language. The migration effort for attribute mappings is comparable to SailPoint. Saviynt has better native SCIM 2.0 support, so targets that OpenIDM reached via custom OpenICF connectors may be reachable via Saviynt's SCIM connector without custom code. Saviynt's deep ERP connectors (SAP, Oracle EBS, Workday) may simplify integrations that required complex Groovy scripted connectors in OpenIDM. Workflows transition to Saviynt's workflow designer, which supports multi-level approvals and escalations but uses a proprietary visual model rather than BPMN. The OrientDB-to-Saviynt data migration is straightforward (export managed objects as JSON, transform to Saviynt import format); JDBC repository migration is similarly a SQL export/transform/load operation. Estimated effort: 2-5 months, potentially lower than SailPoint if ERP connectors reduce custom integration work.
+
+**OpenIDM to Midpoint (Evolveum).** Midpoint is the closest architectural match to OpenIDM: both are Java-based identity management platforms with connector frameworks (OpenICF vs ConnId, which is API-compatible), sync/recon engines, and managed object models. However, the configuration formats differ fundamentally. OpenIDM uses JSON configuration (`sync.json`, `managed.json`, `provisioner.openicf-*.json`); Midpoint uses XML-based "resource definitions" and "object templates" with its own expression language. Each sync mapping must be translated to a Midpoint resource definition with inbound/outbound mappings. OpenICF connectors can run in Midpoint via the ConnId compatibility layer with minimal modification, since ConnId descends from the same Sun ICF codebase. This is the single largest migration advantage: existing connector JARs (LDAP, JDBC, CSV) work in both platforms. Activiti workflows must be replaced with Midpoint's built-in approval mechanisms (policy rules with approval actions), which are less visually modelable but more tightly integrated with Midpoint's policy engine. Estimated effort: 2-4 months, with connector reuse offsetting the XML configuration translation cost.
+
+**Key risk: custom Groovy scripts.** The single largest migration risk across all three target platforms is custom Groovy scripting. OpenIDM allows Groovy (and JavaScript) in managed object lifecycle hooks (`onCreate`, `onUpdate`, `onDelete`, `onRead`, `postCreate`, `postUpdate`, `postDelete`), sync mapping attribute transformations, correlation queries, situation-action scripts, custom endpoints, and scripted connectors. Organizations with mature OpenIDM deployments may have dozens of Groovy scripts encoding business logic -- username generation algorithms, conditional attribute derivation, multi-system correlation rules, error handling and notification logic.
+
+These scripts have no portable equivalent:
+
+- **SailPoint** uses BeanShell (restricted in cloud deployments, requires Expert Services approval) or transforms (declarative JSON, ~30 built-in types, limited expressiveness).
+- **Saviynt** uses its own expression language with a narrower function library than Groovy's full JVM access.
+- **Midpoint** uses its own XML-embedded expression language. Groovy is partially supported in Midpoint expressions, but the script context objects (`source`, `target`, `openidm.*` functions) and APIs differ completely from OpenIDM's script bindings.
+
+Every Groovy script must be analyzed, its intent understood, and the logic reimplemented in the target platform's idiom. This is the most labor-intensive and error-prone component of any OpenIDM migration.
+
+#### Migration Summary
+
+| Dimension | SailPoint ISC | Saviynt EIC | Midpoint |
+|-----------|--------------|-------------|----------|
+| **Mapping translation** | Identity profiles + transforms | Connection configs | XML resource definitions |
+| **Connector reuse** | None (SailPoint connectors or SaaS Connectivity Framework) | Partial (SCIM targets simplify) | High (ConnId is ICF-compatible) |
+| **Workflow migration** | Approval framework (less flexible) | Proprietary visual designer | Built-in approval policies |
+| **Groovy script portability** | None (BeanShell/transforms) | None (proprietary expressions) | Partial (Groovy supported, different APIs) |
+| **Data export** | SQL/JSON export + transform | SQL/JSON export + transform | SQL/JSON export + transform |
+| **Estimated effort (5-10 targets)** | 3-6 months | 2-5 months | 2-4 months |
+| **Governance features gained** | Full IGA (certifications, SoD, AI) | Full IGA + ERP governance | Access certifications, role mining, SoD |
+| **Cost model change** | Free -> $30K-500K+/year | Free -> enterprise SaaS pricing | Free -> free (Apache 2.0) + optional support |
+
+### Codebase Navigation Guide
+
+For developers and architects evaluating OpenIDM's source, the following module map identifies the key entry points for each major subsystem. All paths are relative to the `OpenIDM/` repository root. OpenIDM contains 42 modules in total; the five described below are the most architecturally significant.
+
+| Module | Purpose | Key Entry Class | Java Files |
+|--------|---------|----------------|------------|
+| `openidm-core/` | Sync engine, reconciliation, managed objects | `SynchronizationService`, `ReconciliationService` | 50+ (sync/impl/) |
+| `openidm-provisioner-openicf/` | OpenICF connector bridge | `OpenICFProvisionerService` | 30+ |
+| `openidm-workflow-activiti/` | BPMN 2.0 workflow engine | `ActivitiServiceImpl` | 33 |
+| `openidm-repo-jdbc/` | JDBC repository backend | `JDBCRepoService` | 51 |
+| `openidm-repo-orientdb/` | OrientDB repository backend | `OrientDBRepoService` | 13 |
+| `openidm-script/` | Groovy/JS scripting infrastructure | `ScriptRegistryService` | 8 |
+
+**`openidm-core/` -- Sync engine and reconciliation.** The most architecturally significant module. The sync engine lives in `src/main/java/org/forgerock/openidm/sync/impl/`. Key classes: `SynchronizationService` (OSGi service entry point, handles `/sync` route, dispatches LiveSync and implicit sync operations), `ReconciliationService` (manages reconciliation lifecycle, thread pool, JMX monitoring via `ReconciliationServiceMBean`), `ObjectMapping` (represents a single sync mapping with source, target, properties, policies, and correlation configuration), `Recon` and `ReconPhase` (reconciliation state machine coordinating source, target, and link phases), `SyncOperation`/`SourceSyncOperation`/`TargetSyncOperation` (per-object sync execution with situation detection and action dispatch), `Link` and `LinkType` (link store access for source-to-target ID mappings), and `Correlation` (matching logic to find target objects for unlinked source objects). The `Situation` enum defines the 12 possible states (SOURCE_MISSING, TARGET_MISSING, CONFIRMED, FOUND, AMBIGUOUS, etc.) that drive the policy engine's action selection. `ReconciliationStatistic` and `PhaseStatistic` capture per-run metrics exposed in recon reports.
+
+**`openidm-provisioner-openicf/` -- Connector integration.** Bridges OpenIDM's CREST request model to OpenICF's `ConnectorFacade` API. Key classes: `OpenICFProvisionerService` (the central OSGi service, implements `ProvisionerService`, registers `/system/{connector}` routes, manages connector lifecycle and configuration), `ConnectorInfoProviderService` (discovers and manages local and remote connector bundles, handles connection to remote OpenICF connector servers), `ObjectClassResourceProvider` (translates CREST CRUD operations to OpenICF `CreateOp`/`UpdateOp`/`DeleteOp`/`SearchOp` calls), `OpenICFFilterAdapter` (converts CREST query filters to OpenICF filter objects), and the `syncfailure/` package (`DeadLetterQueueHandler`, `InfiniteRetrySyncFailureHandler`, `SimpleRetrySyncFailureHandler`, `ScriptedSyncFailureHandler`) which implements configurable failure handling strategies for LiveSync operations.
+
+**`openidm-workflow-activiti/` -- BPMN workflows.** Embeds the Activiti process engine within OpenIDM's OSGi runtime. Key classes: `ActivitiServiceImpl` (initializes the `ProcessEngine` with OpenIDM's JDBC data source, configures custom resolver factories and session factories), `ProcessInstanceResource` and `TaskInstanceResource` (REST resource providers for `/workflow/processinstance` and `/workflow/taskinstance` endpoints), `SharedIdentityService` (bridges Activiti's identity model with OpenIDM's managed users/groups via `JsonUser`, `JsonUserQuery`, `JsonGroup`, `JsonGroupQuery`), `OpenIDMELResolver` and `OpenIDMResolverFactory` (enable BPMN process definitions to access OpenIDM's router via expression language, allowing workflow scripts to read/write managed objects), and `ProcessDefinitionResource`/`TaskDefinitionResource` (BPMN definition deployment and introspection).
+
+**`openidm-repo-jdbc/` and `openidm-repo-orientdb/` -- Dual repository support.** The JDBC module provides production-grade persistence. Key classes: `JDBCRepoService` (OSGi service implementing the repository contract for `/repo/*` routes, dispatches to database-specific table handlers), `GenericTableHandler` (default handler using JSON-in-column storage with `GenericSQLQueryFilterVisitor` for query translation), `MappedTableHandler` (explicit column-per-attribute mapping for performance-critical tables), and database-specific handlers (`PostgreSQLTableHandler`, `MySQLTableHandler`, `OracleTableHandler`, `MSSQLTableHandler`, `DB2TableHandler`) that handle SQL dialect differences. Connection pooling is configured via `HikariCPDataSourceConfig` / `HikariCPDataSourceFactory`, with `BoneCPDataSourceConfig` as a legacy alternative. The OrientDB module mirrors this structure: `OrientDBRepoService` implements the same repository contract, with `EmbeddedOServerService` managing the embedded database lifecycle and `ConfiguredQueries`/`PredefinedQueries` handling the OrientDB-specific query language.
+
+**`openidm-script/` -- Groovy/JavaScript scripting hooks.** Provides the scripting infrastructure used by managed object lifecycle hooks, sync mapping transformations, and custom endpoints. Key classes: `ScriptRegistryService` (OSGi service that manages script compilation, caching, and execution using `javax.script.ScriptEngine`), `AbstractScriptedService` (base class for OSGi services that expose custom scripted endpoints), `ScriptedRequestHandler` (CREST request handler that executes a configured script on each request), `ResourceFunctions` (utility functions injected into script scope: `openidm.create()`, `openidm.read()`, `openidm.update()`, `openidm.delete()`, `openidm.query()`, `openidm.action()` -- these are the functions that scripts call to interact with OpenIDM's router), and `ScriptExecutor` (executes scripts within a configured context with bindings for the current request, managed object state, and router access). The script directory (`script/` in the OpenIDM installation) is monitored for changes, enabling hot-reload of script modifications without restarting the OSGi container.
+
 ---
 
 ## 7. Verdict

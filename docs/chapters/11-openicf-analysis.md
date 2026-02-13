@@ -345,7 +345,296 @@ OpenICF's value is concentrated in the legacy integration tier. As organizations
 
 ---
 
-## 7. Verdict
+## 7. Production Deployment Topology
+
+Deploying OpenICF in production requires choosing between local (in-process) and remote connector execution, configuring connection pools, and planning for failover.
+
+### 7.1 Local Connector Bundles (In-Process)
+
+The simplest deployment runs connector bundles inside the OpenIDM JVM. The connector JAR is placed in OpenIDM's `connectors/` directory and discovered via service loader. All operations execute in OpenIDM's thread pool, sharing its heap and ClassLoader hierarchy.
+
+```
+OpenIDM JVM
++----------------------------------------------+
+| openidm-core                                 |
+|   +-- ConnectorFacade (local)                |
+|       +-- LDAP Connector JAR (ClassLoader A) |
+|       +-- DB Connector JAR  (ClassLoader B)  |
+|       +-- CSV Connector JAR (ClassLoader C)  |
++----------------------------------------------+
+  |           |            |
+ LDAP        JDBC         File
+ Server      Server       System
+```
+
+Local execution offers the lowest latency (no serialization overhead) and simplest operational model (one process to monitor). The framework isolates each connector in its own `BundleClassLoader` (see `BundleClassLoader.java` in `connector-framework-internal`), preventing dependency conflicts -- a connector using an older Guava version will not collide with another using a newer one. The downside: all connectors share the OpenIDM JVM's memory and CPU. A misbehaving connector (memory leak, thread starvation) affects the entire OpenIDM instance.
+
+**When to use local:** Target systems are network-accessible from the OpenIDM host, connector count is modest (under ~10), and connector code is trusted/well-tested.
+
+### 7.2 Remote Connector Server Deployment
+
+When target systems reside in network segments unreachable from OpenIDM -- or when connector isolation is required for stability -- the Remote Connector Server runs as a standalone JVM on a host with direct access to the target.
+
+```
+DMZ / Cloud                    On-Premises Data Center
++------------------+           +----------------------------+
+| OpenIDM          |           | Remote Connector Server    |
+| (port 8080)      | Protobuf  | (port 8759, standalone JVM)|
+|                  | --------> |  +-- AD Connector           |
+|                  |  TLS      |  +-- Mainframe Connector    |
++------------------+           +----------------------------+
+                                  |              |
+                                Active         Mainframe
+                                Directory      (TN3270)
+```
+
+The protocol between OpenIDM and the Remote Connector Server uses Protobuf serialization over TCP with length-prefixed framing, defined across six `.proto` files in `connector-framework-protobuf/src/main/protobuf/`: `RPCMessages.proto` (handshake, request/response envelopes), `OperationMessages.proto` (CRUD/sync/auth operations), `ConnectorObjects.proto` (Uid, ObjectClass, Attribute), `FilterMessages.proto` (filter tree serialization), `SchemaMessages.proto` (schema exchange), and `CommonObjectMessages.proto` (shared types). The connection authenticates via HMAC-SHA256 challenge-response over a pre-shared key.
+
+**When to use remote:** Target systems are behind firewalls, on different network segments, or require OS-specific libraries (e.g., Windows DLLs for Active Directory).
+
+### 7.3 Connection Pooling
+
+Connectors that implement the `PoolableConnector` interface (extending `Connector` with a `checkAlive()` method) participate in the framework's connection pool. Pool behavior is governed by `ObjectPoolConfiguration` with five parameters:
+
+| Parameter | Default | Purpose |
+|-----------|---------|---------|
+| `maxObjects` | 10 | Maximum total connections (idle + active) |
+| `maxIdle` | 10 | Maximum idle connections retained in pool |
+| `minIdle` | 1 | Minimum idle connections kept warm |
+| `maxWait` | 150,000 ms | Timeout waiting for a free connection before error |
+| `minEvictableIdleTimeMillis` | 120,000 ms | Idle time before a connection is eligible for eviction |
+
+The pool implementation (`ObjectPool.java` in `connector-framework-internal`) uses a `ConcurrentLinkedQueue` for idle objects, a `Semaphore` for capacity enforcement, and a `ReentrantLock` for eviction. Before returning an idle connector to a caller, the pool invokes `checkAlive()` -- if the connector's underlying connection has timed out, it is discarded and a fresh instance is created. The `ConnectorPoolManager` maintains a `ConcurrentMap` keyed by `ConnectorKey` + configuration properties, so distinct configurations for the same connector type get separate pools.
+
+Non-poolable connectors (those implementing only `Connector`, not `PoolableConnector`) are instantiated per-operation and disposed immediately. This is acceptable for stateless connectors (CSV, XML) but expensive for connectors that establish network connections (LDAP, database).
+
+### 7.4 Failover Patterns
+
+The RPC layer in `connector-framework-rpc` provides two load balancing algorithms for multi-server deployments:
+
+- **`RoundRobinLoadBalancingAlgorithm`**: Distributes requests across connector servers in round-robin order. All servers are active simultaneously. If one server fails, it is skipped and retried after a health check interval.
+- **`FailoverLoadBalancingAlgorithm`**: Sends all requests to a primary server. On failure, traffic shifts to the next server in the list. When the primary recovers (determined by periodic health checks), traffic returns to it.
+
+Both algorithms operate through the `RemoteConnectionGroup` and `RequestDistributor` abstractions, which manage a set of `RemoteConnectionHolder` instances. Health checking is lightweight: the framework reuses the Protobuf channel's heartbeat mechanism rather than running full `TestOp` calls.
+
+---
+
+## 8. Connector Development Guide
+
+### 8.1 SPI Operation Interfaces
+
+A connector is a Java class annotated with `@ConnectorClass` that implements `Connector` (or `PoolableConnector` for pooled connections) plus one or more operation interfaces from `org.identityconnectors.framework.spi.operations`:
+
+| Interface | When to Implement |
+|-----------|-------------------|
+| `CreateOp` | Connector can create resources on the target system |
+| `UpdateOp` | Connector can modify existing resources |
+| `UpdateAttributeValuesOp` | Connector supports add/remove of multi-valued attributes (vs. full replace) |
+| `DeleteOp` | Connector can remove resources |
+| `SearchOp<T>` | Connector can query resources; generic type `T` is the native query type |
+| `SyncOp` | Connector can detect changes since a token (for LiveSync) |
+| `SchemaOp` | Connector can describe its resource types and attributes at runtime |
+| `AuthenticateOp` | Connector can validate credentials against the target |
+| `TestOp` | Connector can verify its configuration and connectivity |
+| `ScriptOnResourceOp` | Connector can execute scripts on the target system |
+| `ScriptOnConnectorOp` | Connector can execute scripts in its own JVM |
+| `BatchOp` | Connector supports batched operations |
+
+The minimum viable connector implements `SearchOp` (read-only). A full lifecycle connector implements `CreateOp`, `UpdateOp`, `DeleteOp`, `SearchOp`, `SyncOp`, `SchemaOp`, and `TestOp`. The framework introspects implemented interfaces to advertise capabilities to OpenIDM.
+
+`SearchOp<T>` deserves special attention: the generic type `T` represents the connector's native filter type. The connector provides a `FilterTranslator<T>` that converts the framework's abstract `Filter` tree into the target system's native query representation (e.g., LDAP filter strings, SQL WHERE clauses). This is the most complex part of connector development.
+
+### 8.2 Groovy Scripted Connector
+
+The fastest path to a custom connector is the Groovy scripted connector (`OpenICF-groovy-connector`). Instead of compiling Java, you write Groovy scripts for each operation. The `ScriptedConnector` class (which extends `ScriptedConnectorBase`) delegates each operation to a configured Groovy script file.
+
+Typical script mapping in provisioner configuration:
+
+```json
+{
+  "connectorRef": {
+    "bundleName": "org.forgerock.openicf.connectors.groovy-connector",
+    "connectorName": "org.forgerock.openicf.connectors.groovy.ScriptedConnector"
+  },
+  "configurationProperties": {
+    "createScriptFileName": "CreateScript.groovy",
+    "updateScriptFileName": "UpdateScript.groovy",
+    "deleteScriptFileName": "DeleteScript.groovy",
+    "searchScriptFileName": "SearchScript.groovy",
+    "syncScriptFileName":   "SyncScript.groovy",
+    "schemaScriptFileName": "SchemaScript.groovy",
+    "testScriptFileName":   "TestScript.groovy"
+  }
+}
+```
+
+Each script receives pre-bound variables: `operation` (the operation name), `objectClass` (the resource type), `attributes` (for create/update), `uid` (for update/delete), `filter` (for search), `token` (for sync), and `connection` (if using `ScriptedPoolableConnector`). The Groovy scripted approach trades type safety for development speed -- ideal for proof-of-concept integrations, REST API targets, or systems where the integration logic changes frequently.
+
+### 8.3 Database Table Connector
+
+The database table connector (`OpenICF-databasetable-connector`) maps a single database table (or view) to an OpenICF object class. Key classes in `org.identityconnectors.databasetable`:
+
+- `DatabaseTableConnector` -- implements `CreateOp`, `UpdateOp`, `DeleteOp`, `SearchOp`, `SyncOp`, `AuthenticateOp`, `TestOp`
+- `DatabaseTableConfiguration` -- connection URL, driver class, table name, key column, password column, sync column (timestamp or integer for change detection)
+- `DatabaseTableFilterTranslator` -- converts framework `Filter` objects into SQL WHERE clauses
+- `DatabaseTableConnection` -- manages JDBC connection lifecycle, wraps `java.sql.Connection`
+
+Change detection for `SyncOp` relies on a designated timestamp or auto-increment column. The connector queries rows where `syncColumn > lastToken`, returning them as `SyncDelta` objects. This is simple but limited: it cannot detect deletes unless a soft-delete column exists.
+
+### 8.4 LDAP Connector for Non-OpenDJ Directories
+
+The LDAP connector (`OpenICF-ldap-connector`) supports any LDAPv3-compliant directory, not just OpenDJ. Key configuration in `LdapConfiguration`:
+
+- `host`, `port`, `ssl` -- connection parameters
+- `principal`, `credentials` -- bind DN and password
+- `baseContexts` -- search base DNs for accounts
+- `accountObjectClasses` -- LDAP object classes representing user accounts (default: `inetOrgPerson`, `top`)
+- `groupObjectClasses` -- LDAP object classes for groups
+- `accountSearchFilter` -- additional LDAP filter for account searches
+- `passwordAttribute` -- attribute name for password operations (default: `userPassword`)
+- `changeLogBlockSize` -- number of changelog entries read per sync cycle
+- `usePagedResultControl` -- enable LDAP paged results for large directories
+
+The connector supports Active Directory via `ADLdapUtil` and `ADUserAccountControl` classes that handle AD-specific attributes (UAC flags, group types, primary group membership). The `GroupHelper` class manages group membership operations across both standard LDAP (via `member`/`memberOf`) and AD-specific patterns.
+
+Sync detection uses the directory's changelog mechanism (cn=changelog for Sun/OIP directories, USN-changed for AD). Directories without changelog support (e.g., some OpenLDAP configurations) cannot use `SyncOp` and are limited to periodic full reconciliation.
+
+### 8.5 Testing with the Contract Test Framework
+
+OpenICF provides `connector-framework-contract`, a comprehensive test suite that validates any connector against the SPI contract. Located in `org.identityconnectors.contract.test`, the key classes are:
+
+| Test Class | What It Validates |
+|------------|-------------------|
+| `CreateApiOpTests` | Create returns valid Uid; created object is retrievable |
+| `DeleteApiOpTests` | Delete removes the object; subsequent get returns null |
+| `UpdateApiOpTests` | Update modifies specified attributes; unmodified attributes unchanged |
+| `SearchApiOpTests` | Search returns correct results for various filter types |
+| `SyncApiOpTests` | Sync returns deltas for changes made after token |
+| `SchemaApiOpTests` | Schema is non-null, contains expected object classes |
+| `AuthenticationApiOpTests` | Valid credentials succeed; invalid credentials throw |
+| `TestApiOpTests` | TestOp succeeds with valid configuration |
+| `ConfigurationTests` | Configuration validates correctly, rejects invalid values |
+
+To use: extend `ContractITCase`, configure a test properties file pointing at a real or test instance of the target system, and run with Maven. The `ConnectorHelper` utility class handles connector instantiation, configuration loading, and test data generation. The `connector-test-common` module provides `TestHelpers` for unit-level testing without a live target.
+
+---
+
+## 9. Migration Cost Analysis
+
+### 9.1 OpenICF to SCIM 2.0
+
+SCIM migration only works when the target system exposes SCIM endpoints. For targets that do -- Salesforce, Workday, Slack, Box, Zoom, and most modern SaaS applications -- the migration eliminates the connector entirely. OpenIDM (or any SCIM-capable IdP) pushes user/group changes directly via standard HTTP calls.
+
+**What migrates cleanly:** Attribute mapping (OpenICF's `Attribute` model maps reasonably to SCIM's User/Group schemas). Provisioning flow (create/update/delete operations have direct SCIM equivalents).
+
+**What does not migrate:** `SyncOp` (SCIM has no pull-based change detection; the IdP pushes, or the target emits events). Filter translation (SCIM has its own filter syntax, incompatible with OpenICF's `Filter` tree). Custom `ObjectClass` types beyond User and Group (SCIM extension schemas exist but are not universally supported). Authentication delegation (`AuthenticateOp` has no SCIM equivalent).
+
+**Estimated effort:** Low per target (days, not weeks), but only for SCIM-compliant targets. Non-SCIM targets cannot use this path.
+
+### 9.2 OpenICF to MidPoint ConnId
+
+ConnId (Connector Identity) is the open-source fork of the OpenICF SPI, maintained by Evolveum as part of MidPoint. ConnId and OpenICF share the same lineage -- the `org.identityconnectors` package namespace, the same operation interfaces (`CreateOp`, `SearchOp`, `SyncOp`), and the same `ConnectorFacade` pattern. This is the highest-compatibility migration target.
+
+**What migrates cleanly:** Most Java connectors compile against ConnId with minimal changes (package renames, dependency updates). The SPI contract is nearly identical. MidPoint's connector test framework is derived from the same `connector-framework-contract` tests.
+
+**What requires work:** Groovy scripted connectors need adaptation to MidPoint's script binding conventions (different variable names, different configuration structure). Remote connector server protocol differs (ConnId uses its own RPC, not OpenICF's Protobuf). Pool configuration parameters map one-to-one but live in different configuration files.
+
+**Estimated effort:** Low for Java connectors (hours to days). Moderate for Groovy scripted connectors (days). The reconciliation engine migration (OpenIDM recon to MidPoint synchronization tasks) is the larger effort, not the connector migration itself.
+
+### 9.3 OpenICF to iPaaS (Workato, Mulesoft)
+
+iPaaS platforms operate on a fundamentally different model: event-driven workflows with pre-built application connectors, not a connector SPI with reconciliation.
+
+**What does not map:** OpenICF's `SyncOp` and OpenIDM's reconciliation engine have no iPaaS equivalent. Reconciliation (full source-target comparison, link table management, situation-based policy) must be reimplemented as iPaaS workflows -- a significant architectural change. Connection pooling and ClassLoader isolation are platform-managed, not configurable.
+
+**What maps partially:** CRUD operations translate to iPaaS "actions" on target applications. Attribute mapping translates to iPaaS "data transformations." But each mapping must be rebuilt in the iPaaS visual builder; there is no automated migration path from OpenICF provisioner JSON to iPaaS workflow definitions.
+
+**Estimated effort:** High. Each connector integration must be rebuilt from scratch in the iPaaS platform. The reconciliation logic must be redesigned as workflows. Budget weeks-to-months per complex integration.
+
+### 9.4 Key Risk: Custom Groovy Connectors
+
+Custom Groovy scripted connectors represent the highest migration risk across all targets. These connectors embed business-specific integration logic -- custom API calls, proprietary data transformations, environment-specific error handling -- in Groovy scripts that have no equivalent in SCIM, no direct port to ConnId's different scripting conventions, and no automated conversion to iPaaS workflows. Every custom Groovy connector requires manual analysis and rewrite regardless of the migration target. Organizations with 5+ custom Groovy connectors should budget significant effort for any migration scenario.
+
+---
+
+## 10. Codebase Navigation Guide
+
+### 10.1 Repository Structure
+
+The OpenICF codebase is split between the core framework and individual connector modules, all under `OpenICF/`:
+
+```
+OpenICF/
++-- OpenICF-java-framework/          # Core framework (19 sub-modules)
+|   +-- connector-framework/          # SPI + API interfaces
+|   +-- connector-framework-internal/ # Runtime: pooling, ClassLoader, dispatch
+|   +-- connector-framework-protobuf/ # Protobuf message definitions (6 .proto files)
+|   +-- connector-framework-rpc/      # RPC transport, load balancing
+|   +-- connector-framework-server/   # Remote server bootstrap
+|   +-- connector-framework-contract/ # Contract test suite for connectors
+|   +-- connector-framework-osgi/     # OSGi bundle support
+|   +-- connector-server-grizzly/     # Grizzly-based remote server
+|   +-- connector-server-jetty/       # Jetty-based remote server
+|   +-- connector-test-common/        # Test utilities (TestHelpers, PropertyBag)
+|   +-- bundles-parent/               # Parent POM for connector bundles
+|   +-- icfl-over-slf4j/              # Logging bridge
+|   +-- openicf-zip/                  # Distribution packaging
+|   +-- testbundlev1/, testbundlev2/  # Test connector bundles
+|   +-- testcommonv1/, testcommonv2/  # Shared test infrastructure
++-- OpenICF-ldap-connector/           # LDAP/AD connector
++-- OpenICF-databasetable-connector/  # JDBC database table connector
++-- OpenICF-csvfile-connector/        # CSV file connector
++-- OpenICF-groovy-connector/         # Groovy scripted connector
++-- OpenICF-ssh-connector/            # SSH connector
++-- OpenICF-xml-connector/            # XML file connector
++-- OpenICF-kerberos-connector/       # Kerberos connector
++-- OpenICF-dbcommon/                 # Shared database utilities
++-- OpenICF-maven-plugin/             # Maven plugin for connector packaging
+```
+
+### 10.2 Key Source Paths
+
+**SPI/API interfaces** -- the contract between framework and connectors:
+- `OpenICF-java-framework/connector-framework/src/main/java/org/identityconnectors/framework/api/` -- Consumer API (`ConnectorFacade`, `ConnectorInfo`, `ConnectorInfoManager`)
+- `OpenICF-java-framework/connector-framework/src/main/java/org/identityconnectors/framework/spi/` -- Implementor SPI (`Connector`, `PoolableConnector`, `Configuration`, `@ConnectorClass`)
+- `OpenICF-java-framework/connector-framework/src/main/java/org/identityconnectors/framework/spi/operations/` -- Operation interfaces (16 files: `CreateOp`, `UpdateOp`, `DeleteOp`, `SearchOp`, `SyncOp`, `SchemaOp`, `AuthenticateOp`, `TestOp`, `BatchOp`, etc.)
+
+**Connection pooling and ClassLoader isolation:**
+- `connector-framework-internal/.../local/ObjectPool.java` -- Pool implementation (Semaphore + ConcurrentLinkedQueue)
+- `connector-framework-internal/.../local/ConnectorPoolManager.java` -- Pool-per-configuration management
+- `connector-framework-internal/.../local/BundleClassLoader.java` -- Per-connector ClassLoader isolation
+- `connector-framework/src/main/java/org/identityconnectors/common/pooling/ObjectPoolConfiguration.java` -- Pool tuning parameters
+
+**Protobuf protocol definitions** (remote connector server wire format):
+- `connector-framework-protobuf/src/main/protobuf/RPCMessages.proto` -- Handshake, request/response envelopes
+- `connector-framework-protobuf/src/main/protobuf/OperationMessages.proto` -- CRUD, sync, auth operation messages
+- `connector-framework-protobuf/src/main/protobuf/ConnectorObjects.proto` -- Uid, ObjectClass, Attribute serialization
+- `connector-framework-protobuf/src/main/protobuf/FilterMessages.proto` -- Filter tree serialization
+- `connector-framework-protobuf/src/main/protobuf/SchemaMessages.proto` -- Schema exchange
+- `connector-framework-protobuf/src/main/protobuf/CommonObjectMessages.proto` -- Shared primitive types
+
+**RPC transport and failover:**
+- `connector-framework-rpc/.../rpc/RoundRobinLoadBalancingAlgorithm.java`
+- `connector-framework-rpc/.../rpc/FailoverLoadBalancingAlgorithm.java`
+- `connector-framework-rpc/.../rpc/RemoteConnectionGroup.java` -- Server group management
+- `connector-framework-rpc/.../rpc/RequestDistributor.java` -- Request routing
+
+**Built-in connector implementations:**
+- `OpenICF-ldap-connector/src/main/java/org/identityconnectors/ldap/LdapConnector.java` -- LDAP/AD connector entry point
+- `OpenICF-databasetable-connector/src/main/java/org/identityconnectors/databasetable/DatabaseTableConnector.java` -- JDBC connector
+- `OpenICF-csvfile-connector/src/main/java/org/forgerock/openicf/csvfile/CSVFileConnector.java` -- CSV connector
+- `OpenICF-groovy-connector/src/main/java/org/forgerock/openicf/connectors/groovy/ScriptedConnector.java` -- Groovy entry point (delegates to `ScriptedConnectorBase`)
+- `OpenICF-ssh-connector/` -- SSH/shell command execution
+- `OpenICF-kerberos-connector/` -- Kerberos authentication integration
+
+**Contract test framework** (for validating custom connectors):
+- `connector-framework-contract/src/main/java/org/identityconnectors/contract/test/ContractITCase.java` -- Main test entry point
+- `connector-framework-contract/.../test/CreateApiOpTests.java`, `SearchApiOpTests.java`, `SyncApiOpTests.java`, etc. -- Per-operation contract tests
+- `connector-test-common/src/main/java/org/identityconnectors/test/common/TestHelpers.java` -- Unit test utilities
+
+---
+
+## 11. Verdict
 
 OpenICF is a sound piece of integration engineering. Its SPI/API separation is a model of interface design. Its Protobuf RPC remote execution solves a real network topology problem. Its built-in connectors cover the most common enterprise targets. The sync token model enables reliable incremental synchronization.
 

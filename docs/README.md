@@ -51,22 +51,28 @@ This research analyzes the complete lineage of open-source identity management s
 
 | Chapter | Title | Lines | Audience |
 |---------|-------|-------|----------|
-| [01-history.md](chapters/01-history.md) | Historical Narrative | 374 | Everyone |
+| [01-history.md](chapters/01-history.md) | Historical Narrative | 500 | Everyone |
 | [02-authentication-protocols.md](chapters/02-authentication-protocols.md) | Authentication Protocols | 658 | Security architects |
 | [03-federation-protocols.md](chapters/03-federation-protocols.md) | Federation Protocols | 879 | Integration engineers |
 | [04-authorization-frameworks.md](chapters/04-authorization-frameworks.md) | Authorization Frameworks | 1,002 | Policy architects |
 | [05-directory-services.md](chapters/05-directory-services.md) | Directory Services | 1,191 | Infrastructure engineers |
 | [06-token-formats.md](chapters/06-token-formats.md) | Token Formats & Sessions | 1,407 | Security engineers |
-| [07-openam-analysis.md](chapters/07-openam-analysis.md) | OpenAM Analysis | 403 | Evaluators, architects |
-| [08-opendj-analysis.md](chapters/08-opendj-analysis.md) | OpenDJ Analysis | 399 | Directory administrators |
-| [09-openidm-analysis.md](chapters/09-openidm-analysis.md) | OpenIDM Analysis | 404 | IGA planners |
-| [10-openig-analysis.md](chapters/10-openig-analysis.md) | OpenIG Analysis | 399 | Gateway engineers |
-| [11-openicf-analysis.md](chapters/11-openicf-analysis.md) | OpenICF Analysis | 362 | Integration developers |
+| [07-openam-analysis.md](chapters/07-openam-analysis.md) | OpenAM Analysis | 504 | Evaluators, architects |
+| [08-opendj-analysis.md](chapters/08-opendj-analysis.md) | OpenDJ Analysis | 502 | Directory administrators |
+| [09-openidm-analysis.md](chapters/09-openidm-analysis.md) | OpenIDM Analysis | 579 | IGA planners |
+| [10-openig-analysis.md](chapters/10-openig-analysis.md) | OpenIG Analysis | 541 | Gateway engineers |
+| [11-openicf-analysis.md](chapters/11-openicf-analysis.md) | OpenICF Analysis | 651 | Integration developers |
 | [12-modern-architecture.md](chapters/12-modern-architecture.md) | Modern Architecture Patterns | 517 | CTOs, architects |
-| [13-comparison-matrices.md](chapters/13-comparison-matrices.md) | Comparison Matrices | 414 | Procurement, evaluators |
-| [14-lessons-from-history.md](chapters/14-lessons-from-history.md) | Lessons from History | 356 | Researchers, designers |
+| [13-comparison-matrices.md](chapters/13-comparison-matrices.md) | Comparison Matrices (8 tables) | 539 | Procurement, evaluators |
+| [14-lessons-from-history.md](chapters/14-lessons-from-history.md) | Lessons from History | 500 | Researchers, designers |
 
-**Total: ~8,765 lines across 14 chapters + 8 extract files.**
+### Presentation
+
+| File | Description |
+|------|-------------|
+| [presentations/iam-evolution-deck.pptx](presentations/iam-evolution-deck.pptx) | 25-slide executive deck covering full research |
+
+**Total: ~10,000+ lines across 14 chapters + 8 extract files + 1 presentation.**
 
 ---
 

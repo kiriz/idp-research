@@ -384,7 +384,149 @@ Where credential replay can be avoided, organizations have better options:
 
 ---
 
-## 8. Verdict
+## 8. Production Deployment Topology
+
+OpenIG's design assumes a centralized reverse proxy deployment, which maps cleanly to a DMZ-based topology. Understanding this deployment model is essential for evaluating migration costs and operational trade-offs.
+
+### DMZ Reverse Proxy Pattern
+
+In a typical production deployment, OpenIG sits in the network DMZ as the sole externally reachable component. Backend applications -- portals, REST APIs, legacy web apps -- reside in an internal network segment unreachable from the internet. OpenIG terminates TLS, enforces authentication and authorization via OpenAM, and forwards authenticated requests to the appropriate backend based on route matching. This topology eliminates the need for policy agents on every backend server (the Generation 1 model described in Section 6) and centralizes security enforcement at a single chokepoint.
+
+```
+Internet --> Load Balancer --> OpenIG (DMZ) --> Backend App 1 (internal)
+                                            --> Backend App 2 (internal)
+                                            --> OpenAM (internal, auth decisions)
+```
+
+### Horizontal Scaling with Stateless Filter Chains
+
+OpenIG filter chains are stateless by default -- request processing depends only on the incoming request, the route configuration, and external services (OpenAM, databases, vaults). This means multiple OpenIG instances can sit behind a standard HTTP load balancer (HAProxy, Nginx, AWS ALB) with no session affinity or inter-instance coordination required. The load balancer distributes requests round-robin; each OpenIG instance evaluates routes independently. Scaling is horizontal: add instances to increase throughput, remove them to reduce cost.
+
+The exception to statelessness is `SessionFilter`, which binds session state to the OpenIG instance via a servlet HTTP session. Deployments using `SessionFilter` require sticky sessions at the load balancer or an external session store (e.g., Redis via a custom filter). In practice, most production deployments avoid `SessionFilter` in favor of passing all necessary state via tokens and headers, keeping the filter chain fully stateless.
+
+### Route-Based Configuration and Hot Reload
+
+Routes are JSON files in the `$OPENIG_BASE/config/routes/` directory. The `RouterHandler` (in `openig-core`) uses a `DirectoryMonitor` that polls the routes directory on a configurable interval (default: 10 seconds). When a route file is added, modified, or deleted, `RouterHandler` rebuilds its routing table without restarting the JVM or dropping in-flight requests. Routes are sorted lexicographically by filename and evaluated in order -- a naming convention like `01-api.json`, `02-portal.json`, `99-default.json` provides explicit ordering.
+
+This hot-reload capability enables a GitOps workflow: route files are stored in version control, pushed to the OpenIG instance via CI/CD, and take effect within the polling interval. No restart, no deployment artifact rebuild, no downtime.
+
+### OpenAM Integration for Policy Agent Replacement
+
+The `openig-openam` module provides `PolicyEnforcementFilter` and `SingleSignOnFilter` as drop-in replacements for legacy OpenAM policy agents. `SingleSignOnFilter` validates the OpenAM SSO token (typically the `iPlanetDirectoryPro` cookie) against OpenAM's session service. `PolicyEnforcementFilter` evaluates OpenAM access policies for the requested resource, returning allow/deny decisions. Together, these filters replicate the full policy agent lifecycle -- session validation, policy evaluation, attribute injection -- without requiring agent installation on each backend.
+
+This is the primary upgrade path for organizations migrating from per-server policy agents to a centralized gateway model: replace all agents with a single OpenIG deployment that performs the same authentication and authorization checks.
+
+### Docker Deployment
+
+OIP provides an official Dockerfile in the `openig-docker/` module. The image is based on Tomcat 11 (JRE 25), deploys the OpenIG WAR as `ROOT.war`, and exposes port 8080. The `OPENIG_BASE` environment variable (`/var/openig`) is the mount point for route configuration and keystores. A health check endpoint at `/openig/` is configured with 30-second intervals.
+
+```bash
+# Build and run with custom routes
+docker build -t openig:latest OpenIG/openig-docker/
+docker run -d -p 8080:8080 -v /path/to/routes:/var/openig/config/routes openig:latest
+```
+
+For Kubernetes deployments, the Docker image serves as the base, but no official Helm chart or Operator exists. Organizations must create their own Deployment, Service, and ConfigMap (for routes) resources. Liveness and readiness probes can target the `/openig/` health endpoint.
+
+---
+
+## 9. Migration Cost Analysis
+
+Migrating away from OpenIG is a common consideration for organizations seeking better performance, observability, or community support. The migration cost varies significantly depending on the target platform and the OpenIG features in use.
+
+### OpenIG to Kong
+
+**Filter-to-plugin mapping.** Most OpenIG filters have Kong plugin equivalents: `OAuth2ResourceServerFilter` maps to Kong's `openid-connect` plugin, `HeaderFilter` maps to `request-transformer`, `ThrottlingFilter` maps to `rate-limiting`, and `CookieFilter` maps to `response-transformer`. The conceptual model is similar -- both use an ordered chain of middleware units applied to matched routes.
+
+**Configuration gap.** OpenIG routes are JSON files with an embedded Expression Language; Kong routes are configured via declarative YAML (decK), an Admin API, or database-backed entries. The migration requires translating EL expressions into Kong's plugin configuration parameters or custom Lua logic. Kong has no EL equivalent -- dynamic behavior requires Lua plugins or the Enterprise expression language.
+
+**Plugin development model.** Where no built-in Kong plugin exists, custom plugins must be written in Lua (PDK), Go, Python, or JavaScript. This is a different skill set than OpenIG's Java filters and Groovy scripts. Organizations with Java-heavy teams face a retraining cost.
+
+**Policy agent gap.** Kong has no native equivalent to `PolicyEnforcementFilter` or `SingleSignOnFilter`. Integrating with OpenAM for centralized policy decisions requires a custom plugin that calls OpenAM's REST API for session validation and policy evaluation. This is feasible but non-trivial to implement correctly, particularly around session caching and policy decision caching.
+
+### OpenIG to Traefik
+
+**Middleware mapping.** Traefik's middleware model is simpler than OpenIG's filter chain. `ForwardAuth` middleware can delegate authentication to an external service (including OpenAM), roughly replacing `SingleSignOnFilter`. `Headers` middleware replaces `HeaderFilter`. `RateLimit` middleware replaces `ThrottlingFilter`. However, Traefik has fewer built-in middleware types than OpenIG has filters -- the gap is filled by Traefik plugins (Go, WebAssembly) or by delegating to external services via `ForwardAuth`.
+
+**Simpler but less capable.** Traefik excels at auto-discovery and TLS management but has a shallower identity feature set than OpenIG. There is no built-in OAuth2 resource server filter, no SAML federation handler, and no credential replay. Organizations using OpenIG primarily as a simple reverse proxy with header injection will find Traefik a straightforward replacement. Organizations using OAuth2 validation, SAML, or credential replay will find significant gaps.
+
+### OpenIG to Envoy + ext_authz
+
+**Architecture shift.** Envoy uses an `ext_authz` filter that delegates authorization decisions to an external gRPC or HTTP service. This pattern can replicate OpenIG's `PolicyEnforcementFilter` by pointing `ext_authz` at an authorization service that calls OpenAM. The architecture is more modern (sidecar-compatible, gRPC-native, xDS-driven) but requires building and maintaining the external authorization service -- a component that OpenIG provides out of the box.
+
+**Sidecar vs. gateway trade-off.** Envoy is designed as a sidecar proxy (one instance per service) rather than a centralized gateway. Using Envoy as a centralized edge proxy is possible but not its primary deployment model. Organizations migrating from OpenIG's centralized gateway pattern to Envoy's sidecar pattern face a fundamental architectural change, not just a tool swap.
+
+**WebAssembly extensibility.** Envoy supports Wasm filters for custom logic, which could theoretically implement credential replay. However, Wasm filters run in a sandbox with limited I/O capabilities -- calling external vaults or databases for credential lookups is more constrained than in OpenIG's Java environment.
+
+### Key Risk: Credential Replay Has No Modern Equivalent
+
+The hardest feature to replace in any migration is `PasswordReplayFilter` (located in `openig-core` as `PasswordReplayFilterHeaplet`). This filter authenticates users via modern protocols and then replays credentials (HTTP Basic, form POST, custom headers) to legacy backends. No modern API gateway -- Kong, Traefik, Envoy, APISIX, or AWS API Gateway -- provides this capability natively. Replacing it requires:
+
+1. **Custom plugin development** in the target gateway (Lua for Kong, Go for Traefik, Wasm for Envoy) that replicates the credential lookup, injection, and session management logic.
+2. **Secure credential storage integration** -- the custom plugin must retrieve credentials from a vault or database, adding a dependency that OpenIG handles transparently via `SqlAttributesFilter` and `ScriptableFilter`.
+3. **Form POST replay logic** -- for applications that authenticate via HTML form submission, the plugin must construct and submit a POST request with the correct form fields, follow redirects, and capture session cookies. This is brittle, application-specific logic that is notoriously difficult to maintain.
+
+Organizations with a significant estate of legacy applications behind `PasswordReplayFilter` should treat credential replay as the binding constraint in any migration decision. The migration cannot proceed until either (a) legacy applications are modernized to accept header-based identity or token-based auth, or (b) a custom credential replay plugin is built and validated for the target gateway.
+
+---
+
+## 10. Codebase Navigation Guide
+
+For developers and architects who need to read, extend, or understand OpenIG's internals, the following guide maps key capabilities to their source locations within the `OpenIG/` repository.
+
+### openig-core: Router and Pipeline Engine
+
+The core module at `OpenIG/openig-core/` contains the filter/handler pipeline, route management, and all general-purpose filters. Key entry points:
+
+- **`handler/router/RouterHandler.java`** -- the central routing engine. Loads route JSON files from disk, monitors the directory for changes via `DirectoryMonitor`, and dispatches requests to the first matching route. Routes are sorted via `LexicographicalRouteComparator` and evaluated in order.
+- **`handler/router/Route.java`** and **`RouteBuilder.java`** -- parse individual route JSON files into executable filter/handler chains. Each route is an isolated heap (dependency injection container) with its own filter instances.
+- **`filter/PasswordReplayFilterHeaplet.java`** -- the credential replay filter that injects legacy credentials into upstream requests. This is the filter with no modern equivalent, as discussed in Sections 7 and 9.
+- **`filter/ScriptableFilter.java`** and **`handler/ScriptableHandler.java`** -- Groovy/JavaScript extensibility points. Scripts have access to the full `Context`, `Request`, and `Response` objects.
+- **`filter/SwitchFilter.java`** -- conditional routing within a filter chain, enabling if/else branching based on EL expressions.
+- **`el/`** -- the Expression Language engine that evaluates `${...}` expressions in route configurations at runtime.
+
+### openig-oauth2: OAuth 2.0 Resource Server and Client
+
+Located at `OpenIG/openig-oauth2/`, this module provides OAuth2 token validation for protected APIs:
+
+- **`OAuth2ResourceServerFilterHeaplet.java`** -- configures the resource server filter that validates bearer tokens via introspection or JWT verification.
+- **`client/`** -- OAuth2 client logic for token introspection, UserInfo endpoint calls, and access token resolution.
+- **`ScriptableAccessTokenResolver.java`** -- allows custom Groovy/JS logic for non-standard token validation flows.
+
+### openig-saml: SAML 2.0 Federation
+
+Located at `OpenIG/openig-saml/`, this module enables OpenIG to act as a SAML Service Provider:
+
+- **`handler/saml/SamlFederationHandler.java`** -- handles SAML SSO flows (AuthnRequest, Assertion consumption, artifact resolution). Parses SAML assertions and populates session attributes with identity information for downstream filters to consume.
+- **`handler/saml/RequestAdapter.java`** and **`ResponseAdapter.java`** -- bridge OpenIG's HTTP request/response model to the SAML library's servlet API expectations.
+
+### openig-openam: Policy Enforcement (PEP)
+
+Located at `OpenIG/openig-openam/`, this module provides the OpenAM-specific integration filters:
+
+- **`openam/PolicyEnforcementFilter.java`** -- the Policy Enforcement Point (PEP). Evaluates OpenAM access policies for the requested resource and either allows or denies the request. Populates `PolicyDecisionContext` with the decision details.
+- **`openam/SingleSignOnFilter.java`** -- validates OpenAM SSO tokens (the `iPlanetDirectoryPro` cookie) and populates `SsoTokenContext` with session attributes.
+- **`openam/TokenTransformationFilter.java`** -- transforms tokens via OpenAM's Security Token Service (STS), enabling protocol bridging (e.g., OIDC-to-SAML token exchange).
+- **`openam/HeadlessAuthenticationFilter.java`** -- authenticates programmatically against OpenAM without browser redirects, useful for API-to-API credential exchange.
+
+### openig-doc: Route Configuration Examples
+
+Located at `OpenIG/openig-doc/src/main/docbkx/gateway-guide/`, this directory contains reference route configurations demonstrating common patterns:
+
+- **`loginSimple.json`** -- basic form-based login replay to a backend application.
+- **`loginMixed.json`** -- combines multiple authentication methods in a single route.
+- **`loginAMHeaders.json`** -- injects OpenAM session attributes as headers for the backend.
+- **`loginHiddenValue.json`** -- extracts hidden form fields from a login page before replaying credentials (handles CSRF tokens in legacy login forms).
+- **`loginWithCookie.json`** and **`loginWithCookieExtract.json`** -- credential replay with cookie-based session management.
+- **`OWAOnline.json`** -- Outlook Web Access integration, a representative example of credential replay for a complex COTS application.
+- **`capture.json`** -- debugging route that logs full request/response details via `CaptureFilter`.
+- **`multipleApplications.json`** -- demonstrates routing to multiple backends from a single OpenIG instance.
+
+These examples serve as practical templates for new route development and illustrate the credential replay patterns that are unique to OpenIG.
+
+---
+
+## 11. Verdict
 
 OpenIG is a well-designed identity gateway whose architectural elegance -- the composable filter/handler pipeline, declarative JSON configuration, and Promise-based async execution -- compares favorably to any gateway framework from a software engineering perspective. The credential replay capability addresses a real enterprise problem that no modern API gateway solves natively.
 
