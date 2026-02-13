@@ -1,0 +1,4913 @@
+[
+  {
+    "family": "autonomous-access",
+    "product": "autonomous-access",
+    "title": "Autonomous Access",
+    "pdflist": [
+      {
+        "title": "Autonomous Access 2023",
+        "path": "autonomous-access/2023/idcloud-latest-auto-access.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "autonomous-identity",
+    "product": "autonomous-identity",
+    "title": "Autonomous Identity",
+    "pdflist": [
+      {
+        "title": "Autonomous Identity 2022.11.7 Admin Guide",
+        "path": "autonomous-identity/2022.11.7/autonomous-identity-2022.11.7-admin-guide.pdf",
+        "version": "2022.11.7"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.7 API Guide",
+        "path": "autonomous-identity/2022.11.7/autonomous-identity-2022.11.7-api-guide.pdf",
+        "version": "2022.11.7"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.7 Deployment Planning",
+        "path": "autonomous-identity/2022.11.7/autonomous-identity-2022.11.7-deployment-planning.pdf",
+        "version": "2022.11.7"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.7 Install Guide",
+        "path": "autonomous-identity/2022.11.7/autonomous-identity-2022.11.7-install-guide.pdf",
+        "version": "2022.11.7"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.7 Release Notes",
+        "path": "autonomous-identity/2022.11.7/autonomous-identity-2022.11.7-release-notes.pdf",
+        "version": "2022.11.7"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.7 Users Guide",
+        "path": "autonomous-identity/2022.11.7/autonomous-identity-2022.11.7-users-guide.pdf",
+        "version": "2022.11.7"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.6 Admin Guide",
+        "path": "autonomous-identity/2022.11.6/autonomous-identity-2022.11.6-admin-guide.pdf",
+        "version": "2022.11.6"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.6 API Guide",
+        "path": "autonomous-identity/2022.11.6/autonomous-identity-2022.11.6-api-guide.pdf",
+        "version": "2022.11.6"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.6 Deployment Planning",
+        "path": "autonomous-identity/2022.11.6/autonomous-identity-2022.11.6-deployment-planning.pdf",
+        "version": "2022.11.6"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.6 Install Guide",
+        "path": "autonomous-identity/2022.11.6/autonomous-identity-2022.11.6-install-guide.pdf",
+        "version": "2022.11.6"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.6 Release Notes",
+        "path": "autonomous-identity/2022.11.6/autonomous-identity-2022.11.6-release-notes.pdf",
+        "version": "2022.11.6"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.6 Users Guide",
+        "path": "autonomous-identity/2022.11.6/autonomous-identity-2022.11.6-users-guide.pdf",
+        "version": "2022.11.6"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.5 Admin Guide",
+        "path": "autonomous-identity/2022.11.5/autonomous-identity-2022.11.5-admin-guide.pdf",
+        "version": "2022.11.5"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.5 API Guide",
+        "path": "autonomous-identity/2022.11.5/autonomous-identity-2022.11.5-api-guide.pdf",
+        "version": "2022.11.5"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.5 Deployment Planning",
+        "path": "autonomous-identity/2022.11.5/autonomous-identity-2022.11.5-deployment-planning.pdf",
+        "version": "2022.11.5"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.5 Install Guide",
+        "path": "autonomous-identity/2022.11.5/autonomous-identity-2022.11.5-install-guide.pdf",
+        "version": "2022.11.5"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.5 Release Notes",
+        "path": "autonomous-identity/2022.11.5/autonomous-identity-2022.11.5-release-notes.pdf",
+        "version": "2022.11.5"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.5 Users Guide",
+        "path": "autonomous-identity/2022.11.5/autonomous-identity-2022.11.5-users-guide.pdf",
+        "version": "2022.11.5"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.4 Admin Guide",
+        "path": "autonomous-identity/2022.11.4/autonomous-identity-2022.11.4-admin-guide.pdf",
+        "version": "2022.11.4"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.4 API Guide",
+        "path": "autonomous-identity/2022.11.4/autonomous-identity-2022.11.4-api-guide.pdf",
+        "version": "2022.11.4"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.4 Deployment Planning",
+        "path": "autonomous-identity/2022.11.4/autonomous-identity-2022.11.4-deployment-planning.pdf",
+        "version": "2022.11.4"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.4 Install Guide",
+        "path": "autonomous-identity/2022.11.4/autonomous-identity-2022.11.4-install-guide.pdf",
+        "version": "2022.11.4"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.4 Release Notes",
+        "path": "autonomous-identity/2022.11.4/autonomous-identity-2022.11.4-release-notes.pdf",
+        "version": "2022.11.4"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.4 Users Guide",
+        "path": "autonomous-identity/2022.11.4/autonomous-identity-2022.11.4-users-guide.pdf",
+        "version": "2022.11.4"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.3 Admin Guide",
+        "path": "autonomous-identity/2022.11.3/autonomous-identity-2022.11.3-admin-guide.pdf",
+        "version": "2022.11.3"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.3 API Guide",
+        "path": "autonomous-identity/2022.11.3/autonomous-identity-2022.11.3-api-guide.pdf",
+        "version": "2022.11.3"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.3 Deployment Planning",
+        "path": "autonomous-identity/2022.11.3/autonomous-identity-2022.11.3-deployment-planning.pdf",
+        "version": "2022.11.3"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.3 Install Guide",
+        "path": "autonomous-identity/2022.11.3/autonomous-identity-2022.11.3-install-guide.pdf",
+        "version": "2022.11.3"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.3 Release Notes",
+        "path": "autonomous-identity/2022.11.3/autonomous-identity-2022.11.3-release-notes.pdf",
+        "version": "2022.11.3"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.3 Users Guide",
+        "path": "autonomous-identity/2022.11.3/autonomous-identity-2022.11.3-users-guide.pdf",
+        "version": "2022.11.3"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.2 Admin Guide",
+        "path": "autonomous-identity/2022.11.2/autonomous-identity-2022.11.2-admin-guide.pdf",
+        "version": "2022.11.2"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.2 API Guide",
+        "path": "autonomous-identity/2022.11.2/autonomous-identity-2022.11.2-api-guide.pdf",
+        "version": "2022.11.2"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.2 Deployment Planning",
+        "path": "autonomous-identity/2022.11.2/autonomous-identity-2022.11.2-deployment-planning.pdf",
+        "version": "2022.11.2"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.2 Install Guide",
+        "path": "autonomous-identity/2022.11.2/autonomous-identity-2022.11.2-install-guide.pdf",
+        "version": "2022.11.2"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.2 Release Notes",
+        "path": "autonomous-identity/2022.11.2/autonomous-identity-2022.11.2-release-notes.pdf",
+        "version": "2022.11.2"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.2 Users Guide",
+        "path": "autonomous-identity/2022.11.2/autonomous-identity-2022.11.2-users-guide.pdf",
+        "version": "2022.11.2"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.1 Admin Guide",
+        "path": "autonomous-identity/2022.11.1/autonomous-identity-2022.11.1-admin-guide.pdf",
+        "version": "2022.11.1"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.1 API Guide",
+        "path": "autonomous-identity/2022.11.1/autonomous-identity-2022.11.1-api-guide.pdf",
+        "version": "2022.11.1"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.1 Deployment Planning",
+        "path": "autonomous-identity/2022.11.1/autonomous-identity-2022.11.1-deployment-planning.pdf",
+        "version": "2022.11.1"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.1 Install Guide",
+        "path": "autonomous-identity/2022.11.1/autonomous-identity-2022.11.1-install-guide.pdf",
+        "version": "2022.11.1"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.1 Release Notes",
+        "path": "autonomous-identity/2022.11.1/autonomous-identity-2022.11.1-release-notes.pdf",
+        "version": "2022.11.1"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.1 Users Guide",
+        "path": "autonomous-identity/2022.11.1/autonomous-identity-2022.11.1-users-guide.pdf",
+        "version": "2022.11.1"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.0 Admin Guide",
+        "path": "autonomous-identity/2022.11.0/autonomous-identity-2022.11.0-admin-guide.pdf",
+        "version": "2022.11.0"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.0 API Guide",
+        "path": "autonomous-identity/2022.11.0/autonomous-identity-2022.11.0-api-guide.pdf",
+        "version": "2022.11.0"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.0 Deployment Planning",
+        "path": "autonomous-identity/2022.11.0/autonomous-identity-2022.11.0-deployment-planning.pdf",
+        "version": "2022.11.0"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.0 Install Guide",
+        "path": "autonomous-identity/2022.11.0/autonomous-identity-2022.11.0-install-guide.pdf",
+        "version": "2022.11.0"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.0 Release Notes",
+        "path": "autonomous-identity/2022.11.0/autonomous-identity-2022.11.0-release-notes.pdf",
+        "version": "2022.11.0"
+      },
+      {
+        "title": "Autonomous Identity 2022.11.0 Users Guide",
+        "path": "autonomous-identity/2022.11.0/autonomous-identity-2022.11.0-users-guide.pdf",
+        "version": "2022.11.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.7 Admin Guide",
+        "path": "autonomous-identity/2021.8.7/autonomous-identity-2021.8.7-admin-guide.pdf",
+        "version": "2021.8.7"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.7 API Guide",
+        "path": "autonomous-identity/2021.8.7/autonomous-identity-2021.8.7-api-guide.pdf",
+        "version": "2021.8.7"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.7 Deployment Planning",
+        "path": "autonomous-identity/2021.8.7/autonomous-identity-2021.8.7-deployment-planning.pdf",
+        "version": "2021.8.7"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.7 Install Guide",
+        "path": "autonomous-identity/2021.8.7/autonomous-identity-2021.8.7-install-guide.pdf",
+        "version": "2021.8.7"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.7 Release Notes",
+        "path": "autonomous-identity/2021.8.7/autonomous-identity-2021.8.7-release-notes.pdf",
+        "version": "2021.8.7"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.7 Users Guide",
+        "path": "autonomous-identity/2021.8.7/autonomous-identity-2021.8.7-users-guide.pdf",
+        "version": "2021.8.7"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.6 Admin Guide",
+        "path": "autonomous-identity/2021.8.6/autonomous-identity-2021.8.6-admin-guide.pdf",
+        "version": "2021.8.6"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.6 API Guide",
+        "path": "autonomous-identity/2021.8.6/autonomous-identity-2021.8.6-api-guide.pdf",
+        "version": "2021.8.6"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.6 Deployment Planning",
+        "path": "autonomous-identity/2021.8.6/autonomous-identity-2021.8.6-deployment-planning.pdf",
+        "version": "2021.8.6"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.6 Install Guide",
+        "path": "autonomous-identity/2021.8.6/autonomous-identity-2021.8.6-install-guide.pdf",
+        "version": "2021.8.6"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.6 Release Notes",
+        "path": "autonomous-identity/2021.8.6/autonomous-identity-2021.8.6-release-notes.pdf",
+        "version": "2021.8.6"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.6 Users Guide",
+        "path": "autonomous-identity/2021.8.6/autonomous-identity-2021.8.6-users-guide.pdf",
+        "version": "2021.8.6"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.5 Admin Guide",
+        "path": "autonomous-identity/2021.8.5/autonomous-identity-2021.8.5-admin-guide.pdf",
+        "version": "2021.8.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.5 API Guide",
+        "path": "autonomous-identity/2021.8.5/autonomous-identity-2021.8.5-api-guide.pdf",
+        "version": "2021.8.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.5 Deployment Planning",
+        "path": "autonomous-identity/2021.8.5/autonomous-identity-2021.8.5-deployment-planning.pdf",
+        "version": "2021.8.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.5 Install Guide",
+        "path": "autonomous-identity/2021.8.5/autonomous-identity-2021.8.5-install-guide.pdf",
+        "version": "2021.8.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.5 Release Notes",
+        "path": "autonomous-identity/2021.8.5/autonomous-identity-2021.8.5-release-notes.pdf",
+        "version": "2021.8.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.5 Users Guide",
+        "path": "autonomous-identity/2021.8.5/autonomous-identity-2021.8.5-users-guide.pdf",
+        "version": "2021.8.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.4 Admin Guide",
+        "path": "autonomous-identity/2021.8.4/autonomous-identity-2021.8.4-admin-guide.pdf",
+        "version": "2021.8.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.4 API Guide",
+        "path": "autonomous-identity/2021.8.4/autonomous-identity-2021.8.4-api-guide.pdf",
+        "version": "2021.8.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.4 Deployment Planning",
+        "path": "autonomous-identity/2021.8.4/autonomous-identity-2021.8.4-deployment-planning.pdf",
+        "version": "2021.8.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.4 Install Guide",
+        "path": "autonomous-identity/2021.8.4/autonomous-identity-2021.8.4-install-guide.pdf",
+        "version": "2021.8.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.4 Release Notes",
+        "path": "autonomous-identity/2021.8.4/autonomous-identity-2021.8.4-release-notes.pdf",
+        "version": "2021.8.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.4 Users Guide",
+        "path": "autonomous-identity/2021.8.4/autonomous-identity-2021.8.4-users-guide.pdf",
+        "version": "2021.8.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.3 Admin Guide",
+        "path": "autonomous-identity/2021.8.3/autonomous-identity-2021.8.3-admin-guide.pdf",
+        "version": "2021.8.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.3 API Guide",
+        "path": "autonomous-identity/2021.8.3/autonomous-identity-2021.8.3-api-guide.pdf",
+        "version": "2021.8.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.3 Deployment Planning",
+        "path": "autonomous-identity/2021.8.3/autonomous-identity-2021.8.3-deployment-planning.pdf",
+        "version": "2021.8.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.3 Install Guide",
+        "path": "autonomous-identity/2021.8.3/autonomous-identity-2021.8.3-install-guide.pdf",
+        "version": "2021.8.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.3 Release Notes",
+        "path": "autonomous-identity/2021.8.3/autonomous-identity-2021.8.3-release-notes.pdf",
+        "version": "2021.8.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.3 Users Guide",
+        "path": "autonomous-identity/2021.8.3/autonomous-identity-2021.8.3-users-guide.pdf",
+        "version": "2021.8.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.2 Admin Guide",
+        "path": "autonomous-identity/2021.8.2/autonomous-identity-2021.8.2-admin-guide.pdf",
+        "version": "2021.8.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.2 API Guide",
+        "path": "autonomous-identity/2021.8.2/autonomous-identity-2021.8.2-api-guide.pdf",
+        "version": "2021.8.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.2 Deployment Planning",
+        "path": "autonomous-identity/2021.8.2/autonomous-identity-2021.8.2-deployment-planning.pdf",
+        "version": "2021.8.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.2 Install Guide",
+        "path": "autonomous-identity/2021.8.2/autonomous-identity-2021.8.2-install-guide.pdf",
+        "version": "2021.8.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.2 Release Notes",
+        "path": "autonomous-identity/2021.8.2/autonomous-identity-2021.8.2-release-notes.pdf",
+        "version": "2021.8.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.2 Users Guide",
+        "path": "autonomous-identity/2021.8.2/autonomous-identity-2021.8.2-users-guide.pdf",
+        "version": "2021.8.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.1 Admin Guide",
+        "path": "autonomous-identity/2021.8.1/autonomous-identity-2021.8.1-admin-guide.pdf",
+        "version": "2021.8.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.1 API Guide",
+        "path": "autonomous-identity/2021.8.1/autonomous-identity-2021.8.1-api-guide.pdf",
+        "version": "2021.8.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.1 Deployment Planning",
+        "path": "autonomous-identity/2021.8.1/autonomous-identity-2021.8.1-deployment-planning.pdf",
+        "version": "2021.8.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.1 Install Guide",
+        "path": "autonomous-identity/2021.8.1/autonomous-identity-2021.8.1-install-guide.pdf",
+        "version": "2021.8.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.1 Release Notes",
+        "path": "autonomous-identity/2021.8.1/autonomous-identity-2021.8.1-release-notes.pdf",
+        "version": "2021.8.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.1 Users Guide",
+        "path": "autonomous-identity/2021.8.1/autonomous-identity-2021.8.1-users-guide.pdf",
+        "version": "2021.8.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.0 Admin Guide",
+        "path": "autonomous-identity/2021.8.0/autonomous-identity-2021.8.0-admin-guide.pdf",
+        "version": "2021.8.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.0 API Guide",
+        "path": "autonomous-identity/2021.8.0/autonomous-identity-2021.8.0-api-guide.pdf",
+        "version": "2021.8.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.0 Deployment Planning",
+        "path": "autonomous-identity/2021.8.0/autonomous-identity-2021.8.0-deployment-planning.pdf",
+        "version": "2021.8.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.0 Install Guide",
+        "path": "autonomous-identity/2021.8.0/autonomous-identity-2021.8.0-install-guide.pdf",
+        "version": "2021.8.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.0 Release Notes",
+        "path": "autonomous-identity/2021.8.0/autonomous-identity-2021.8.0-release-notes.pdf",
+        "version": "2021.8.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.8.0 Users Guide",
+        "path": "autonomous-identity/2021.8.0/autonomous-identity-2021.8.0-users-guide.pdf",
+        "version": "2021.8.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.5 Admin Guide",
+        "path": "autonomous-identity/2021.3.5/autonomous-identity-2021.3.5-admin-guide.pdf",
+        "version": "2021.3.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.5 API Guide",
+        "path": "autonomous-identity/2021.3.5/autonomous-identity-2021.3.5-api-guide.pdf",
+        "version": "2021.3.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.5 Deployment Planning",
+        "path": "autonomous-identity/2021.3.5/autonomous-identity-2021.3.5-deployment-planning.pdf",
+        "version": "2021.3.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.5-getting-started",
+        "path": "autonomous-identity/2021.3.5/autonomous-identity-2021.3.5-getting-started.pdf",
+        "version": "2021.3.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.5 Install Guide",
+        "path": "autonomous-identity/2021.3.5/autonomous-identity-2021.3.5-install-guide.pdf",
+        "version": "2021.3.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.5 Release Notes",
+        "path": "autonomous-identity/2021.3.5/autonomous-identity-2021.3.5-release-notes.pdf",
+        "version": "2021.3.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.5 Users Guide",
+        "path": "autonomous-identity/2021.3.5/autonomous-identity-2021.3.5-users-guide.pdf",
+        "version": "2021.3.5"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.4 Admin Guide",
+        "path": "autonomous-identity/2021.3.4/autonomous-identity-2021.3.4-admin-guide.pdf",
+        "version": "2021.3.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.4 API Guide",
+        "path": "autonomous-identity/2021.3.4/autonomous-identity-2021.3.4-api-guide.pdf",
+        "version": "2021.3.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.4 Deployment Planning",
+        "path": "autonomous-identity/2021.3.4/autonomous-identity-2021.3.4-deployment-planning.pdf",
+        "version": "2021.3.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.4-getting-started",
+        "path": "autonomous-identity/2021.3.4/autonomous-identity-2021.3.4-getting-started.pdf",
+        "version": "2021.3.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.4 Install Guide",
+        "path": "autonomous-identity/2021.3.4/autonomous-identity-2021.3.4-install-guide.pdf",
+        "version": "2021.3.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.4 Release Notes",
+        "path": "autonomous-identity/2021.3.4/autonomous-identity-2021.3.4-release-notes.pdf",
+        "version": "2021.3.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.4 Users Guide",
+        "path": "autonomous-identity/2021.3.4/autonomous-identity-2021.3.4-users-guide.pdf",
+        "version": "2021.3.4"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.3 Admin Guide",
+        "path": "autonomous-identity/2021.3.3/autonomous-identity-2021.3.3-admin-guide.pdf",
+        "version": "2021.3.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.3 API Guide",
+        "path": "autonomous-identity/2021.3.3/autonomous-identity-2021.3.3-api-guide.pdf",
+        "version": "2021.3.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.3 Deployment Planning",
+        "path": "autonomous-identity/2021.3.3/autonomous-identity-2021.3.3-deployment-planning.pdf",
+        "version": "2021.3.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.3-getting-started",
+        "path": "autonomous-identity/2021.3.3/autonomous-identity-2021.3.3-getting-started.pdf",
+        "version": "2021.3.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.3 Install Guide",
+        "path": "autonomous-identity/2021.3.3/autonomous-identity-2021.3.3-install-guide.pdf",
+        "version": "2021.3.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.3 Release Notes",
+        "path": "autonomous-identity/2021.3.3/autonomous-identity-2021.3.3-release-notes.pdf",
+        "version": "2021.3.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.3 Users Guide",
+        "path": "autonomous-identity/2021.3.3/autonomous-identity-2021.3.3-users-guide.pdf",
+        "version": "2021.3.3"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.2 Admin Guide",
+        "path": "autonomous-identity/2021.3.2/autonomous-identity-2021.3.2-admin-guide.pdf",
+        "version": "2021.3.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.2 API Guide",
+        "path": "autonomous-identity/2021.3.2/autonomous-identity-2021.3.2-api-guide.pdf",
+        "version": "2021.3.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.2 Deployment Planning",
+        "path": "autonomous-identity/2021.3.2/autonomous-identity-2021.3.2-deployment-planning.pdf",
+        "version": "2021.3.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.2-getting-started",
+        "path": "autonomous-identity/2021.3.2/autonomous-identity-2021.3.2-getting-started.pdf",
+        "version": "2021.3.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.2 Install Guide",
+        "path": "autonomous-identity/2021.3.2/autonomous-identity-2021.3.2-install-guide.pdf",
+        "version": "2021.3.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.2 Release Notes",
+        "path": "autonomous-identity/2021.3.2/autonomous-identity-2021.3.2-release-notes.pdf",
+        "version": "2021.3.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.2 Users Guide",
+        "path": "autonomous-identity/2021.3.2/autonomous-identity-2021.3.2-users-guide.pdf",
+        "version": "2021.3.2"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.1 Admin Guide",
+        "path": "autonomous-identity/2021.3.1/autonomous-identity-2021.3.1-admin-guide.pdf",
+        "version": "2021.3.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.1 API Guide",
+        "path": "autonomous-identity/2021.3.1/autonomous-identity-2021.3.1-api-guide.pdf",
+        "version": "2021.3.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.1 Deployment Planning",
+        "path": "autonomous-identity/2021.3.1/autonomous-identity-2021.3.1-deployment-planning.pdf",
+        "version": "2021.3.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.1-getting-started",
+        "path": "autonomous-identity/2021.3.1/autonomous-identity-2021.3.1-getting-started.pdf",
+        "version": "2021.3.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.1 Install Guide",
+        "path": "autonomous-identity/2021.3.1/autonomous-identity-2021.3.1-install-guide.pdf",
+        "version": "2021.3.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.1 Release Notes",
+        "path": "autonomous-identity/2021.3.1/autonomous-identity-2021.3.1-release-notes.pdf",
+        "version": "2021.3.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.1 Users Guide",
+        "path": "autonomous-identity/2021.3.1/autonomous-identity-2021.3.1-users-guide.pdf",
+        "version": "2021.3.1"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.0 Admin Guide",
+        "path": "autonomous-identity/2021.3.0/autonomous-identity-2021.3.0-admin-guide.pdf",
+        "version": "2021.3.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.0 API Guide",
+        "path": "autonomous-identity/2021.3.0/autonomous-identity-2021.3.0-api-guide.pdf",
+        "version": "2021.3.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.0 Deployment Planning",
+        "path": "autonomous-identity/2021.3.0/autonomous-identity-2021.3.0-deployment-planning.pdf",
+        "version": "2021.3.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.0-getting-started",
+        "path": "autonomous-identity/2021.3.0/autonomous-identity-2021.3.0-getting-started.pdf",
+        "version": "2021.3.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.0 Install Guide",
+        "path": "autonomous-identity/2021.3.0/autonomous-identity-2021.3.0-install-guide.pdf",
+        "version": "2021.3.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.0 Release Notes",
+        "path": "autonomous-identity/2021.3.0/autonomous-identity-2021.3.0-release-notes.pdf",
+        "version": "2021.3.0"
+      },
+      {
+        "title": "Autonomous Identity 2021.3.0 Users Guide",
+        "path": "autonomous-identity/2021.3.0/autonomous-identity-2021.3.0-users-guide.pdf",
+        "version": "2021.3.0"
+      },
+      {
+        "title": "Autonomous Identity 2020.10.2 Admin Guide",
+        "path": "autonomous-identity/2020.10.2/Autonomous-Identity-2020.10.2-Admin-Guide.pdf",
+        "version": "2020.10.2"
+      },
+      {
+        "title": "Autonomous Identity 2020.10.2 Api Guide",
+        "path": "autonomous-identity/2020.10.2/Autonomous-Identity-2020.10.2-Api-Guide.pdf",
+        "version": "2020.10.2"
+      },
+      {
+        "title": "Autonomous Identity 2020.10.2 Deployment Planning",
+        "path": "autonomous-identity/2020.10.2/Autonomous-Identity-2020.10.2-Deployment-Planning.pdf",
+        "version": "2020.10.2"
+      },
+      {
+        "title": "Autonomous Identity-2020.10.2 Getting Started",
+        "path": "autonomous-identity/2020.10.2/Autonomous-Identity-2020.10.2-Getting-Started.pdf",
+        "version": "2020.10.2"
+      },
+      {
+        "title": "Autonomous Identity 2020.10.2 Install Guide",
+        "path": "autonomous-identity/2020.10.2/Autonomous-Identity-2020.10.2-Install-Guide.pdf",
+        "version": "2020.10.2"
+      },
+      {
+        "title": "Autonomous Identity 2020.10.2 Release Notes",
+        "path": "autonomous-identity/2020.10.2/Autonomous-Identity-2020.10.2-Release-Notes.pdf",
+        "version": "2020.10.2"
+      },
+      {
+        "title": "Autonomous Identity-2020.10.2 Users Guide",
+        "path": "autonomous-identity/2020.10.2/Autonomous-Identity-2020.10.2-Users-Guide.pdf",
+        "version": "2020.10.2"
+      },
+      {
+        "title": "Autonomous Identity 2020.6.4 Admin Guide",
+        "path": "autonomous-identity/2020.6.4/Autonomous-Identity-2020.6.4-Admin-Guide.pdf",
+        "version": "2020.6.4"
+      },
+      {
+        "title": "Autonomous Identity 2020.6.4 API Guide",
+        "path": "autonomous-identity/2020.6.4/Autonomous-Identity-2020.6.4-Api-Guide.pdf",
+        "version": "2020.6.4"
+      },
+      {
+        "title": "Autonomous Identity 2020.6.4 Deployment Planning",
+        "path": "autonomous-identity/2020.6.4/Autonomous-Identity-2020.6.4-Deployment-Planning.pdf",
+        "version": "2020.6.4"
+      },
+      {
+        "title": "Autonomous Identity 2020.6.4-Getting-Started",
+        "path": "autonomous-identity/2020.6.4/Autonomous-Identity-2020.6.4-Getting-Started.pdf",
+        "version": "2020.6.4"
+      },
+      {
+        "title": "Autonomous Identity 2020.6.4 Install Guide",
+        "path": "autonomous-identity/2020.6.4/Autonomous-Identity-2020.6.4-Install-Guide.pdf",
+        "version": "2020.6.4"
+      },
+      {
+        "title": "Autonomous Identity 2020.6.4 Release Notes",
+        "path": "autonomous-identity/2020.6.4/Autonomous-Identity-2020.6.4-Release-Notes.pdf",
+        "version": "2020.6.4"
+      },
+      {
+        "title": "Autonomous Identity 2020.6.4 Users Guide",
+        "path": "autonomous-identity/2020.6.4/Autonomous-Identity-2020.6.4-Users-Guide.pdf",
+        "version": "2020.6.4"
+      }
+    ]
+  },
+  {
+    "family": "forgeops",
+    "product": "forgeops",
+    "title": "ForgeOps",
+    "pdflist": [
+      {
+        "title": "ForgeOps 7.1",
+        "path": "forgeops/7.1/ForgeOps-7.1.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "iot",
+    "product": "iot",
+    "title": "ForgeRock IoT",
+    "pdflist": [
+      {
+        "title": "IoT 7.4 Release Notes",
+        "path": "iot/7.4/iot-7.4-release-notes.pdf",
+        "version": "7.4"
+      },
+      {
+        "title": "IoT 7.4 Dev Guide",
+        "path": "iot/7.4/iot-7.4-dev-guide.pdf",
+        "version": "7.4"
+      },
+      {
+        "title": "IoT 7.4 Evaluation Guide",
+        "path": "iot/7.4/iot-7.4-evaluation-guide.pdf",
+        "version": "7.4"
+      },
+      {
+        "title": "IoT 7.2 Release Notes",
+        "path": "iot/7.2/iot-7.2-release-notes.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "IoT 7.2 Dev Guide",
+        "path": "iot/7.2/iot-7.2-dev-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "IoT 7.2 Evaluation Guide",
+        "path": "iot/7.2/iot-7.2-evaluation-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "IoT 7.1 Release Notes",
+        "path": "iot/7.1/iot-7.1-release-notes.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IoT 7.1 Dev Guide",
+        "path": "iot/7.1/iot-7.1-dev-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IoT 7.1 Evaluation Guide",
+        "path": "iot/7.1/iot-7.1-evaluation-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IoT 7 Release Notes",
+        "path": "iot/7/IoT-7.0.0-Release-Notes.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IoT 7 Dev Guide",
+        "path": "iot/7/IoT-7.0.0-Dev-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IoT 7 Evaluation Guide",
+        "path": "iot/7/IoT-7.0.0-Evaluation-Guide.pdf",
+        "version": "7"
+      }
+    ]
+  },
+  {
+    "family": "platform",
+    "product": "platform",
+    "title": "ForgeRock Platform",
+    "pdflist": [
+      {
+        "title": "Platform 7.1 Platform Guide",
+        "path": "platform/7.1/Platform-7.1-Platform-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "Platform 7.1 Platform Self-Service Guide",
+        "path": "platform/7.1/Platform-7.1-Platform-Self-Service-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "Platform 7.1 Platform Setup Guide",
+        "path": "platform/7.1/Platform-7.1-Platform-Setup-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "Platform 7 Platform Guide",
+        "path": "platform/7/Platform-7-Platform-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "Platform 7 Platform Self-Service Guide",
+        "path": "platform/7/Platform-7-Platform-Self-Service-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "Platform 7 Platform Setup Guide",
+        "path": "platform/7/Platform-7-Platform-Setup-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "Platform 6.5 IoT Guide",
+        "path": "platform/6.5/Platform-6.5-Iot-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "Platform 6.5 Platform Guide",
+        "path": "platform/6.5/Platform-6.5-Platform-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "Platform 6 IoT Guide",
+        "path": "platform/6/Platform-6-Iot-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "Platform 6 Platform Guide",
+        "path": "platform/6/Platform-6-Platform-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "Platform 5.5 Platform Guide",
+        "path": "platform/5.5/Platform-5.5-Platform-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "Platform 5 IoT Guide",
+        "path": "platform/5/Platform-5-Iot-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "Platform 5 Platform Guide",
+        "path": "platform/5/Platform-5-Platform-Guide.pdf",
+        "version": "5"
+      }
+    ]
+  },
+  {
+    "family": "pingam",
+    "product": "am",
+    "title": "AM",
+    "pdflist": [
+      {
+        "title": "AM 7.2 Auth Nodes",
+        "path": "am/7.2/AM-7.2-auth-nodes.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Authentication Guide",
+        "path": "am/7.2/AM-7.2-authentication-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Authorization Guide",
+        "path": "am/7.2/AM-7.2-authorization-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 CTS Guide",
+        "path": "am/7.2/AM-7.2-cts-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Deployment Planning Guide",
+        "path": "am/7.2/AM-7.2-deployment-planning-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Eval Guide",
+        "path": "am/7.2/AM-7.2-eval-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Install Guide",
+        "path": "am/7.2/AM-7.2-install-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Maintenance Guide",
+        "path": "am/7.2/AM-7.2-maintenance-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 OAuth2 Guide",
+        "path": "am/7.2/AM-7.2-oauth2-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 OIDC 1 Guide",
+        "path": "am/7.2/AM-7.2-oidc1-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Radius Server Guide",
+        "path": "am/7.2/AM-7.2-radius-server-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Reference",
+        "path": "am/7.2/AM-7.2-reference.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.2 Saml2 Guide",
+        "path": "am/7.2/AM-7.2-saml2-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 REST Guide",
+        "path": "am/7.2/AM-7.2-REST-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Scripting Guide",
+        "path": "am/7.2/AM-7.2-scripting-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Security Guide",
+        "path": "am/7.2/AM-7.2-security-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Sessions Guide",
+        "path": "am/7.2/AM-7.2-sessions-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Setup Guide",
+        "path": "am/7.2/AM-7.2-setup-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 STS Guide",
+        "path": "am/7.2/AM-7.2-sts-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 UI Customization Guide",
+        "path": "am/7.2/AM-7.2-ui-customization-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 UMA Guide",
+        "path": "am/7.2/AM-7.2-uma-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Upgrade Guide",
+        "path": "am/7.2/AM-7.2-upgrade-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 User Self-Service Guide",
+        "path": "am/7.2/AM-7.2-user-self-service-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.2 Javadoc",
+        "path": "am/7.2/am-7.2-javadoc.zip",
+        "version": "7.2"
+      },
+      {
+        "title": "AM 7.1 Release Notes",
+        "path": "am/7.1/AM-7.1.4-Release-Notes.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Auth Nodes",
+        "path": "am/7.1/AM-7.1.4-Auth-Nodes.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Authentication Guide",
+        "path": "am/7.1/AM-7.1.4-Authentication-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Authorization Guide",
+        "path": "am/7.1/AM-7.1.4-Authorization-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 CTS Guide",
+        "path": "am/7.1/AM-7.1.4-Cts-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Deployment Planning Guide",
+        "path": "am/7.1/AM-7.1.4-Deployment-Planning-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Eval Guide",
+        "path": "am/7.1/AM-7.1.4-Eval-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Install Guide",
+        "path": "am/7.1/AM-7.1.4-Install-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Maintenance Guide",
+        "path": "am/7.1/AM-7.1.4-Maintenance-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 OAuth2 Guide",
+        "path": "am/7.1/AM-7.1.4-Oauth2-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 OIDC 1 Guide",
+        "path": "am/7.1/AM-7.1.4-Oidc1-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 REST Guide",
+        "path": "am/7.1/AM-7.1.4-REST-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Radius Server Guide",
+        "path": "am/7.1/AM-7.1.4-Radius-Server-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Reference",
+        "path": "am/7.1/AM-7.1.4-Reference.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Saml2 Guide",
+        "path": "am/7.1/AM-7.1.4-Saml2-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Scripting Guide",
+        "path": "am/7.1/AM-7.1.4-Scripting-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Security Guide",
+        "path": "am/7.1/AM-7.1.4-Security-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Sessions Guide",
+        "path": "am/7.1/AM-7.1.4-Sessions-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Setup Guide",
+        "path": "am/7.1/AM-7.1.4-Setup-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 STS Guide",
+        "path": "am/7.1/AM-7.1.4-Sts-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 UI Customization Guide",
+        "path": "am/7.1/AM-7.1.4-Ui-Customization-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 UMA Guide",
+        "path": "am/7.1/AM-7.1.4-Uma-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Upgrade Guide",
+        "path": "am/7.1/AM-7.1.4-Upgrade-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 User Self-Service Guide",
+        "path": "am/7.1/AM-7.1.4-User-Self-Service-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7.1 Javadoc",
+        "path": "am/7.1/am-7.1-javadoc.zip",
+        "version": "7.1"
+      },
+      {
+        "title": "AM 7 Release Notes",
+        "path": "am/7/AM-7-Release-Notes.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Auth Nodes",
+        "path": "am/7/AM-7-Auth-Nodes.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Authentication Guide",
+        "path": "am/7/AM-7-Authentication-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Authorization Guide",
+        "path": "am/7/AM-7-Authorization-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 CTS Guide",
+        "path": "am/7/AM-7-Cts-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Deployment Planning",
+        "path": "am/7/AM-7-Deployment-Planning-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Eval Guide",
+        "path": "am/7/AM-7-Eval-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Install Guide",
+        "path": "am/7/AM-7-Install-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Maintenance Guide",
+        "path": "am/7/AM-7-Maintenance-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 OAuth 2 Guide",
+        "path": "am/7/AM-7-Oauth2-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 OIDC 1 Guide",
+        "path": "am/7/AM-7-Oidc1-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 REST Guide",
+        "path": "am/7/AM-7-REST-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Radius Server Guide",
+        "path": "am/7/AM-7-Radius-Server-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Reference",
+        "path": "am/7/AM-7-Reference.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 SAML 2 Guide",
+        "path": "am/7/AM-7-Saml2-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Scripting Guide",
+        "path": "am/7/AM-7-Scripting-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Security Guide",
+        "path": "am/7/AM-7-Security-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Sessions Guide",
+        "path": "am/7/AM-7-Sessions-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Setup Guide",
+        "path": "am/7/AM-7-Setup-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 STS Guide",
+        "path": "am/7/AM-7-Sts-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 UI Customization Guide",
+        "path": "am/7/AM-7-Ui-Customization-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 UMA Guide",
+        "path": "am/7/AM-7-Uma-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Upgrade Guide",
+        "path": "am/7/AM-7-Upgrade-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 User Self-Service Guide",
+        "path": "am/7/AM-7-User-Self-Service-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "AM 7 Javadoc",
+        "path": "am/7/am-7-javadoc.zip",
+        "version": "7"
+      },
+      {
+        "title": "AM 6.5 Release Notes",
+        "path": "am/6.5/AM-6.5-Release-Notes.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Quick Start Guide",
+        "path": "am/6.5/AM-6.5-Quick-Start-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Auth Nodes",
+        "path": "am/6.5/AM-6.5-Auth-Nodes.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Authentication Guide",
+        "path": "am/6.5/AM-6.5-Authentication-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Authorization Guide",
+        "path": "am/6.5/AM-6.5-Authorization-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Deployment Planning",
+        "path": "am/6.5/AM-6.5-Deployment-Planning-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Dev Guide",
+        "path": "am/6.5/AM-6.5-Dev-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Install Guide",
+        "path": "am/6.5/AM-6.5-Install-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Maintenance Guide",
+        "path": "am/6.5/AM-6.5-Maintenance-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 OAuth 2 Guide",
+        "path": "am/6.5/AM-6.5-Oauth2-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 OIDC 1 Guide",
+        "path": "am/6.5/AM-6.5-Oidc1-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Radius Server Guide",
+        "path": "am/6.5/AM-6.5-Radius-Server-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Reference",
+        "path": "am/6.5/AM-6.5-Reference.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 SAML 1 Guide",
+        "path": "am/6.5/AM-6.5-Saml1-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 SAML 2 Guide",
+        "path": "am/6.5/AM-6.5-Saml2-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 STS Guide",
+        "path": "am/6.5/AM-6.5-Sts-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 UI Customization Guide",
+        "path": "am/6.5/AM-6.5-Ui-Customization-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 UMA Guide",
+        "path": "am/6.5/AM-6.5-Uma-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Upgrade Guide",
+        "path": "am/6.5/AM-6.5-Upgrade-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 User Self-Service Guide",
+        "path": "am/6.5/AM-6.5-User-Self-Service-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6.5 Javadoc",
+        "path": "am/6.5/am-6.5-javadoc.zip",
+        "version": "6.5"
+      },
+      {
+        "title": "AM 6 Release Notes",
+        "path": "am/6/AM-6-Release-Notes.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Quick Start Guide",
+        "path": "am/6/AM-6-Quick-Start-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Authentication Guide",
+        "path": "am/6/AM-6-Authentication-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Authorization Guide",
+        "path": "am/6/AM-6-Authorization-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Deployment Planning",
+        "path": "am/6/AM-6-Deployment-Planning-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Dev Guide",
+        "path": "am/6/AM-6-Dev-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Install Guide",
+        "path": "am/6/AM-6-Install-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Maintenance Guide",
+        "path": "am/6/AM-6-Maintenance-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 OAuth 2 Guide",
+        "path": "am/6/AM-6-Oauth2-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 OIDC 1 Guide",
+        "path": "am/6/AM-6-Oidc1-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Radius Server Guide",
+        "path": "am/6/AM-6-Radius-Server-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Reference",
+        "path": "am/6/AM-6-Reference.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 SAML 1 Guide",
+        "path": "am/6/AM-6-Saml1-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 SAML 2 Guide",
+        "path": "am/6/AM-6-Saml2-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 STS Guide",
+        "path": "am/6/AM-6-Sts-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 UI Customization Guide",
+        "path": "am/6/AM-6-Ui-Customization-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 UMA Guide",
+        "path": "am/6/AM-6-Uma-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Upgrade Guide",
+        "path": "am/6/AM-6-Upgrade-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 User Self-Service Guide",
+        "path": "am/6/AM-6-User-Self-Service-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "AM 6 Javadoc",
+        "path": "am/6/am-6-javadoc.zip",
+        "version": "6"
+      },
+      {
+        "title": "AM 5.5 Release Notes",
+        "path": "am/5.5/AM-5.5-Release-Notes.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Quick Start Guide",
+        "path": "am/5.5/AM-5.5-Quick-Start-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Authentication Guide",
+        "path": "am/5.5/AM-5.5-Authentication-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Authorization Guide",
+        "path": "am/5.5/AM-5.5-Authorization-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Deployment Planning",
+        "path": "am/5.5/AM-5.5-Deployment-Planning-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Dev Guide",
+        "path": "am/5.5/AM-5.5-Dev-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Install Guide",
+        "path": "am/5.5/AM-5.5-Install-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Maintenance Guide",
+        "path": "am/5.5/AM-5.5-Maintenance-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 OAuth 2 Guide",
+        "path": "am/5.5/AM-5.5-Oauth2-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 OIDC 1 Guide",
+        "path": "am/5.5/AM-5.5-Oidc1-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Radius Server Guide",
+        "path": "am/5.5/AM-5.5-Radius-Server-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Reference",
+        "path": "am/5.5/AM-5.5-Reference.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 SAML 1 Guide",
+        "path": "am/5.5/AM-5.5-Saml1-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 SAML 2 Guide",
+        "path": "am/5.5/AM-5.5-Saml2-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 STS Guide",
+        "path": "am/5.5/AM-5.5-Sts-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 UI Customization Guide",
+        "path": "am/5.5/AM-5.5-Ui-Customization-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 UMA Guide",
+        "path": "am/5.5/AM-5.5-Uma-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Upgrade Guide",
+        "path": "am/5.5/AM-5.5-Upgrade-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 User Self-Service Guide",
+        "path": "am/5.5/AM-5.5-User-Self-Service-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.5 Javadoc",
+        "path": "am/5.5/am-5.5-javadoc.zip",
+        "version": "5.5"
+      },
+      {
+        "title": "AM 5.1 Release Notes",
+        "path": "am/5.1/AM-5.1-Release-Notes.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Guide Guide",
+        "path": "am/5.1/AM-5.1-Guide-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Quick Start Guide",
+        "path": "am/5.1/AM-5.1-Quick-Start-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Authentication Guide",
+        "path": "am/5.1/AM-5.1-Authentication-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Authorization Guide",
+        "path": "am/5.1/AM-5.1-Authorization-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Deployment Planning",
+        "path": "am/5.1/AM-5.1-Deployment-Planning-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Dev Guide",
+        "path": "am/5.1/AM-5.1-Dev-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Install Guide",
+        "path": "am/5.1/AM-5.1-Install-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Maintenance Guide",
+        "path": "am/5.1/AM-5.1-Maintenance-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 OAuth 2 Guide",
+        "path": "am/5.1/AM-5.1-Oauth2-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 OIDC 1 Guide",
+        "path": "am/5.1/AM-5.1-Oidc1-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Radius Server Guide",
+        "path": "am/5.1/AM-5.1-Radius-Server-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Reference",
+        "path": "am/5.1/AM-5.1-Reference.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 SAML 1 Guide",
+        "path": "am/5.1/AM-5.1-Saml1-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 SAML 2 Guide",
+        "path": "am/5.1/AM-5.1-Saml2-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 STS Guide",
+        "path": "am/5.1/AM-5.1-Sts-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 UI Customization Guide",
+        "path": "am/5.1/AM-5.1-Ui-Customization-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 UMA Guide",
+        "path": "am/5.1/AM-5.1-Uma-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Upgrade Guide",
+        "path": "am/5.1/AM-5.1-Upgrade-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 User Self-Service Guide",
+        "path": "am/5.1/AM-5.1-User-Self-Service-Guide.pdf",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5.1 Javadoc",
+        "path": "am/5.1/am-5.1-javadoc.zip",
+        "version": "5.1"
+      },
+      {
+        "title": "AM 5 Release Notes",
+        "path": "am/5/AM-5-Release-Notes.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Guide Guide",
+        "path": "am/5/AM-5-Guide-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Quick Start Guide",
+        "path": "am/5/AM-5-Quick-Start-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Authentication Guide",
+        "path": "am/5/AM-5-Authentication-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Authorization Guide",
+        "path": "am/5/AM-5-Authorization-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Deployment Planning",
+        "path": "am/5/AM-5-Deployment-Planning-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Dev Guide",
+        "path": "am/5/AM-5-Dev-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Install Guide",
+        "path": "am/5/AM-5-Install-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Maintenance Guide",
+        "path": "am/5/AM-5-Maintenance-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 OAuth 2 Guide",
+        "path": "am/5/AM-5-Oauth2-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 OIDC 1 Guide",
+        "path": "am/5/AM-5-Oidc1-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Radius Server Guide",
+        "path": "am/5/AM-5-Radius-Server-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Reference",
+        "path": "am/5/AM-5-Reference.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 SAML 1 Guide",
+        "path": "am/5/AM-5-Saml1-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 SAML 2 Guide",
+        "path": "am/5/AM-5-Saml2-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 STS Guide",
+        "path": "am/5/AM-5-Sts-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 UMA Guide",
+        "path": "am/5/AM-5-Uma-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Upgrade Guide",
+        "path": "am/5/AM-5-Upgrade-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 User Self-Service Guide",
+        "path": "am/5/AM-5-User-Self-Service-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "AM 5 Javadoc",
+        "path": "am/5/am-5-javadoc.zip",
+        "version": "5"
+      }
+    ]
+  },
+  {
+    "family": "pingam",
+    "product": "amster",
+    "title": "Amster",
+    "pdflist": [
+      {
+        "title": "Amster 7.2 Release Notes",
+        "path": "amster/7.2/amster-7.2-release-notes.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "Amster 7.2 User Guide",
+        "path": "amster/7.2/amster-7.2-user-guide.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "Amster 7.2 Entity Reference",
+        "path": "amster/7.2/amster-7.2-entity-reference.pdf",
+        "version": "7.2"
+      },
+      {
+        "title": "Amster 7.1 Release Notes",
+        "path": "amster/7.1/amster-7.1-release-notes.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "Amster 7.1 User Guide",
+        "path": "amster/7.1/amster-7.1-user-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "Amster 7 Release Notes",
+        "path": "amster/7/Amster-7.0.2-Release-Notes.pdf",
+        "version": "7"
+      },
+      {
+        "title": "Amster 7 User Guide",
+        "path": "amster/7/Amster-7.0.2-User-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "Amster 7 Entity Reference",
+        "path": "amster/7/Amster-7.0.2-Entity-Reference.pdf",
+        "version": "7"
+      },
+      {
+        "title": "Amster 6.5 Release Notes",
+        "path": "amster/6.5/Amster-6.5.5-Release-Notes.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "Amster 6.5 User Guide",
+        "path": "amster/6.5/Amster-6.5.5-User-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "Amster 6.5 Entity Reference",
+        "path": "amster/6.5/Amster-6.5.5-Entity-Reference.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "Amster 6 Release Notes",
+        "path": "amster/6/Amster-6-Release-Notes.pdf",
+        "version": "6"
+      },
+      {
+        "title": "Amster 6 User Guide",
+        "path": "amster/6/Amster-6-User-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "Amster 6 Entity Reference",
+        "path": "amster/6/Amster-6-Entity-Reference.pdf",
+        "version": "6"
+      },
+      {
+        "title": "Amster 5.5 Release Notes",
+        "path": "amster/5.5/Amster-5.5.2-Release-Notes.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "Amster 5.5 User Guide",
+        "path": "amster/5.5/Amster-5.5.2-User-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "Amster 5.5 Entity Reference",
+        "path": "amster/5.5/Amster-5.5.2-Entity-Reference.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "Amster 5 Release Notes",
+        "path": "amster/5/Amster-5-Release-Notes.pdf",
+        "version": "5"
+      },
+      {
+        "title": "Amster 5 User Guide",
+        "path": "amster/5/Amster-5-User-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "Amster 5 Entity Reference",
+        "path": "amster/5/Amster-5-Entity-Reference.pdf",
+        "version": "5"
+      }
+    ]
+  },
+  {
+    "family": "pingam",
+    "product": "java-agents",
+    "title": "AM Java Agents",
+    "pdflist": [
+      {
+        "title": "Java Agents 2024.9",
+        "path": "java-agents/2024.9/java_agents-2024.9.pdf",
+        "version": "2024.9"
+      },
+      {
+        "title": "Java Agents 2024.6",
+        "path": "java-agents/2024.6/java_agents-2024.6.pdf",
+        "version": "2024.6"
+      },
+      {
+        "title": "Java Agents 2024.3",
+        "path": "java-agents/2024.3/java_agents-2024.3.pdf",
+        "version": "2024.3"
+      },
+      {
+        "title": "Java Policy Agents 2023.9 Identity Cloud Guide",
+        "path": "java-agents/2023.9/openam-jee-policy-agents-2023.9-identity-cloud-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Java Policy Agents 2023.9 Installation Guide",
+        "path": "java-agents/2023.9/openam-jee-policy-agents-2023.9-installation-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Java Policy Agents 2023.9 Maintenance Guide",
+        "path": "java-agents/2023.9/openam-jee-policy-agents-2023.9-maintenance-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Java Policy Agents 2023.9 Properties Reference",
+        "path": "java-agents/2023.9/openam-jee-policy-agents-2023.9-properties-reference.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Java Policy Agents 2023.9 Release Notes",
+        "path": "java-agents/2023.9/openam-jee-policy-agents-2023.9-release-notes.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Java Policy Agents 2023.9 Security Guide",
+        "path": "java-agents/2023.9/openam-jee-policy-agents-2023.9-security-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Java Policy Agents 2023.9 User Guide",
+        "path": "java-agents/2023.9/openam-jee-policy-agents-2023.9-user-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Java Policy Agents 2023.6 Identity Cloud Guide",
+        "path": "java-agents/2023.6/openam-jee-policy-agents-2023.6-identity-cloud-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Java Policy Agents 2023.6 Installation Guide",
+        "path": "java-agents/2023.6/openam-jee-policy-agents-2023.6-installation-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Java Policy Agents 2023.6 Maintenance Guide",
+        "path": "java-agents/2023.6/openam-jee-policy-agents-2023.6-maintenance-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Java Policy Agents 2023.6 Properties Reference",
+        "path": "java-agents/2023.6/openam-jee-policy-agents-2023.6-properties-reference.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Java Policy Agents 2023.6 Release Notes",
+        "path": "java-agents/2023.6/openam-jee-policy-agents-2023.6-release-notes.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Java Policy Agents 2023.6 Security Guide",
+        "path": "java-agents/2023.6/openam-jee-policy-agents-2023.6-security-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Java Policy Agents 2023.6 User Guide",
+        "path": "java-agents/2023.6/openam-jee-policy-agents-2023.6-user-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Java Policy Agents 2023.3 Identity Cloud Guide",
+        "path": "java-agents/2023.3/openam-jee-policy-agents-2023.3-identity-cloud-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Java Policy Agents 2023.3 Installation Guide",
+        "path": "java-agents/2023.3/openam-jee-policy-agents-2023.3-installation-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Java Policy Agents 2023.3 Maintenance Guide",
+        "path": "java-agents/2023.3/openam-jee-policy-agents-2023.3-maintenance-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Java Policy Agents 2023.3 Properties Reference",
+        "path": "java-agents/2023.3/openam-jee-policy-agents-2023.3-properties-reference.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Java Policy Agents 2023.3 Release Notes",
+        "path": "java-agents/2023.3/openam-jee-policy-agents-2023.3-release-notes.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Java Policy Agents 2023.3 Security Guide",
+        "path": "java-agents/2023.3/openam-jee-policy-agents-2023.3-security-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Java Policy Agents 2023.3 User Guide",
+        "path": "java-agents/2023.3/openam-jee-policy-agents-2023.3-user-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Java Policy Agents 5.10",
+        "path": "java-agents/5.10/java_agents-5.10.pdf",
+        "version": "5.10"
+      },
+      {
+        "title": "Java Policy Agents 5.9 Identity Cloud Guide",
+        "path": "java-agents/5.9/openam-jee-policy-agents-5.9-identity-cloud-guide.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Java Policy Agents 5.9 Installation Guide",
+        "path": "java-agents/5.9/openam-jee-policy-agents-5.9-installation-guide.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Java Policy Agents 5.9 Maintenance Guide",
+        "path": "java-agents/5.9/openam-jee-policy-agents-5.9-maintenance-guide.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Java Policy Agents 5.9 Properties Reference",
+        "path": "java-agents/5.9/openam-jee-policy-agents-5.9-properties-reference.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Java Policy Agents 5.9 Release Notes",
+        "path": "java-agents/5.9/openam-jee-policy-agents-5.9-release-notes.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Java Policy Agents 5.9 User Guide",
+        "path": "java-agents/5.9/openam-jee-policy-agents-5.9-user-guide.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Java Policy Agents 5.8.2 Identity Cloud Guide",
+        "path": "java-agents/5.8/Java-Agents-5.8.2-Identity-Cloud-Guide.pdf",
+        "version": "5.8"
+      },
+      {
+        "title": "Java Policy Agents 5.8.2 User Guide",
+        "path": "java-agents/5.8/Java-Agents-5.8.2-Java-Agents-Guide.pdf",
+        "version": "5.8"
+      },
+      {
+        "title": "Java Policy Agents 5.8.2 Release Notes",
+        "path": "java-agents/5.8/Java-Agents-5.8.2-Release-Notes.pdf",
+        "version": "5.8"
+      },
+      {
+        "title": "Java Policy Agents 5.7 User Guide",
+        "path": "java-agents/5.7/Java-Agents-5.7-Java-Agents-Guide.pdf",
+        "version": "5.7"
+      },
+      {
+        "title": "Java Policy Agents 5.7 Release Notes",
+        "path": "java-agents/5.7/Java-Agents-5.7-Java-Agents-Rnotes.pdf",
+        "version": "5.7"
+      },
+      {
+        "title": "Java Policy Agents 5.6 User Guide",
+        "path": "java-agents/5.6/Java-Agents-5.6-Java-Agents-Guide.pdf",
+        "version": "5.6"
+      },
+      {
+        "title": "Java Policy Agents 5.6 Release Notes",
+        "path": "java-agents/5.6/Java-Agents-5.6-Java-Agents-Rnotes.pdf",
+        "version": "5.6"
+      },
+      {
+        "title": "Java Policy Agents 5.5 User Guide",
+        "path": "java-agents/5.5/Java-Agents-5.5-Java-Agents-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "Java Policy Agents 5.5 Release Notes",
+        "path": "java-agents/5.5/Java-Agents-5.5-Java-Agents-Rnotes.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "Java Policy Agents 5 User Guide",
+        "path": "java-agents/5/Java-Agents-5-Java-Agents-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "Java Policy Agents 5 Release Notes",
+        "path": "java-agents/5/Java-Agents-5-Java-Agents-Rnotes.pdf",
+        "version": "5"
+      },
+      {
+        "title": "Java Policy Agents 3.5 Release Notes",
+        "path": "java-agents/3.5/OpenAM-JEE-Policy-Agents-3.5-Jee-Release-Notes.pdf",
+        "version": "3.5"
+      },
+      {
+        "title": "Java Policy Agents 3.5 Users Guide",
+        "path": "java-agents/3.5/OpenAM-JEE-Policy-Agents-3.5-Jee-Users-Guide.pdf",
+        "version": "3.5"
+      },
+      {
+        "title": "Java Policy Agents 3.3 Installation Guide",
+        "path": "java-agents/3.3/OpenAM-JEE-Policy-Agents-3.3-Jee-Install-Guide.pdf",
+        "version": "3.3"
+      },
+      {
+        "title": "Java Policy Agents 3.3 Reference",
+        "path": "java-agents/3.3/OpenAM-JEE-Policy-Agents-3.3-Jee-Reference.pdf",
+        "version": "3.3"
+      },
+      {
+        "title": "Java Policy Agents 3.3 Release Notes",
+        "path": "java-agents/3.3/OpenAM-JEE-Policy-Agents-3.3-Jee-Release-Notes.pdf",
+        "version": "3.3"
+      }
+    ]
+  },
+  {
+    "family": "pingam",
+    "product": "web-agents",
+    "title": "AM Web Agents",
+    "pdflist": [
+      {
+        "title": "Web Agents 2024.9",
+        "path": "web-agents/2024.9/web_agents-2024.9.pdf",
+        "version": "2024.9"
+      },
+      {
+        "title": "Web Agents 2024.6",
+        "path": "web-agents/2024.6/web_agents-2024.6.pdf",
+        "version": "2024.6"
+      },
+      {
+        "title": "Web Agents 2024.3",
+        "path": "web-agents/2024.3/web_agents-2024.3.pdf",
+        "version": "2024.3"
+      },
+      {
+        "title": "Web Policy Agents 2023.9 Release Notes",
+        "path": "web-agents/2023.9/openam-web-policy-agents-2023.9-release-notes.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Web Policy Agents 2023.9 Identity Cloud Guide",
+        "path": "web-agents/2023.9/openam-web-policy-agents-2023.9-identity-cloud-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Web Policy Agents 2023.9 Installation Guide",
+        "path": "web-agents/2023.9/openam-web-policy-agents-2023.9-installation-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Web Policy Agents 2023.9 Maintenance Guide",
+        "path": "web-agents/2023.9/openam-web-policy-agents-2023.9-maintenance-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Web Policy Agents 2023.9 Properties Reference",
+        "path": "web-agents/2023.9/openam-web-policy-agents-2023.9-properties-reference.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Web Policy Agents 2023.9 Security Guide",
+        "path": "web-agents/2023.9/openam-web-policy-agents-2023.9-security-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Web Policy Agents 2023.9 User Guide",
+        "path": "web-agents/2023.9/openam-web-policy-agents-2023.9-user-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "Web Policy Agents 2023.6 Release Notes",
+        "path": "web-agents/2023.6/openam-web-policy-agents-2023.6-release-notes.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Web Policy Agents 2023.6 Identity Cloud Guide",
+        "path": "web-agents/2023.6/openam-web-policy-agents-2023.6-identity-cloud-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Web Policy Agents 2023.6 Installation Guide",
+        "path": "web-agents/2023.6/openam-web-policy-agents-2023.6-installation-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Web Policy Agents 2023.6 Maintenance Guide",
+        "path": "web-agents/2023.6/openam-web-policy-agents-2023.6-maintenance-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Web Policy Agents 2023.6 Properties Reference",
+        "path": "web-agents/2023.6/openam-web-policy-agents-2023.6-properties-reference.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Web Policy Agents 2023.6 Security Guide",
+        "path": "web-agents/2023.6/openam-web-policy-agents-2023.6-security-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Web Policy Agents 2023.6 User Guide",
+        "path": "web-agents/2023.6/openam-web-policy-agents-2023.6-user-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "Web Policy Agents 2023.3 Release Notes",
+        "path": "web-agents/2023.3/openam-web-policy-agents-2023.3-release-notes.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Web Policy Agents 2023.3 Identity Cloud Guide",
+        "path": "web-agents/2023.3/openam-web-policy-agents-2023.3-identity-cloud-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Web Policy Agents 2023.3 Installation Guide",
+        "path": "web-agents/2023.3/openam-web-policy-agents-2023.3-installation-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Web Policy Agents 2023.3 Maintenance Guide",
+        "path": "web-agents/2023.3/openam-web-policy-agents-2023.3-maintenance-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Web Policy Agents 2023.3 Properties Reference",
+        "path": "web-agents/2023.3/openam-web-policy-agents-2023.3-properties-reference.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Web Policy Agents 2023.3 Security Guide",
+        "path": "web-agents/2023.3/openam-web-policy-agents-2023.3-security-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Web Policy Agents 2023.3 User Guide",
+        "path": "web-agents/2023.3/openam-web-policy-agents-2023.3-user-guide.pdf",
+        "version": "2023.3"
+      },
+      {
+        "title": "Web Policy Agents 5.10",
+        "path": "web-agents/5.10/web_agents-5.10.pdf",
+        "version": "5.10"
+      },
+      {
+        "title": "Web Policy Agents 5.9 Release Notes",
+        "path": "web-agents/5.9/openam-web-policy-agents-5.9-release-notes.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Web Policy Agents 5.9 Identity Cloud Guide",
+        "path": "web-agents/5.9/openam-web-policy-agents-5.9-identity-cloud-guide.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Web Policy Agents 5.9 Installation Guide",
+        "path": "web-agents/5.9/openam-web-policy-agents-5.9-installation-guide.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Web Policy Agents 5.9 Maintenance Guide",
+        "path": "web-agents/5.9/openam-web-policy-agents-5.9-maintenance-guide.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Web Policy Agents 5.9 Properties Reference",
+        "path": "web-agents/5.9/openam-web-policy-agents-5.9-properties-reference.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Web Policy Agents 5.9 User Guide",
+        "path": "web-agents/5.9/openam-web-policy-agents-5.9-user-guide.pdf",
+        "version": "5.9"
+      },
+      {
+        "title": "Web Policy Agents 5.8 Release Notes",
+        "path": "web-agents/5.8/Web-Agents-5.8.2.1-Release-Notes.pdf",
+        "version": "5.8"
+      },
+      {
+        "title": "Web Policy Agents 5.8 Identity Cloud Guide",
+        "path": "web-agents/5.8/Web-Agents-5.8.2.1-Identity-Cloud-Guide.pdf",
+        "version": "5.8"
+      },
+      {
+        "title": "Web Policy Agents 5.8 User Guide",
+        "path": "web-agents/5.8/Web-Agents-5.8.2.1-Web-Agents-Guide.pdf",
+        "version": "5.8"
+      },
+      {
+        "title": "Web Policy Agents 5.7 Release Notes",
+        "path": "web-agents/5.7/Web-Agents-5.7-Web-Agents-Rnotes.pdf",
+        "version": "5.7"
+      },
+      {
+        "title": "Web Policy Agents 5.7 User Guide",
+        "path": "web-agents/5.7/Web-Agents-5.7-Web-Agents-Guide.pdf",
+        "version": "5.7"
+      },
+      {
+        "title": "Web Policy Agents 5.6 Release Notes",
+        "path": "web-agents/5.6/Web-Agents-5.6-Web-Agents-Rnotes.pdf",
+        "version": "5.6"
+      },
+      {
+        "title": "Web Policy Agents 5.6 User Guide",
+        "path": "web-agents/5.6/Web-Agents-5.6-Web-Agents-Guide.pdf",
+        "version": "5.6"
+      },
+      {
+        "title": "Web Policy Agents 5.5 Release Notes",
+        "path": "web-agents/5.5/Web-Agents-5.5-Web-Agents-Rnotes.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "Web Policy Agents 5.5 User Guide",
+        "path": "web-agents/5.5/Web-Agents-5.5-Web-Agents-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "Web Policy Agents 5 Release Notes",
+        "path": "web-agents/5/Web-Agents-5-Web-Agents-Rnotes.pdf",
+        "version": "5"
+      },
+      {
+        "title": "Web Policy Agents 5 User Guide",
+        "path": "web-agents/5/Web-Agents-5-Web-Agents-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "Web Policy Agents 4.2 Release Notes",
+        "path": "web-agents/4.2/Web-Agents-4.2-Web-Pa-Rnotes.pdf",
+        "version": "4.2"
+      },
+      {
+        "title": "Web Policy Agents 4.2 Users Guide",
+        "path": "web-agents/4.2/Web-Agents-4.2-Web-Pa-Guide.pdf",
+        "version": "4.2"
+      },
+      {
+        "title": "Web Policy Agents 4.1 Release Notes",
+        "path": "web-agents/4.1/OpenAM-Web-Policy-Agents-4.1.1-Web-Pa-Rnotes.pdf",
+        "version": "4.1"
+      },
+      {
+        "title": "Web Policy Agents 4.1 Users Guide",
+        "path": "web-agents/4.1/OpenAM-Web-Policy-Agents-4.1.1-Web-Pa-Guide.pdf",
+        "version": "4.1"
+      },
+      {
+        "title": "Web Policy Agents 4 Release Notes",
+        "path": "web-agents/4/OpenAM-Web-Policy-Agents-4-Web-Release-Notes.pdf",
+        "version": "4"
+      },
+      {
+        "title": "Web Policy Agents 4 Users Guide",
+        "path": "web-agents/4/OpenAM-Web-Policy-Agents-4-Web-Users-Guide.pdf",
+        "version": "4"
+      },
+      {
+        "title": "Web Policy Agents 3.3 Release Notes",
+        "path": "web-agents/3.3/OpenAM-Web-Policy-Agents-3.3-Web-Release-Notes.pdf",
+        "version": "3.3"
+      },
+      {
+        "title": "Web Policy Agents 3.3 Install Guide",
+        "path": "web-agents/3.3/OpenAM-Web-Policy-Agents-3.3-Web-Install-Guide.pdf",
+        "version": "3.3"
+      },
+      {
+        "title": "Web Policy Agents 3.3 Reference",
+        "path": "web-agents/3.3/OpenAM-Web-Policy-Agents-3.3-Web-Reference.pdf",
+        "version": "3.3"
+      }
+    ]
+  },
+  {
+    "family": "pingam",
+    "product": "openam",
+    "title": "OpenAM",
+    "pdflist": [
+      {
+        "title": "OpenAM 13.5 Release Notes",
+        "path": "openam/13.5/OpenAM-13.5-Release-Notes.pdf",
+        "version": "13.5"
+      },
+      {
+        "title": "OpenAM 13.5 Admin Guide",
+        "path": "openam/13.5/OpenAM-13.5-Admin-Guide.pdf",
+        "version": "13.5"
+      },
+      {
+        "title": "OpenAM 13.5 Deployment Planning",
+        "path": "openam/13.5/OpenAM-13.5-Deployment-Planning.pdf",
+        "version": "13.5"
+      },
+      {
+        "title": "OpenAM 13.5 Dev Guide",
+        "path": "openam/13.5/OpenAM-13.5-Dev-Guide.pdf",
+        "version": "13.5"
+      },
+      {
+        "title": "OpenAM 13.5 Getting Started",
+        "path": "openam/13.5/OpenAM-13.5-Getting-Started.pdf",
+        "version": "13.5"
+      },
+      {
+        "title": "OpenAM 13.5 Install Guide",
+        "path": "openam/13.5/OpenAM-13.5-Install-Guide.pdf",
+        "version": "13.5"
+      },
+      {
+        "title": "OpenAM 13.5 Reference",
+        "path": "openam/13.5/OpenAM-13.5-Reference.pdf",
+        "version": "13.5"
+      },
+      {
+        "title": "OpenAM 13.5 Upgrade Guide",
+        "path": "openam/13.5/OpenAM-13.5-Upgrade-Guide.pdf",
+        "version": "13.5"
+      },
+      {
+        "title": "OpenAM 13.5 Javadoc",
+        "path": "openam/13.5/openam-13.5-javadoc.zip",
+        "version": "13.5"
+      },
+      {
+        "title": "OpenAM 13 Release Notes",
+        "path": "openam/13/OpenAM-13-Release-Notes.pdf",
+        "version": "13"
+      },
+      {
+        "title": "OpenAM 13 Admin Guide",
+        "path": "openam/13/OpenAM-13-Admin-Guide.pdf",
+        "version": "13"
+      },
+      {
+        "title": "OpenAM 13 Deployment Planning",
+        "path": "openam/13/OpenAM-13-Deployment-Planning.pdf",
+        "version": "13"
+      },
+      {
+        "title": "OpenAM 13 Dev Guide",
+        "path": "openam/13/OpenAM-13-Dev-Guide.pdf",
+        "version": "13"
+      },
+      {
+        "title": "OpenAM 13 Getting Started",
+        "path": "openam/13/OpenAM-13-Getting-Started.pdf",
+        "version": "13"
+      },
+      {
+        "title": "OpenAM 13 Install Guide",
+        "path": "openam/13/OpenAM-13-Install-Guide.pdf",
+        "version": "13"
+      },
+      {
+        "title": "OpenAM 13 Reference",
+        "path": "openam/13/OpenAM-13-Reference.pdf",
+        "version": "13"
+      },
+      {
+        "title": "OpenAM 13 Upgrade Guide",
+        "path": "openam/13/OpenAM-13-Upgrade-Guide.pdf",
+        "version": "13"
+      },
+      {
+        "title": "OpenAM 13 Javadoc",
+        "path": "openam/13/openam-13-javadoc.zip",
+        "version": "13"
+      },
+      {
+        "title": "OpenAM 12 Release Notes",
+        "path": "openam/12/OpenAM-12-Release-Notes.pdf",
+        "version": "12"
+      },
+      {
+        "title": "OpenAM 12 Admin Guide",
+        "path": "openam/12/OpenAM-12-Admin-Guide.pdf",
+        "version": "12"
+      },
+      {
+        "title": "OpenAM 12 Deployment Planning",
+        "path": "openam/12/OpenAM-12-Deployment-Planning.pdf",
+        "version": "12"
+      },
+      {
+        "title": "OpenAM 12 Dev Guide",
+        "path": "openam/12/OpenAM-12-Dev-Guide.pdf",
+        "version": "12"
+      },
+      {
+        "title": "OpenAM 12 Getting Started",
+        "path": "openam/12/OpenAM-12-Getting-Started.pdf",
+        "version": "12"
+      },
+      {
+        "title": "OpenAM 12 Install Guide",
+        "path": "openam/12/OpenAM-12-Install-Guide.pdf",
+        "version": "12"
+      },
+      {
+        "title": "OpenAM 12 Reference",
+        "path": "openam/12/OpenAM-12-Reference.pdf",
+        "version": "12"
+      },
+      {
+        "title": "OpenAM 12 Upgrade Guide",
+        "path": "openam/12/OpenAM-12-Upgrade-Guide.pdf",
+        "version": "12"
+      },
+      {
+        "title": "OpenAM 12 Javadoc",
+        "path": "openam/12/openam-12-javadoc.zip",
+        "version": "12"
+      },
+      {
+        "title": "OpenAM 11 Release Notes",
+        "path": "openam/11/OpenAM-11-Release-Notes.pdf",
+        "version": "11"
+      },
+      {
+        "title": "OpenAM 11 Admin Guide",
+        "path": "openam/11/OpenAM-11-Admin-Guide.pdf",
+        "version": "11"
+      },
+      {
+        "title": "OpenAM 11 Dev Guide",
+        "path": "openam/11/OpenAM-11-Dev-Guide.pdf",
+        "version": "11"
+      },
+      {
+        "title": "OpenAM 11 Getting Started",
+        "path": "openam/11/OpenAM-11-Getting-Started.pdf",
+        "version": "11"
+      },
+      {
+        "title": "OpenAM 11 Install Guide",
+        "path": "openam/11/OpenAM-11-Install-Guide.pdf",
+        "version": "11"
+      },
+      {
+        "title": "OpenAM 11 Reference",
+        "path": "openam/11/OpenAM-11-Reference.pdf",
+        "version": "11"
+      },
+      {
+        "title": "OpenAM 11 Upgrade Guide",
+        "path": "openam/11/OpenAM-11-Upgrade-Guide.pdf",
+        "version": "11"
+      },
+      {
+        "title": "OpenAM 11 Javadoc",
+        "path": "openam/11/openam-11-javadoc.zip",
+        "version": "11"
+      },
+      {
+        "title": "OpenAM 10.1 Release Notes",
+        "path": "openam/10.1/OpenAM-10.1-Release-Notes.pdf",
+        "version": "10.1"
+      },
+      {
+        "title": "OpenAM 10.1 Admin Guide",
+        "path": "openam/10.1/OpenAM-10.1-Admin-Guide.pdf",
+        "version": "10.1"
+      },
+      {
+        "title": "OpenAM 10.1 Dev Guide",
+        "path": "openam/10.1/OpenAM-10.1-Dev-Guide.pdf",
+        "version": "10.1"
+      },
+      {
+        "title": "OpenAM 10.1 Install Guide",
+        "path": "openam/10.1/OpenAM-10.1-Install-Guide.pdf",
+        "version": "10.1"
+      },
+      {
+        "title": "OpenAM 10.1 Reference",
+        "path": "openam/10.1/OpenAM-10.1-Reference.pdf",
+        "version": "10.1"
+      },
+      {
+        "title": "OpenAM 10 Release Notes",
+        "path": "openam/10/OpenAM-10-Release-Notes.pdf",
+        "version": "10"
+      },
+      {
+        "title": "OpenAM 10 Admin Guide",
+        "path": "openam/10/OpenAM-10-Admin-Guide.pdf",
+        "version": "10"
+      },
+      {
+        "title": "OpenAM 10 Dev Guide",
+        "path": "openam/10/OpenAM-10-Dev-Guide.pdf",
+        "version": "10"
+      },
+      {
+        "title": "OpenAM 10 Install Guide",
+        "path": "openam/10/OpenAM-10-Install-Guide.pdf",
+        "version": "10"
+      },
+      {
+        "title": "OpenAM 10 Reference",
+        "path": "openam/10/OpenAM-10-Reference.pdf",
+        "version": "10"
+      },
+      {
+        "title": "OpenAM 10 Javadoc",
+        "path": "openam/10/openam-10-javadoc.zip",
+        "version": "10"
+      }
+    ]
+  },
+  {
+    "family": "pingam",
+    "product": "legacy-agents",
+    "title": "Legacy Policy Agents",
+    "pdflist": [
+      {
+        "title": "OpenAM Policy Agents 3.1 Release Notes",
+        "path": "legacy-agents/3.1/OpenAM-Policy-Agents-3.1-Agent-Release-Notes.pdf",
+        "version": ""
+      },
+      {
+        "title": "OpenAM Policy Agents 3.1 Install Guide",
+        "path": "legacy-agents/3.1/OpenAM-Policy-Agents-3.1-Agent-Install-Guide.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pingaccess",
+    "product": "pingaccess",
+    "title": "PingAccess",
+    "pdflist": [
+      {
+        "title": "PingAccess 7.1",
+        "path": "pingaccess/pingaccess-71.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 7.0",
+        "path": "pingaccess/pingaccess-70.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 6.3",
+        "path": "pingaccess/pingaccess-63.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 6.2",
+        "path": "pingaccess/pingaccess-62.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 6.1",
+        "path": "pingaccess/pingaccess-61.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 6.0",
+        "path": "pingaccess/pingaccess-60.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 5.3",
+        "path": "pingaccess/pingaccess-53.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 5.2",
+        "path": "pingaccess/pingaccess-52.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 5.1",
+        "path": "pingaccess/pingaccess-51.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 5.0",
+        "path": "pingaccess/pingaccess-50.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 4.3",
+        "path": "pingaccess/pingaccess-43.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 4.2",
+        "path": "pingaccess/pingaccess-42.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 4.1",
+        "path": "pingaccess/pingaccess-41.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 4.0",
+        "path": "pingaccess/pingaccess-40.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 3.2",
+        "path": "pingaccess/pingaccess-32.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAccess 3.1",
+        "path": "pingaccess/pingaccess-31.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pingauthorize",
+    "product": "pingauthorize",
+    "title": "PingAuthorize",
+    "pdflist": [
+      {
+        "title": "PingAuthorize 10.0",
+        "path": "pingauthorize/10.0/pingauthorize-10.0.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAuthorize 9.2",
+        "path": "pingauthorize/9.2/pingauthorize-9.2.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAuthorize 9.1",
+        "path": "pingauthorize/pingauthorize-91.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAuthorize 9.0",
+        "path": "pingauthorize/pingauthorize-90.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingAuthorize 8.3",
+        "path": "pingauthorize/pingauthorize-83.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pingauthorize",
+    "product": "pingdatagovernance",
+    "title": "PingDataGovernance",
+    "pdflist": [
+      {
+        "title": "PingDataGovernance 8.3",
+        "path": "pingdatagovernance/pingdatagovernance-83.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDataGovernance 8.2",
+        "path": "pingdatagovernance/pingdatagovernance-82.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDataGovernance 8.1",
+        "path": "pingdatagovernance/pingdatagovernance-81.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDataGovernance 8.0",
+        "path": "pingdatagovernance/pingdatagovernance-80.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDataGovernance 7.3",
+        "path": "pingdatagovernance/pingdatagovernance-73.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDataGovernance 7.0",
+        "path": "pingdatagovernance/pingdatagovernance-70.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDataGovernance 6.2",
+        "path": "pingdatagovernance/pingdatagovernance-62.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDataGovernance 6.1",
+        "path": "pingdatagovernance/pingdatagovernance-61.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDataGovernance 6.0",
+        "path": "pingdatagovernance/pingdatagovernance-60.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pingcentral",
+    "product": "pingcentral",
+    "title": "PingCentral",
+    "pdflist": [
+      {
+        "title": "PingCentral 1.10",
+        "path": "pingcentral/pingcentral-110.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingCentral 1.9",
+        "path": "pingcentral/pingcentral-19.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingCentral 1.8",
+        "path": "pingcentral/pingcentral-18.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingCentral 1.7",
+        "path": "pingcentral/pingcentral-17.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingCentral 1.6",
+        "path": "pingcentral/pingcentral-16.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingCentral 1.5",
+        "path": "pingcentral/pingcentral-15.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingCentral 1.4",
+        "path": "pingcentral/pingcentral-14.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingCentral 1.3",
+        "path": "pingcentral/pingcentral-13.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingCentral 1.2",
+        "path": "pingcentral/pingcentral-12.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pingdirectory",
+    "product": "pingdirectory",
+    "title": "PingDirectory",
+    "pdflist": [
+      {
+        "title": "PingDirectory 10.0",
+        "path": "pingdirectory/10.0/pingdirectory-10.0.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 9.2",
+        "path": "pingdirectory/pingdirectory-9.2.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 9.1",
+        "path": "pingdirectory/pingdirectory-91.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 9.0",
+        "path": "pingdirectory/pingdirectory-90.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 8.3",
+        "path": "pingdirectory/pingdirectory-83.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 8.2",
+        "path": "pingdirectory/pingdirectory-82.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 8.1",
+        "path": "pingdirectory/pingdirectory-81.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 8.0",
+        "path": "pingdirectory/pingdirectory-80.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 7.3",
+        "path": "pingdirectory/pingdirectory-73.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 7.2",
+        "path": "pingdirectory/pingdirectory-72.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 7.0",
+        "path": "pingdirectory/pingdirectory-70.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 6.2",
+        "path": "pingdirectory/pingdirectory-62.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 6.1",
+        "path": "pingdirectory/pingdirectory-61.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingDirectory 6.0",
+        "path": "pingdirectory/pingdirectory-60.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pingds",
+    "product": "ds",
+    "title": "DS",
+    "pdflist": [
+      {
+        "title": "DS 7.1 Getting Started",
+        "path": "ds/7.1/ds-7.1-getting-started.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Config Guide",
+        "path": "ds/7.1/ds-7.1-config-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Config Reference",
+        "path": "ds/7.1/ds-7.1-configref.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Deployment Guide",
+        "path": "ds/7.1/ds-7.1-deployment-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Install Guide",
+        "path": "ds/7.1/ds-7.1-install-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 LDAP Guide",
+        "path": "ds/7.1/ds-7.1-ldap-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 LDAP Reference",
+        "path": "ds/7.1/ds-7.1-ldap-reference.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Log Reference",
+        "path": "ds/7.1/ds-7.1-log-reference.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Logging Guide",
+        "path": "ds/7.1/ds-7.1-logging-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Maintenance Guide",
+        "path": "ds/7.1/ds-7.1-maintenance-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Monitoring Guide",
+        "path": "ds/7.1/ds-7.1-monitoring-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 REST Guide",
+        "path": "ds/7.1/ds-7.1-rest-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Schema Reference",
+        "path": "ds/7.1/ds-7.1-schemaref.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Security Guide",
+        "path": "ds/7.1/ds-7.1-security-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Tools Reference",
+        "path": "ds/7.1/ds-7.1-tools-reference.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Upgrade Guide",
+        "path": "ds/7.1/ds-7.1-upgrade-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7.1 Javadoc",
+        "path": "ds/7.1/ds-7.1-javadoc.zip",
+        "version": "7.1"
+      },
+      {
+        "title": "DS 7 Release Notes",
+        "path": "ds/7/DS-7-Release-Notes.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Getting Started",
+        "path": "ds/7/DS-7-Getting-Started.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Guide Guide",
+        "path": "ds/7/DS-7-Guide-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Config Guide",
+        "path": "ds/7/DS-7-Config-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Config Reference",
+        "path": "ds/7/DS-7-Configref.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Deployment Guide",
+        "path": "ds/7/DS-7-Deployment-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Install Guide",
+        "path": "ds/7/DS-7-Install-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 LDAP Guide",
+        "path": "ds/7/DS-7-Ldap-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 LDAP Reference",
+        "path": "ds/7/DS-7-Ldap-Reference.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Log Reference",
+        "path": "ds/7/DS-7-Log-Reference.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Logging Guide",
+        "path": "ds/7/DS-7-Logging-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Maintenance Guide",
+        "path": "ds/7/DS-7-Maintenance-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Monitoring Guide",
+        "path": "ds/7/DS-7-Monitoring-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 REST Guide",
+        "path": "ds/7/DS-7-Rest-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Schema Reference",
+        "path": "ds/7/DS-7-Schemaref.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Security Guide",
+        "path": "ds/7/DS-7-Security-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Tools Reference",
+        "path": "ds/7/DS-7-Tools-Reference.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Upgrade Guide",
+        "path": "ds/7/DS-7-Upgrade-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "DS 7 Javadoc",
+        "path": "ds/7/ds-7-javadoc.zip",
+        "version": "7"
+      },
+      {
+        "title": "DS 6.5 Release Notes",
+        "path": "ds/6.5/DS-6.5-Release-Notes.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Getting Started",
+        "path": "ds/6.5/DS-6.5-Getting-Started.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Admin Guide",
+        "path": "ds/6.5/DS-6.5-Admin-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Config Reference",
+        "path": "ds/6.5/DS-6.5-Configref.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Deployment Guide",
+        "path": "ds/6.5/DS-6.5-Deployment-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Dev Guide",
+        "path": "ds/6.5/DS-6.5-Dev-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Install Guide",
+        "path": "ds/6.5/DS-6.5-Install-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Log Reference",
+        "path": "ds/6.5/DS-6.5-Log-Reference.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Reference",
+        "path": "ds/6.5/DS-6.5-Reference.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Schema Reference",
+        "path": "ds/6.5/DS-6.5-Schemaref.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Security Guide",
+        "path": "ds/6.5/DS-6.5-Security-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6.5 Javadoc",
+        "path": "ds/6.5/ds-6.5-javadoc.zip",
+        "version": "6.5"
+      },
+      {
+        "title": "DS 6 Release Notes",
+        "path": "ds/6/DS-6-Release-Notes.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Admin Guide",
+        "path": "ds/6/DS-6-Admin-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Config Reference",
+        "path": "ds/6/DS-6-Configref.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Deployment Guide",
+        "path": "ds/6/DS-6-Deployment-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Dev Guide",
+        "path": "ds/6/DS-6-Dev-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Install Guide",
+        "path": "ds/6/DS-6-Install-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Log Reference",
+        "path": "ds/6/DS-6-Log-Reference.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Reference",
+        "path": "ds/6/DS-6-Reference.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Schema Reference",
+        "path": "ds/6/DS-6-Schemaref.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Security Guide",
+        "path": "ds/6/DS-6-Security-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "DS 6 Javadoc",
+        "path": "ds/6/ds-6-javadoc.zip",
+        "version": "6"
+      },
+      {
+        "title": "DS 5.5 Release Notes",
+        "path": "ds/5.5/DS-5.5-Release-Notes.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5.5 Admin Guide",
+        "path": "ds/5.5/DS-5.5-Admin-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5.5 Config Reference",
+        "path": "ds/5.5/DS-5.5-Configref.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5.5 Dev Guide",
+        "path": "ds/5.5/DS-5.5-Dev-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5.5 Install Guide",
+        "path": "ds/5.5/DS-5.5-Install-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5.5 Log Reference",
+        "path": "ds/5.5/DS-5.5-Log-Reference.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5.5 Reference",
+        "path": "ds/5.5/DS-5.5-Reference.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5.5 Schema Reference",
+        "path": "ds/5.5/DS-5.5-Schemaref.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5.5 Security Guide",
+        "path": "ds/5.5/DS-5.5-Security-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5.5 Javadoc",
+        "path": "ds/5.5/ds-5.5-javadoc.zip",
+        "version": "5.5"
+      },
+      {
+        "title": "DS 5 Release Notes",
+        "path": "ds/5/DS-5-Release-Notes.pdf",
+        "version": "5"
+      },
+      {
+        "title": "DS 5 Admin Guide",
+        "path": "ds/5/DS-5-Admin-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "DS 5 Dev Guide",
+        "path": "ds/5/DS-5-Dev-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "DS 5 Install Guide",
+        "path": "ds/5/DS-5-Install-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "DS 5 Log Reference",
+        "path": "ds/5/DS-5-Log-Reference.pdf",
+        "version": "5"
+      },
+      {
+        "title": "DS 5 Reference",
+        "path": "ds/5/DS-5-Reference.pdf",
+        "version": "5"
+      },
+      {
+        "title": "DS 5 Security Guide",
+        "path": "ds/5/DS-5-Security-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "DS 5 Javadoc",
+        "path": "ds/5/ds-5-javadoc.zip",
+        "version": "5"
+      }
+    ]
+  },
+  {
+    "family": "pingds",
+    "product": "opendj",
+    "title": "OpenDJ",
+    "pdflist": [
+      {
+        "title": "OpenDJ 3.5 Release Notes",
+        "path": "opendj/3.5/OpenDJ-3.5-Release-Notes.pdf",
+        "version": "3.5"
+      },
+      {
+        "title": "OpenDJ 3.5 Admin Guide",
+        "path": "opendj/3.5/OpenDJ-3.5-Admin-Guide.pdf",
+        "version": "3.5"
+      },
+      {
+        "title": "OpenDJ 3.5 Install Guide",
+        "path": "opendj/3.5/OpenDJ-3.5-Install-Guide.pdf",
+        "version": "3.5"
+      },
+      {
+        "title": "OpenDJ 3.5-Reference",
+        "path": "opendj/3.5/OpenDJ-3.5-Reference.pdf",
+        "version": "3.5"
+      },
+      {
+        "title": "OpenDJ 3.5 Server Dev Guide",
+        "path": "opendj/3.5/OpenDJ-3.5-Server-Dev-Guide.pdf",
+        "version": "3.5"
+      },
+      {
+        "title": "OpenDJ 3.5 Config Reference",
+        "path": "opendj/3.5/opendj-3.5-configref.zip",
+        "version": "3.5"
+      },
+      {
+        "title": "OpenDJ 3.5 Javadoc",
+        "path": "opendj/3.5/opendj-3.5-javadoc.zip",
+        "version": "3.5"
+      },
+      {
+        "title": "OpenDJ 3 Release Notes",
+        "path": "opendj/3/OpenDJ-3-Release-Notes.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenDJ 3 OEM Release Notes",
+        "path": "opendj/3/OpenDJ-3-Oem-Release-Notes.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenDJ 3 Admin Guide",
+        "path": "opendj/3/OpenDJ-3-Admin-Guide.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenDJ 3 Install Guide",
+        "path": "opendj/3/OpenDJ-3-Install-Guide.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenDJ 3 Reference",
+        "path": "opendj/3/OpenDJ-3-Reference.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenDJ 3 Server Dev Guide",
+        "path": "opendj/3/OpenDJ-3-Server-Dev-Guide.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenDJ 2.6 Release Notes",
+        "path": "opendj/2.6/OpenDJ-2.6-Release-Notes.pdf",
+        "version": "2.6"
+      },
+      {
+        "title": "OpenDJ 2.6 Admin Guide",
+        "path": "opendj/2.6/OpenDJ-2.6-Admin-Guide.pdf",
+        "version": "2.6"
+      },
+      {
+        "title": "OpenDJ 2.6 Dev Guide",
+        "path": "opendj/2.6/OpenDJ-2.6-Dev-Guide.pdf",
+        "version": "2.6"
+      },
+      {
+        "title": "OpenDJ 2.6 Install Guide",
+        "path": "opendj/2.6/OpenDJ-2.6-Install-Guide.pdf",
+        "version": "2.6"
+      },
+      {
+        "title": "OpenDJ 2.5.0-Xpress1 Release Notes",
+        "path": "opendj/2.5/OpenDJ-2.5.0-Xpress1-Release-Notes.pdf",
+        "version": "2.5"
+      }
+    ]
+  },
+  {
+    "family": "pingfederate",
+    "product": "pingfederate",
+    "title": "PingFederate",
+    "pdflist": [
+      {
+        "title": "PingFederate 11.2",
+        "path": "pingfederate/11.2/pingfederate_server-11.2.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 11.1",
+        "path": "pingfederate/pingfederate-111.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 11.0",
+        "path": "pingfederate/pingfederate-110.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 10.3",
+        "path": "pingfederate/pingfederate-103.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 10.2",
+        "path": "pingfederate/pingfederate-102.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 10.1",
+        "path": "pingfederate/pingfederate-101.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 10.0",
+        "path": "pingfederate/pingfederate-100.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 9.3",
+        "path": "pingfederate/pingfederate-93.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 9.2",
+        "path": "pingfederate/pingfederate-92.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 9.1",
+        "path": "pingfederate/pingfederate-91.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 9.0",
+        "path": "pingfederate/pingfederate-90.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 8.4",
+        "path": "pingfederate/pingfederate-84.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 8.3",
+        "path": "pingfederate/pingfederate-83.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 8.2",
+        "path": "pingfederate/pingfederate-82.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 8.1",
+        "path": "pingfederate/pingfederate-81.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 8.0",
+        "path": "pingfederate/pingfederate-80.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate 7.3",
+        "path": "pingfederate/pingfederate-73.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pingfederate",
+    "product": "pingfederatebridge",
+    "title": "PingFederate Bridge",
+    "pdflist": [
+      {
+        "title": "PingFederate Bridge 10.2",
+        "path": "pingfederatebridge/pingfederatebridge-102.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate Bridge 10.1",
+        "path": "pingfederatebridge/pingfederatebridge-101.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate Bridge 10.0",
+        "path": "pingfederatebridge/pingfederatebridge-100.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingFederate Bridge 9.3",
+        "path": "pingfederatebridge/pingfederatebridge-93.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pingfederate",
+    "product": "integrations",
+    "title": "PingFederate Integrations",
+    "pdflist": [
+      {
+        "title": "Citrix XenApp Integration Kit",
+        "path": "integrations/pingfederate-citrix-xenapp-ik.pdf",
+        "version": ""
+      },
+      {
+        "title": "IDaaS Directory Provisioner",
+        "path": "integrations/pingfederate-idaasdirectory-connector.pdf",
+        "version": ""
+      },
+      {
+        "title": "Integrated Windows Authentication (IWA) Integration Kit",
+        "path": "integrations/pingfederate-iwa-ik.pdf",
+        "version": ""
+      },
+      {
+        "title": "Jive Provisioner",
+        "path": "integrations/pingfederate-jive-connector.pdf",
+        "version": ""
+      },
+      {
+        "title": "OpenID Login Integration Kit",
+        "path": "integrations/pingfederate-openid-cic.pdf",
+        "version": ""
+      },
+      {
+        "title": "WebLogic Integration Kit",
+        "path": "integrations/pingfederate-weblogic-ik.pdf",
+        "version": ""
+      },
+      {
+        "title": "WebSphere Integration Kit",
+        "path": "integrations/pingfederate-websphere-ik.pdf",
+        "version": ""
+      },
+      {
+        "title": "WS-Trust STS and Microsoft Integration Guide",
+        "path": "integrations/pingfederate-wstrust-sts-microsoft-integration.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pinggateway",
+    "product": "pinggateway",
+    "title": "PingGateway",
+    "pdflist": [
+      {
+        "title": "PingGateway 2024.9",
+        "path": "pinggateway/2024.9/pinggateway-2024.9.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingGateway 2024.6",
+        "path": "pinggateway/2024.6/pinggateway-2024.6.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingGateway 2024.3",
+        "path": "pinggateway/2024.3/pinggateway-2024.3.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pinggateway",
+    "product": "ig",
+    "title": "IG",
+    "pdflist": [
+      {
+        "title": "IG 2023.9 Release Notes",
+        "path": "ig/2023.9/ig-2023.9-release-notes.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Getting Started",
+        "path": "ig/2023.9/ig-2023.9-getting-started.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Devops Guide",
+        "path": "ig/2023.9/ig-2023.9-devops-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Gateway Guide",
+        "path": "ig/2023.9/ig-2023.9-gateway-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Identity Cloud Guide",
+        "path": "ig/2023.9/ig-2023.9-identity-cloud-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Installation Guide",
+        "path": "ig/2023.9/ig-2023.9-installation-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Maintenance Guide",
+        "path": "ig/2023.9/ig-2023.9-maintenance-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Reference",
+        "path": "ig/2023.9/ig-2023.9-reference.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Security Guide",
+        "path": "ig/2023.9/ig-2023.9-security-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Studio Guide",
+        "path": "ig/2023.9/ig-2023.9-studio-guide.pdf",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.9 Javadoc",
+        "path": "ig/2023.9/ig-2023.9-javadoc.zip",
+        "version": "2023.9"
+      },
+      {
+        "title": "IG 2023.6 Release Notes",
+        "path": "ig/2023.6/ig-2023.6-release-notes.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Getting Started",
+        "path": "ig/2023.6/ig-2023.6-getting-started.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Devops Guide",
+        "path": "ig/2023.6/ig-2023.6-devops-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Gateway Guide",
+        "path": "ig/2023.6/ig-2023.6-gateway-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Identity Cloud Guide",
+        "path": "ig/2023.6/ig-2023.6-identity-cloud-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Installation Guide",
+        "path": "ig/2023.6/ig-2023.6-installation-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Maintenance Guide",
+        "path": "ig/2023.6/ig-2023.6-maintenance-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Reference",
+        "path": "ig/2023.6/ig-2023.6-reference.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Security Guide",
+        "path": "ig/2023.6/ig-2023.6-security-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Studio Guide",
+        "path": "ig/2023.6/ig-2023.6-studio-guide.pdf",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.6 Javadoc",
+        "path": "ig/2023.6/ig-2023.6-javadoc.zip",
+        "version": "2023.6"
+      },
+      {
+        "title": "IG 2023.4 Release Notes",
+        "path": "ig/2023.4/ig-2023.4-release-notes.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Getting Started",
+        "path": "ig/2023.4/ig-2023.4-getting-started.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Devops Guide",
+        "path": "ig/2023.4/ig-2023.4-devops-guide.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Gateway Guide",
+        "path": "ig/2023.4/ig-2023.4-gateway-guide.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Identity Cloud Guide",
+        "path": "ig/2023.4/ig-2023.4-identity-cloud-guide.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Installation Guide",
+        "path": "ig/2023.4/ig-2023.4-installation-guide.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Maintenance Guide",
+        "path": "ig/2023.4/ig-2023.4-maintenance-guide.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Reference",
+        "path": "ig/2023.4/ig-2023.4-reference.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Security Guide",
+        "path": "ig/2023.4/ig-2023.4-security-guide.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Studio Guide",
+        "path": "ig/2023.4/ig-2023.4-studio-guide.pdf",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.4 Javadoc",
+        "path": "ig/2023.4/ig-2023.4-javadoc.zip",
+        "version": "2023.4"
+      },
+      {
+        "title": "IG 2023.2 Release Notes",
+        "path": "ig/2023.2/ig-2023.2-release-notes.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Getting Started",
+        "path": "ig/2023.2/ig-2023.2-getting-started.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Devops Guide",
+        "path": "ig/2023.2/ig-2023.2-devops-guide.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Gateway Guide",
+        "path": "ig/2023.2/ig-2023.2-gateway-guide.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Identity Cloud Guide",
+        "path": "ig/2023.2/ig-2023.2-identity-cloud-guide.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Installation Guide",
+        "path": "ig/2023.2/ig-2023.2-installation-guide.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Maintenance Guide",
+        "path": "ig/2023.2/ig-2023.2-maintenance-guide.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Reference",
+        "path": "ig/2023.2/ig-2023.2-reference.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Security Guide",
+        "path": "ig/2023.2/ig-2023.2-security-guide.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Studio Guide",
+        "path": "ig/2023.2/ig-2023.2-studio-guide.pdf",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 2023.2 Javadoc",
+        "path": "ig/2023.2/ig-2023.2-javadoc.zip",
+        "version": "2023.2"
+      },
+      {
+        "title": "IG 7.1 Release Notes",
+        "path": "ig/7.1/ig-7.1-release-notes.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Getting Started",
+        "path": "ig/7.1/ig-7.1-getting-started.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Devops Guide",
+        "path": "ig/7.1/ig-7.1-devops-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Gateway Guide",
+        "path": "ig/7.1/ig-7.1-gateway-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Identity Cloud Guide",
+        "path": "ig/7.1/ig-7.1-identity-cloud-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Installation Guide",
+        "path": "ig/7.1/ig-7.1-installation-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Maintenance Guide",
+        "path": "ig/7.1/ig-7.1-maintenance-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Reference",
+        "path": "ig/7.1/ig-7.1-reference.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Security Guide",
+        "path": "ig/7.1/ig-7.1-security-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Studio Guide",
+        "path": "ig/7.1/ig-7.1-studio-guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7.1 Javadoc",
+        "path": "ig/7.1/ig-7.1-javadoc.zip",
+        "version": "7.1"
+      },
+      {
+        "title": "IG 7 Release Notes",
+        "path": "ig/7/IG-7-Release-Notes.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IG 7 Getting Started",
+        "path": "ig/7/IG-7-Getting-Started.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IG 7 Devops Guide",
+        "path": "ig/7/IG-7-Devops-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IG 7 Gateway Guide",
+        "path": "ig/7/IG-7-Gateway-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IG 7 Identity Cloud Guide",
+        "path": "ig/7/IG-7-Identity-Cloud-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IG 7 Maintenance Guide",
+        "path": "ig/7/IG-7-Maintenance-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IG 7 Reference",
+        "path": "ig/7/IG-7-Reference.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IG 7 Studio Guide",
+        "path": "ig/7/IG-7-Studio-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IG 7 Javadoc",
+        "path": "ig/7/ig-7-javadoc.zip",
+        "version": "7"
+      },
+      {
+        "title": "IG 6.5 Release Notes",
+        "path": "ig/6.5/IG-6.5-Release-Notes.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IG 6.5 Getting Started",
+        "path": "ig/6.5/IG-6.5-Getting-Started.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IG 6.5 Devops Guide",
+        "path": "ig/6.5/IG-6.5-Devops-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IG 6.5 Gateway Guide",
+        "path": "ig/6.5/IG-6.5-Gateway-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IG 6.5 Reference",
+        "path": "ig/6.5/IG-6.5-Reference.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IG 6.5 Javadoc",
+        "path": "ig/6.5/ig-6.5-javadoc.zip",
+        "version": "6.5"
+      },
+      {
+        "title": "IG 6.1 Release Notes",
+        "path": "ig/6.1/IG-6.1-Release-Notes.pdf",
+        "version": "6.1"
+      },
+      {
+        "title": "IG 6.1 Getting Started",
+        "path": "ig/6.1/IG-6.1-Getting-Started.pdf",
+        "version": "6.1"
+      },
+      {
+        "title": "IG 6.1 Devops Guide",
+        "path": "ig/6.1/IG-6.1-Devops-Guide.pdf",
+        "version": "6.1"
+      },
+      {
+        "title": "IG 6.1 Gateway Guide",
+        "path": "ig/6.1/IG-6.1-Gateway-Guide.pdf",
+        "version": "6.1"
+      },
+      {
+        "title": "IG 6.1 Reference",
+        "path": "ig/6.1/IG-6.1-Reference.pdf",
+        "version": "6.1"
+      },
+      {
+        "title": "IG 6.1 Javadoc",
+        "path": "ig/6.1/ig-6.1-javadoc.zip",
+        "version": "6.1"
+      },
+      {
+        "title": "IG 6 Release Notes",
+        "path": "ig/6/IG-6-Release-Notes.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IG 6 Getting Started",
+        "path": "ig/6/IG-6-Getting-Started.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IG 6 Devops Guide",
+        "path": "ig/6/IG-6-Devops-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IG 6 Gateway Guide",
+        "path": "ig/6/IG-6-Gateway-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IG 6 Reference",
+        "path": "ig/6/IG-6-Reference.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IG 6 Javadoc",
+        "path": "ig/6/ig-6-javadoc.zip",
+        "version": "6"
+      },
+      {
+        "title": "IG 5.5 Release Notes",
+        "path": "ig/5.5/IG-5.5-Release-Notes.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IG 5.5 Getting Started",
+        "path": "ig/5.5/IG-5.5-Getting-Started.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IG 5.5 Devops Guide",
+        "path": "ig/5.5/IG-5.5-Devops-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IG 5.5 Gateway Guide",
+        "path": "ig/5.5/IG-5.5-Gateway-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IG 5.5 Reference",
+        "path": "ig/5.5/IG-5.5-Reference.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IG 5.5 Javadoc",
+        "path": "ig/5.5/ig-5.5-javadoc.zip",
+        "version": "5.5"
+      },
+      {
+        "title": "IG 5 Release Notes",
+        "path": "ig/5/IG-5-Release-Notes.pdf",
+        "version": "5"
+      },
+      {
+        "title": "IG 5 Devops Guide",
+        "path": "ig/5/IG-5-Devops-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "IG 5 Gateway Guide",
+        "path": "ig/5/IG-5-Gateway-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "IG 5 Reference",
+        "path": "ig/5/IG-5-Reference.pdf",
+        "version": "5"
+      },
+      {
+        "title": "IG 5 Javadoc",
+        "path": "ig/5/ig-5-javadoc.zip",
+        "version": "5"
+      }
+    ]
+  },
+  {
+    "family": "pinggateway",
+    "product": "mg",
+    "title": "Microgateway",
+    "pdflist": [
+      {
+        "title": "Microgateway 1 Release-Notes",
+        "path": "mg/1/Microgateway-1-Release-Notes.pdf",
+        "version": ""
+      },
+      {
+        "title": "Microgateway 1 User-Guide",
+        "path": "mg/1/Microgateway-1-User-Guide.pdf",
+        "version": ""
+      },
+      {
+        "title": "Microgateway 1 Reference",
+        "path": "mg/1/Microgateway-1-Reference.pdf",
+        "version": ""
+      },
+      {
+        "title": "Microgateway 1 Javadoc",
+        "path": "mg/1/microgateway-1-javadoc.zip",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pinggateway",
+    "product": "tvm",
+    "title": "Token Validation Microservice",
+    "pdflist": [
+      {
+        "title": "Token Validation Microservice 1 Release Notes",
+        "path": "tvm/1/Token-Validation-Microservice-1-Release-Notes.pdf",
+        "version": ""
+      },
+      {
+        "title": "Token Validation Microservice 1 User Guide",
+        "path": "tvm/1/Token-Validation-Microservice-1-User-Guide.pdf",
+        "version": ""
+      },
+      {
+        "title": "Token Validation Microservice 1 Reference",
+        "path": "tvm/1/Token-Validation-Microservice-1-Reference.pdf",
+        "version": ""
+      },
+      {
+        "title": "Token Validation Microservice 1 Javadoc",
+        "path": "tvm/1/tvm-1-javadoc.zip",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pinggateway",
+    "product": "openig",
+    "title": "OpenIG",
+    "pdflist": [
+      {
+        "title": "OpenIG 4.5 Release Notes",
+        "path": "openig/4.5/OpenIG-4.5-Release-Notes.pdf",
+        "version": "4.5"
+      },
+      {
+        "title": "OpenIG 4.5 Gateway Guide",
+        "path": "openig/4.5/OpenIG-4.5-Gateway-Guide.pdf",
+        "version": "4.5"
+      },
+      {
+        "title": "OpenIG 4.5 Reference",
+        "path": "openig/4.5/OpenIG-4.5-Reference.pdf",
+        "version": "4.5"
+      },
+      {
+        "title": "OpenIG 4 Release Notes",
+        "path": "openig/4/OpenIG-4-Release-Notes.pdf",
+        "version": "4"
+      },
+      {
+        "title": "OpenIG 4 Gateway Guide",
+        "path": "openig/4/OpenIG-4-Gateway-Guide.pdf",
+        "version": "4"
+      },
+      {
+        "title": "OpenIG 4 Reference",
+        "path": "openig/4/OpenIG-4-Reference.pdf",
+        "version": "4"
+      },
+      {
+        "title": "OpenIG 4 Javadoc",
+        "path": "openig/4/openig-4-javadoc.zip",
+        "version": "4"
+      },
+      {
+        "title": "OpenIG 3.1 Release Notes",
+        "path": "openig/3.1/OpenIG-3.1-Release-Notes.pdf",
+        "version": "3.1"
+      },
+      {
+        "title": "OpenIG 3.1 Gateway Guide",
+        "path": "openig/3.1/OpenIG-3.1-Gateway-Guide.pdf",
+        "version": "3.1"
+      },
+      {
+        "title": "OpenIG 3.1 Reference",
+        "path": "openig/3.1/OpenIG-3.1-Reference.pdf",
+        "version": "3.1"
+      },
+      {
+        "title": "OpenIG 3.1 Javadoc",
+        "path": "openig/3.1/openig-3.1-javadoc.zip",
+        "version": "3.1"
+      },
+      {
+        "title": "OpenIG 3 Release Notes",
+        "path": "openig/3/OpenIG-3-Release-Notes.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenIG 3 Gateway Guide",
+        "path": "openig/3/OpenIG-3-Gateway-Guide.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenIG 3 Reference",
+        "path": "openig/3/OpenIG-3-Reference.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenIG 2.1 Release Notes",
+        "path": "openig/2.1/OpenIG-2.1-Release-Notes.pdf",
+        "version": "2.1"
+      },
+      {
+        "title": "OpenIG 2.1 Gateway Guide",
+        "path": "openig/2.1/OpenIG-2.1-Gateway-Guide.pdf",
+        "version": "2.1"
+      },
+      {
+        "title": "OpenIG 2.1 Reference",
+        "path": "openig/2.1/OpenIG-2.1-Reference.pdf",
+        "version": "2.1"
+      }
+    ]
+  },
+  {
+    "family": "pingidm",
+    "product": "idm",
+    "title": "Identity Management (IDM)",
+    "pdflist": [
+      {
+        "title": "IDM 7.1 Release Notes",
+        "path": "idm/7.1/IDM-7.1-Release-Notes.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Getting Started",
+        "path": "idm/7.1/IDM-7.1-Getting-Started.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Audit Guide",
+        "path": "idm/7.1/IDM-7.1-Audit-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Auth Guide",
+        "path": "idm/7.1/IDM-7.1-Auth-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Connector Dev Guide",
+        "path": "idm/7.1/IDM-7.1-Connector-Dev-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Connector Reference",
+        "path": "idm/7.1/IDM-7.1-Connector-Reference.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Connector Release Notes",
+        "path": "idm/7.1/IDM-7.1-Connector-Release-Notes.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 External Services Guide",
+        "path": "idm/7.1/IDM-7.1-External-Services-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Install Guide",
+        "path": "idm/7.1/IDM-7.1-Install-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Monitoring Guide",
+        "path": "idm/7.1/IDM-7.1-Monitoring-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Objects Guide",
+        "path": "idm/7.1/IDM-7.1-Objects-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Password Plugin Guide",
+        "path": "idm/7.1/IDM-7.1-Pwd-Plugin-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 REST API Reference",
+        "path": "idm/7.1/IDM-7.1-Rest-Api-Reference.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Samples Guide",
+        "path": "idm/7.1/IDM-7.1-Samples-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Schedules Guide",
+        "path": "idm/7.1/IDM-7.1-Schedules-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Scripting Guide",
+        "path": "idm/7.1/IDM-7.1-Scripting-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Security Guide",
+        "path": "idm/7.1/IDM-7.1-Security-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Self-Service Reference",
+        "path": "idm/7.1/IDM-7.1-Self-Service-Reference.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Setup Guide",
+        "path": "idm/7.1/IDM-7.1-Setup-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Synchronization Guide",
+        "path": "idm/7.1/IDM-7.1-Synchronization-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Upgrade Guide",
+        "path": "idm/7.1/IDM-7.1-Upgrade-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.1 Workflow Guide",
+        "path": "idm/7.1/IDM-7.1-Workflow-Guide.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "IDM 7.0 Release Notes",
+        "path": "idm/7/IDM-7.0.4-Release-Notes.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Getting Started",
+        "path": "idm/7/IDM-7.0.4-Getting-Started.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Audit Guide",
+        "path": "idm/7/IDM-7.0.4-Audit-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Connector Dev Guide",
+        "path": "idm/7/IDM-7.0.4-Connector-Dev-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Connector Reference",
+        "path": "idm/7/IDM-7.0.4-Connector-Reference.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Connector Release Notes",
+        "path": "idm/7/IDM-7.0.4-Connector-Release-Notes.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 External Services Guide",
+        "path": "idm/7/IDM-7.0.4-External-Services-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Install Guide",
+        "path": "idm/7/IDM-7.0.4-Install-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Monitoring Guide",
+        "path": "idm/7/IDM-7.0.4-Monitoring-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Objects Guide",
+        "path": "idm/7/IDM-7.0.4-Objects-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Password Plugin Guide",
+        "path": "idm/7/IDM-7.0.4-Pwd-Plugin-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 REST API Reference",
+        "path": "idm/7/IDM-7.0.4-Rest-Api-Reference.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Samples Guide",
+        "path": "idm/7/IDM-7.0.4-Samples-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Schedules Guide",
+        "path": "idm/7/IDM-7.0.4-Schedules-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Scripting Guide",
+        "path": "idm/7/IDM-7.0.4-Scripting-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Security Guide",
+        "path": "idm/7/IDM-7.0.4-Security-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Self-Service Reference",
+        "path": "idm/7/IDM-7.0.4-Self-Service-Reference.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Setup Guide",
+        "path": "idm/7/IDM-7.0.4-Setup-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Synchronization Guide",
+        "path": "idm/7/IDM-7.0.4-Synchronization-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Upgrade Guide",
+        "path": "idm/7/IDM-7.0.4-Upgrade-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 7.0 Workflow Guide",
+        "path": "idm/7/IDM-7.0.4-Workflow-Guide.pdf",
+        "version": "7"
+      },
+      {
+        "title": "IDM 6.5 Release Notes",
+        "path": "idm/6.5/IDM-6.5-Release-Notes.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6.5 Getting Started",
+        "path": "idm/6.5/IDM-6.5-Getting-Started.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6.5 Connector Dev Guide",
+        "path": "idm/6.5/IDM-6.5-Connector-Dev-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6.5 Connector Reference",
+        "path": "idm/6.5/IDM-6.5-Connector-Reference.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6.5 Connector Release Notes",
+        "path": "idm/6.5/IDM-6.5-Connector-Release-Notes.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6.5 Install Guide",
+        "path": "idm/6.5/IDM-6.5-Install-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6.5 Integrators Guide",
+        "path": "idm/6.5/IDM-6.5-Integrators-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6.5 Password Plugin Guide",
+        "path": "idm/6.5/IDM-6.5-Pwd-Plugin-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6.5 Samples Guide",
+        "path": "idm/6.5/IDM-6.5-Samples-Guide.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6.5 Self-Service Reference",
+        "path": "idm/6.5/IDM-6.5-Self-Service-Reference.pdf",
+        "version": "6.5"
+      },
+      {
+        "title": "IDM 6 Release Notes",
+        "path": "idm/6/IDM-6-Release-Notes.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IDM 6 Getting Started",
+        "path": "idm/6/IDM-6-Getting-Started.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IDM 6 Connector Dev Guide",
+        "path": "idm/6/IDM-6-Connector-Dev-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IDM 6 Connector Reference",
+        "path": "idm/6/IDM-6-Connector-Reference.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IDM 6 Install Guide",
+        "path": "idm/6/IDM-6-Install-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IDM 6 Integrators Guide",
+        "path": "idm/6/IDM-6-Integrators-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IDM 6 Password Plugin Guide",
+        "path": "idm/6/IDM-6-Pwd-Plugin-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IDM 6 Samples Guide",
+        "path": "idm/6/IDM-6-Samples-Guide.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IDM 6 Self-Service Reference",
+        "path": "idm/6/IDM-6-Self-Service-Reference.pdf",
+        "version": "6"
+      },
+      {
+        "title": "IDM 5.5 Release Notes",
+        "path": "idm/5.5/IDM-5.5-Release-Notes.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IDM 5.5 Getting Started",
+        "path": "idm/5.5/IDM-5.5-Getting-Started.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IDM 5.5 Connector Dev Guide",
+        "path": "idm/5.5/IDM-5.5-Connector-Dev-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IDM 5.5 Connector Reference",
+        "path": "idm/5.5/IDM-5.5-Connector-Reference.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IDM 5.5 Install Guide",
+        "path": "idm/5.5/IDM-5.5-Install-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IDM 5.5 Integrators Guide",
+        "path": "idm/5.5/IDM-5.5-Integrators-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IDM 5.5 Password Plugin Guide",
+        "path": "idm/5.5/IDM-5.5-Pwd-Plugin-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IDM 5.5 Samples Guide",
+        "path": "idm/5.5/IDM-5.5-Samples-Guide.pdf",
+        "version": "5.5"
+      },
+      {
+        "title": "IDM 5.0 Release Notes",
+        "path": "idm/5/IDM-5.0-Release-Notes.pdf",
+        "version": "5"
+      },
+      {
+        "title": "IDM 5.0 Getting Started",
+        "path": "idm/5/IDM-5.0-Getting-Started.pdf",
+        "version": "5"
+      },
+      {
+        "title": "IDM 5.0 Connectors Guide",
+        "path": "idm/5/IDM-5.0-Connectors-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "IDM 5.0 Install Guide",
+        "path": "idm/5/IDM-5.0-Install-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "IDM 5.0 Integrators Guide",
+        "path": "idm/5/IDM-5.0-Integrators-Guide.pdf",
+        "version": "5"
+      },
+      {
+        "title": "IDM 5.0 Samples Guide",
+        "path": "idm/5/IDM-5.0-Samples-Guide.pdf",
+        "version": "5"
+      }
+    ]
+  },
+  {
+    "family": "pingidm",
+    "product": "identity-governance",
+    "title": "Identity Governance",
+    "pdflist": [
+      {
+        "title": "Identity Governance 7.1 Release Notes",
+        "path": "identity-governance/7.1/identity-governance-7.1-release-notes.pdf",
+        "version": ""
+      },
+      {
+        "title": "Identity Governance 7.1 Users Guide",
+        "path": "identity-governance/7.1/identity-governance-7.1-users-guide.pdf",
+        "version": ""
+      },
+      {
+        "title": "Identity Governance 7.1 Admin Guide",
+        "path": "identity-governance/7.1/identity-governance-7.1-admin-guide.pdf",
+        "version": ""
+      },
+      {
+        "title": "Identity Governance 7.1 API Guide",
+        "path": "identity-governance/7.1/identity-governance-7.1-api-guide.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "pingidm",
+    "product": "identity-reporting",
+    "title": "Identity Reporting",
+    "pdflist": [
+      {
+        "title": "Identity Reporting 7.1 Release Notes",
+        "path": "identity-reporting/7.1/identity-reporting-7.1-release-notes.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "Identity Reporting 7.1",
+        "path": "identity-reporting/7.1/identity-reporting-7.1-identity-reporting.pdf",
+        "version": "7.1"
+      },
+      {
+        "title": "Identity Reporting 1.1 Release Notes",
+        "path": "identity-reporting/1.1/identity-reporting-1.1-release-notes.pdf",
+        "version": "1.1"
+      },
+      {
+        "title": "Identity Reporting 1.1",
+        "path": "identity-reporting/1.1/identity-reporting-1.1-identity-reporting.pdf",
+        "version": "1.1"
+      }
+    ]
+  },
+  {
+    "family": "pingidm",
+    "product": "openidm",
+    "title": "OpenIDM",
+    "pdflist": [
+      {
+        "title": "OpenIDM 4.5 Release Notes",
+        "path": "openidm/4.5/OpenIDM-4.5-Release-Notes.pdf",
+        "version": "4.5"
+      },
+      {
+        "title": "OpenIDM 4.5 Getting Started",
+        "path": "openidm/4.5/OpenIDM-4.5-Getting-Started.pdf",
+        "version": "4.5"
+      },
+      {
+        "title": "OpenIDM 4.5 Install Guide",
+        "path": "openidm/4.5/OpenIDM-4.5-Install-Guide.pdf",
+        "version": "4.5"
+      },
+      {
+        "title": "OpenIDM 4.5 Integrators Guide",
+        "path": "openidm/4.5/OpenIDM-4.5-Integrators-Guide.pdf",
+        "version": "4.5"
+      },
+      {
+        "title": "OpenIDM 4.5 Connectors Guide",
+        "path": "openidm/4.5/OpenIDM-4.5-Connectors-Guide.pdf",
+        "version": "4.5"
+      },
+      {
+        "title": "OpenIDM 4.5 Samples Guide",
+        "path": "openidm/4.5/OpenIDM-4.5-Samples-Guide.pdf",
+        "version": "4.5"
+      },
+      {
+        "title": "OpenIDM 4 Release Notes",
+        "path": "openidm/4/OpenIDM-4-Release-Notes.pdf",
+        "version": "4"
+      },
+      {
+        "title": "OpenIDM 4 Getting Started",
+        "path": "openidm/4/OpenIDM-4-Getting-Started.pdf",
+        "version": "4"
+      },
+      {
+        "title": "OpenIDM 4 Install Guide",
+        "path": "openidm/4/OpenIDM-4-Install-Guide.pdf",
+        "version": "4"
+      },
+      {
+        "title": "OpenIDM 4 Integrators Guide",
+        "path": "openidm/4/OpenIDM-4-Integrators-Guide.pdf",
+        "version": "4"
+      },
+      {
+        "title": "OpenIDM 4 Samples Guide",
+        "path": "openidm/4/OpenIDM-4-Samples-Guide.pdf",
+        "version": "4"
+      },
+      {
+        "title": "OpenIDM 3.1 Release Notes",
+        "path": "openidm/3.1/OpenIDM-3.1-Release-Notes.pdf",
+        "version": "3.1"
+      },
+      {
+        "title": "OpenIDM 3.1 Install Guide",
+        "path": "openidm/3.1/OpenIDM-3.1-Install-Guide.pdf",
+        "version": "3.1"
+      },
+      {
+        "title": "OpenIDM 3.1 Integrators Guide",
+        "path": "openidm/3.1/OpenIDM-3.1-Integrators-Guide.pdf",
+        "version": "3.1"
+      },
+      {
+        "title": "OpenIDM 3 Release Notes",
+        "path": "openidm/3/OpenIDM-3-Release-Notes.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenIDM 3 Install Guide",
+        "path": "openidm/3/OpenIDM-3-Install-Guide.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenIDM 3 Integrators Guide",
+        "path": "openidm/3/OpenIDM-3-Integrators-Guide.pdf",
+        "version": "3"
+      },
+      {
+        "title": "OpenIDM 2.1 Release Notes",
+        "path": "openidm/2.1/OpenIDM-2.1-Release-Notes.pdf",
+        "version": "2.1"
+      },
+      {
+        "title": "OpenIDM 2.1 Install Guide",
+        "path": "openidm/2.1/OpenIDM-2.1-Install-Guide.pdf",
+        "version": "2.1"
+      },
+      {
+        "title": "OpenIDM 2.1 Integrators Guide",
+        "path": "openidm/2.1/OpenIDM-2.1-Integrators-Guide.pdf",
+        "version": "2.1"
+      },
+      {
+        "title": "OpenIDM 2 Release Notes",
+        "path": "openidm/2/OpenIDM-2-Release-Notes.pdf",
+        "version": "2"
+      },
+      {
+        "title": "OpenIDM 2 Install Guide",
+        "path": "openidm/2/OpenIDM-2-Install-Guide.pdf",
+        "version": "2"
+      },
+      {
+        "title": "OpenIDM 2 Integrators Guide",
+        "path": "openidm/2/OpenIDM-2-Integrators-Guide.pdf",
+        "version": "2"
+      }
+    ]
+  },
+  {
+    "family": "pingintelligence",
+    "product": "pingintelligence",
+    "title": "PingIntelligence",
+    "pdflist": [
+      {
+        "title": "PingIntelligence 5.0",
+        "path": "pingintelligence/pingintelligence-50.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingIntelligence 4.4",
+        "path": "pingintelligence/pingintelligence-44.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingIntelligence 4.3",
+        "path": "pingintelligence/pingintelligence-43.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingIntelligence 4.2",
+        "path": "pingintelligence/pingintelligence-42.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingIntelligence 4.1",
+        "path": "pingintelligence/pingintelligence-41.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingIntelligence 4.0",
+        "path": "pingintelligence/pingintelligence-40.pdf",
+        "version": ""
+      },
+      {
+        "title": "PingIntelligence 3.2",
+        "path": "pingintelligence/pingintelligence-32.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "davinci",
+    "product": "connectors",
+    "title": "DaVinci Connectors",
+    "pdflist": [
+      {
+        "title": "DaVinci LexisNexis Legacy Connector",
+        "path": "connectors/davinci-lexisnexis-legacy-connector.pdf",
+        "version": ""
+      }
+    ]
+  },
+  {
+    "family": "solutions",
+    "product": "solutions",
+    "title": "Ping Solutions",
+    "pdflist": [
+      {
+        "title": "Customer360",
+        "path": "solutions/Customer360.pdf",
+        "version": ""
+      },
+      {
+        "title": "Workforce360",
+        "path": "solutions/Workforce360.pdf",
+        "version": ""
+      }
+    ]
+  }
+]

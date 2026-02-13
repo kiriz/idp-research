@@ -1,0 +1,28 @@
+# Cloned source repos (large, not part of research output)
+OpenAM/
+OpenDJ/
+OpenIDM/
+OpenIG/
+OpenICF/
+openam-community-edition/
+wrenam/
+
+# PDFs (large binary files)
+*.pdf
+docs/extracts/pdf/
+
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.venv
+.python-version
+
+# OS
+.DS_Store
+
+# uv
+uv.lock
