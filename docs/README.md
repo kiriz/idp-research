@@ -66,6 +66,7 @@ This research analyzes the complete lineage of open-source identity management s
 | [13-comparison-matrices.md](chapters/13-comparison-matrices.md) | Comparison Matrices (8 tables) | 539 | Procurement, evaluators |
 | [14-lessons-from-history.md](chapters/14-lessons-from-history.md) | Lessons from History | 500 | Researchers, designers |
 | [15-historical-parallels.md](chapters/15-historical-parallels.md) | Pre-Computer ↔ Post-Computer Parallels | 510 | Security architects, historians |
+| [16-evolution-roadmaps.md](chapters/16-evolution-roadmaps.md) | Identity Security Evolution Roadmaps (18 domains) | 3,335 | Everyone |
 
 ### Diagrams
 
@@ -79,7 +80,7 @@ This research analyzes the complete lineage of open-source identity management s
 |------|-------------|
 | [presentations/iam-evolution-deck.pptx](presentations/iam-evolution-deck.pptx) | 25-slide executive deck covering full research |
 
-**Total: ~11,000+ lines across 15 chapters + 8 extract files + 16 diagrams + 1 presentation.**
+**Total: ~14,300+ lines across 16 chapters + 8 extract files + 16 diagrams + 1 presentation.**
 
 ---
 
