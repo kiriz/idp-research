@@ -72,7 +72,7 @@ This research analyzes the complete lineage of open-source identity management s
 
 | File | Description |
 |------|-------------|
-| [diagrams/](diagrams/) | 16 Excalidraw diagrams: architecture, timelines, protocol flows, decision trees, swim lane timelines |
+| [diagrams/](diagrams/) | 17 Excalidraw diagrams: architecture, timelines, protocol flows, decision trees, swim lane timelines, evolution grid |
 
 ### Presentation
 
@@ -80,7 +80,7 @@ This research analyzes the complete lineage of open-source identity management s
 |------|-------------|
 | [presentations/iam-evolution-deck.pptx](presentations/iam-evolution-deck.pptx) | 25-slide executive deck covering full research |
 
-**Total: ~14,300+ lines across 16 chapters + 8 extract files + 16 diagrams + 1 presentation.**
+**Total: ~14,300+ lines across 16 chapters + 8 extract files + 17 diagrams + 1 presentation.**
 
 ---
 

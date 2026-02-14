@@ -3281,6 +3281,8 @@ OpenAM's JAAS chain model is the oldest and least flexible orchestration approac
 
 ## Summary: The Grand Shift Table
 
+![Identity Security Evolution: 18 Domains, 60 Years](../diagrams/16-identity-security-evolution.excalidraw)
+
 The following table consolidates all 18 roadmaps into a single reference, tracing each identity security domain from its origin through the pre-2010 era, the current state (2024--2026), and the projected next evolution (2027+).
 
 | # | Domain | Origin | Then (Pre-2010) | Now (2024--2026) | Next (2027+) | OpenAM/OIP Status |
