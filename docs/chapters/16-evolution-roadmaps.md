@@ -18,7 +18,7 @@ That era is over. The problem space has expanded in every dimension simultaneous
 - **Privacy & Consent** -- GDPR/CCPA compliance, consent-as-code, data subject rights
 - **Zero Trust** -- continuous verification, device trust, microsegmentation anchored to identity
 
-This chapter -- Part 3 of the Evolution Roadmaps series -- covers Roadmaps 13 through 18, completing the comprehensive survey begun in Parts 1 and 2. Each roadmap traces a single identity security domain from its earliest origins through its current state and into its projected future trajectory. The chapter concludes with the Grand Shift Table, a consolidated summary of all 18 roadmaps.
+This chapter traces 18 identity security domains from earliest origins through current state to projected future. Each roadmap is self-contained. The chapter concludes with the Grand Shift Table summarizing all 18 domains.
 
 ### How to Read This Chapter
 
@@ -35,9 +35,6 @@ OpenAM/OIP implementation notes appear inline for every technology where OpenAM 
 
 ---
 
-
----
-
 ## Roadmap 1: Authentication Methods
 
 **Arc:** Shared secrets (1960s) --> directory-verified passwords (1993) --> network authentication protocols (1988-2000) --> one-time passwords (2005-2011) --> push notifications (2012) --> public-key passwordless (2014-present) --> continuous authentication (emerging).
@@ -49,10 +46,11 @@ OpenAM/OIP implementation notes appear inline for every technology where OpenAM 
 | 1961 | MIT CTSS implements first computer password system | Fernando Corbato, MIT | `[ACTIVE]` (concept) |
 | 1976 | Unix crypt(3) introduces salted password hashing (DES-based) | Unix V7 | `[OBSOLETE]` (DES hash) |
 | 1988 | Kerberos V4 replaces plaintext network passwords at MIT | Project Athena | `[OBSOLETE]` |
-| 1993 | LDAP Simple Bind (RFC 1487/1777) -- password sent to directory for verification | IETF | `[ACTIVE]` |
-| 1997 | LDAPv3 adds StartTLS for encrypted password transmission | RFC 2251 | `[ACTIVE]` |
-| 1999 | PKCS#5 PBKDF1 standardizes password-based key derivation | RFC 2898 | `[LEGACY]` |
-| 2000 | bcrypt published (Provos & Mazieres, OpenBSD) | USENIX 1999 | `[ACTIVE]` |
+| 1993 | LDAP Simple Bind (RFC 1487, LDAPv1) -- password sent to directory for verification | IETF | `[ACTIVE]` |
+| 1995 | LDAPv2 (RFC 1777) refines simple bind | IETF | `[OBSOLETE]` |
+| 2000 | LDAPv3 adds StartTLS for encrypted password transmission | RFC 2830 | `[ACTIVE]` |
+| 2000 | PKCS#5 PBKDF2 standardizes password-based key derivation | RFC 2898 | `[ACTIVE]` |
+| 1999 | bcrypt published (Provos & Mazieres, OpenBSD) | USENIX 1999 | `[ACTIVE]` |
 | 2009 | scrypt (Colin Percival) -- memory-hard password hashing | Percival, BSDCan 2009 | `[ACTIVE]` |
 | 2013 | Password Hashing Competition launched | PHC | -- |
 | 2015 | Argon2 wins PHC, becomes recommended hash | RFC 9106 (2021) | `[ACTIVE]` |
@@ -75,8 +73,8 @@ OpenAM/OIP implementation notes appear inline for every technology where OpenAM 
 | 2005 | Kerberos V5 revised specification | RFC 4120 | `[ACTIVE]` |
 | 2005 | AES encryption replaces DES for Kerberos | RFC 3962 | `[ACTIVE]` |
 | 2005 | PKINIT -- public key initial authentication | RFC 4556 | `[ACTIVE]` |
-| 2006 | SPNEGO/Negotiate for HTTP | RFC 4178 | `[ACTIVE]` |
-| 2017 | DES and RC4 formally deprecated | RFC 8429 | `[ACTIVE]` (deprecation) |
+| 2006 | SPNEGO/Negotiate for HTTP | RFC 4559 | `[ACTIVE]` |
+| 2018 | DES and RC4 formally deprecated | RFC 8429 | `[ACTIVE]` (deprecation) |
 
 **What Kerberos solved:** Secure network authentication without transmitting passwords. Ticket-based system: user authenticates once to KDC (Key Distribution Center), receives TGT (Ticket Granting Ticket), then obtains service tickets for individual services without re-entering credentials. Mutual authentication -- both client and server prove identity.
 
@@ -116,7 +114,7 @@ OpenAM/OIP implementation notes appear inline for every technology where OpenAM 
 | 1997 | RADIUS standardized | RFC 2058/2059 | Superseded |
 | 2000 | RADIUS definitive RFCs | RFC 2865 (auth), RFC 2866 (accounting) | `[ACTIVE]` |
 | 2003 | RADIUS over EAP for 802.1X/Wi-Fi | RFC 3579 | `[ACTIVE]` |
-| 2005 | Diameter protocol (RADIUS successor for telecom) | RFC 3588 | `[ACTIVE]` (telecom) |
+| 2003 | Diameter protocol (RADIUS successor for telecom) | RFC 3588 (obsoleted by RFC 6733, 2012) | `[ACTIVE]` (telecom) |
 | 2008 | Dynamic Authorization (CoA/Disconnect) | RFC 5176 | `[ACTIVE]` |
 | 2012 | RadSec -- RADIUS over TLS | RFC 6614 | `[ACTIVE]` |
 
@@ -158,10 +156,10 @@ OpenAM/OIP implementation notes appear inline for every technology where OpenAM 
 | 1998 | S/KEY one-time password system | RFC 2289 | `[OBSOLETE]` |
 | 2004 | OATH consortium founded (Initiative for Open Authentication) | OATH | -- |
 | 2005 | HOTP -- HMAC-Based One-Time Password | RFC 4226 | `[LEGACY]` |
-| 2011 | TOTP -- Time-Based One-Time Password | RFC 6238 | `[ACTIVE]` |
-| 2010 | Google Authenticator launched (popularized TOTP) | Google | `[ACTIVE]` |
 | 2005-2010 | SMS OTP widespread deployment | Industry practice | `[LEGACY]` |
-| 2016 | NIST SP 800-63B deprecates SMS OTP as "restricted" authenticator | NIST | `[ACTIVE]` (guidance) |
+| 2010 | Google Authenticator launched (popularized TOTP) | Google | `[ACTIVE]` |
+| 2011 | TOTP -- Time-Based One-Time Password | RFC 6238 | `[ACTIVE]` |
+| 2017 | NIST SP 800-63B deprecates SMS OTP as "restricted" authenticator | NIST | `[ACTIVE]` (guidance) |
 
 **HOTP (RFC 4226):** Counter-based. HMAC-SHA1(secret, counter) truncated to 6-8 digits. Problem: counter desynchronization between client and server. Requires look-ahead window. `[LEGACY]` -- superseded by TOTP for software tokens; still in some hardware tokens.
 
@@ -262,7 +260,7 @@ See Ch.02 for detailed OTP module analysis.
 
 **Adaptive authentication:** Context-aware risk scoring at point of login. Signals: device fingerprint, IP geolocation, time-of-day, velocity, threat intelligence. Low risk = password only. High risk = step-up to MFA or deny.
 
-**Continuous authentication:** Goes beyond point-of-login. CAEP enables real-time session revocation when risk changes mid-session (device compromise reported, impossible travel detected, credential stuffing detected). Security Event Tokens (SET, RFC 8935/8936) carry signals between providers.
+**Continuous authentication:** Goes beyond point-of-login. CAEP enables real-time session revocation when risk changes mid-session (device compromise reported, impossible travel detected, credential stuffing detected). Security Event Tokens (SET, RFC 8417; delivery via RFC 8935/8936) carry signals between providers.
 
 **OpenAM implementation:**
 - Adaptive module: `openam-auth-adaptive` -- pluggable risk evaluators.
@@ -568,7 +566,7 @@ Proprietary SSO (1995-2001)
   |                            |
   |                            +--> OpenID Connect (2014) [ACTIVE]
   |                            |
-  |                            +--> UMA 2.0 (2018) [ACTIVE niche]
+  |                            +--> UMA 2.0 (2018) [ACTIVE]
   |                            |
   |                            +--> OAuth 2.1 (draft)
   |                            |
@@ -621,7 +619,7 @@ Proprietary SSO (1995-2001)
 | 1992 | Ferraiolo & Kuhn publish RBAC model | NIST | -- |
 | 1996 | RBAC96 formal model (Sandhu et al.) | ACM RBAC Workshop | `[ACTIVE]` (concept) |
 | 1999 | J2EE security roles (declarative RBAC for Java) | Sun Microsystems | `[ACTIVE]` |
-| 2001 | NIST RBAC standard proposed | NIST IR 7316 | -- |
+| 2001 | NIST RBAC model submitted to INCITS | INCITS 359-2004 (ratified 2004) | -- |
 | 2004 | ANSI INCITS 359-2004 (RBAC standard) | ANSI | `[ACTIVE]` |
 
 **RBAC model:**
@@ -1315,7 +1313,7 @@ Payload: { "jti": "<unique>", "htm": "GET", "htu": "https://api.example.com/data
 2014  OWASP API Security awareness begins
 2015  Kong Gateway 0.1 (open-source, Nginx + Lua)
 2015  OAuth 2.0 Token Introspection (RFC 7662)
-2015  OAuth 2.0 Token Revocation (RFC 7009)
+2013  OAuth 2.0 Token Revocation (RFC 7009)
 2016  Envoy proxy open-sourced by Lyft
 2016  Traefik 1.0 (Go-based edge router)
 2017  Istio service mesh 0.1 (Google, IBM, Lyft)
@@ -1324,10 +1322,10 @@ Payload: { "jti": "<unique>", "htm": "GET", "htu": "https://api.example.com/data
 2018  TLS 1.3 (RFC 8446)
 2019  OWASP API Security Top 10 (first edition)
 2020  mTLS certificate-bound tokens (RFC 8705)
-2020  Pushed Authorization Requests (RFC 9126)
+2021  Pushed Authorization Requests (RFC 9126)
 2021  JWT-secured Authorization Requests (RFC 9101)
-2021  Rich Authorization Requests (RFC 9396)
-2022  Gateway API for Kubernetes (GA, replacing Ingress)
+2023  Rich Authorization Requests (RFC 9396)
+2023  Gateway API for Kubernetes (v1.0 GA, replacing Ingress)
 2023  DPoP for APIs (RFC 9449)
 2023  OWASP API Security Top 10 (2023 edition)
 2023  API security platforms mature (Salt Security, Noname/Akamai, 42Crunch)
@@ -1380,10 +1378,10 @@ Payload: { "jti": "<unique>", "htm": "GET", "htu": "https://api.example.com/data
 - **OpenAM implementation**: OpenAM's `openam-oauth2` module provides a full OAuth 2.0 authorization server (all grant types: authorization code, implicit, client credentials, resource owner password, device authorization). OpenIG's `OAuth2ResourceServerFilter` validates bearer tokens via introspection or JWT verification.
 - **Extensions driving modern API security**:
   - Token Introspection (RFC 7662, 2015) `[ACTIVE]`: Resource servers query the authorization server to validate opaque tokens.
-  - Token Revocation (RFC 7009, 2015) `[ACTIVE]`: Standardized endpoint for revoking access and refresh tokens.
+  - Token Revocation (RFC 7009, 2013) `[ACTIVE]`: Standardized endpoint for revoking access and refresh tokens.
   - JWT Access Tokens (RFC 9068, 2021) `[ACTIVE]`: Standardized JWT format for access tokens, enabling stateless validation at the gateway without introspection round-trips.
   - Pushed Authorization Requests (RFC 9126, 2021) `[ACTIVE]`: Authorization request parameters sent directly to the AS, keeping sensitive data off the browser URL.
-  - Rich Authorization Requests (RFC 9396, 2021) `[ACTIVE]`: Fine-grained `authorization_details` parameter replacing coarse scopes for complex authorization (financial APIs, healthcare).
+  - Rich Authorization Requests (RFC 9396, 2023) `[ACTIVE]`: Fine-grained `authorization_details` parameter replacing coarse scopes for complex authorization (financial APIs, healthcare).
 
 #### Token Introspection vs JWT Validation at the Edge (2015-present) `[ACTIVE]`
 
@@ -1421,7 +1419,7 @@ Payload: { "jti": "<unique>", "htm": "GET", "htu": "https://api.example.com/data
 **Linkerd** (2017-present) `[ACTIVE]`:
 - **Version**: 2.16+ (2025). Rust-based micro-proxy (linkerd2-proxy). ~10,600 GitHub stars. CNCF Graduated (2021).
 - Simpler than Istio. Automatic mTLS, latency-aware load balancing, observability. No `ext_authz` equivalent -- authorization delegated to OPA sidecar or application layer.
-- In February 2024, Linkerd switched to a non-open-source license (BSL), causing community friction. Linkerd2-proxy remains Apache 2.0.
+- In February 2024, Buoyant stopped publishing free stable release builds of Linkerd (source remains Apache 2.0; only edge releases freely available), causing community friction.
 
 #### OWASP API Security Top 10 (2019, 2023) `[ACTIVE]`
 
@@ -1471,7 +1469,7 @@ Payload: { "jti": "<unique>", "htm": "GET", "htu": "https://api.example.com/data
 
 #### Kubernetes Gateway API (2022-present) `[ACTIVE]`
 
-- **Spec**: Kubernetes SIG-Network, GA in Kubernetes 1.26 (2022). Replaces the Ingress API (which was limited to basic HTTP routing).
+- **Spec**: Kubernetes SIG-Network, v1.0 GA (October 2023). Replaces the Ingress API (which was limited to basic HTTP routing).
 - **Problem solved**: The Kubernetes Ingress resource was too simple for modern gateway requirements -- no support for header-based routing, traffic splitting, TCP/UDP, or cross-namespace references. Gateway API provides a role-oriented, expressive, portable API for managing gateway infrastructure.
 - **Key resources**: `GatewayClass`, `Gateway`, `HTTPRoute`, `GRPCRoute`, `TCPRoute`, `TLSRoute`, `ReferenceGrant`.
 - **Identity integration**: `HTTPRoute` can reference backend policies that delegate authentication to external services. `BackendTLSPolicy` enables mTLS to backends. Gateway implementations (Kong, Istio, Envoy Gateway, Traefik, APISIX) all support Gateway API.
@@ -1521,7 +1519,7 @@ The convergence of API gateways, service mesh, and identity standards is driving
 1971  Unix su (substitute user) command
 1980  sudo (superuser do) introduced by Bob Coggeshall and Cliff Spencer
 1985  sudo 1.0 formal release
-1993  SSH protocol (Tatu Ylonen, SSH-1)
+1995  SSH protocol (Tatu Ylonen, SSH-1)
 1996  SSH-2 (IETF standardization begins, RFC 4251-4254, finalized 2006)
 1999  CyberArk founded (Israel)
 2001  Lieberman Software Random Password Manager (early credential vaulting)
@@ -1531,7 +1529,7 @@ The convergence of API gateways, service mesh, and identity standards is driving
 2008  Bomgar (later BeyondTrust) privileged remote access
 2010  Session recording as standard PAM feature
 2011  AWS IAM launched (cloud privilege management begins)
-2012  SSH certificate-based auth (OpenSSH 5.4+, certificates vs static keys)
+2010  SSH certificate-based auth (OpenSSH 5.4, March 2010, certificates vs static keys)
 2013  CyberArk IPO (NASDAQ: CYBR)
 2014  Centrify Server Suite (server privilege management)
 2015  HashiCorp Vault 0.1 (dynamic secrets, secrets-as-a-service)
@@ -1542,7 +1540,7 @@ The convergence of API gateways, service mesh, and identity standards is driving
 2019  AWS IAM Access Analyzer (identify overly permissive policies)
 2020  Zero Standing Privileges concept formalized (Gartner)
 2021  Thycotic + Centrify merger -> Delinea
-2021  BeyondTrust acquires Bomgar, consolidates PAM suite
+2018  Bomgar acquires BeyondTrust, rebrands as BeyondTrust
 2022  CyberArk Identity Security Platform (unified PAM + IAM)
 2023  HashiCorp Vault license change to BSL 1.1; OpenBao fork (Linux Foundation)
 2024  IBM acquires HashiCorp (~$6.4B)
@@ -1672,8 +1670,8 @@ The convergence of API gateways, service mesh, and identity standards is driving
 2006  OpenSSO on GlassFish
 2010  ForgeRock OpenAM 9 as standalone WAR (Tomcat)
 2012  OpenAM CTS (Core Token Service) for distributed session persistence
-2013  Docker 1.0 (container runtime)
-2014  Kubernetes 1.0 (container orchestration)
+2013  Docker open-sourced (container runtime; 1.0 in June 2014)
+2015  Kubernetes 1.0 (container orchestration, open-sourced by Google 2014)
 2015  OpenAM in Docker containers (community-contributed Dockerfiles)
 2015  Keycloak on WildFly (monolithic Java EE)
 2016  Helm 1.0 (Kubernetes package manager)
@@ -1849,7 +1847,7 @@ The convergence of API gateways, service mesh, and identity standards is driving
 2003  US HSPD-12 mandates PIV smart cards for federal employees
 2004  PhoneFactor (precursor to Azure MFA) -- phone-based authentication
 2005  HOTP (RFC 4226) -- HMAC-based One-Time Password
-2007  RSA breach aftermath (SecurID seed compromise, 2011)
+2011  RSA SecurID seed compromise (40M tokens at risk)
 2009  Google deploys U2F internally (pre-standard)
 2010  SMS OTP widely deployed as second factor
 2011  TOTP (RFC 6238) -- Time-based One-Time Password
@@ -2042,17 +2040,16 @@ The convergence of API gateways, service mesh, and identity standards is driving
 ### Timeline Overview
 
 ```
-1988  Network firewalls (DEC SEAL, first commercial firewall)
-1990  Checkpoint Firewall-1 (stateful inspection)
+1988  DEC publishes first packet filtering paper
+1993  Check Point Firewall-1 (stateful inspection, first commercial firewall)
 1993  DMZ architecture standardized (dual-firewall, three-zone)
-1996  IPSEC (RFC 1825-1829, updated RFC 4301-4309)
+1995  IPsec (RFC 1825-1829; updated by RFC 4301-4309 in 2005)
 1999  SSL VPN concept (Neoteris, later Juniper)
 2001  802.1X Network Access Control (IEEE)
 2003  Network Access Control (NAC) category emerges (Cisco NAC, Microsoft NAP)
 2004  Jericho Forum (deperimeterization manifesto)
 2005  NAC/802.1X enterprise deployments
-2007  Forrester Research coins "Zero Trust" (John Kindervag)
-2009  Forrester publishes Zero Trust framework
+2010  Forrester Research publishes "No More Chewy Centers" -- John Kindervag coins "Zero Trust"
 2010  Google begins internal BeyondCorp implementation
 2011  Cloud Access Security Broker (CASB) category emerges
 2013  Software-Defined Networking (SDN) enables micro-segmentation
@@ -2065,14 +2062,14 @@ The convergence of API gateways, service mesh, and identity standards is driving
 2018  Cloudflare Access (edge-deployed zero trust proxy)
 2019  Gartner coins SASE (Secure Access Service Edge)
 2020  NIST SP 800-207 (Zero Trust Architecture) published
-2020  US Executive Order 14028 on Cybersecurity (implied zero trust mandate)
+2021  US Executive Order 14028 on Cybersecurity (May 2021, zero trust mandate)
 2021  CISA Zero Trust Maturity Model v1.0
 2022  US OMB M-22-09 (Federal Zero Trust Strategy, mandatory deadlines)
 2022  DoD Zero Trust Strategy and Roadmap
 2023  CISA Zero Trust Maturity Model v2.0 (five pillars: Identity, Devices, Networks, Applications, Data)
 2023  EU NIS2 Directive (implies zero-trust principles for critical infrastructure)
 2024  Gartner predicts 60% of enterprises will adopt zero trust by 2025
-2024  ZTNA 2.0 (Palo Alto Networks) -- application-level zero trust
+2022  ZTNA 2.0 (Palo Alto Networks) -- application-level zero trust
 2025  Continuous verification as default security posture
 2026  Zero trust extends to AI agents and autonomous systems
 ```
@@ -2202,7 +2199,7 @@ The OIP stack was designed for the perimeter era. It can serve as a building blo
 - **SASE (Secure Access Service Edge)** (Gartner, 2019): Converges network services (SD-WAN) with security services (SWG, CASB, FWaaS, ZTNA) into a cloud-delivered platform. Single vendor provides both networking and security at the edge.
   - Vendors: Zscaler, Palo Alto Prisma SASE, Netskope, Cloudflare One, Cisco SASE.
   - Identity integration: SASE platforms delegate authentication to external IdPs (Okta, Entra ID, Ping, SAML/OIDC). Access policies combine user identity, device posture, and application sensitivity.
-- **ZTNA 2.0** (Palo Alto Networks term, 2024): Extends zero trust from access control to continuous application monitoring. Verifies not just "can this user access this app" but "is the user's behavior within this app consistent with expected patterns."
+- **ZTNA 2.0** (Palo Alto Networks term, 2022): Extends zero trust from access control to continuous application monitoring. Verifies not just "can this user access this app" but "is the user's behavior within this app consistent with expected patterns."
 
 #### Zero Trust for Non-Human Identities (2024-present) `[EMERGING]`
 
@@ -2239,10 +2236,10 @@ The OIP stack was designed for the perimeter era. It can serve as a building blo
 2021  Azure Workload Identity (OIDC-based, replacing pod-managed identity)
 2021  cert-manager v1.0 (Kubernetes-native certificate management)
 2021  Sigstore (Cosign, Fulcio, Rekor) for supply chain identity
-2022  SPIFFE/SPIRE CNCF Incubation
+2020  SPIFFE/SPIRE CNCF Incubating
 2023  OpenPubkey (BastionZero, Linux Foundation) -- identity-bound public keys
 2023  GitHub Actions OIDC tokens for keyless auth to cloud providers
-2024  SPIFFE/SPIRE CNCF Graduated
+2022  SPIFFE/SPIRE CNCF Graduated
 2024  CyberArk acquires Venafi (machine identity management)
 2024  IETF WIMSE Working Group chartered (Workload Identity in Multi-System Environments)
 2024  Kubernetes bound service account token improvements
@@ -2310,7 +2307,7 @@ The OIP stack was designed for the perimeter era. It can serve as a building blo
     - JWT-SVID: JWT token with SPIFFE ID in the `sub` claim. Used for application-layer authentication.
   - **Trust bundle**: Set of root CA certificates for a trust domain. Exchanged between trust domains for federation.
   - **Workload API**: Local API exposed via Unix domain socket. Workloads obtain SVIDs without managing secrets, keys, or certificates.
-- **SPIRE** (SPIFFE Runtime Environment): Reference implementation. CNCF Graduated (2024).
+- **SPIRE** (SPIFFE Runtime Environment): Reference implementation. CNCF Graduated (September 2022).
   - **SPIRE Server**: Central component. Manages workload registrations, performs attestation, issues SVIDs. Stores registration entries in SQLite, PostgreSQL, or MySQL. CA functionality built-in or delegated to upstream CA (Vault, AWS PCA).
   - **SPIRE Agent**: Runs on each node (one per host/VM). Attests node identity to SPIRE Server. Attests local workloads. Caches and rotates SVIDs. Exposes Workload API.
   - **Attestation flow**:
@@ -2495,8 +2492,8 @@ The ITDR market consolidated rapidly through acquisitions:
 | Preempt Security | 2020 | CrowdStrike | Preempt | AD threat detection (now Falcon Identity Threat Detection) |
 | Attivo Networks | 2022 | SentinelOne | Attivo | Identity deception, AD assessment |
 | Illusive Networks | 2022 | Proofpoint | Illusive | Deceptive identity artifacts |
-| Rezonate | 2024 | CrowdStrike | Rezonate | Cloud identity posture |
-| Authomize | 2023 | Delinea | Authomize | Cloud identity detection |
+| Rezonate | 2024 | Silverfort | Rezonate | Cloud identity posture |
+| Authomize | 2024 | Delinea | Authomize | Cloud identity detection |
 
 Standalone ITDR vendors remaining as of 2026:
 
@@ -2607,9 +2604,9 @@ The Health Insurance Portability and Accountability Act Security Rule (45 CFR Pa
 
 **2004: PCI DSS v1.0** `[ACTIVE]`
 
-The Payment Card Industry Data Security Standard, developed by Visa, Mastercard, American Express, Discover, and JCB, established requirements for systems handling cardholder data. IAM-relevant requirements include: unique user IDs (Requirement 8), access control (Requirement 7), authentication factors (Requirement 8.3), session timeout (Requirement 8.1.8), and audit trail (Requirement 10). PCI DSS has been updated through v4.0.1 (March 2024), which requires multi-factor authentication for all access to the cardholder data environment (not just remote access) and phishing-resistant authentication where feasible.
+The Payment Card Industry Data Security Standard, developed by Visa, Mastercard, American Express, Discover, and JCB, established requirements for systems handling cardholder data. IAM-relevant requirements include: unique user IDs (Requirement 8), access control (Requirement 7), authentication factors (Requirement 8.3), session timeout (Requirement 8.1.8), and audit trail (Requirement 10). PCI DSS has been updated through v4.0.1 (June 2024), which requires multi-factor authentication for all access to the cardholder data environment (not just remote access) and phishing-resistant authentication where feasible.
 
-**2009: Kantara Initiative Consent Receipt Specification** `[LEGACY]`
+**2017: Kantara Initiative Consent Receipt Specification v1.0** `[LEGACY]`
 
 The Kantara Initiative developed the Consent Receipt specification -- a machine-readable record of consent that captures: data subject identity, data controller identity, purposes of processing, categories of personal data, consent timestamp, and withdrawal mechanism. The specification aimed to make consent portable and verifiable across service boundaries.
 
@@ -2885,7 +2882,7 @@ Sun open-sourced Access Manager as OpenSSO (Open Web Single Sign-On) under the C
 
 Simultaneously, Sun open-sourced its next-generation LDAP server as OpenDS (Open Directory Server) on June 28, 2006 -- the first commit of what would become OpenDJ, and the oldest codebase in this entire research corpus (24,107 commits over 19.6 years as of February 2026).
 
-**2008: CAS (Central Authentication Service)** `[LEGACY]`
+**2004: CAS (Central Authentication Service, Yale 2001, Jasig 2004)** `[LEGACY]`
 
 CAS, originally developed at Yale University and later maintained by Apereo (formerly Jasig), provided SSO for web applications, particularly in higher education. CAS protocol is simple (ticket-based, XML or JSON validation) and widely deployed at universities. CAS 6.x/7.x (2023+) supports OIDC, SAML 2.0, OAuth 2.0, and MFA, but its primary user base remains academic. `[LEGACY]` -- still deployed widely in education but not gaining share in enterprise.
 
@@ -2899,7 +2896,7 @@ Oracle acquired Sun Microsystems for $7.4 billion (closed January 27, 2010). Ora
 
 **2010--2011: ForgeRock Founded** `[OBSOLETE]` (the company's open-source era)
 
-Ludovic Poitou, Lasse Andresen, and Peter Major left Oracle and incorporated ForgeRock in Norway (February 2011). They rescued the OpenSSO and OpenDS codebases from `java.net` and began the rebranding: OpenSSO to OpenAM, OpenDS to OpenDJ, and new projects OpenIDM, OpenIG, and OpenICF.
+Lasse Andresen, Jonathan Scudder, Hermann Svoren, and others left Sun/Oracle and incorporated ForgeRock AS in Norway (2010). They rescued the OpenSSO and OpenDS codebases from `java.net` and began the rebranding: OpenSSO to OpenAM, OpenDS to OpenDJ, and new projects OpenIDM, OpenIG, and OpenICF.
 
 **2012--2016: ForgeRock Open-Source Golden Age** `[OBSOLETE]` (as an open-source effort)
 
@@ -2921,7 +2918,7 @@ Keycloak's advantages over ForgeRock OpenAM:
 
 **November 2016: ForgeRock Source Closure** `[OBSOLETE]` (as a pivotal event)
 
-ForgeRock closed its source code after a $88M Series C round. The last open tags: OpenAM 14.0.0-M2 (November 1, 2016), OpenDJ 4.0.0-M1 (September 30, 2016). Combined commits dropped from 6,631 (2016) to 401 (2017) -- a 94% decline. See [Chapter 1](01-history.md) for the full analysis, including the CDDL license dynamics that enabled community forks.
+ForgeRock closed its source code in November 2016 (the $88M Series D came later, September 2017). The last open tags: OpenAM 14.0.0-M2 (November 1, 2016), OpenDJ 4.0.0-M1 (September 30, 2016). Combined commits dropped from 6,631 (2016) to 401 (2017) -- a 94% decline. See [Chapter 1](01-history.md) for the full analysis, including the CDDL license dynamics that enabled community forks.
 
 **2017: Open Identity Platform (OIP) Fork** `[ACTIVE]`
 
@@ -3194,7 +3191,7 @@ This was a fundamental architectural advance:
 
 OpenAM (OIP fork) does **not** implement authentication trees. The OIP fork remains on the JAAS chain model from the ForgeRock CE era. This is one of the most significant feature gaps between the open-source forks and the ForgeRock commercial product.
 
-**2020: Auth0 Actions** `[ACTIVE]`
+**2021: Auth0 Actions** `[ACTIVE]`
 
 Auth0 introduced Actions (2021, GA) -- serverless Node.js functions that execute at specific points in the authentication/authorization flow. Actions run on Auth0's infrastructure and can modify the flow by:
 
@@ -3301,7 +3298,7 @@ The following table consolidates all 18 roadmaps into a single reference, tracin
 | 11 | **Zero Trust** | Firewall perimeter (1990s) | DMZ architecture, VPN, network zones | NIST SP 800-207, ZTNA (Zscaler, Cloudflare), CISA ZT Maturity `[ACTIVE]` | Identity-native zero trust, continuous verification `[EMERGING]` | Adaptive auth + OpenIG gateway (partial ZT fit) |
 | 12 | **Machine & Workload Identity** | Service accounts (1990s) | API keys, static credentials, OAuth client_credentials | SPIFFE/SPIRE, cloud workload identity, mTLS, Sigstore `[ACTIVE]` | WIMSE standard, non-human identity platforms `[EMERGING]` | OAuth client_credentials grant; no SPIFFE/SPIRE |
 | 13 | **ITDR** | Log aggregation (2000s) | SIEM correlation (ArcSight, Splunk), manual investigation | Gartner ITDR category, CrowdStrike/Silverfort/Entra ID Protection `[ACTIVE]` | AI-powered identity SOC, automated remediation `[EMERGING]` | Audit module as data source; no native ITDR |
-| 14 | **Privacy & Consent** | OECD Guidelines (1980) | EU Directive 95/46/EC, P3P, basic consent checkboxes | GDPR/CCPA/PIPL, consent-as-code, GPC, eIDAS 2.0 `[ACTIVE]` | Purpose-bound access, ZKP-based age verification `[EMERGING]` | OAuth consent screen; no CMP, no DSAR automation |
+| 14 | **Privacy & Consent** | US FIPPs (1973) | EU Directive 95/46/EC, P3P, basic consent checkboxes | GDPR/CCPA/PIPL, consent-as-code, GPC, eIDAS 2.0 `[ACTIVE]` | Purpose-bound access, ZKP-based age verification `[EMERGING]` | OAuth consent screen; no CMP, no DSAR automation |
 | 15 | **Decentralized Identity** | PGP web of trust (1991) | OpenID 2.0, user-centric identity movement | W3C VCs 2.0, DIDs 1.0, OID4VC, SD-JWT VC, EU EUDIW `[EMERGING]` | Wallet-native auth, VC-first enterprise IAM `[EMERGING]` | No VC/DID support; centralized IdP model |
 | 16 | **Open-Source IAM Platforms** | Sun OpenSSO (2005) | ForgeRock OpenAM, CAS, Shibboleth | Keycloak (CNCF), Ory, Zitadel, Authentik, OIP, Wren `[ACTIVE]` | Composable identity fabric, platform consolidation `[EMERGING]` | OIP OpenAM 16.0.5 (CDDL, 34+ modules) |
 | 17 | **CIEM** | AWS IAM (2011) | Single-cloud IAM policies, manual permission management | Multi-cloud CIEM (Entra Permissions Mgmt, Wiz), blast radius analysis `[ACTIVE]` | Autonomous least-privilege, zero standing cloud perms `[EMERGING]` | Not in scope; SAML/OIDC federation to cloud IAM |
