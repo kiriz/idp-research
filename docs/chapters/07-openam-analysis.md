@@ -4,6 +4,8 @@ OpenAM is the central access management component of the Open Identity Platform 
 
 ---
 
+![OIP Component Architecture](../diagrams/01-oip-architecture.png)
+
 ## 1. What OpenAM Does
 
 OpenAM serves as a centralized authentication and authorization hub for web and API applications. Its core capabilities include:
@@ -19,6 +21,8 @@ These capabilities make OpenAM suitable for enterprises requiring a self-hosted 
 ---
 
 ## 2. Architecture Overview
+
+![OpenAM Authentication Chain (JAAS)](../diagrams/13-openam-auth-chain.png)
 
 ### Authentication Chain Model
 
@@ -132,6 +136,8 @@ The three forks diverge significantly in their technology stacks, as detailed in
 OIP's upgrade to Guice 7.0.0 modernizes the DI container but breaks backward compatibility with extensions compiled against Guice 3.0. Wren deliberately retained Guice 3.0 to preserve enterprise extension compatibility, wrapping it in namespace-isolated artifacts. This divergence means that custom authentication modules, post-authentication processors, and policy plugins are not binary-compatible between OIP and Wren builds -- a consideration for organizations maintaining custom extensions.
 
 Other notable dependency differences include Jackson (OIP conservative at 2.3.x, Wren modern at 2.15.2), SLF4J (OIP on 1.7.x, Wren on 2.0.17), Restlet (OIP 2.4.4, Wren 2.6.0), and Jakarta EE level (OIP partial jakarta.servlet 4.0+, Wren full jakarta.servlet 5.0.0). Wren's aggressive dependency modernization, combined with its conservative Guice strategy, reflects a deliberate architectural choice: update everything except the plugin contract surface.
+
+![Production HA Deployment Topology](../diagrams/02-ha-deployment.png)
 
 ### Production Deployment Topology
 

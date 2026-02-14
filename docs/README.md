@@ -65,6 +65,13 @@ This research analyzes the complete lineage of open-source identity management s
 | [12-modern-architecture.md](chapters/12-modern-architecture.md) | Modern Architecture Patterns | 517 | CTOs, architects |
 | [13-comparison-matrices.md](chapters/13-comparison-matrices.md) | Comparison Matrices (8 tables) | 539 | Procurement, evaluators |
 | [14-lessons-from-history.md](chapters/14-lessons-from-history.md) | Lessons from History | 500 | Researchers, designers |
+| [15-historical-parallels.md](chapters/15-historical-parallels.md) | Pre-Computer ↔ Post-Computer Parallels | 510 | Security architects, historians |
+
+### Diagrams
+
+| File | Description |
+|------|-------------|
+| [diagrams/](diagrams/) | 16 Excalidraw diagrams: architecture, timelines, protocol flows, decision trees, swim lane timelines |
 
 ### Presentation
 
@@ -72,7 +79,7 @@ This research analyzes the complete lineage of open-source identity management s
 |------|-------------|
 | [presentations/iam-evolution-deck.pptx](presentations/iam-evolution-deck.pptx) | 25-slide executive deck covering full research |
 
-**Total: ~10,000+ lines across 14 chapters + 8 extract files + 1 presentation.**
+**Total: ~11,000+ lines across 15 chapters + 8 extract files + 16 diagrams + 1 presentation.**
 
 ---
 

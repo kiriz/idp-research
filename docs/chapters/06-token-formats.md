@@ -2,6 +2,8 @@
 
 Tokens are the currency of modern identity systems, conveying authentication proof, authorization grants, and session state across network boundaries. This chapter examines the major token formats used in IAM: SAML assertions (XML-based federation tokens), JWT (JSON Web Tokens for OAuth2 and OIDC), CTS tokens (OpenAM's opaque session tokens), OAuth2 access/refresh tokens, and emerging formats for enhanced security. Each format reflects different design philosophies around token transparency, security properties, and interoperability trade-offs.
 
+![Token Format Evolution and Lifecycle](../diagrams/10-token-lifecycle.png)
+
 ## SAML Assertions: XML-Based Federation Tokens
 
 Security Assertion Markup Language (SAML) assertions are XML-encoded security tokens that convey authentication statements, authorization decisions, and user attributes. SAML 2.0 (OASIS, 2005) remains the dominant enterprise federation protocol nearly two decades after standardization.

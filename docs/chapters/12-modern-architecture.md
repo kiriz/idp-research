@@ -4,6 +4,10 @@ The architecture of identity and access management systems has undergone a funda
 
 ---
 
+![Modern IAM Landscape Positioning](../diagrams/11-iam-landscape.png)
+
+![Swim Lane Timeline: Modern Era (2005-2026)](../diagrams/15b-swimlane-modern.png)
+
 ## Then vs Now: Comparison Table
 
 The following table summarizes all fourteen architectural shifts covered in this chapter.

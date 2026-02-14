@@ -2,6 +2,8 @@
 
 Before digital computers existed, humans solved authentication and trust for five millennia using physical tokens, shared secrets, social networks, and ceremonial verification. The fundamental IAM patterns implemented in OpenAM, OpenDJ, and OpenIDM are not modern inventions — they are digital translations of mechanisms refined across centuries of trade, warfare, diplomacy, and craft guilds. This chapter examines eleven historical trust mechanisms, maps each to its contemporary equivalent in federation protocols and access management systems, and identifies six "untranslated patterns" that remain under-digitized despite clear applicability. Understanding this lineage reveals both what modern IAM has successfully solved and where forgotten wisdom might address persistent challenges in continuous authentication, progressive access escalation, and decentralized trust.
 
+![Swim Lane Timeline: Origins (1960-2005)](../diagrams/15a-swimlane-origins.png)
+
 ## A Five-Thousand-Year Narrative: How Humans Solved Trust Before Computers
 
 ### 1. The First Digital Signatures: Mesopotamian Cylinder Seals (3500–500 BC)

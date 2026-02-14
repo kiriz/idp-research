@@ -6,6 +6,10 @@ This is the story of how a pioneering identity management platform survived thre
 
 ---
 
+![Historical Timeline](../diagrams/04-historical-timeline.png)
+
+![Swim Lane Timeline: Origins (1960-2005)](../diagrams/15a-swimlane-origins.png)
+
 ## Sun Microsystems Era (2005-2010): The Vision of an Integrated Identity Stack
 
 In 2005, Sun Microsystems occupied a unique position in enterprise computing. It was the company that had given the world Java, Solaris, and the SPARC architecture. It also understood, better than most, that identity would be the cornerstone of networked computing in the emerging era of web services and service-oriented architecture.
@@ -166,6 +170,8 @@ Two groups chose the third path.
 
 ---
 
+![Fork Divergence: ForgeRock CE vs OIP vs Wren Security](../diagrams/06-fork-divergence.png)
+
 ## Community Fork: Two Paths Diverge (2017-2018)
 
 In early 2017, while ForgeRock was still publishing its final community edition patches, two independent efforts began to organize.
@@ -315,6 +321,8 @@ The transitive dependency problem is not theoretical. Consider a concrete exampl
 The modernization challenge is ultimately a story about the hidden costs of forking enterprise Java software. The source code is the visible artifact; the dependency graph, the build infrastructure, the testing matrix, and the compatibility contracts are the invisible ones. Both forks have made defensible choices given their constraints, but neither has fully solved the problem. The next major forcing function will be Java 11's end of extended support—when that happens, OIP will face the same Java 17 migration that Wren has already completed, potentially closing one of the last major divergences between the two forks.
 
 ---
+
+![Swim Lane Timeline: Modern Era (2005-2026)](../diagrams/15b-swimlane-modern.png)
 
 ## Current State and Trajectory (2018-2026): A Fragmented Landscape
 

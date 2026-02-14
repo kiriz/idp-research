@@ -2,9 +2,13 @@
 
 Federation protocols enable cross-domain single sign-on and identity assertion exchange without credential replication. The Open Identity Platform implements three generations of federation standards: SAML (dominant enterprise protocol since 2005), WS-Federation (Microsoft ecosystem), and OpenID Connect (modern cloud-native standard). This chapter examines each protocol's technical architecture, implementation in the OIP codebase, current deployment patterns, and the industry's ongoing SAML-to-OIDC migration trajectory.
 
+![Protocol Evolution Timeline](../diagrams/05-protocol-evolution.png)
+
 ## SAML 2.0: The Enterprise Federation Standard
 
 **Problem Solved:** Cross-organizational single sign-on without shared credential databases. User authenticates once at Identity Provider (IdP), accesses multiple Service Providers (SPs) via cryptographically signed assertions. Eliminates password synchronization, reduces password sprawl, centralizes authentication policy enforcement.
+
+![SAML 2.0 SP-Initiated SSO Flow](../diagrams/07-saml-sso-flow.png)
 
 ### Protocol Architecture
 
@@ -579,6 +583,8 @@ STS responds with issued token, lifetime, proof-of-possession key (optional).
 - Retain WS-Security only for legacy system integration
 - Use API gateways (OpenIG) to translate WS-Security→OAuth2 at boundary
 - Sunset WS-* services within 5-10 years
+
+![OAuth2/OIDC Authorization Code + PKCE Flow](../diagrams/08-oauth2-oidc-flow.png)
 
 ## OpenID Connect as Federation Protocol
 

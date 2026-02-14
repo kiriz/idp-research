@@ -184,6 +184,8 @@ This table compares approaches to identity integration and provisioning -- the d
 
 ---
 
+![IAM Decision Framework](../diagrams/14-iam-decision-tree.png)
+
 ## Decision Framework
 
 The following decision trees provide structured guidance for selecting between the platforms compared above. Each tree starts with a primary decision criterion and branches toward a recommended option.
@@ -445,6 +447,8 @@ ITDR products add the most value when deployed alongside, not instead of, a well
 - **Microsoft Entra ID Protection** is cost-effective for Microsoft-centric environments (E5 license) but assumes Entra ID as the primary IdP.
 
 ---
+
+![SPIFFE/SPIRE Workload Identity Flow](../diagrams/12-spiffe-spire.png)
 
 ## Table 8: Workload Identity (SPIFFE/SPIRE)
 

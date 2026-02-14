@@ -20,6 +20,8 @@ Together, these capabilities address the "Day 2" identity problem: not authentic
 
 ---
 
+![OpenIDM Provisioning Architecture](../diagrams/03-openidm-provisioning.png)
+
 ## 2. Architecture Overview
 
 ### OSGi Service Model (Apache Felix)

@@ -88,6 +88,8 @@ Example XACML 3.0 policy fragment:
 </Policy>
 ```
 
+![XACML Policy Evaluation Flow](../diagrams/09-xacml-evaluation.png)
+
 ### PEP/PDP/PIP/PAP Architecture
 
 XACML defines a distributed architecture with clear separation of concerns:
