@@ -32,29 +32,29 @@ OpenAM's OAuth2 implementation provides a precise reference for how the standard
 ```mermaid
 sequenceDiagram
     participant UA as User Agent
-    participant PEP as PEP / OpenIG Agent
-    participant AR as AuthorizeResource<br/>/oauth2/authorize
-    participant ACGTH as AuthorizationCodeGrantTypeHandler
+    participant PEP as PEP/OpenIG Agent
+    participant AR as AuthorizeResource
+    participant ACGTH as AuthzCodeGrantHandler
     participant TSS as StatelessTokenStore
     participant SSO as OpenAM SSO Session
 
-    UA->>AR: GET /authorize?response_type=code&code_challenge=S256:&client_id=&redirect_uri=
-    AR->>SSO: Validate SSOToken (cookie)
+    UA->>AR: GET /authorize response_type=code code_challenge=S256
+    AR->>SSO: Validate SSOToken cookie
     SSO-->>AR: Principal + AUTH_INSTANT + groups
     AR->>AR: Validate client_id, redirect_uri, scope
     AR->>ACGTH: issueAuthorizationCode(request, resourceOwner)
-    ACGTH->>ACGTH: Store AuthorizationCode{code, codeChallenge, codeChallengeMethod, ssoTokenId, ISSUED=false}
-    ACGTH-->>UA: 302 redirect_uri?code=&state=
+    ACGTH->>ACGTH: Store code + codeChallenge + ssoTokenId, ISSUED=false
+    ACGTH-->>UA: 302 redirect_uri?code=...&state=...
 
-    UA->>ACGTH: POST /access_token code= code_verifier= client_id=
-    ACGTH->>ACGTH: synchronized(code.intern()) — replay lock
-    ACGTH->>ACGTH: if code.isIssued() → ERROR invalid_grant
-    ACGTH->>ACGTH: PKCE: SHA-256(code_verifier) == codeChallenge? (MessageDigest.isEqual)
+    UA->>ACGTH: POST /access_token code + code_verifier + client_id
+    ACGTH->>ACGTH: synchronized(code.intern()) replay lock
+    ACGTH->>ACGTH: Reject if code.isIssued() == true
+    ACGTH->>ACGTH: PKCE SHA-256 verify via MessageDigest.isEqual
     ACGTH->>ACGTH: code.setIssued(true)
-    ACGTH->>TSS: createAccessToken(grantType, scope, clientId, resourceOwnerId, …)
+    ACGTH->>TSS: createAccessToken(grantType, scope, clientId, ...)
     TSS->>SSO: Get groups, claims, auth_time from ssoTokenId
-    TSS->>TSS: Build JWT: 20 claims (see below)
-    TSS-->>UA: {"access_token":"<JWT>","token_type":"Bearer","expires_in":3600,"id_token":"<JWT>"}
+    TSS->>TSS: Build JWT with 20 claims
+    TSS-->>UA: access_token=JWT, token_type=Bearer, expires_in=3600, id_token=JWT
 ```
 
 ### The 20-Claim Access Token
@@ -199,8 +199,8 @@ When an AI agent has OAuth2 tokens and acts on natural language instructions, in
 ```mermaid
 sequenceDiagram
     participant User
-    participant Agent as AI Agent<br/>(has OAuth token)
-    participant Attacker as Attacker Content<br/>(injected instruction)
+    participant Agent as AI Agent with OAuth token
+    participant Attacker as Attacker Injected Content
     participant API as Protected API
 
     User->>Agent: "Summarize my emails from last week"
@@ -229,7 +229,7 @@ block-beta
     block:spiffe["SPIFFE/SPIRE Layer — Workload Identity"]:1
         spire_server["SPIRE Server\n(attestation + signing CA)"]
         spire_agent["SPIRE Agent\n(per node, attestation)"]
-        svid["SVID\n(X.509 or JWT, <1hr TTL)"]
+        svid["SVID\n(X.509 or JWT, under 1hr TTL)"]
     end
 
     block:oauth["OAuth 2.1 Layer — Delegated Authorization"]:1
@@ -263,13 +263,13 @@ sequenceDiagram
     Agent->>MCP: GET /tools (unauthenticated)
     MCP-->>Agent: 401 WWW-Authenticate: Bearer resource_metadata=https://mcp.example.com/.well-known/oauth-protected-resource
     Agent->>MCP: GET /.well-known/oauth-protected-resource
-    MCP-->>Agent: {"authorization_servers": ["https://as.example.com"]}
+    MCP-->>Agent: authorization_servers = https://as.example.com
     Agent->>AS: GET /.well-known/oauth-authorization-server
-    AS-->>Agent: {"authorization_endpoint": "...", "token_endpoint": "...", "registration_endpoint": "..."}
-    Agent->>AS: POST /register (dynamic client registration — RFC 7591)
-    AS-->>Agent: {"client_id": "agent-abc123"}
+    AS-->>Agent: authorization_endpoint, token_endpoint, registration_endpoint
+    Agent->>AS: POST /register (dynamic client registration RFC 7591)
+    AS-->>Agent: client_id = agent-abc123
     Agent->>AS: POST /token (client_credentials or authorization_code + PKCE)
-    AS-->>Agent: {"access_token": "...", "scope": "tools:read tools:execute:summarize"}
+    AS-->>Agent: access_token + scope tools:read tools:execute:summarize
     Agent->>MCP: GET /tools Bearer: access_token
     MCP-->>Agent: [tool definitions]
 ```
@@ -359,10 +359,10 @@ gantt
     HQC backup KEM selected           :milestone, 2025, 0d
 
     section Mandatory Milestones
-    Software signing: PQ mandatory    :crit, 2027, 365d
+    Software signing PQ mandatory     :crit, 2027, 365d
     Classical algorithms deprecated   :crit, 2030, 365d
-    New systems: PQ mandatory         :crit, 2031, 365d
-    Cloud services: PQ mandatory      :crit, 2033, 730d
+    New systems PQ mandatory          :crit, 2031, 365d
+    Cloud services PQ mandatory       :crit, 2033, 730d
     All classical algorithms banned   :crit, 2035, 365d
 
     section Migration Work
