@@ -43,12 +43,64 @@ export default defineConfig({
         },
       ],
       head: [
+        // Inter + JetBrains Mono from Google Fonts
+        {
+          tag: "link",
+          attrs: { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        },
+        {
+          tag: "link",
+          attrs: { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
+        },
+        {
+          tag: "link",
+          attrs: {
+            rel: "stylesheet",
+            href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+          },
+        },
+        // Mermaid: diagrams are already <div class="mermaid"> via remarkMermaid plugin
         {
           tag: "script",
           attrs: { type: "module" },
           content: `
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
 mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
+`,
+        },
+        // Sidebar collapse toggle buttons
+        {
+          tag: "script",
+          content: `
+(function() {
+  var html = document.documentElement;
+
+  // Restore saved state before first paint
+  if (localStorage.getItem('sl-hide-left')  === '1') html.classList.add('sl-hide-left');
+  if (localStorage.getItem('sl-hide-right') === '1') html.classList.add('sl-hide-right');
+
+  function makeToggle(id, label, title, cls, key) {
+    var btn = document.createElement('button');
+    btn.id = id;
+    btn.className = 'sl-panel-toggle';
+    btn.title = title;
+    btn.textContent = label;
+    btn.addEventListener('click', function() {
+      html.classList.toggle(cls);
+      localStorage.setItem(key, html.classList.contains(cls) ? '1' : '0');
+    });
+    return btn;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.appendChild(
+      makeToggle('sl-toggle-left',  '☰', 'Toggle navigation sidebar',    'sl-hide-left',  'sl-hide-left')
+    );
+    document.body.appendChild(
+      makeToggle('sl-toggle-right', '≡', 'Toggle table of contents',      'sl-hide-right', 'sl-hide-right')
+    );
+  });
+})();
 `,
         },
       ],

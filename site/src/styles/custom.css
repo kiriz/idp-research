@@ -1,3 +1,10 @@
+/* Typography */
+:root {
+  --sl-font: 'Inter', system-ui, -apple-system, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --sl-content-width: 55rem;
+}
+
 /* CVE matrix status colors — also used directly in component styles */
 :root {
   --cve-danger-bg: #fef2f2;
@@ -6,6 +13,51 @@
   --cve-success-text: #166534;
   --cve-warning-bg: #fffbeb;
   --cve-warning-text: #92400e;
+}
+
+/* ── Sidebar collapse toggles ── */
+.sl-panel-toggle {
+  position: fixed;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  top: calc(var(--sl-nav-height, 3.5rem) + 0.6rem);
+  background: var(--sl-color-bg-nav);
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--sl-color-text-accent);
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+.sl-panel-toggle:hover { opacity: 1; }
+
+@media (min-width: 50em) {
+  #sl-toggle-left  { display: flex; left: 0.4rem; }
+}
+@media (min-width: 72em) {
+  #sl-toggle-right { display: flex; right: 0.4rem; }
+}
+
+/* Hide left sidebar + collapse its space */
+html.sl-hide-left .sidebar,
+html.sl-hide-left .sidebar-pane {
+  display: none !important;
+}
+@media (min-width: 50em) {
+  html.sl-hide-left[data-has-sidebar] {
+    --sl-content-inline-start: 0 !important;
+  }
+}
+
+/* Hide right TOC */
+html.sl-hide-right .right-sidebar-container {
+  display: none !important;
 }
 
 [data-theme="dark"] {
