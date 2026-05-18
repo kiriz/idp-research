@@ -1,0 +1,187 @@
+---
+// No props — data is hardcoded from git-history-analysis.md
+const chartId = `chart-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<figure class="chart-figure">
+  <div class="chart-wrapper" data-chart-id={chartId}>
+    <canvas id={chartId} aria-label="Commit velocity across 7 OpenAM-lineage repositories, 2006–2025"></canvas>
+  </div>
+  <figcaption>
+    Commit velocity across 7 repositories in the OpenAM lineage, 2006–2025.
+    ForgeRock's closure in November 2016 produced a <strong>94% drop</strong> in combined
+    activity within one year (6,631 → 401 commits). The Open Identity Platform community
+    revived maintenance from 2018 onward.
+  </figcaption>
+</figure>
+
+<script>
+  import Chart from "chart.js/auto";
+  import AnnotationPlugin from "chartjs-plugin-annotation";
+
+  Chart.register(AnnotationPlugin);
+
+  const years = [
+    2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014,
+    2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025,
+  ];
+
+  const datasets = [
+    {
+      label: "OpenDJ",
+      data: [1294,4696,2036,1976,678,1530,1408,3056,2660,2833,1148,66,219,93,73,30,67,36,103,100],
+      borderColor: "#16a34a",
+      backgroundColor: "transparent",
+      tension: 0.3,
+      pointRadius: 2,
+      borderWidth: 2,
+    },
+    {
+      label: "OpenAM",
+      data: [0,0,0,0,0,0,762,1346,1966,2206,1816,226,291,203,150,145,144,97,117,107],
+      borderColor: "#2563eb",
+      backgroundColor: "transparent",
+      tension: 0.3,
+      pointRadius: 2,
+      borderWidth: 2,
+    },
+    {
+      label: "Wren:AM",
+      data: [0,0,0,0,0,0,762,1346,1965,2200,1816,17,3,0,0,5,51,184,43,120],
+      borderColor: "#7c3aed",
+      backgroundColor: "transparent",
+      tension: 0.3,
+      pointRadius: 2,
+      borderWidth: 2,
+    },
+    {
+      label: "OpenIDM",
+      data: [0,0,0,0,0,802,1502,864,1618,1965,1218,0,0,40,0,0,0,0,88,44],
+      borderColor: "#ea580c",
+      backgroundColor: "transparent",
+      tension: 0.3,
+      pointRadius: 2,
+      borderWidth: 2,
+    },
+    {
+      label: "ForgeRock CE",
+      data: [0,0,0,0,0,0,762,1346,1818,98,5,92,0,0,0,0,0,0,0,0],
+      borderColor: "#dc2626",
+      backgroundColor: "transparent",
+      tension: 0.3,
+      pointRadius: 2,
+      borderWidth: 1.5,
+      borderDash: [5, 3],
+    },
+    {
+      label: "OpenIG",
+      data: [0,0,0,0,0,12,120,18,565,451,504,0,57,36,33,29,48,25,43,48],
+      borderColor: "#0891b2",
+      backgroundColor: "transparent",
+      tension: 0.3,
+      pointRadius: 2,
+      borderWidth: 2,
+    },
+    {
+      label: "OpenICF",
+      data: [0,241,444,41,121,60,58,152,194,124,0,0,65,21,0,0,0,0,81,32],
+      borderColor: "#94a3b8",
+      backgroundColor: "transparent",
+      tension: 0.3,
+      pointRadius: 2,
+      borderWidth: 1.5,
+    },
+    {
+      label: "Total (all repos)",
+      data: [1294,4937,2480,2017,799,2404,5376,8034,10744,9947,6631,401,635,393,256,209,310,342,475,451],
+      borderColor: "#0f172a",
+      backgroundColor: "transparent",
+      tension: 0.3,
+      pointRadius: 3,
+      borderWidth: 3,
+      borderDash: [8, 4],
+    },
+  ];
+
+  document.querySelectorAll<HTMLDivElement>("[data-chart-id]").forEach((wrapper) => {
+    const id = wrapper.dataset.chartId!;
+    const canvas = document.getElementById(id) as HTMLCanvasElement | null;
+    if (!canvas || canvas.dataset.initialized) return;
+    canvas.dataset.initialized = "true";
+
+    new Chart(canvas, {
+      type: "line",
+      data: { labels: years, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { position: "bottom", labels: { boxWidth: 12, padding: 16, font: { size: 11 } } },
+          tooltip: { callbacks: { title: (items) => `Year: ${items[0].label}` } },
+          annotation: {
+            annotations: {
+              closureLine: {
+                type: "line",
+                xMin: 10.5,
+                xMax: 10.5,
+                borderColor: "#dc2626",
+                borderWidth: 2,
+                borderDash: [6, 3],
+                label: {
+                  content: "ForgeRock Closure (Nov 2016)",
+                  display: true,
+                  position: "start",
+                  backgroundColor: "#dc262620",
+                  color: "#dc2626",
+                  font: { size: 11, weight: "bold" },
+                  padding: 4,
+                },
+              },
+              peakPoint: {
+                type: "point",
+                xValue: 2014,
+                yValue: 10744,
+                backgroundColor: "#f59e0b",
+                radius: 8,
+                label: {
+                  content: "Peak: 10,744 commits (2014)",
+                  display: true,
+                  position: "right",
+                  backgroundColor: "#f59e0b20",
+                  color: "#92400e",
+                  font: { size: 11 },
+                  padding: 4,
+                },
+              },
+            },
+          },
+        },
+        scales: {
+          x: { title: { display: true, text: "Year" } },
+          y: { title: { display: true, text: "Commits" }, beginAtZero: true },
+        },
+      },
+    });
+  });
+</script>
+
+<style>
+  .chart-figure {
+    margin: 2rem 0;
+  }
+
+  .chart-wrapper {
+    position: relative;
+    height: 420px;
+    width: 100%;
+  }
+
+  figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--sl-color-gray-3);
+    text-align: center;
+    line-height: 1.5;
+  }
+</style>

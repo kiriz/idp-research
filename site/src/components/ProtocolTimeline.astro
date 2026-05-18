@@ -1,0 +1,193 @@
+---
+interface Era {
+  name: string;
+  color: string;
+  years: string;
+  entries: { year: number; name: string; desc: string }[];
+}
+
+const eras: Era[] = [
+  {
+    name: "Directory Era",
+    color: "#6366f1",
+    years: "1988–2000",
+    entries: [
+      { year: 1988, name: "X.500 / DAP", desc: "ITU-T directory standard over full OSI stack. Introduced the DN hierarchy and information model that LDAP inherits wholesale." },
+      { year: 1993, name: "LDAPv1 (RFC 1487)", desc: "Lightweight X.500 access over TCP, invented at University of Michigan. Read-only subset of DAP — the protocol that changed everything." },
+      { year: 1993, name: "Kerberos V5 (RFC 1510)", desc: "MIT ticket-based network authentication. Still the backbone of Active Directory and enterprise Windows environments." },
+      { year: 1995, name: "LDAPv2 (RFC 1777)", desc: "Added write operations (add, delete, modify). Simple bind authentication. First broadly deployable directory protocol." },
+      { year: 1997, name: "LDAPv3 (RFC 2251)", desc: "SASL authentication, TLS, extensibility. Became an Internet Standard. Still entrenched in enterprise IAM today — 27 years later." },
+      { year: 1997, name: "RADIUS (RFC 2058)", desc: "Network access authentication and accounting for dial-up, then Wi-Fi and VPN. Still widely deployed for network access." },
+    ],
+  },
+  {
+    name: "Enterprise Federation Era",
+    color: "#0891b2",
+    years: "2000–2010",
+    entries: [
+      { year: 2002, name: "SAML 1.0 (OASIS)", desc: "First cross-domain SSO standard. XML-based assertions for identity. Too complex, but proved the concept." },
+      { year: 2003, name: "WS-Federation (Microsoft/IBM)", desc: "Enterprise federation for .NET and Java EE ecosystems. Now legacy — superseded by SAML 2.0 and OIDC." },
+      { year: 2003, name: "XACML 1.0 (OASIS)", desc: "Fine-grained policy-based authorization in XML. Powerful but too complex for widespread adoption. Simpler alternatives eventually won." },
+      { year: 2005, name: "SAML 2.0 (OASIS)", desc: "Dominant enterprise federation standard. Still the protocol enterprises reach for when integrating legacy SaaS. OpenAM's killer feature." },
+      { year: 2007, name: "OAuth 1.0", desc: "API authorization via signed tokens. Complex signing scheme proved painful — but introduced delegated authorization to the industry." },
+    ],
+  },
+  {
+    name: "API & Consumer Era",
+    color: "#059669",
+    years: "2010–2018",
+    entries: [
+      { year: 2012, name: "OAuth 2.0 (RFC 6749)", desc: "Modern API authorization framework. Token-based, bearer-token simplicity. Became the foundation of the modern web's authorization layer." },
+      { year: 2014, name: "OpenID Connect 1.0", desc: "Identity layer over OAuth 2.0. JWT-based ID tokens. Dominant for consumer-scale authentication — every major IdP supports it." },
+      { year: 2015, name: "SCIM 2.0 (RFC 7642–7644)", desc: "Standardized identity provisioning via REST. Achieved broad SaaS adoption where its predecessor SPML had failed." },
+      { year: 2018, name: "UMA 2.0 (Kantara)", desc: "User-managed resource sharing — users control who can access their data. Niche adoption, mostly healthcare." },
+    ],
+  },
+  {
+    name: "Zero Trust & Phishing-Resistant Era",
+    color: "#dc2626",
+    years: "2019–present",
+    entries: [
+      { year: 2019, name: "FIDO2 / WebAuthn (W3C)", desc: "Hardware key and biometric authentication. Phishing-resistant by design — the credential never leaves the device." },
+      { year: 2019, name: "W3C Verifiable Credentials", desc: "Decentralized identity claims via cryptographic proofs. Production deployments still limited but growing in government/healthcare." },
+      { year: 2020, name: "NIST SP 800-207 (Zero Trust)", desc: "Zero Trust Architecture codified. US Executive Order 14028 (2021) mandated federal adoption, driving industry-wide adoption." },
+      { year: 2022, name: "Passkeys (FIDO Alliance)", desc: "Synced FIDO2 credentials across devices. Apple, Google, Microsoft all shipped support by late 2023. The password's replacement." },
+      { year: 2023, name: "Cedar (AWS)", desc: "Next-generation policy language — simpler than XACML, designed for cloud-native fine-grained authorization at scale." },
+      { year: 2024, name: "OAuth 2.1 (draft)", desc: "Consolidates OAuth 2.0 security best practices (PKCE mandatory, no implicit flow, etc.) into a single clean spec." },
+    ],
+  },
+];
+---
+
+<figure class="timeline-figure">
+  {
+    eras.map((era) => (
+      <section class="era" style={`--era-color: ${era.color}`}>
+        <div class="era-header">
+          <span class="era-name">{era.name}</span>
+          <span class="era-years">{era.years}</span>
+        </div>
+        <ol class="entries">
+          {era.entries.map((e) => (
+            <li class="entry">
+              <div class="year-badge">{e.year}</div>
+              <div class="entry-body">
+                <strong class="proto-name">{e.name}</strong>
+                <p class="proto-desc">{e.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+  <figcaption>
+    Identity standard evolution from X.500 (1988) to Passkeys (2022+). Colored bands represent
+    architectural eras. Legacy protocols (LDAP, SAML, Kerberos) remain entrenched in enterprise
+    environments while modern standards continue to emerge.
+  </figcaption>
+</figure>
+
+<style>
+  .timeline-figure {
+    margin: 2rem 0;
+  }
+
+  .era {
+    border-left: 4px solid var(--era-color);
+    margin-bottom: 2.5rem;
+    padding-left: 1.25rem;
+  }
+
+  .era-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--sl-color-hairline);
+  }
+
+  .era-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--era-color);
+  }
+
+  .era-years {
+    font-size: 0.8rem;
+    color: var(--sl-color-gray-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 0.75rem;
+    align-items: start;
+  }
+
+  .year-badge {
+    background: var(--era-color);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 0.2rem 0.3rem;
+    border-radius: 4px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .entry-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .proto-name {
+    font-size: 0.9rem;
+    color: var(--sl-color-text);
+    line-height: 1.3;
+  }
+
+  .proto-desc {
+    font-size: 0.82rem;
+    color: var(--sl-color-gray-3);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  figcaption {
+    margin-top: 1.5rem;
+    font-size: 0.82rem;
+    color: var(--sl-color-gray-3);
+    text-align: center;
+    line-height: 1.5;
+    padding: 0.75rem;
+    background: var(--sl-color-bg-nav);
+    border-radius: 6px;
+  }
+
+  @media (max-width: 480px) {
+    .entry {
+      grid-template-columns: 2.8rem 1fr;
+      gap: 0.5rem;
+    }
+
+    .year-badge {
+      font-size: 0.65rem;
+    }
+  }
+</style>

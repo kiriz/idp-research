@@ -1,0 +1,343 @@
+---
+type PatchStatus = "critical-unpatched" | "patched" | "warning" | "unknown" | "na";
+
+interface CVERow {
+  id: string;
+  year: number;
+  cvss: string;
+  component: string;
+  description: string;
+  forgeRockCE: PatchStatus;
+  oipOpenAM: PatchStatus;
+  wrenAM: PatchStatus;
+  note?: string;
+}
+
+const cves: CVERow[] = [
+  {
+    id: "CVE-2021-35464",
+    year: 2021,
+    cvss: "9.8 Critical",
+    component: "OpenAM core (Jato)",
+    description: "Pre-auth RCE via Java deserialization — actively exploited in the wild. Metasploit module available. CISA advisory issued.",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "patched",
+    note: "Most dangerous: unauthenticated RCE with public exploit tooling",
+  },
+  {
+    id: "CVE-2021-29156",
+    year: 2021,
+    cvss: "7.5 High",
+    component: "OpenAM core (Webfinger)",
+    description: "LDAP injection via Webfinger endpoint — character-by-character retrieval of password hashes and session tokens.",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "patched",
+  },
+  {
+    id: "CVE-2024-38999",
+    year: 2024,
+    cvss: "9.8 Critical",
+    component: "RequireJS (OpenAM, OpenIDM, OpenIG)",
+    description: "Prototype pollution via RequireJS — affects 3 OIP components simultaneously.",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "na",
+  },
+  {
+    id: "CVE-2022-1471",
+    year: 2022,
+    cvss: "9.8 Critical",
+    component: "SnakeYaml (OpenAM)",
+    description: "Constructor deserialization RCE — arbitrary code execution via YAML parsing.",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "patched",
+  },
+  {
+    id: "CVE-2022-42889",
+    year: 2022,
+    cvss: "9.8 Critical",
+    component: "Apache Commons Text",
+    description: "Arbitrary code execution via string interpolation (\"Text4Shell\").",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "unknown",
+  },
+  {
+    id: "CVE-2021-35043",
+    year: 2021,
+    cvss: "6.1 Medium",
+    component: "OWASP AntiSamy (OpenAM)",
+    description: "XSS via crafted HTML attributes bypassing AntiSamy sanitizer.",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "patched",
+  },
+  {
+    id: "CVE-2022-24670",
+    year: 2022,
+    cvss: "—",
+    component: "OpenAM core",
+    description: "OpenAM-specific vulnerability (ForgeRock internal advisory).",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "unknown",
+    wrenAM: "patched",
+  },
+  {
+    id: "CVE-2025-27497",
+    year: 2025,
+    cvss: "Medium",
+    component: "All OIP components",
+    description: "DoS via alias loop — affects OpenAM, OpenDJ, OpenIDM, OpenIG, OpenICF simultaneously.",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "na",
+  },
+  {
+    id: "CVE-2025-8662",
+    year: 2025,
+    cvss: "Medium",
+    component: "OpenAM core (SAML IdP)",
+    description: "Request parameter tampering modifies internal cache — SAML IdP dysfunction.",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "na",
+  },
+  {
+    id: "CVE-2019-10172",
+    year: 2019,
+    cvss: "7.5 High",
+    component: "Jackson-mapper-asl (OpenAM)",
+    description: "XXE injection via XML parsing in legacy Jackson library.",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "warning",
+  },
+  {
+    id: "CVE-2018-8039",
+    year: 2018,
+    cvss: "8.1 High",
+    component: "Apache CXF (OpenAM)",
+    description: "TLS hostname verification bypass — enables man-in-the-middle attacks.",
+    forgeRockCE: "critical-unpatched",
+    oipOpenAM: "patched",
+    wrenAM: "patched",
+  },
+];
+
+function statusLabel(s: PatchStatus): string {
+  switch (s) {
+    case "critical-unpatched": return "Unpatched";
+    case "patched":            return "Patched";
+    case "warning":            return "Partial";
+    case "unknown":            return "Unknown";
+    case "na":                 return "N/A";
+  }
+}
+
+function statusClass(s: PatchStatus): string {
+  switch (s) {
+    case "critical-unpatched": return "status--danger";
+    case "patched":            return "status--success";
+    case "warning":            return "status--warning";
+    case "unknown":            return "status--unknown";
+    case "na":                 return "status--na";
+  }
+}
+---
+
+<div class="cve-matrix">
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">CVE</th>
+          <th scope="col">Year</th>
+          <th scope="col">CVSS</th>
+          <th scope="col">Component</th>
+          <th scope="col">Description</th>
+          <th scope="col">ForgeRock CE 11.0.3</th>
+          <th scope="col">OIP OpenAM</th>
+          <th scope="col">Wren:AM</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          cves.map((cve) => (
+            <tr class={cve.note ? "row--highlight" : ""}>
+              <td class="cve-id">
+                <a
+                  href={`https://nvd.nist.gov/vuln/detail/${cve.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {cve.id}
+                </a>
+              </td>
+              <td class="year">{cve.year}</td>
+              <td class={`cvss ${cve.cvss.startsWith("9") ? "cvss--critical" : cve.cvss.startsWith("8") || cve.cvss.startsWith("7") ? "cvss--high" : ""}`}>
+                {cve.cvss}
+              </td>
+              <td class="component">{cve.component}</td>
+              <td class="description">
+                {cve.description}
+                {cve.note && <span class="note"> ⚠ {cve.note}</span>}
+              </td>
+              <td>
+                <span class={`status-badge ${statusClass(cve.forgeRockCE)}`}>
+                  {statusLabel(cve.forgeRockCE)}
+                </span>
+              </td>
+              <td>
+                <span class={`status-badge ${statusClass(cve.oipOpenAM)}`}>
+                  {statusLabel(cve.oipOpenAM)}
+                </span>
+              </td>
+              <td>
+                <span class={`status-badge ${statusClass(cve.wrenAM)}`}>
+                  {statusLabel(cve.wrenAM)}
+                </span>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <strong>Legend:</strong>
+    <span class="status-badge status--danger">Unpatched</span> — vulnerability present, no fix applied
+    <span class="status-badge status--success">Patched</span> — fix confirmed in commit history
+    <span class="status-badge status--warning">Partial</span> — partial or uncertain fix
+    <span class="status-badge status--unknown">Unknown</span> — patch status not confirmed
+    <span class="status-badge status--na">N/A</span> — component not present in this fork
+  </div>
+</div>
+
+<style>
+  .cve-matrix {
+    margin: 2rem 0;
+    font-size: 0.85rem;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--sl-color-hairline);
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 800px;
+  }
+
+  th {
+    background: var(--sl-color-bg-nav);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--sl-color-gray-2);
+    white-space: nowrap;
+    border-bottom: 2px solid var(--sl-color-hairline);
+  }
+
+  td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--sl-color-hairline);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr.row--highlight td {
+    background: #fef3c720;
+  }
+
+  .cve-id a {
+    font-family: var(--sl-font-mono, monospace);
+    font-size: 0.78rem;
+    white-space: nowrap;
+    color: var(--sl-color-accent);
+    text-decoration: none;
+  }
+
+  .cve-id a:hover {
+    text-decoration: underline;
+  }
+
+  .year {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    color: var(--sl-color-gray-3);
+  }
+
+  .cvss {
+    white-space: nowrap;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cvss--critical { color: #dc2626; }
+  .cvss--high     { color: #ea580c; }
+
+  .component {
+    font-size: 0.78rem;
+    color: var(--sl-color-gray-2);
+    min-width: 140px;
+  }
+
+  .description {
+    max-width: 280px;
+    color: var(--sl-color-text);
+  }
+
+  .note {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.75rem;
+    color: #92400e;
+    font-style: italic;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .status--danger  { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+  .status--success { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+  .status--warning { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
+  .status--unknown { background: var(--sl-color-bg-nav); color: var(--sl-color-gray-3); border: 1px solid var(--sl-color-hairline); }
+  .status--na      { background: transparent; color: var(--sl-color-gray-4); border: 1px solid var(--sl-color-hairline); }
+
+  .legend {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--sl-color-gray-3);
+    padding: 0.75rem;
+    background: var(--sl-color-bg-nav);
+    border-radius: 6px;
+  }
+
+  :global([data-theme="dark"]) .status--danger  { background: #450a0a; color: #fca5a5; }
+  :global([data-theme="dark"]) .status--success { background: #052e16; color: #86efac; }
+  :global([data-theme="dark"]) .status--warning { background: #422006; color: #fcd34d; }
+</style>

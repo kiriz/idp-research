@@ -1,0 +1,22 @@
+{
+  "name": "iam-deep-dive",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "sync": "bun run scripts/sync-content.ts",
+    "diagrams": "bun run scripts/export-diagrams.ts"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.33.0",
+    "astro": "^5.7.0",
+    "chart.js": "^4.4.9",
+    "chartjs-plugin-annotation": "^3.1.0",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

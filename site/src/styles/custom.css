@@ -1,0 +1,92 @@
+/* CVE matrix status colors — also used directly in component styles */
+:root {
+  --cve-danger-bg: #fef2f2;
+  --cve-danger-text: #991b1b;
+  --cve-success-bg: #f0fdf4;
+  --cve-success-text: #166534;
+  --cve-warning-bg: #fffbeb;
+  --cve-warning-text: #92400e;
+}
+
+[data-theme="dark"] {
+  --cve-danger-bg: #450a0a;
+  --cve-danger-text: #fca5a5;
+  --cve-success-bg: #052e16;
+  --cve-success-text: #86efac;
+  --cve-warning-bg: #422006;
+  --cve-warning-text: #fcd34d;
+}
+
+/* Landing page hero stat pills */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat-pill {
+  background: var(--sl-color-bg-nav);
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-pill .stat-number {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--sl-color-accent);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.stat-pill .stat-label {
+  font-size: 0.78rem;
+  color: var(--sl-color-gray-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Reading path callout boxes */
+.reading-paths {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.reading-path {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--sl-color-accent);
+  background: var(--sl-color-bg-nav);
+}
+
+.reading-path h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: var(--sl-color-accent);
+}
+
+.reading-path ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--sl-color-gray-2);
+}
+
+/* Ensure chart canvas only loads Chart.js on chart pages */
+canvas[aria-label] {
+  display: block;
+}
+
+/* Table improvements for reference pages */
+.sl-markdown-content table {
+  font-size: 0.85rem;
+}
+
+.sl-markdown-content th {
+  background: var(--sl-color-bg-nav);
+}

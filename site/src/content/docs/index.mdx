@@ -1,0 +1,111 @@
+---
+title: IAM Deep Dive
+description: "20 years of open-source identity management — primary source analysis of 7 repositories, 250,000+ commits, 40+ protocols, and the ForgeRock lineage from Sun OpenSSO to today's modern IAM landscape."
+template: splash
+hero:
+  tagline: 20 years of open-source identity management — source code, commit history, CVEs, and protocols. All primary source.
+  actions:
+    - text: Start with the History
+      link: /idp-research/history/
+      icon: right-arrow
+      variant: primary
+    - text: Compare Platforms
+      link: /idp-research/decision-guide/comparison/
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<div class="stat-grid">
+  <div class="stat-pill"><span class="stat-number">7</span><span class="stat-label">Repos Analyzed</span></div>
+  <div class="stat-pill"><span class="stat-number">250K+</span><span class="stat-label">Commits Mined</span></div>
+  <div class="stat-pill"><span class="stat-number">20 yrs</span><span class="stat-label">Timeline</span></div>
+  <div class="stat-pill"><span class="stat-number">40+</span><span class="stat-label">Protocols</span></div>
+  <div class="stat-pill"><span class="stat-number">30+</span><span class="stat-label">CVEs Traced</span></div>
+  <div class="stat-pill"><span class="stat-number">683 pg</span><span class="stat-label">Reference PDF</span></div>
+</div>
+
+## Six Key Findings
+
+**1. The ForgeRock closure (November 2016) was the defining event.**
+It caused a 94% drop in commit velocity within one year — from 6,631 combined commits in 2016 to 401 in 2017. The community split into two forks (OIP and Wren Security) with divergent strategies that persist today.
+
+**2. The OIP stack implements more protocols than any single modern alternative.**
+OpenAM alone has 34+ authentication modules, SAML 2.0 IdP/SP, OAuth 2.0/OIDC provider, XACML 3.0 policy engine, UMA 2.0, WS-Federation, and WS-Trust — all in one WAR file. No modern platform matches this breadth.
+
+**3. The architecture is a time capsule of 2005–2016 enterprise Java.**
+Monolithic WAR deployment, JAAS authentication chains, OSGi service model (OpenIDM), Jato UI framework (OpenAM), and deep LDAP coupling. Modern IAM has moved to microservices (Ory), event sourcing (Zitadel), API-first design, and cloud-native deployment.
+
+**4. Security risk varies dramatically by fork.**
+ForgeRock CE 11.0.3 (frozen since 2017) has 4+ unpatched critical RCE vulnerabilities including CVE-2021-35464 (CVSS 9.8, actively exploited, Metasploit module available). OIP and Wren:AM have patched all critical CVEs.
+
+**5. LDAP persists but is being demoted.**
+OpenDJ remains one of the most capable open-source LDAPv3 implementations. But modern platforms use PostgreSQL or CockroachDB as their identity store, with SCIM 2.0 as the wire protocol. LDAP is becoming a compatibility interface.
+
+**6. The IAM market has bifurcated into composable services and integrated platforms.**
+The Ory stack (4 independent Go binaries) represents the composable extreme. Keycloak and Zitadel are modern integrated platforms. Auth0/Okta/Cognito are managed SaaS. The OIP stack fits none of these categories.
+
+---
+
+## Choose Your Reading Path
+
+<div class="reading-paths">
+  <div class="reading-path">
+    <h3>For Leadership (30 min)</h3>
+    <ul>
+      <li>This page — key findings</li>
+      <li><a href="/idp-research/history/">20-Year History</a></li>
+      <li><a href="/idp-research/decision-guide/comparison/">Platform Comparison</a></li>
+      <li><a href="/idp-research/decision-guide/migration/">Migration Recommendations</a></li>
+    </ul>
+  </div>
+  <div class="reading-path">
+    <h3>For Security Architects (2 hrs)</h3>
+    <ul>
+      <li><a href="/idp-research/protocols/authentication/">Authentication Protocols</a></li>
+      <li><a href="/idp-research/protocols/federation/">Federation Protocols</a></li>
+      <li><a href="/idp-research/protocols/tokens/">Token Formats</a></li>
+      <li><a href="/idp-research/reference/cve-history/">CVE History & Patch Matrix</a></li>
+    </ul>
+  </div>
+  <div class="reading-path">
+    <h3>For Migration Planners (2 hrs)</h3>
+    <ul>
+      <li><a href="/idp-research/openam-lineage/">The ForgeRock Story</a></li>
+      <li><a href="/idp-research/openam-lineage/openam/">OpenAM Analysis</a></li>
+      <li><a href="/idp-research/decision-guide/comparison/">Comparison Matrices</a></li>
+      <li><a href="/idp-research/reference/git-analysis/">Git History Analysis</a></li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## What's Here
+
+<CardGrid>
+  <Card title="20-Year History" icon="open-book">
+    From Sun OpenSSO (2005) through ForgeRock's commercial era to today's two active forks. Interactive commit velocity chart showing the ForgeRock closure cliff.
+  </Card>
+  <Card title="Protocol Deep Dives" icon="information">
+    Authentication, federation, authorization, directory services, and token formats — 40+ protocols analyzed across their full lifecycle.
+  </Card>
+  <Card title="OpenAM Lineage" icon="puzzle">
+    Deep analysis of all 5 OIP components: OpenAM, OpenDJ, OpenIDM, OpenIG, and OpenICF. Architecture, CVEs, and fork divergence.
+  </Card>
+  <Card title="Modern Landscape" icon="rocket">
+    Where IAM is today: Keycloak, Ory, Auth0, Okta, Cognito, Zitadel, Authentik, and others compared across 8 decision matrices.
+  </Card>
+  <Card title="Decision Guide" icon="approve-check">
+    Platform comparison matrices, migration recommendations, and lessons from 20 years of IAM history — the "what should I use?" chapter.
+  </Card>
+  <Card title="Reference Data" icon="list-format">
+    Raw data: complete protocol inventory, CVE history and patch matrix, git commit analysis, and pre-computer authentication history.
+  </Card>
+</CardGrid>
+
+---
+
+## Methodology
+
+This research analyzed: **7 Git repositories** (full commit history unshallowed — OpenAM, OpenDJ, OpenIDM, OpenIG, OpenICF, ForgeRock CE, Wren:AM) · **683-page ForgeRock OpenAM 12 Reference PDF** · **CVE databases** (NVD, GitHub Security Advisories, git history cross-referenced) · **450+ archived PDFs** from PingIdentity/ForgeRock documentation archive · **Standards body publications** (RFCs, OASIS, W3C, FIDO Alliance, NIST).
