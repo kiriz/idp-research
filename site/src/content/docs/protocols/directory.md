@@ -1195,4 +1195,4 @@ Cloud directories abstract LDAP behind REST APIs (Microsoft Graph, Google Cloud 
 
 Despite cloud evolution, LDAP remains the universal directory protocol, coexisting with cloud directories in hybrid deployments. REST2LDAP and SCIM bridge legacy LDAP infrastructure with modern API-first architectures without requiring migration.
 
-References: OpenDJ source code at `/Users/kirane/projects/idp/OpenDJ/opendj-core/`, `/Users/kirane/projects/idp/OpenDJ/opendj-server-legacy/`, `/Users/kirane/projects/idp/OpenDJ/opendj-rest2ldap/`. LDAP RFCs 4510-4519, DSML v2 (OASIS), SCIM RFCs 7642-7644.
+References: OpenDJ source code at [github.com/OpenIdentityPlatform/OpenDJ](https://github.com/OpenIdentityPlatform/OpenDJ) (modules: opendj-core, opendj-server-legacy, opendj-rest2ldap). LDAP RFCs 4510-4519, DSML v2 (OASIS), SCIM RFCs 7642-7644.

@@ -1413,4 +1413,4 @@ Token formats reflect trade-offs between interoperability, security, size, and f
 
 Session management strategies range from stateful (CTS-backed, immediate revocation, database bottleneck) to stateless (JWT, horizontal scalability, revocation complexity). Hybrid approaches (short JWT + refresh token) balance performance and control. Modern best practice: stateless JWT for API performance, refresh tokens for revocation, session blacklisting for emergency scenarios.
 
-References: OpenAM source code at `/Users/kirane/projects/idp/OpenAM/openam-core/src/main/java/org/forgerock/openam/cts/`, `/Users/kirane/projects/idp/OpenAM/openam-oauth2/`, `/Users/kirane/projects/idp/OpenAM/openam-federation/`. SAML 2.0 (OASIS), JWT RFCs (7519, 7515, 7516), OAuth2 RFCs (6749, 6750, 7662), DPoP (RFC 9449), W3C Verifiable Credentials.
+References: OpenAM source code at [github.com/OpenIdentityPlatform/OpenAM](https://github.com/OpenIdentityPlatform/OpenAM) (modules: openam-core/cts, openam-oauth2, openam-federation). SAML 2.0 (OASIS), JWT RFCs (7519, 7515, 7516), OAuth2 RFCs (6749, 6750, 7662), DPoP (RFC 9449), W3C Verifiable Credentials.

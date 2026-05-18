@@ -1008,4 +1008,4 @@ Authorization frameworks have evolved from centralized, XML-heavy policy engines
 
 Modern best practice: OAuth 2.0/OIDC for authentication and API authorization, OPA or Cedar for policy-based fine-grained authorization, and ReBAC systems (OpenFGA, SpiceDB) for complex resource sharing scenarios. XACML remains relevant for regulatory compliance in legacy enterprises but is not recommended for greenfield projects.
 
-References: OpenAM source code at `/Users/kirane/projects/idp/OpenAM/openam-entitlements/`, `/Users/kirane/projects/idp/OpenAM/openam-oauth2/`, `/Users/kirane/projects/idp/OpenAM/openam-uma/`. XACML 3.0 (OASIS), OAuth 2.0 RFCs (6749, 6750, 7662, 9396), UMA 2.0 (Kantara), Zanzibar paper (Google, 2019).
+References: OpenAM source code at [github.com/OpenIdentityPlatform/OpenAM](https://github.com/OpenIdentityPlatform/OpenAM) (modules: openam-entitlements, openam-oauth2, openam-uma). XACML 3.0 (OASIS), OAuth 2.0 RFCs (6749, 6750, 7662, 9396), UMA 2.0 (Kantara), Zanzibar paper (Google, 2019).
