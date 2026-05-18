@@ -1,16 +1,40 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
+// Remark plugin: convert ```mermaid blocks to <div class="mermaid"> BEFORE
+// expressive-code processes them. expressive-code restructures code block DOM
+// so a client-side querySelector('code.language-mermaid') never finds anything.
+// Transforming to raw HTML at the remark phase sidesteps this entirely.
+function remarkMermaid() {
+  return function (tree) {
+    function walk(node, parent, index) {
+      if (node.type === "code" && node.lang === "mermaid") {
+        parent.children[index] = {
+          type: "html",
+          value: `<div class="mermaid">\n${node.value}\n</div>`,
+        };
+        return;
+      }
+      if (Array.isArray(node.children)) {
+        node.children.forEach((child, i) => walk(child, node, i));
+      }
+    }
+    if (tree.children) tree.children.forEach((child, i) => walk(child, tree, i));
+  };
+}
+
 export default defineConfig({
   site: "https://kiriz.github.io",
   base: "/idp-research",
+  markdown: {
+    remarkPlugins: [remarkMermaid],
+  },
   integrations: [
     starlight({
       title: "IAM Deep Dive",
       description:
         "20 years of open-source identity management: Sun OpenSSO to ForgeRock to the modern IAM landscape. Source analysis of 7 repos, 58K+ commits, 40+ protocols.",
       customCss: ["./src/styles/custom.css"],
-
       social: [
         {
           icon: "github",
@@ -24,25 +48,7 @@ export default defineConfig({
           attrs: { type: "module" },
           content: `
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
-document.addEventListener('DOMContentLoaded', async () => {
-  const blocks = document.querySelectorAll('pre > code.language-mermaid');
-  for (const code of blocks) {
-    const pre = code.parentElement;
-    const definition = code.textContent;
-    const id = 'mermaid-' + Math.random().toString(36).slice(2);
-    const div = document.createElement('div');
-    div.className = 'mermaid-diagram';
-    div.style.cssText = 'overflow-x:auto;margin:1.5rem 0;';
-    try {
-      const { svg } = await mermaid.render(id, definition);
-      div.innerHTML = svg;
-    } catch(e) {
-      div.textContent = 'Diagram error: ' + e.message;
-    }
-    pre.replaceWith(div);
-  }
-});
+mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
 `,
         },
       ],

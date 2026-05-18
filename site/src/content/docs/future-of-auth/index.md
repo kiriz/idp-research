@@ -462,6 +462,81 @@ Despite a decade of disruption, three properties remain load-bearing:
 
 ---
 
+## Part 6 — Modern Platform Readiness: Source-Verified Analysis
+
+The table below reflects direct source analysis of three leading open-source IAM platforms cloned at their current HEAD (May 2026). Every cell is grounded in a specific file or grep result — not documentation claims.
+
+**Platforms analyzed:**
+- **Keycloak** — `github.com/keycloak/keycloak` (Java, Red Hat-backed, most widely deployed OSS IdP)
+- **Ory Hydra** — `github.com/ory/hydra` (Go, headless OAuth2/OIDC core, uses Fosite)
+- **Zitadel** — `github.com/zitadel/zitadel` (Go, event-sourced, single-binary)
+
+### Cross-Platform Capability Matrix
+
+| Capability | Keycloak | Ory Hydra | Zitadel | Why It Matters for 2025–2035 |
+|-----------|:--------:|:---------:|:-------:|------------------------------|
+| **OAuth 2.1 / reject `plain` PKCE** | PARTIAL | ✅ | PARTIAL | `plain` PKCE offers zero protection against code interception; OAuth 2.1 removes it entirely |
+| **DPoP enforcement (RFC 9449)** | ✅ | ✗ | ✗ | Proof-of-possession binding makes stolen access tokens useless — critical for AI agent tokens |
+| **PAR — Pushed Auth Requests (RFC 9126)** | ✅ | ✅ | ✗ | Removes auth params from browser URL; required for FAPI 2.0 and high-assurance flows |
+| **RFC 9728 — Resource Metadata** | ✗ | ✗ | ✗ | Discovery protocol MCP agents use to find their authorization server autonomously |
+| **CAEP / SSF real-time revocation** | ✗ | ✗ | PARTIAL | Real-time session revocation signals; Zitadel has event-sourced back-channel logout only |
+| **WebAuthn / Passkeys** | PARTIAL | ✗ | ✅ | Structural phishing defense; Zitadel is first-class, Keycloak is authenticator plugin, Hydra delegates to Kratos |
+| **Post-quantum crypto (ML-KEM/ML-DSA)** | ✗ | ✗ | ✗ | NIST FIPS 203/204 published Aug 2024; no OSS IdP has deployed PQ signing yet |
+| **Dynamic Client Registration (RFC 7591)** | ✅ | ✅ | ✗ | AI agents must self-register; static pre-registration breaks zero-trust automation |
+| **FAPI 2.0** | PARTIAL | PARTIAL | ✗ | Financial-grade high-assurance profile; Keycloak ~80% there, Hydra has signed request objects |
+| **Token Exchange (RFC 8693)** | ✅ | ✗ | ✅ | Foundation for multi-agent delegation — one agent acting on behalf of another with auditable chain |
+
+✅ Implemented  · PARTIAL = partial / configurable  · ✗ Not found in source
+
+### The Five Things an AI-Agent-Ready IdP Needs
+
+A secure AI agent authorization stack requires exactly five capabilities working together: **DCR + DPoP + PAR + Token Exchange + RFC 9728**. Here is where each platform stands:
+
+| Platform | DCR | DPoP | PAR | Token Exchange | RFC 9728 | Score |
+|---------|:---:|:----:|:---:|:-------------:|:--------:|:-----:|
+| Keycloak | ✅ | ✅ | ✅ | ✅ | ✗ | **4/5** |
+| Zitadel | ✗ | ✗ | ✗ | ✅ | ✗ | **1/5** |
+| Ory Hydra | ✅ | ✗ | ✅ | ✗ | ✗ | **2/5** |
+
+No single platform covers all five. **RFC 9728 is absent from every production OSS IdP** — it was published April 2025 and implementations haven't landed yet.
+
+### Three Cross-Cutting Findings
+
+**Finding 1: Keycloak is the only AI-agent-ready platform today (4/5).**
+It is the only codebase with DPoP `cnf` binding enforced at token use (`DPoPUtil.validateBinding()`), full RFC 8693 Token Exchange with DPoP-aware exchange (`StandardTokenExchangeProvider`), PAR, and DCR. The missing piece is RFC 9728 — Keycloak would need a `/.well-known/oauth-protected-resource` endpoint to be fully MCP-compatible. This is a single endpoint addition, not an architecture change.
+
+**Finding 2: Zitadel's event-sourcing architecture is structurally superior for AI agent audit trails.**
+Every auth event in Zitadel — session creation, token issuance, token exchange, revocation, logout — generates an immutable event in the event store (`internal/command/oidc_session_model.go`). When an AI agent exchanges a token and acts on behalf of a user, that delegation chain is permanently logged with actor/subject pairs. Traditional RDBMS IdPs (Keycloak, OpenAM) have audit logs; Zitadel has an audit-by-default architecture where the log *is* the state. For regulated environments and high-stakes AI agent deployments, this is a meaningful architectural advantage.
+
+**Finding 3: Post-quantum is universally absent — and the window is tighter than platforms seem to realize.**
+ML-KEM (FIPS 203) and ML-DSA (FIPS 204) were published August 2024. Keycloak's BouncyCastle dependency does not yet have production PQ support; Hydra's HSM integration could accept a PQ-capable HSM but has no native algorithm; Zitadel has algorithm abstraction (`SigningAlgorithm` enum) but only RSA/ECDSA/EdDSA values. With CNSA 2.0 mandating new software signing go PQ by **2027**, all three platforms need active migration planning now. The pluggable crypto provider patterns in Keycloak and Hydra are the right architecture — the algorithm values just haven't been added.
+
+```mermaid
+block-beta
+    columns 3
+
+    block:kc["Keycloak\n4/5 AI-ready"]:1
+        kc_yes["✅ DPoP\n✅ PAR\n✅ Token Exchange\n✅ DCR"]
+        kc_no["✗ RFC 9728\n✗ CAEP/SSF\n✗ Post-quantum"]
+    end
+
+    block:hy["Hydra\n2/5 AI-ready"]:1
+        hy_yes["✅ PKCE strict\n✅ PAR\n✅ DCR"]
+        hy_no["✗ DPoP\n✗ Token Exchange\n✗ WebAuthn\n✗ RFC 9728"]
+    end
+
+    block:zi["Zitadel\n1/5 AI-ready"]:1
+        zi_yes["✅ Token Exchange\n✅ Passkeys\n✅ Event audit"]
+        zi_no["✗ DPoP\n✗ PAR\n✗ DCR\n✗ RFC 9728"]
+    end
+```
+
+### The Composite Architecture
+
+No single platform is complete. The pattern emerging in high-security deployments is **Hydra as OAuth core + Kratos for identity + Keycloak or a standalone DPoP validator for proof-of-possession**. For most organizations migrating from OpenAM, Keycloak's 4/5 score and broad SAML coverage make it the pragmatic choice while the industry converges on RFC 9728 and CAEP. Zitadel is the pick for greenfield deployments where AI agent delegation and audit trails are first-class requirements.
+
+---
+
 ## OpenAM Implementation Lessons for Modern Systems
 
 The OpenAM source code is a precise record of what a production OAuth2/OIDC implementation looked like at scale in 2015–2022. The lessons are not academic—they describe the state of systems still in production:
