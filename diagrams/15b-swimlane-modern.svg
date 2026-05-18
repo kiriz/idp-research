@@ -1,7 +1,126 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
-  <!-- placeholder: 15b-swimlane-modern -->
-  <rect width="800" height="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8"/>
-  <text x="400" y="85" font-family="system-ui, sans-serif" font-size="16" fill="#64748b" text-anchor="middle" font-weight="600">15b-swimlane-modern</text>
-  <text x="400" y="115" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Excalidraw diagram — export manually from docs/diagrams/15b-swimlane-modern.excalidraw</text>
-  <text x="400" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Open excalidraw.com, load the file, export as SVG to site/public/diagrams/15b-swimlane-modern.svg</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-30.00 -20.00 4050.00 1050.00" width="4050" height="1050"><rect width="100%" height="100%" fill="#ffffff"/><defs><marker id="arrow-end-0" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(39,174,96,1.00)"/></marker></defs>
+  <rect x="200" y="100" width="3780" height="120" rx="0" fill="rgba(235,245,251,0.60)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="200" y="220" width="3780" height="120" rx="0" fill="rgba(232,248,245,0.60)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="200" y="340" width="3780" height="120" rx="0" fill="rgba(254,245,231,0.60)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="200" y="460" width="3780" height="120" rx="0" fill="rgba(244,246,246,0.60)" stroke="rgba(127,140,141,0.60)" stroke-width="2" />
+  <rect x="200" y="580" width="3780" height="120" rx="0" fill="rgba(235,245,251,0.60)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="200" y="700" width="3780" height="120" rx="0" fill="rgba(244,236,247,0.60)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="200" y="820" width="3780" height="120" rx="0" fill="rgba(250,219,216,0.60)" stroke="rgba(231,76,60,0.60)" stroke-width="2" />
+  <line x1="200.00" y1="80.00" x2="200.00" y2="960.00" stroke="rgba(149,165,166,0.40)" stroke-width="1" />
+  <line x1="560.00" y1="80.00" x2="560.00" y2="960.00" stroke="rgba(189,195,199,0.30)" stroke-width="1" />
+  <line x1="920.00" y1="80.00" x2="920.00" y2="960.00" stroke="rgba(149,165,166,0.40)" stroke-width="1" />
+  <line x1="1280.00" y1="80.00" x2="1280.00" y2="960.00" stroke="rgba(189,195,199,0.30)" stroke-width="1" />
+  <line x1="1640.00" y1="80.00" x2="1640.00" y2="960.00" stroke="rgba(149,165,166,0.40)" stroke-width="1" />
+  <line x1="2000.00" y1="80.00" x2="2000.00" y2="960.00" stroke="rgba(189,195,199,0.30)" stroke-width="1" />
+  <line x1="2360.00" y1="80.00" x2="2360.00" y2="960.00" stroke="rgba(149,165,166,0.40)" stroke-width="1" />
+  <line x1="2720.00" y1="80.00" x2="2720.00" y2="960.00" stroke="rgba(189,195,199,0.30)" stroke-width="1" />
+  <line x1="3080.00" y1="80.00" x2="3080.00" y2="960.00" stroke="rgba(149,165,166,0.40)" stroke-width="1" />
+  <line x1="3440.00" y1="80.00" x2="3440.00" y2="960.00" stroke="rgba(189,195,199,0.30)" stroke-width="1" />
+  <line x1="3800.00" y1="80.00" x2="3800.00" y2="960.00" stroke="rgba(149,165,166,0.40)" stroke-width="1" />
+  <rect x="220" y="130" width="3740" height="30" rx="0" fill="rgba(46,134,193,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="1300" y="165" width="2660" height="30" rx="0" fill="rgba(46,134,193,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="1820" y="130" width="900" height="30" rx="0" fill="rgba(127,140,141,0.24)" stroke="rgba(127,140,141,0.40)" stroke-width="2" />
+  <rect x="2740" y="130" width="340" height="30" rx="0" fill="rgba(127,140,141,0.24)" stroke="rgba(127,140,141,0.40)" stroke-width="2" />
+  <rect x="3100" y="130" width="860" height="30" rx="0" fill="rgba(46,134,193,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="3280" y="165" width="680" height="30" rx="0" fill="rgba(39,174,96,0.48)" stroke="rgba(39,174,96,0.80)" stroke-width="3" />
+  <rect x="580" y="250" width="900" height="30" rx="0" fill="rgba(127,140,141,0.24)" stroke="rgba(127,140,141,0.40)" stroke-width="2" />
+  <rect x="1480" y="250" width="2480" height="30" rx="0" fill="rgba(39,174,96,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1820" y="285" width="2140" height="30" rx="0" fill="rgba(39,174,96,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="2020" y="250" width="1940" height="30" rx="0" fill="rgba(39,174,96,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="3460" y="285" width="500" height="30" rx="0" fill="rgba(39,174,96,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1660" y="370" width="2300" height="30" rx="0" fill="rgba(243,156,18,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="2540" y="405" width="1420" height="30" rx="0" fill="rgba(243,156,18,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <ellipse cx="2815.00" cy="380.00" rx="75.00" ry="15.00" fill="none" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="3280" y="405" width="680" height="30" rx="0" fill="rgba(243,156,18,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="3460" y="370" width="500" height="30" rx="0" fill="rgba(243,156,18,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="380" y="490" width="3580" height="30" rx="0" fill="rgba(127,140,141,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" />
+  <rect x="2020" y="525" width="1940" height="30" rx="0" fill="rgba(127,140,141,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" />
+  <rect x="2540" y="490" width="1420" height="30" rx="0" fill="rgba(127,140,141,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" />
+  <rect x="2900" y="525" width="1060" height="30" rx="0" fill="rgba(127,140,141,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" />
+  <rect x="2020" y="610" width="1940" height="30" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="2900" y="645" width="1060" height="30" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="3280" y="610" width="680" height="30" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="3460" y="645" width="500" height="30" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="3640" y="610" width="320" height="30" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="2740" y="610" width="1220" height="30" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="220" y="730" width="1980" height="30" rx="0" fill="rgba(127,140,141,0.24)" stroke="rgba(127,140,141,0.40)" stroke-width="2" />
+  <rect x="1820" y="765" width="2140" height="30" rx="0" fill="rgba(142,68,173,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="2200" y="730" width="1760" height="30" rx="0" fill="rgba(142,68,173,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="2380" y="765" width="60" height="30" rx="0" fill="rgba(52,73,94,0.80)" stroke="rgba(127,140,141,0.80)" stroke-width="3" />
+  <rect x="2540" y="730" width="1420" height="30" rx="0" fill="rgba(39,174,96,0.42)" stroke="rgba(39,174,96,0.70)" stroke-width="3" />
+  <rect x="2900" y="765" width="1060" height="30" rx="0" fill="rgba(142,68,173,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="3100" y="730" width="860" height="30" rx="0" fill="rgba(142,68,173,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="3460" y="765" width="500" height="30" rx="0" fill="rgba(142,68,173,0.42)" stroke="rgba(142,68,173,0.70)" stroke-width="3" />
+  <polygon points="920.00,850.00 940.00,870.00 920.00,890.00 900.00,870.00" fill="rgba(231,76,60,0.80)" stroke="rgba(231,76,60,0.80)" stroke-width="2" />
+  <polygon points="1640.00,850.00 1660.00,870.00 1640.00,890.00 1620.00,870.00" fill="rgba(231,76,60,0.80)" stroke="rgba(231,76,60,0.80)" stroke-width="2" />
+  <line x1="2200.00" y1="100.00" x2="2200.00" y2="940.00" stroke="rgba(192,57,43,1.00)" stroke-width="6" />
+  <polygon points="2205.00,850.00 2230.00,875.00 2205.00,900.00 2180.00,875.00" fill="rgba(192,57,43,1.00)" stroke="rgba(192,57,43,1.00)" stroke-width="4" />
+  <polygon points="2540.00,850.00 2560.00,870.00 2540.00,890.00 2520.00,870.00" fill="rgba(231,76,60,0.80)" stroke="rgba(231,76,60,0.80)" stroke-width="2" />
+  <polygon points="3080.00,850.00 3100.00,870.00 3080.00,890.00 3060.00,870.00" fill="rgba(231,76,60,0.80)" stroke="rgba(231,76,60,0.80)" stroke-width="2" />
+  <polygon points="3200.00,850.00 3220.00,870.00 3200.00,890.00 3180.00,870.00" fill="rgba(231,76,60,0.80)" stroke="rgba(231,76,60,0.80)" stroke-width="2" />
+  <polygon points="3440.00,850.00 3460.00,870.00 3440.00,890.00 3420.00,870.00" fill="rgba(231,76,60,0.80)" stroke="rgba(231,76,60,0.80)" stroke-width="2" />
+  <polygon points="3640.00,850.00 3660.00,870.00 3640.00,890.00 3620.00,870.00" fill="rgba(231,76,60,0.80)" stroke="rgba(231,76,60,0.80)" stroke-width="2" />
+  <line x1="1820.00" y1="115.00" x2="3436.00" y2="115.00" stroke="rgba(39,174,96,1.00)" stroke-width="3"  marker-end="url(#arrow-end-0)" />
+  <text font-family="sans-serif" font-size="36" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="500.00" y="56.00">Identity Technology Timeline 2005-2026</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(46,134,193,1.00)" text-anchor="start"><tspan x="10.00" y="156.00">Authentication</tspan><tspan x="10.00" y="176.00">Methods</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(39,174,96,1.00)" text-anchor="start"><tspan x="10.00" y="276.00">Federation &amp;</tspan><tspan x="10.00" y="296.00">SSO</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="start"><tspan x="10.00" y="406.00">Authorization</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="10.00" y="516.00">Directory &amp;</tspan><tspan x="10.00" y="536.00">Stores</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(93,173,226,1.00)" text-anchor="start"><tspan x="10.00" y="636.00">Token</tspan><tspan x="10.00" y="656.00">Formats</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(142,68,173,1.00)" text-anchor="start"><tspan x="10.00" y="756.00">Products &amp;</tspan><tspan x="10.00" y="776.00">Platforms</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="10.00" y="886.00">Key Events</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="200.00" y="984.00">2005</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="560.00" y="984.00">2007</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="920.00" y="984.00">2009</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1280.00" y="984.00">2011</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1640.00" y="984.00">2013</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="2000.00" y="984.00">2015</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="2360.00" y="984.00">2017</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="2720.00" y="984.00">2019</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="3080.00" y="984.00">2021</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="3440.00" y="984.00">2023</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="3800.00" y="984.00">2025</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="220.00" y="149.00">HOTP RFC4226</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="1300.00" y="184.00">TOTP RFC6238</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="1820.00" y="149.00">FIDO U2F 1.0</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="2740.00" y="149.00">WebAuthn L1</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3100.00" y="149.00">WebAuthn L2</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3280.00" y="184.00">Passkeys</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(39,174,96,1.00)" text-anchor="middle"><tspan x="2490.00" y="103.00">Passwordless Future</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="580.00" y="269.00">OAuth 1.0</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="1480.00" y="269.00">OAuth 2 RFC6749</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="1820.00" y="304.00">OpenID Connect</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2020.00" y="269.00">PKCE RFC7636</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3460.00" y="304.00">DPoP RFC9449</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="1660.00" y="389.00">XACML 3.0</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2540.00" y="424.00">OPA/Rego</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2760.00" y="385.00">Zanzibar paper</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3280.00" y="424.00">OpenFGA</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3460.00" y="389.00">Cedar (AWS)</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="380.00" y="509.00">OpenDS→OpenDJ</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2020.00" y="544.00">SCIM 2 RFC7644</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2540.00" y="509.00">PostgreSQL store</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2900.00" y="544.00">CockroachDB</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2020.00" y="629.00">JWT RFC7519</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2900.00" y="664.00">Token Ex RFC8693</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3280.00" y="629.00">SPIFFE SVIDs</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3460.00" y="664.00">DPoP tokens</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3640.00" y="629.00">SD-JWT VC</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2740.00" y="629.00">W3C Verifiable Creds</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="220.00" y="749.00">Sun OpenSSO → ForgeRock OS</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="1820.00" y="784.00">Keycloak</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2200.00" y="749.00">Ory stack</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(149,165,166,1.00)" text-anchor="start"><tspan x="2450.00" y="783.00">ForgeRock CE ☠</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2540.00" y="749.00">OIP OpenAM</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2900.00" y="784.00">Authentik</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3100.00" y="749.00">Zitadel</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="3460.00" y="784.00">Wren:AM</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="920.00" y="907.00">Oracle acquires Sun $7.4B</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="1640.00" y="907.00">FIDO Alliance formed</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(192,57,43,1.00)" text-anchor="middle"><tspan x="2205.00" y="919.00">ForgeRock Closes Source</tspan><tspan x="2205.00" y="936.50">Nov 2016</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="2540.00" y="907.00">SPIFFE → CNCF</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="3080.00" y="907.00">ForgeRock IPO $2.8B Sep &#x27;21</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="3200.00" y="907.00">Log4Shell Dec &#x27;21</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="3440.00" y="907.00">Thoma Bravo → ForgeRock+Ping Oct &#x27;23</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="3640.00" y="907.00">eIDAS 2.0</tspan></text>
 </svg>

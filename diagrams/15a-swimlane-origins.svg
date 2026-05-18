@@ -1,7 +1,97 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
-  <!-- placeholder: 15a-swimlane-origins -->
-  <rect width="800" height="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8"/>
-  <text x="400" y="85" font-family="system-ui, sans-serif" font-size="16" fill="#64748b" text-anchor="middle" font-weight="600">15a-swimlane-origins</text>
-  <text x="400" y="115" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Excalidraw diagram — export manually from docs/diagrams/15a-swimlane-origins.excalidraw</text>
-  <text x="400" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Open excalidraw.com, load the file, export as SVG to site/public/diagrams/15a-swimlane-origins.svg</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.00 10.00 2900.00 1180.00" width="2900" height="1180"><rect width="100%" height="100%" fill="#ffffff"/><defs><marker id="arrow-end-0" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(30,30,30,1.00)"/></marker></defs>
+  <rect x="100" y="50" width="2800" height="1100" rx="0" fill="none" stroke="rgba(30,30,30,1.00)" stroke-width="2" />
+  <line x1="190.00" y1="170.00" x2="190.00" y2="1120.00" stroke="rgba(224,224,224,1.00)" stroke-width="1" />
+  <line x1="450.00" y1="170.00" x2="450.00" y2="1120.00" stroke="rgba(224,224,224,1.00)" stroke-width="1" />
+  <line x1="710.00" y1="170.00" x2="710.00" y2="1120.00" stroke="rgba(224,224,224,1.00)" stroke-width="2" />
+  <line x1="970.00" y1="170.00" x2="970.00" y2="1120.00" stroke="rgba(224,224,224,1.00)" stroke-width="1" />
+  <line x1="1230.00" y1="170.00" x2="1230.00" y2="1120.00" stroke="rgba(224,224,224,1.00)" stroke-width="2" />
+  <line x1="1490.00" y1="170.00" x2="1490.00" y2="1120.00" stroke="rgba(224,224,224,1.00)" stroke-width="1" />
+  <line x1="1750.00" y1="170.00" x2="1750.00" y2="1120.00" stroke="rgba(224,224,224,1.00)" stroke-width="2" />
+  <line x1="2010.00" y1="170.00" x2="2010.00" y2="1120.00" stroke="rgba(224,224,224,1.00)" stroke-width="1" />
+  <line x1="2270.00" y1="170.00" x2="2270.00" y2="1120.00" stroke="rgba(224,224,224,1.00)" stroke-width="2" />
+  <line x1="2530.00" y1="170.00" x2="2530.00" y2="1120.00" stroke="rgba(30,30,30,1.00)" stroke-width="2" />
+  <rect x="190" y="190" width="2340" height="120" rx="0" fill="rgba(235,245,251,0.60)" stroke="rgba(46,134,193,0.60)" stroke-width="1" />
+  <rect x="205" y="210" width="2305" height="30" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="1510" y="250" width="1000" height="25" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="1830" y="280" width="680" height="20" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="2530" y="250" width="360" height="20" rx="0" fill="rgba(93,173,226,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="190" y="320" width="2340" height="120" rx="0" fill="rgba(232,248,245,0.60)" stroke="rgba(39,174,96,0.60)" stroke-width="1" />
+  <rect x="2320" y="340" width="208" height="25" rx="0" fill="rgba(213,219,219,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" stroke-dasharray="12,6"/>
+  <rect x="2372" y="370" width="156" height="25" rx="0" fill="rgba(213,219,219,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" stroke-dasharray="12,6"/>
+  <rect x="2372" y="400" width="518" height="25" rx="0" fill="rgba(82,190,128,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="2530" y="340" width="360" height="30" rx="0" fill="rgba(82,190,128,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="190" y="450" width="2340" height="120" rx="0" fill="rgba(254,245,231,0.60)" stroke="rgba(243,156,18,0.60)" stroke-width="1" />
+  <rect x="710" y="470" width="1800" height="25" rx="0" fill="rgba(248,196,113,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="1882" y="502" width="628" height="25" rx="0" fill="rgba(248,196,113,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="2372" y="534" width="156" height="25" rx="0" fill="rgba(213,219,219,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" stroke-dasharray="12,6"/>
+  <rect x="2530" y="534" width="360" height="25" rx="0" fill="rgba(248,196,113,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="190" y="580" width="2340" height="120" rx="0" fill="rgba(242,243,244,0.60)" stroke="rgba(127,140,141,0.60)" stroke-width="1" />
+  <rect x="1542" y="600" width="244" height="25" rx="0" fill="rgba(189,195,199,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" stroke-dasharray="12,6"/>
+  <rect x="1830" y="632" width="208" height="25" rx="0" fill="rgba(189,195,199,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" stroke-dasharray="12,6"/>
+  <rect x="2038" y="600" width="472" height="30" rx="0" fill="rgba(149,165,166,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" />
+  <rect x="2218" y="664" width="292" height="25" rx="0" fill="rgba(149,165,166,0.36)" stroke="rgba(127,140,141,0.60)" stroke-width="2" />
+  <rect x="190" y="710" width="2340" height="120" rx="0" fill="rgba(235,245,251,0.60)" stroke="rgba(93,173,226,0.60)" stroke-width="1" />
+  <rect x="1830" y="730" width="680" height="30" rx="0" fill="rgba(133,193,233,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="2320" y="770" width="590" height="30" rx="0" fill="rgba(133,193,233,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="190" y="840" width="2340" height="120" rx="0" fill="rgba(244,236,247,0.60)" stroke="rgba(142,68,173,0.60)" stroke-width="1" />
+  <rect x="2372" y="860" width="538" height="30" rx="0" fill="rgba(175,122,197,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="2424" y="900" width="486" height="30" rx="0" fill="rgba(175,122,197,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="2530" y="930" width="360" height="25" rx="0" fill="rgba(175,122,197,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="190" y="970" width="2340" height="120" rx="0" fill="rgba(250,219,216,0.60)" stroke="rgba(231,76,60,0.60)" stroke-width="1" />
+  <polygon points="215.00,1010.00 225.00,1020.00 215.00,1030.00 205.00,1020.00" fill="rgba(236,112,99,1.00)" stroke="rgba(231,76,60,1.00)" stroke-width="2" />
+  <polygon points="1552.00,1010.00 1562.00,1020.00 1552.00,1030.00 1542.00,1020.00" fill="rgba(236,112,99,1.00)" stroke="rgba(231,76,60,1.00)" stroke-width="2" />
+  <polygon points="1840.00,1040.00 1850.00,1050.00 1840.00,1060.00 1830.00,1050.00" fill="rgba(236,112,99,1.00)" stroke="rgba(231,76,60,1.00)" stroke-width="2" />
+  <polygon points="2278.00,1010.00 2288.00,1020.00 2278.00,1030.00 2268.00,1020.00" fill="rgba(236,112,99,1.00)" stroke="rgba(231,76,60,1.00)" stroke-width="2" />
+  <polygon points="2434.00,1040.00 2444.00,1050.00 2434.00,1060.00 2424.00,1050.00" fill="rgba(236,112,99,1.00)" stroke="rgba(231,76,60,1.00)" stroke-width="2" />
+  <polygon points="2540.00,1010.00 2550.00,1020.00 2540.00,1030.00 2530.00,1020.00" fill="rgba(236,112,99,1.00)" stroke="rgba(231,76,60,1.00)" stroke-width="2" />
+  <line x1="2880.00" y1="250.00" x2="2904.00" y2="250.00" stroke="rgba(30,30,30,1.00)" stroke-width="2"  marker-end="url(#arrow-end-0)" />
+  <text font-family="sans-serif" font-size="36" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1600.00" y="106.00">Identity Technology Timeline (1960-2005)</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="190.00" y="160.00">1960</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="450.00" y="160.00">1965</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="710.00" y="160.00">1970</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="970.00" y="160.00">1975</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1230.00" y="160.00">1980</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1490.00" y="160.00">1985</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1750.00" y="160.00">1990</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="2010.00" y="160.00">1995</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="2270.00" y="160.00">2000</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="2530.00" y="160.00">2005</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(46,134,193,1.00)" text-anchor="middle"><tspan x="150.00" y="271.00">Auth</tspan><tspan x="150.00" y="291.00">Methods</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="210.00" y="232.25">Passwords (MIT CTSS 1961) →</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="1515.00" y="268.88">RSA SecurID tokens (1986) →</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="1835.00" y="295.50">Kerberos V5 RFC 1510 (1993) →</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2535.00" y="265.50">HOTP RFC 4226 (2005) →</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(39,174,96,1.00)" text-anchor="middle"><tspan x="150.00" y="386.00">Federation</tspan><tspan x="150.00" y="406.00">&amp; SSO</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="2325.00" y="357.88">SAML 1.0 (2002)</tspan></text>
+  <text font-family="sans-serif" font-size="11" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="2468.00" y="358.00">superseded</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="2377.00" y="387.88">SAML 1.1 (2003)</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2377.00" y="417.88">WS-Federation 1.0 (2003) →</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2535.00" y="362.25">SAML 2.0 OASIS (2005) →</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="142.50" y="516.00">Authorization</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="715.00" y="487.88">ACLs (Unix, NTFS ~1970s) →</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="1887.00" y="519.88">RBAC Ferraiolo-Kuhn (1992) →</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="2377.00" y="551.88">XACML 1.0 (2003)</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2535.00" y="551.88">XACML 2.0 (2005) →</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(127,140,141,1.00)" text-anchor="middle"><tspan x="142.50" y="636.00">Directory &amp;</tspan><tspan x="142.50" y="656.00">Identity</tspan><tspan x="142.50" y="676.00">Stores</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="1547.00" y="617.88">X.500 ITU-T (1988)</tspan></text>
+  <text font-family="sans-serif" font-size="11" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="1700.00" y="618.00">abandoned</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(127,140,141,1.00)" text-anchor="start"><tspan x="1835.00" y="649.50">LDAPv1 RFC 1487 (1993)</tspan></text>
+  <text font-family="sans-serif" font-size="11" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="2010.00" y="650.00">deprecated</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2043.00" y="621.88">LDAPv3 RFC 2251 (1997) →</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2223.00" y="681.88">Active Directory Win2000 (1999) →</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(93,173,226,1.00)" text-anchor="middle"><tspan x="142.50" y="776.00">Token</tspan><tspan x="142.50" y="796.00">Formats</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="1835.00" y="752.25">Kerberos tickets (binary, symmetric key) →</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2325.00" y="792.25">SAML assertions (XML, signed) →</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(142,68,173,1.00)" text-anchor="middle"><tspan x="142.50" y="906.00">Products &amp;</tspan><tspan x="142.50" y="926.00">Platforms</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2377.00" y="882.25">Shibboleth (academic fed 2003) →</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2429.00" y="922.25">CAS / Apereo (campus SSO 2004) →</tspan></text>
+  <text font-family="sans-serif" font-size="13" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2535.00" y="947.88">Sun Access Manager / OpenSSO →</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="142.50" y="1026.00">Key</tspan><tspan x="142.50" y="1046.00">Events</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="230.00" y="1026.00">1961: MIT CTSS passwords</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="1567.00" y="1026.00">1988: ITU-T publishes X.500</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="1855.00" y="1056.00">1993: IETF LDAPv1 + Kerberos V5</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="2293.00" y="1026.00">2001: OASIS formed</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="2449.00" y="1056.00">2004: OpenID Foundation founded</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="2555.00" y="1026.00">2005: OASIS publishes SAML 2.0</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="2750.00" y="134.00">→ Continues in Part 2</tspan></text>
 </svg>

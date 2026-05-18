@@ -1,7 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
-  <!-- placeholder: 03-openidm-provisioning -->
-  <rect width="800" height="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8"/>
-  <text x="400" y="85" font-family="system-ui, sans-serif" font-size="16" fill="#64748b" text-anchor="middle" font-weight="600">03-openidm-provisioning</text>
-  <text x="400" y="115" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Excalidraw diagram — export manually from docs/diagrams/03-openidm-provisioning.excalidraw</text>
-  <text x="400" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Open excalidraw.com, load the file, export as SVG to site/public/diagrams/03-openidm-provisioning.svg</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.00 10.00 1530.00 1180.00" width="1530" height="1180"><rect width="100%" height="100%" fill="#ffffff"/><defs><marker id="arrow-end-0" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-1" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-3" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-4" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-5" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-6" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-7" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-8" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker></defs>
+  <rect x="400" y="250" width="800" height="550" rx="8" fill="rgba(248,249,249,0.60)" stroke="rgba(46,64,83,1.00)" stroke-width="3" />
+  <rect x="450" y="330" width="340" height="100" rx="8" fill="rgba(235,245,251,0.54)" stroke="rgba(93,173,226,0.90)" stroke-width="2" />
+  <rect x="820" y="330" width="340" height="100" rx="8" fill="rgba(235,245,251,0.54)" stroke="rgba(93,173,226,0.90)" stroke-width="2" />
+  <rect x="450" y="460" width="340" height="100" rx="8" fill="rgba(235,245,251,0.54)" stroke="rgba(93,173,226,0.90)" stroke-width="2" />
+  <rect x="820" y="460" width="340" height="100" rx="8" fill="rgba(235,245,251,0.54)" stroke="rgba(93,173,226,0.90)" stroke-width="2" />
+  <rect x="450" y="590" width="340" height="100" rx="8" fill="rgba(235,245,251,0.54)" stroke="rgba(93,173,226,0.90)" stroke-width="2" />
+  <rect x="820" y="590" width="340" height="100" rx="8" fill="rgba(235,245,251,0.54)" stroke="rgba(93,173,226,0.90)" stroke-width="2" />
+  <rect x="450" y="50" width="200" height="80" rx="8" fill="rgba(213,216,220,0.54)" stroke="rgba(52,73,94,0.90)" stroke-width="2" />
+  <rect x="900" y="50" width="280" height="80" rx="8" fill="rgba(213,216,220,0.54)" stroke="rgba(52,73,94,0.90)" stroke-width="2" />
+  <rect x="100" y="450" width="200" height="120" rx="8" fill="rgba(234,250,241,0.54)" stroke="rgba(39,174,96,0.90)" stroke-width="2" />
+  <rect x="500" y="900" width="240" height="100" rx="8" fill="rgba(229,232,232,0.54)" stroke="rgba(52,73,94,0.90)" stroke-width="2" />
+  <rect x="150" y="1080" width="180" height="70" rx="8" fill="rgba(253,254,254,0.54)" stroke="rgba(189,195,199,0.90)" stroke-width="2" />
+  <rect x="370" y="1080" width="180" height="70" rx="8" fill="rgba(253,254,254,0.54)" stroke="rgba(189,195,199,0.90)" stroke-width="2" />
+  <rect x="590" y="1080" width="180" height="70" rx="8" fill="rgba(253,254,254,0.54)" stroke="rgba(189,195,199,0.90)" stroke-width="2" />
+  <rect x="810" y="1080" width="180" height="70" rx="8" fill="rgba(253,254,254,0.54)" stroke="rgba(189,195,199,0.90)" stroke-width="2" />
+  <rect x="1350" y="450" width="200" height="120" rx="8" fill="rgba(235,245,251,0.54)" stroke="rgba(26,82,118,0.90)" stroke-width="2" />
+  <line x1="550.00" y1="130.00" x2="550.00" y2="224.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-0)" />
+  <line x1="1040.00" y1="130.00" x2="1040.00" y2="224.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-1)" />
+  <line x1="300.00" y1="510.00" x2="374.00" y2="510.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-2)" />
+  <line x1="1200.00" y1="510.00" x2="1324.00" y2="510.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-3)" />
+  <line x1="620.00" y1="690.00" x2="620.00" y2="874.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-4)" />
+  <line x1="560.00" y1="1000.00" x2="295.52" y2="1066.12" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-5)" />
+  <line x1="580.00" y1="1000.00" x2="502.63" y2="1060.18" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-6)" />
+  <line x1="640.00" y1="1000.00" x2="663.70" y2="1055.29" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-7)" />
+  <line x1="680.00" y1="1000.00" x2="864.90" y2="1064.71" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-8)" />
+  <text font-family="sans-serif" font-size="28" fill="rgba(46,64,83,1.00)" text-anchor="middle"><tspan x="800.00" y="298.00">OpenIDM</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="620.00" y="356.00">Sync Engine</tspan><tspan x="620.00" y="376.00"></tspan><tspan x="620.00" y="396.00">Object mapping, correlation,</tspan><tspan x="620.00" y="416.00">situation handling</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="990.00" y="356.00">Reconciliation Engine</tspan><tspan x="990.00" y="376.00"></tspan><tspan x="990.00" y="396.00">Source→target comparison,</tspan><tspan x="990.00" y="416.00">create/update/delete/link</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="620.00" y="476.00">Workflow Engine</tspan><tspan x="620.00" y="496.00">(Activiti BPMN)</tspan><tspan x="620.00" y="516.00"></tspan><tspan x="620.00" y="536.00">Approval flows,</tspan><tspan x="620.00" y="556.00">onboarding sequences</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="990.00" y="486.00">Managed Objects</tspan><tspan x="990.00" y="506.00"></tspan><tspan x="990.00" y="526.00">Identity lifecycle</tspan><tspan x="990.00" y="546.00">(managed/user, managed/role)</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="620.00" y="626.00">OpenICF Provisioner</tspan><tspan x="620.00" y="646.00"></tspan><tspan x="620.00" y="666.00">Connector integration layer</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="990.00" y="616.00">Script Engine</tspan><tspan x="990.00" y="636.00"></tspan><tspan x="990.00" y="656.00">Groovy/JavaScript hooks</tspan><tspan x="990.00" y="676.00">at all lifecycle points</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="550.00" y="96.75">Admin UI</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1040.00" y="96.75">OpenIG → OpenAM</tspan></text>
+  <text font-family="sans-serif" font-size="15" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="200.00" y="468.75">PostgreSQL</tspan><tspan x="200.00" y="487.50">(JDBC Repository)</tspan><tspan x="200.00" y="506.25"></tspan><tspan x="200.00" y="525.00">Identity store,</tspan><tspan x="200.00" y="543.75">recon state,</tspan><tspan x="200.00" y="562.50">audit logs</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="620.00" y="926.00">OpenICF</tspan><tspan x="620.00" y="946.00">Connector Server</tspan><tspan x="620.00" y="966.00"></tspan><tspan x="620.00" y="986.00">(remote, Protobuf RPC)</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="240.00" y="1121.00">Active Directory</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="460.00" y="1121.00">Oracle HR DB</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="680.00" y="1121.00">SAP</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="900.00" y="1121.00">CSV / REST APIs</tspan></text>
+  <text font-family="sans-serif" font-size="15" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1450.00" y="478.12">OpenDJ</tspan><tspan x="1450.00" y="496.88"></tspan><tspan x="1450.00" y="515.62">Identity sync,</tspan><tspan x="1450.00" y="534.38">LiveSync via</tspan><tspan x="1450.00" y="553.12">external changelog</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="615.00" y="191.00">REST API</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1040.00" y="191.00">SSO-protected</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="345.00" y="501.00">Repository</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1270.00" y="501.00">LDAP/LiveSync</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="700.00" y="796.00">Protobuf RPC</tspan></text>
 </svg>

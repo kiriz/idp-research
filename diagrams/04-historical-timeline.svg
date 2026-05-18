@@ -1,7 +1,79 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
-  <!-- placeholder: 04-historical-timeline -->
-  <rect width="800" height="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8"/>
-  <text x="400" y="85" font-family="system-ui, sans-serif" font-size="16" fill="#64748b" text-anchor="middle" font-weight="600">04-historical-timeline</text>
-  <text x="400" y="115" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Excalidraw diagram — export manually from docs/diagrams/04-historical-timeline.excalidraw</text>
-  <text x="400" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Open excalidraw.com, load the file, export as SVG to site/public/diagrams/04-historical-timeline.svg</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.00 160.00 2040.00 580.00" width="2040" height="580"><rect width="100%" height="100%" fill="#ffffff"/>
+  <rect x="100" y="300" width="480" height="300" rx="8" fill="rgba(255,201,163,0.24)" stroke="rgba(212,118,10,0.40)" stroke-width="2" />
+  <rect x="580" y="300" width="280" height="300" rx="8" fill="rgba(255,168,168,0.24)" stroke="rgba(224,49,49,0.40)" stroke-width="2" />
+  <rect x="860" y="300" width="720" height="300" rx="8" fill="rgba(165,216,255,0.24)" stroke="rgba(25,113,194,0.40)" stroke-width="2" />
+  <line x1="100.00" y1="450.00" x2="2000.00" y2="450.00" stroke="rgba(30,30,30,1.00)" stroke-width="4" />
+  <ellipse cx="180.00" cy="410.00" rx="30.00" ry="30.00" fill="rgba(255,192,120,0.36)" stroke="rgba(212,118,10,0.60)" stroke-width="2" />
+  <line x1="180.00" y1="380.00" x2="180.00" y2="310.00" stroke="rgba(212,118,10,1.00)" stroke-width="2" />
+  <ellipse cx="340.00" cy="480.00" rx="30.00" ry="30.00" fill="rgba(255,192,120,0.36)" stroke="rgba(212,118,10,0.60)" stroke-width="2" />
+  <line x1="340.00" y1="510.00" x2="340.00" y2="580.00" stroke="rgba(212,118,10,1.00)" stroke-width="2" />
+  <polygon points="510.00,380.00 550.00,420.00 510.00,460.00 470.00,420.00" fill="rgba(255,135,135,0.36)" stroke="rgba(224,49,49,0.60)" stroke-width="2" />
+  <line x1="510.00" y1="380.00" x2="510.00" y2="310.00" stroke="rgba(224,49,49,1.00)" stroke-width="2" />
+  <polygon points="670.00,450.00 710.00,490.00 670.00,530.00 630.00,490.00" fill="rgba(255,135,135,0.36)" stroke="rgba(224,49,49,0.60)" stroke-width="2" />
+  <line x1="670.00" y1="530.00" x2="670.00" y2="600.00" stroke="rgba(224,49,49,1.00)" stroke-width="2" />
+  <ellipse cx="820.00" cy="410.00" rx="30.00" ry="30.00" fill="rgba(116,192,252,0.36)" stroke="rgba(25,113,194,0.60)" stroke-width="2" />
+  <line x1="820.00" y1="380.00" x2="820.00" y2="310.00" stroke="rgba(25,113,194,1.00)" stroke-width="2" />
+  <ellipse cx="980.00" cy="480.00" rx="30.00" ry="30.00" fill="rgba(116,192,252,0.36)" stroke="rgba(25,113,194,0.60)" stroke-width="2" />
+  <line x1="980.00" y1="510.00" x2="980.00" y2="580.00" stroke="rgba(25,113,194,1.00)" stroke-width="2" />
+  <ellipse cx="1150.00" cy="420.00" rx="40.00" ry="40.00" fill="rgba(255,212,59,0.48)" stroke="rgba(245,159,0,0.80)" stroke-width="3" />
+  <line x1="1150.00" y1="380.00" x2="1150.00" y2="310.00" stroke="rgba(245,159,0,1.00)" stroke-width="2" />
+  <ellipse cx="1300.00" cy="480.00" rx="30.00" ry="30.00" fill="rgba(116,192,252,0.36)" stroke="rgba(25,113,194,0.60)" stroke-width="2" />
+  <line x1="1300.00" y1="510.00" x2="1300.00" y2="580.00" stroke="rgba(25,113,194,1.00)" stroke-width="2" />
+  <line x1="1450.00" y1="200.00" x2="1450.00" y2="700.00" stroke="rgba(224,49,49,1.00)" stroke-width="8" />
+  <polygon points="1450.00,410.00 1490.00,450.00 1450.00,490.00 1410.00,450.00" fill="rgba(255,107,107,0.60)" stroke="rgba(201,42,42,1.00)" stroke-width="4" />
+  <polygon points="1540.00,450.00 1570.00,480.00 1540.00,510.00 1510.00,480.00" fill="rgba(255,135,135,0.36)" stroke="rgba(224,49,49,0.60)" stroke-width="2" />
+  <line x1="1540.00" y1="510.00" x2="1540.00" y2="580.00" stroke="rgba(224,49,49,1.00)" stroke-width="2" />
+  <line x1="1450.00" y1="450.00" x2="1650.00" y2="350.00" stroke="rgba(47,158,68,1.00)" stroke-width="4" />
+  <line x1="1450.00" y1="450.00" x2="1650.00" y2="550.00" stroke="rgba(156,54,181,1.00)" stroke-width="4" />
+  <line x1="1650.00" y1="350.00" x2="2000.00" y2="350.00" stroke="rgba(47,158,68,1.00)" stroke-width="3" />
+  <line x1="1650.00" y1="550.00" x2="2000.00" y2="550.00" stroke="rgba(156,54,181,1.00)" stroke-width="3" />
+  <ellipse cx="1710.00" cy="350.00" rx="30.00" ry="30.00" fill="rgba(140,233,154,0.36)" stroke="rgba(47,158,68,0.60)" stroke-width="2" />
+  <line x1="1710.00" y1="320.00" x2="1710.00" y2="290.00" stroke="rgba(47,158,68,1.00)" stroke-width="2" />
+  <ellipse cx="1870.00" cy="410.00" rx="30.00" ry="30.00" fill="rgba(255,212,59,0.36)" stroke="rgba(245,159,0,0.60)" stroke-width="2" />
+  <line x1="1870.00" y1="380.00" x2="1870.00" y2="310.00" stroke="rgba(245,159,0,1.00)" stroke-width="2" />
+  <ellipse cx="1870.00" cy="550.00" rx="30.00" ry="30.00" fill="rgba(208,191,255,0.36)" stroke="rgba(156,54,181,0.60)" stroke-width="2" />
+  <line x1="1870.00" y1="580.00" x2="1870.00" y2="610.00" stroke="rgba(156,54,181,1.00)" stroke-width="2" />
+  <polygon points="1960.00,380.00 1990.00,410.00 1960.00,440.00 1930.00,410.00" fill="rgba(255,212,59,0.36)" stroke="rgba(245,159,0,0.60)" stroke-width="2" />
+  <line x1="1960.00" y1="380.00" x2="1960.00" y2="310.00" stroke="rgba(245,159,0,1.00)" stroke-width="2" />
+  <ellipse cx="1970.00" cy="350.00" rx="30.00" ry="30.00" fill="rgba(140,233,154,0.36)" stroke="rgba(47,158,68,0.60)" stroke-width="2" />
+  <line x1="1970.00" y1="320.00" x2="1970.00" y2="290.00" stroke="rgba(47,158,68,1.00)" stroke-width="2" />
+  <ellipse cx="1970.00" cy="550.00" rx="30.00" ry="30.00" fill="rgba(208,191,255,0.36)" stroke="rgba(156,54,181,0.60)" stroke-width="2" />
+  <line x1="1970.00" y1="580.00" x2="1970.00" y2="610.00" stroke="rgba(156,54,181,1.00)" stroke-width="2" />
+  <text font-family="sans-serif" font-size="20" fill="rgba(212,118,10,1.00)" text-anchor="middle"><tspan x="340.00" y="585.00">Sun Era</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(224,49,49,1.00)" text-anchor="middle"><tspan x="720.00" y="583.50">Oracle (Abandonment)</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(25,113,194,1.00)" text-anchor="middle"><tspan x="1220.00" y="583.50">ForgeRock Golden Age</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="180.00" y="306.00">2005 Oct</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="180.00" y="254.00">Sun announces</tspan><tspan x="180.00" y="271.50">OpenSSO (CDDL)</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="340.00" y="606.00">2006 Jun</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="340.00" y="634.00">First OpenDS commit</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="510.00" y="306.00">2009 Apr</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="510.00" y="244.00">Oracle acquires Sun</tspan><tspan x="510.00" y="261.50">($7.4B)</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="670.00" y="626.00">2010 Oct</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="670.00" y="654.00">Oracle announces</tspan><tspan x="670.00" y="671.50">proprietary migration</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="820.00" y="306.00">2011 Feb</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="820.00" y="244.00">ForgeRock incorporated</tspan><tspan x="820.00" y="261.50">(Norway)</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="980.00" y="606.00">2012 Jul</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="980.00" y="634.00">ForgeRock first commits</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1150.00" y="306.00">2014</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1150.00" y="234.00">PEAK:</tspan><tspan x="1150.00" y="251.50">10,744 commits/yr</tspan><tspan x="1150.00" y="269.00">895/month</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1300.00" y="606.00">2015 Mar</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1300.00" y="634.00">Last CE binary</tspan><tspan x="1300.00" y="651.50">(11.0.3)</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1450.00" y="400.00">2016 Nov</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(201,42,42,1.00)" text-anchor="middle"><tspan x="1450.00" y="338.00">SOURCE CLOSED</tspan><tspan x="1450.00" y="360.50">(last tag 14.0.0-M2)</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1540.00" y="606.00">2017</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1540.00" y="634.00">94% commit drop</tspan><tspan x="1540.00" y="651.50">(553→34/month)</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(47,158,68,1.00)" text-anchor="start"><tspan x="1660.00" y="336.00">Open Identity Platform</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(156,54,181,1.00)" text-anchor="start"><tspan x="1660.00" y="576.00">Wren Security</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1710.00" y="286.00">2018 Feb</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1710.00" y="254.00">OIP 14.0.0 released</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1870.00" y="306.00">2021 Sep</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1870.00" y="254.00">ForgeRock IPO</tspan><tspan x="1870.00" y="271.50">($2.8B valuation)</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1870.00" y="636.00">2023 Feb</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1870.00" y="664.00">Wren:AM 15.0.0-M1</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1960.00" y="306.00">2023 Oct</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1960.00" y="224.00">Thoma Bravo acquires</tspan><tspan x="1960.00" y="241.50">ForgeRock ($2.3B)</tspan><tspan x="1960.00" y="259.00">→ PingIdentity</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1970.00" y="286.00">2026 Feb</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1970.00" y="254.00">OIP 16.0.5</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1970.00" y="636.00">2026 Feb</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(30,30,30,1.00)" text-anchor="middle"><tspan x="1970.00" y="664.00">Wren:AM 16.0.0-M1</tspan></text>
 </svg>

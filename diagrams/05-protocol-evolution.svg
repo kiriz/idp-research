@@ -1,7 +1,83 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
-  <!-- placeholder: 05-protocol-evolution -->
-  <rect width="800" height="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8"/>
-  <text x="400" y="85" font-family="system-ui, sans-serif" font-size="16" fill="#64748b" text-anchor="middle" font-weight="600">05-protocol-evolution</text>
-  <text x="400" y="115" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Excalidraw diagram — export manually from docs/diagrams/05-protocol-evolution.excalidraw</text>
-  <text x="400" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Open excalidraw.com, load the file, export as SVG to site/public/diagrams/05-protocol-evolution.svg</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10.00 -20.00 2430.00 940.00" width="2430" height="940"><rect width="100%" height="100%" fill="#ffffff"/><defs><marker id="arrow-end-0" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(134,142,150,1.00)"/></marker><marker id="arrow-end-1" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(134,142,150,1.00)"/></marker><marker id="arrow-end-2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(134,142,150,1.00)"/></marker><marker id="arrow-end-3" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(47,158,68,1.00)"/></marker></defs>
+  <rect x="50" y="100" width="2300" height="120" rx="0" fill="rgba(165,216,255,0.36)" stroke="rgba(25,113,194,0.60)" stroke-width="2" />
+  <rect x="250" y="145" width="180" height="60" rx="0" fill="rgba(165,216,255,0.60)" stroke="rgba(25,113,194,1.00)" stroke-width="2" />
+  <rect x="550" y="145" width="180" height="60" rx="0" fill="rgba(165,216,255,0.60)" stroke="rgba(25,113,194,1.00)" stroke-width="2" />
+  <rect x="850" y="145" width="180" height="60" rx="0" fill="rgba(165,216,255,0.60)" stroke="rgba(25,113,194,1.00)" stroke-width="2" />
+  <rect x="1150" y="145" width="180" height="60" rx="0" fill="rgba(165,216,255,0.60)" stroke="rgba(25,113,194,1.00)" stroke-width="2" />
+  <rect x="1450" y="145" width="180" height="60" rx="0" fill="rgba(165,216,255,0.60)" stroke="rgba(25,113,194,1.00)" stroke-width="2" />
+  <rect x="1750" y="145" width="180" height="60" rx="0" fill="rgba(165,216,255,0.60)" stroke="rgba(25,113,194,1.00)" stroke-width="2" />
+  <rect x="2050" y="145" width="180" height="60" rx="0" fill="rgba(178,242,187,0.60)" stroke="rgba(47,158,68,1.00)" stroke-width="3" />
+  <rect x="50" y="240" width="2300" height="120" rx="0" fill="rgba(178,242,187,0.36)" stroke="rgba(47,158,68,0.60)" stroke-width="2" />
+  <rect x="650" y="285" width="180" height="60" rx="0" fill="rgba(233,236,239,0.60)" stroke="rgba(134,142,150,1.00)" stroke-width="2" />
+  <rect x="850" y="285" width="180" height="60" rx="0" fill="rgba(178,242,187,0.60)" stroke="rgba(47,158,68,1.00)" stroke-width="2" />
+  <rect x="1050" y="285" width="180" height="60" rx="0" fill="rgba(233,236,239,0.60)" stroke="rgba(134,142,150,1.00)" stroke-width="2" />
+  <rect x="1250" y="285" width="180" height="60" rx="0" fill="rgba(178,242,187,0.60)" stroke="rgba(47,158,68,1.00)" stroke-width="2" />
+  <rect x="1450" y="285" width="180" height="60" rx="0" fill="rgba(178,242,187,0.60)" stroke="rgba(47,158,68,1.00)" stroke-width="2" />
+  <rect x="2050" y="285" width="180" height="60" rx="0" fill="rgba(178,242,187,0.60)" stroke="rgba(47,158,68,1.00)" stroke-width="2" />
+  <rect x="50" y="380" width="2300" height="120" rx="0" fill="rgba(255,216,168,0.36)" stroke="rgba(240,140,0,0.60)" stroke-width="2" />
+  <rect x="250" y="425" width="180" height="60" rx="0" fill="rgba(255,216,168,0.60)" stroke="rgba(240,140,0,1.00)" stroke-width="2" />
+  <rect x="450" y="425" width="180" height="60" rx="0" fill="rgba(255,216,168,0.60)" stroke="rgba(240,140,0,1.00)" stroke-width="2" />
+  <rect x="750" y="425" width="180" height="60" rx="0" fill="rgba(233,236,239,0.60)" stroke="rgba(134,142,150,1.00)" stroke-width="2" />
+  <rect x="950" y="425" width="180" height="60" rx="0" fill="rgba(255,216,168,0.60)" stroke="rgba(240,140,0,1.00)" stroke-width="2" />
+  <rect x="1750" y="425" width="180" height="60" rx="0" fill="rgba(255,216,168,0.60)" stroke="rgba(240,140,0,1.00)" stroke-width="2" />
+  <rect x="1950" y="425" width="180" height="60" rx="0" fill="rgba(255,216,168,0.60)" stroke="rgba(240,140,0,1.00)" stroke-width="2" />
+  <rect x="2150" y="425" width="180" height="60" rx="0" fill="rgba(255,216,168,0.60)" stroke="rgba(240,140,0,1.00)" stroke-width="2" />
+  <rect x="50" y="520" width="2300" height="120" rx="0" fill="rgba(233,236,239,0.36)" stroke="rgba(73,80,87,0.60)" stroke-width="2" />
+  <rect x="250" y="565" width="180" height="60" rx="0" fill="rgba(233,236,239,0.60)" stroke="rgba(134,142,150,1.00)" stroke-width="2" />
+  <rect x="450" y="565" width="180" height="60" rx="0" fill="rgba(233,236,239,0.60)" stroke="rgba(73,80,87,1.00)" stroke-width="2" />
+  <rect x="1450" y="565" width="180" height="60" rx="0" fill="rgba(233,236,239,0.60)" stroke="rgba(73,80,87,1.00)" stroke-width="2" />
+  <rect x="50" y="660" width="2300" height="120" rx="0" fill="rgba(153,233,242,0.36)" stroke="rgba(12,133,153,0.60)" stroke-width="2" />
+  <rect x="250" y="705" width="180" height="60" rx="0" fill="rgba(153,233,242,0.60)" stroke="rgba(12,133,153,1.00)" stroke-width="2" />
+  <rect x="650" y="705" width="180" height="60" rx="0" fill="rgba(153,233,242,0.60)" stroke="rgba(12,133,153,1.00)" stroke-width="2" />
+  <rect x="1450" y="705" width="180" height="60" rx="0" fill="rgba(153,233,242,0.60)" stroke="rgba(12,133,153,1.00)" stroke-width="2" />
+  <rect x="1850" y="705" width="180" height="60" rx="0" fill="rgba(153,233,242,0.60)" stroke="rgba(12,133,153,1.00)" stroke-width="2" />
+  <rect x="2050" y="705" width="180" height="60" rx="0" fill="rgba(178,242,187,0.60)" stroke="rgba(47,158,68,1.00)" stroke-width="3" />
+  <rect x="50" y="810" width="600" height="70" rx="0" fill="rgba(248,249,250,1.00)" stroke="rgba(73,80,87,1.00)" stroke-width="1" />
+  <rect x="70" y="845" width="120" height="25" rx="0" fill="rgba(233,236,239,0.60)" stroke="rgba(134,142,150,1.00)" stroke-width="1" />
+  <rect x="210" y="845" width="120" height="25" rx="0" fill="rgba(178,242,187,0.60)" stroke="rgba(47,158,68,1.00)" stroke-width="1" />
+  <rect x="350" y="845" width="120" height="25" rx="0" fill="rgba(178,242,187,0.60)" stroke="rgba(47,158,68,1.00)" stroke-width="3" />
+  <line x1="835.00" y1="315.00" x2="835.00" y2="315.00" stroke="rgba(134,142,150,1.00)" stroke-width="2"  marker-end="url(#arrow-end-0)" />
+  <line x1="1235.00" y1="315.00" x2="1235.00" y2="315.00" stroke="rgba(134,142,150,1.00)" stroke-width="2"  marker-end="url(#arrow-end-1)" />
+  <line x1="935.00" y1="455.00" x2="935.00" y2="455.00" stroke="rgba(134,142,150,1.00)" stroke-width="2"  marker-end="url(#arrow-end-2)" />
+  <line x1="2250.00" y1="400.00" x2="2298.00" y2="400.00" stroke="rgba(47,158,68,1.00)" stroke-width="4"  marker-end="url(#arrow-end-3)" />
+  <text font-family="sans-serif" font-size="36" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="50.00" y="56.00">Identity Protocol Evolution Timeline (1993-2026)</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(25,113,194,1.00)" text-anchor="start"><tspan x="60.00" y="130.00">Authentication</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(25,113,194,1.00)" text-anchor="middle"><tspan x="340.00" y="161.00">Kerberos V5</tspan><tspan x="340.00" y="181.00">RFC 1510</tspan><tspan x="340.00" y="201.00">1993</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(25,113,194,1.00)" text-anchor="middle"><tspan x="640.00" y="161.00">RADIUS</tspan><tspan x="640.00" y="181.00">RFC 2865</tspan><tspan x="640.00" y="201.00">2000</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(25,113,194,1.00)" text-anchor="middle"><tspan x="940.00" y="161.00">HOTP</tspan><tspan x="940.00" y="181.00">RFC 4226</tspan><tspan x="940.00" y="201.00">2005</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(25,113,194,1.00)" text-anchor="middle"><tspan x="1240.00" y="161.00">TOTP</tspan><tspan x="1240.00" y="181.00">RFC 6238</tspan><tspan x="1240.00" y="201.00">2011</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(25,113,194,1.00)" text-anchor="middle"><tspan x="1540.00" y="161.00">FIDO U2F 1.0</tspan><tspan x="1540.00" y="181.00"></tspan><tspan x="1540.00" y="201.00">2014</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(25,113,194,1.00)" text-anchor="middle"><tspan x="1840.00" y="161.00">WebAuthn L1</tspan><tspan x="1840.00" y="181.00">W3C</tspan><tspan x="1840.00" y="201.00">2019</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(47,158,68,1.00)" text-anchor="middle"><tspan x="2140.00" y="161.00">Passkeys</tspan><tspan x="2140.00" y="181.00"></tspan><tspan x="2140.00" y="201.00">2022</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(47,158,68,1.00)" text-anchor="start"><tspan x="60.00" y="270.00">Federation</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(134,142,150,1.00)" text-anchor="middle"><tspan x="740.00" y="301.00">SAML 1.0</tspan><tspan x="740.00" y="321.00">❌ deprecated</tspan><tspan x="740.00" y="341.00">2002</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(47,158,68,1.00)" text-anchor="middle"><tspan x="940.00" y="301.00">SAML 2.0</tspan><tspan x="940.00" y="321.00">OASIS ✓ active</tspan><tspan x="940.00" y="341.00">2005</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(134,142,150,1.00)" text-anchor="middle"><tspan x="1140.00" y="301.00">OAuth 1.0</tspan><tspan x="1140.00" y="321.00">❌ deprecated</tspan><tspan x="1140.00" y="341.00">2007</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(47,158,68,1.00)" text-anchor="middle"><tspan x="1340.00" y="301.00">OAuth 2.0</tspan><tspan x="1340.00" y="321.00">RFC 6749 ✓</tspan><tspan x="1340.00" y="341.00">2012</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(47,158,68,1.00)" text-anchor="middle"><tspan x="1540.00" y="301.00">OIDC Core 1.0</tspan><tspan x="1540.00" y="321.00">✓ active</tspan><tspan x="1540.00" y="341.00">2014</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(47,158,68,1.00)" text-anchor="middle"><tspan x="2140.00" y="301.00">DPoP</tspan><tspan x="2140.00" y="321.00">RFC 9449 ✓</tspan><tspan x="2140.00" y="341.00">2023</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(240,140,0,1.00)" text-anchor="start"><tspan x="60.00" y="410.00">Authorization</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(240,140,0,1.00)" text-anchor="middle"><tspan x="340.00" y="441.00">ACLs</tspan><tspan x="340.00" y="461.00"></tspan><tspan x="340.00" y="481.00">~1970s</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(240,140,0,1.00)" text-anchor="middle"><tspan x="540.00" y="441.00">RBAC</tspan><tspan x="540.00" y="461.00"></tspan><tspan x="540.00" y="481.00">~1992</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(134,142,150,1.00)" text-anchor="middle"><tspan x="840.00" y="441.00">XACML 1.0</tspan><tspan x="840.00" y="461.00">superseded</tspan><tspan x="840.00" y="481.00">2003</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(240,140,0,1.00)" text-anchor="middle"><tspan x="1040.00" y="441.00">XACML 3.0</tspan><tspan x="1040.00" y="461.00">✓ active</tspan><tspan x="1040.00" y="481.00">2013</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(240,140,0,1.00)" text-anchor="middle"><tspan x="1840.00" y="441.00">OPA/Rego</tspan><tspan x="1840.00" y="461.00">CNCF</tspan><tspan x="1840.00" y="481.00">2018</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(240,140,0,1.00)" text-anchor="middle"><tspan x="2040.00" y="441.00">OpenFGA</tspan><tspan x="2040.00" y="461.00">Zanzibar</tspan><tspan x="2040.00" y="481.00">2022</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(240,140,0,1.00)" text-anchor="middle"><tspan x="2240.00" y="441.00">Cedar</tspan><tspan x="2240.00" y="461.00">AWS</tspan><tspan x="2240.00" y="481.00">2023</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(73,80,87,1.00)" text-anchor="start"><tspan x="60.00" y="550.00">Directory</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(134,142,150,1.00)" text-anchor="middle"><tspan x="340.00" y="581.00">LDAPv1</tspan><tspan x="340.00" y="601.00">❌ deprecated</tspan><tspan x="340.00" y="621.00">1993</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(73,80,87,1.00)" text-anchor="middle"><tspan x="540.00" y="581.00">LDAPv3</tspan><tspan x="540.00" y="601.00">✓ active</tspan><tspan x="540.00" y="621.00">1997</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(73,80,87,1.00)" text-anchor="middle"><tspan x="1540.00" y="581.00">SCIM 2.0</tspan><tspan x="1540.00" y="601.00">✓ active</tspan><tspan x="1540.00" y="621.00">2015</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(12,133,153,1.00)" text-anchor="start"><tspan x="60.00" y="690.00">Token Formats</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(12,133,153,1.00)" text-anchor="middle"><tspan x="340.00" y="721.00">Kerberos tickets</tspan><tspan x="340.00" y="741.00"></tspan><tspan x="340.00" y="761.00">1993</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(12,133,153,1.00)" text-anchor="middle"><tspan x="740.00" y="721.00">SAML assertions</tspan><tspan x="740.00" y="741.00"></tspan><tspan x="740.00" y="761.00">2002</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(12,133,153,1.00)" text-anchor="middle"><tspan x="1540.00" y="721.00">JWT</tspan><tspan x="1540.00" y="741.00">RFC 7519</tspan><tspan x="1540.00" y="761.00">2015</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(12,133,153,1.00)" text-anchor="middle"><tspan x="1940.00" y="721.00">DPoP</tspan><tspan x="1940.00" y="741.00">RFC 9449</tspan><tspan x="1940.00" y="761.00">2023</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(47,158,68,1.00)" text-anchor="middle"><tspan x="2140.00" y="721.00">SD-JWT VC</tspan><tspan x="2140.00" y="741.00">Verifiable Creds</tspan><tspan x="2140.00" y="761.00">2024</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(47,158,68,1.00)" text-anchor="middle"><tspan x="2290.00" y="390.00">Future: Passkeys + VCs</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(30,30,30,1.00)" text-anchor="start"><tspan x="60.00" y="831.00">Legend:</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(134,142,150,1.00)" text-anchor="middle"><tspan x="130.00" y="863.25">Deprecated</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(47,158,68,1.00)" text-anchor="middle"><tspan x="270.00" y="863.25">Active/Current</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(47,158,68,1.00)" text-anchor="middle"><tspan x="410.00" y="863.25">Future Direction</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(134,142,150,1.00)" text-anchor="start"><tspan x="490.00" y="861.00">→ = superseded by</tspan></text>
 </svg>

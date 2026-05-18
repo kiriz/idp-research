@@ -1,7 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
-  <!-- placeholder: 06-fork-divergence -->
-  <rect width="800" height="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8"/>
-  <text x="400" y="85" font-family="system-ui, sans-serif" font-size="16" fill="#64748b" text-anchor="middle" font-weight="600">06-fork-divergence</text>
-  <text x="400" y="115" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Excalidraw diagram — export manually from docs/diagrams/06-fork-divergence.excalidraw</text>
-  <text x="400" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Open excalidraw.com, load the file, export as SVG to site/public/diagrams/06-fork-divergence.svg</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20.00 0.00 1610.00 1110.00" width="1610" height="1110"><rect width="100%" height="100%" fill="#ffffff"/>
+  <ellipse cx="850.00" cy="160.00" rx="100.00" ry="40.00" fill="rgba(189,195,199,0.36)" stroke="rgba(28,40,51,0.60)" stroke-width="2" />
+  <line x1="850.00" y1="200.00" x2="850.00" y2="260.00" stroke="rgba(28,40,51,1.00)" stroke-width="3" />
+  <line x1="850.00" y1="260.00" x2="350.00" y2="320.00" stroke="rgba(231,76,60,1.00)" stroke-width="3" />
+  <line x1="850.00" y1="260.00" x2="850.00" y2="320.00" stroke="rgba(39,174,96,1.00)" stroke-width="3" />
+  <line x1="850.00" y1="260.00" x2="1350.00" y2="320.00" stroke="rgba(142,68,173,1.00)" stroke-width="3" />
+  <rect x="150" y="320" width="400" height="80" rx="0" fill="rgba(231,76,60,0.36)" stroke="rgba(231,76,60,0.60)" stroke-width="3" />
+  <rect x="150" y="410" width="400" height="50" rx="0" fill="rgba(231,76,60,1.00)" stroke="rgba(192,57,43,1.00)" stroke-width="2" />
+  <rect x="650" y="320" width="400" height="80" rx="0" fill="rgba(39,174,96,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="3" />
+  <ellipse cx="860.00" cy="430.00" rx="40.00" ry="20.00" fill="rgba(46,204,113,1.00)" stroke="rgba(34,153,84,1.00)" stroke-width="2" />
+  <rect x="1150" y="320" width="400" height="80" rx="0" fill="rgba(142,68,173,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="3" />
+  <ellipse cx="1360.00" cy="430.00" rx="40.00" ry="20.00" fill="rgba(165,105,189,1.00)" stroke="rgba(108,52,131,1.00)" stroke-width="2" />
+  <rect x="150" y="480" width="400" height="50" rx="0" fill="rgba(250,219,216,0.36)" stroke="rgba(231,76,60,0.60)" stroke-width="2" />
+  <rect x="650" y="480" width="400" height="50" rx="0" fill="rgba(213,244,230,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1150" y="480" width="400" height="50" rx="0" fill="rgba(235,222,240,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="150" y="545" width="400" height="50" rx="0" fill="rgba(250,219,216,0.36)" stroke="rgba(231,76,60,0.60)" stroke-width="2" />
+  <rect x="650" y="545" width="400" height="50" rx="0" fill="rgba(213,244,230,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1150" y="545" width="400" height="50" rx="0" fill="rgba(235,222,240,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="150" y="610" width="400" height="50" rx="0" fill="rgba(250,219,216,0.36)" stroke="rgba(231,76,60,0.60)" stroke-width="2" />
+  <rect x="650" y="610" width="400" height="50" rx="0" fill="rgba(213,244,230,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1150" y="610" width="400" height="50" rx="0" fill="rgba(235,222,240,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="150" y="675" width="400" height="50" rx="0" fill="rgba(250,219,216,0.36)" stroke="rgba(231,76,60,0.60)" stroke-width="2" />
+  <rect x="650" y="675" width="400" height="50" rx="0" fill="rgba(213,244,230,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1150" y="675" width="400" height="50" rx="0" fill="rgba(235,222,240,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="150" y="740" width="400" height="50" rx="0" fill="rgba(250,219,216,0.36)" stroke="rgba(231,76,60,0.60)" stroke-width="2" />
+  <rect x="650" y="740" width="400" height="50" rx="0" fill="rgba(213,244,230,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1150" y="740" width="400" height="50" rx="0" fill="rgba(235,222,240,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="150" y="805" width="400" height="50" rx="0" fill="rgba(250,219,216,0.36)" stroke="rgba(231,76,60,0.60)" stroke-width="2" />
+  <rect x="650" y="805" width="400" height="50" rx="0" fill="rgba(213,244,230,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1150" y="805" width="400" height="50" rx="0" fill="rgba(235,222,240,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="150" y="870" width="400" height="50" rx="0" fill="rgba(250,219,216,0.36)" stroke="rgba(231,76,60,0.60)" stroke-width="2" />
+  <rect x="650" y="870" width="400" height="50" rx="0" fill="rgba(213,244,230,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1150" y="870" width="400" height="50" rx="0" fill="rgba(235,222,240,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="150" y="935" width="400" height="70" rx="0" fill="rgba(231,76,60,1.00)" stroke="rgba(192,57,43,1.00)" stroke-width="3" />
+  <rect x="650" y="935" width="400" height="70" rx="0" fill="rgba(213,244,230,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1150" y="935" width="400" height="70" rx="0" fill="rgba(235,222,240,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <rect x="150" y="1020" width="400" height="50" rx="0" fill="rgba(250,219,216,0.36)" stroke="rgba(231,76,60,0.60)" stroke-width="2" />
+  <rect x="650" y="1020" width="400" height="50" rx="0" fill="rgba(213,244,230,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1150" y="1020" width="400" height="50" rx="0" fill="rgba(235,222,240,0.36)" stroke="rgba(142,68,173,0.60)" stroke-width="2" />
+  <text font-family="sans-serif" font-size="36" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="850.00" y="76.00">OpenAM Fork Divergence Analysis</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="850.00" y="146.00">ForgeRock</tspan><tspan x="850.00" y="166.00">OpenAM</tspan><tspan x="850.00" y="186.00">(2010-2016)</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="880.00" y="240.00">Nov 2016: SPLIT</tspan></text>
+  <text font-family="sans-serif" font-size="28" fill="rgba(255,255,255,1.00)" text-anchor="middle"><tspan x="350.00" y="353.00">ForgeRock CE</tspan><tspan x="350.00" y="388.00">11.0.3</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(255,255,255,1.00)" text-anchor="middle"><tspan x="350.00" y="431.00">⚠️ DO NOT USE</tspan><tspan x="350.00" y="451.00">IN PRODUCTION</tspan></text>
+  <text font-family="sans-serif" font-size="28" fill="rgba(255,255,255,1.00)" text-anchor="middle"><tspan x="850.00" y="353.00">OIP OpenAM</tspan><tspan x="850.00" y="388.00">16.0.5</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(255,255,255,1.00)" text-anchor="middle"><tspan x="860.00" y="436.50">ACTIVE</tspan></text>
+  <text font-family="sans-serif" font-size="28" fill="rgba(255,255,255,1.00)" text-anchor="middle"><tspan x="1350.00" y="353.00">Wren:AM</tspan><tspan x="1350.00" y="388.00">16.0.0-M1</tspan></text>
+  <text font-family="sans-serif" font-size="16" fill="rgba(255,255,255,1.00)" text-anchor="middle"><tspan x="1360.00" y="436.50">ACTIVE</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="20.00" y="510.00">Status:</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(192,57,43,1.00)" text-anchor="middle"><tspan x="350.00" y="500.50">🔴 FROZEN</tspan><tspan x="350.00" y="523.00">(Nov 2017)</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(30,132,73,1.00)" text-anchor="middle"><tspan x="850.00" y="500.50">🟢 Active</tspan><tspan x="850.00" y="523.00">Continuous updates</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(108,52,131,1.00)" text-anchor="middle"><tspan x="1350.00" y="500.50">🟣 Active</tspan><tspan x="1350.00" y="523.00">Regular releases</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="20.00" y="575.00">Java:</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(192,57,43,1.00)" text-anchor="middle"><tspan x="350.00" y="577.25">7 (EOL 2015)</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(30,132,73,1.00)" text-anchor="middle"><tspan x="850.00" y="577.25">11+</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(108,52,131,1.00)" text-anchor="middle"><tspan x="1350.00" y="577.25">17+</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="20.00" y="640.00">Guice:</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(192,57,43,1.00)" text-anchor="middle"><tspan x="350.00" y="642.25">3.0</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(30,132,73,1.00)" text-anchor="middle"><tspan x="850.00" y="642.25">7.0.0</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(108,52,131,1.00)" text-anchor="middle"><tspan x="1350.00" y="642.25">3.0 (wrapped)</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="20.00" y="705.00">Jakarta:</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(192,57,43,1.00)" text-anchor="middle"><tspan x="350.00" y="707.25">javax.*</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(30,132,73,1.00)" text-anchor="middle"><tspan x="850.00" y="707.25">jakarta.* 4.0</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(108,52,131,1.00)" text-anchor="middle"><tspan x="1350.00" y="707.25">jakarta.* 5.0</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="20.00" y="770.00">Modules:</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(192,57,43,1.00)" text-anchor="middle"><tspan x="350.00" y="772.25">~45</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(30,132,73,1.00)" text-anchor="middle"><tspan x="850.00" y="772.25">52+</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(108,52,131,1.00)" text-anchor="middle"><tspan x="1350.00" y="772.25">~40</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="20.00" y="835.00">Commits/yr:</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(192,57,43,1.00)" text-anchor="middle"><tspan x="350.00" y="837.25">0</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(30,132,73,1.00)" text-anchor="middle"><tspan x="850.00" y="837.25">350+</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(108,52,131,1.00)" text-anchor="middle"><tspan x="1350.00" y="837.25">80-120</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="20.00" y="900.00">Contributors:</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(192,57,43,1.00)" text-anchor="middle"><tspan x="350.00" y="902.25">0</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(30,132,73,1.00)" text-anchor="middle"><tspan x="850.00" y="902.25">~8</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(108,52,131,1.00)" text-anchor="middle"><tspan x="1350.00" y="902.25">~4</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="20.00" y="965.00">Security:</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(255,255,255,1.00)" text-anchor="middle"><tspan x="350.00" y="954.25">💀 CRITICAL</tspan><tspan x="350.00" y="976.75">4 UNPATCHED CVEs</tspan><tspan x="350.00" y="999.25">CVSS 9.8 RCE</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(30,132,73,1.00)" text-anchor="middle"><tspan x="850.00" y="965.50">✅ All CVEs</tspan><tspan x="850.00" y="988.00">Patched</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(108,52,131,1.00)" text-anchor="middle"><tspan x="1350.00" y="965.50">✅ All CVEs</tspan><tspan x="1350.00" y="988.00">Patched</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="20.00" y="1050.00">LOC:</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(192,57,43,1.00)" text-anchor="middle"><tspan x="350.00" y="1052.25">~1.8M</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(30,132,73,1.00)" text-anchor="middle"><tspan x="850.00" y="1052.25">~2.35M</tspan></text>
+  <text font-family="sans-serif" font-size="18" fill="rgba(108,52,131,1.00)" text-anchor="middle"><tspan x="1350.00" y="1052.25">~2.0M</tspan></text>
 </svg>

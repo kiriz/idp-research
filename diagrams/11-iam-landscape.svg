@@ -1,7 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
-  <!-- placeholder: 11-iam-landscape -->
-  <rect width="800" height="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8"/>
-  <text x="400" y="85" font-family="system-ui, sans-serif" font-size="16" fill="#64748b" text-anchor="middle" font-weight="600">11-iam-landscape</text>
-  <text x="400" y="115" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Excalidraw diagram — export manually from docs/diagrams/11-iam-landscape.excalidraw</text>
-  <text x="400" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Open excalidraw.com, load the file, export as SVG to site/public/diagrams/11-iam-landscape.svg</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10.00 -20.00 1540.00 995.00" width="1540" height="995"><rect width="100%" height="100%" fill="#ffffff"/><defs><marker id="arrow-end-0" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-1" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(231,76,60,1.00)"/></marker></defs>
+  <rect x="100" y="50" width="300" height="400" rx="0" fill="rgba(248,249,250,0.30)" stroke="none" stroke-width="1" />
+  <rect x="400" y="50" width="1100" height="400" rx="0" fill="rgba(248,249,250,0.30)" stroke="none" stroke-width="1" />
+  <rect x="100" y="450" width="300" height="450" rx="0" fill="rgba(248,249,250,0.30)" stroke="none" stroke-width="1" />
+  <rect x="400" y="450" width="1100" height="450" rx="0" fill="rgba(248,249,250,0.30)" stroke="none" stroke-width="1" />
+  <rect x="120" y="100" width="240" height="80" rx="8" fill="rgba(235,245,251,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <rect x="120" y="210" width="240" height="80" rx="8" fill="rgba(235,245,251,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="120" y="320" width="240" height="80" rx="8" fill="rgba(235,245,251,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="600" y="100" width="200" height="90" rx="8" fill="rgba(232,248,245,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="3" />
+  <rect x="850" y="100" width="200" height="90" rx="8" fill="rgba(232,248,245,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="3" />
+  <rect x="1100" y="100" width="180" height="70" rx="8" fill="rgba(232,248,245,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1320" y="100" width="160" height="70" rx="8" fill="rgba(232,248,245,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="600" y="220" width="220" height="70" rx="8" fill="rgba(232,248,245,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="120" y="520" width="240" height="100" rx="8" fill="rgba(235,245,251,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="120" y="650" width="240" height="100" rx="8" fill="rgba(235,245,251,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="120" y="780" width="240" height="70" rx="8" fill="rgba(235,245,251,0.36)" stroke="rgba(46,134,193,0.60)" stroke-width="2" />
+  <rect x="600" y="520" width="180" height="70" rx="8" fill="rgba(232,248,245,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="820" y="520" width="150" height="70" rx="8" fill="rgba(232,248,245,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1010" y="520" width="150" height="70" rx="8" fill="rgba(232,248,245,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="1200" y="520" width="150" height="70" rx="8" fill="rgba(232,248,245,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="900" y="320" width="580" height="100" rx="8" fill="rgba(235,245,251,0.48)" stroke="rgba(93,173,226,0.80)" stroke-width="2" />
+  <line x1="400.00" y1="50.00" x2="400.00" y2="884.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-0)" />
+  <line x1="100.00" y1="450.00" x2="1484.00" y2="450.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-1)" />
+  <line x1="240.00" y1="190.00" x2="240.00" y2="194.00" stroke="rgba(231,76,60,1.00)" stroke-width="2" stroke-dasharray="12,6" marker-end="url(#arrow-end-2)" />
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="420.00" y="40.00">Integrated Suite</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="420.00" y="930.00">Composable Services</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="50.00" y="480.00">Self-hosted</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="1450.00" y="480.00">SaaS</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="240.00" y="147.00">OpenAM/OIP</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(93,173,226,1.00)" text-anchor="middle"><tspan x="240.00" y="169.00">52 modules, full protocol coverage</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="240.00" y="257.00">Keycloak</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(46,134,193,1.00)" text-anchor="middle"><tspan x="240.00" y="279.00">Most popular OSS IAM</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="240.00" y="367.00">Authentik</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(46,134,193,1.00)" text-anchor="middle"><tspan x="240.00" y="389.00">Python, rapid growth</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="700.00" y="152.00">Auth0</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="950.00" y="152.00">Okta</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1190.00" y="142.00">AWS Cognito</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1400.00" y="142.00">MS Entra ID</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="710.00" y="262.00">Ping/ForgeRock</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="240.00" y="567.00">Ory stack</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(46,134,193,1.00)" text-anchor="middle"><tspan x="240.00" y="587.00">4 Go binaries:</tspan><tspan x="240.00" y="602.00">Kratos, Hydra, Keto, Oathkeeper</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="240.00" y="697.00">Zitadel</tspan></text>
+  <text font-family="sans-serif" font-size="12" fill="rgba(46,134,193,1.00)" text-anchor="middle"><tspan x="240.00" y="717.00">Single Go binary,</tspan><tspan x="240.00" y="732.00">CockroachDB</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="240.00" y="822.00">SuperTokens</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="690.00" y="562.00">Ory Network</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="895.00" y="562.00">Stytch</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1085.00" y="562.00">Descope</tspan></text>
+  <text font-family="sans-serif" font-size="20" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1275.00" y="562.00">WorkOS</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(231,76,60,1.00)" text-anchor="start"><tspan x="250.00" y="206.00">Most common migration path</tspan></text>
+  <text font-family="sans-serif" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="start"><tspan x="910.00" y="349.00">OpenAM unique niche:</tspan><tspan x="910.00" y="366.50">• Full protocol coverage (SAML + OAuth + XACML + WS-Fed + UMA)</tspan><tspan x="910.00" y="384.00">• No vendor lock-in</tspan><tspan x="910.00" y="401.50">• But: no modern operational model</tspan></text>
 </svg>
