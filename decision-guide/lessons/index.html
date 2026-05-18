@@ -1,24 +1,6 @@
 <!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Lessons from History | IAM Deep Dive</title><link rel="canonical" href="https://kiriz.github.io/idp-research/decision-guide/lessons/"/><link rel="sitemap" href="/idp-research/sitemap-index.xml"/><script type="module">
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
-document.addEventListener('DOMContentLoaded', async () => {
-  const blocks = document.querySelectorAll('pre > code.language-mermaid');
-  for (const code of blocks) {
-    const pre = code.parentElement;
-    const definition = code.textContent;
-    const id = 'mermaid-' + Math.random().toString(36).slice(2);
-    const div = document.createElement('div');
-    div.className = 'mermaid-diagram';
-    div.style.cssText = 'overflow-x:auto;margin:1.5rem 0;';
-    try {
-      const { svg } = await mermaid.render(id, definition);
-      div.innerHTML = svg;
-    } catch(e) {
-      div.textContent = 'Diagram error: ' + e.message;
-    }
-    pre.replaceWith(div);
-  }
-});
+mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
 </script><link rel="shortcut icon" href="/idp-research/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.1"/><meta name="generator" content="Starlight v0.33.2"/><meta property="og:title" content="Lessons from History"/><meta property="og:type" content="article"/><meta property="og:url" content="https://kiriz.github.io/idp-research/decision-guide/lessons/"/><meta property="og:locale" content="en"/><meta property="og:description" content="What 20 years of IAM open-source history teaches about protocol design, vendor lock-in, security debt, and the cost of architectural decisions."/><meta property="og:site_name" content="IAM Deep Dive"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="What 20 years of IAM open-source history teaches about protocol design, vendor lock-in, security debt, and the cost of architectural decisions."/><script>
 	window.StarlightThemeProvider = (() => {
 		const storedTheme =
