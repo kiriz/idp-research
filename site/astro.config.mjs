@@ -8,7 +8,7 @@ export default defineConfig({
     starlight({
       title: "IAM Deep Dive",
       description:
-        "20 years of open-source identity management: Sun OpenSSO to ForgeRock to the modern IAM landscape. Source analysis of 7 repos, 250K+ commits, 40+ protocols.",
+        "20 years of open-source identity management: Sun OpenSSO to ForgeRock to the modern IAM landscape. Source analysis of 7 repos, 58K+ commits, 40+ protocols.",
       customCss: ["./src/styles/custom.css"],
 
       social: [

@@ -42,7 +42,7 @@ The following table summarizes all fourteen architectural shifts covered in this
 
 ### The Monolithic Era
 
-The OIP stack represents the canonical monolithic IAM architecture of the 2005-2016 period. OpenAM deploys as a single WAR file containing authentication engines (34+ modules), OAuth 2.0/OIDC provider, SAML 2.0 IdP/SP, XACML policy engine, session management, and an administrative console (see [Chapter 7: OpenAM Analysis](07-openam-analysis.md)). OpenIDM runs as a monolithic OSGi application bundling sync engine, reconciliation, workflow (Activiti BPMN), and connector orchestration (see [Chapter 9: OpenIDM Analysis](09-openidm-analysis.md)). Each component carries the full weight of its capabilities whether or not a given deployment uses them all.
+The OIP stack represents the canonical monolithic IAM architecture of the 2005-2016 period. OpenAM deploys as a single WAR file containing authentication engines (34+ modules), OAuth 2.0/OIDC provider, SAML 2.0 IdP/SP, XACML policy engine, session management, and an administrative console (see [OpenAM Analysis](/idp-research/openam-lineage/openam/)). OpenIDM runs as a monolithic OSGi application bundling sync engine, reconciliation, workflow (Activiti BPMN), and connector orchestration (see [OpenIDM Analysis](/idp-research/openam-lineage/openidm/)). Each component carries the full weight of its capabilities whether or not a given deployment uses them all.
 
 This model had clear strengths: a single deployment artifact, unified configuration, and well-tested internal integration paths. It also had structural weaknesses. Scaling required scaling the entire application; a bug in the SAML engine could take down the OAuth 2.0 provider; upgrading one capability required redeploying the whole system; and the monolith's memory footprint grew with every feature added.
 
@@ -66,7 +66,7 @@ The OIP stack's modular Maven structure (OpenAM alone has ~60 submodules) hints 
 
 ### LDAP as Universal Identity Store
 
-LDAPv3 (RFC 4510-4519) has served as the universal identity store protocol since 1997. OpenDJ implements a full LDAPv3 server with multi-master replication, virtual attributes, and REST-to-LDAP mapping (see [Chapter 8: OpenDJ Analysis](08-opendj-analysis.md)). Active Directory, 389 Directory Server, and OpenLDAP fill the same role in other ecosystems. The hierarchical DIT (Directory Information Tree) model, while powerful for organizational modeling, imposes a rigid schema that resists the fluid identity structures demanded by modern applications.
+LDAPv3 (RFC 4510-4519) has served as the universal identity store protocol since 1997. OpenDJ implements a full LDAPv3 server with multi-master replication, virtual attributes, and REST-to-LDAP mapping (see [OpenDJ Analysis](/idp-research/openam-lineage/opendj/)). Active Directory, 389 Directory Server, and OpenLDAP fill the same role in other ecosystems. The hierarchical DIT (Directory Information Tree) model, while powerful for organizational modeling, imposes a rigid schema that resists the fluid identity structures demanded by modern applications.
 
 ### Cloud-Native Alternatives
 
@@ -82,7 +82,7 @@ Cloud IAM platforms have moved away from LDAP as the primary identity store:
 
 ### What Persists
 
-LDAP is not disappearing. Active Directory remains the dominant enterprise directory, and Kerberos V5 authentication still underpins Windows domain environments (see [Chapter 2: Authentication Protocols](02-authentication-protocols.md)). OpenDJ and 389 DS continue to serve organizations that need on-premises directory services. The shift is not the elimination of LDAP but its demotion from primary store to compatibility interface, increasingly hidden behind REST/GraphQL APIs (Microsoft Graph, SCIM) and accessed directly only by legacy systems.
+LDAP is not disappearing. Active Directory remains the dominant enterprise directory, and Kerberos V5 authentication still underpins Windows domain environments (see [Authentication Protocols](/idp-research/protocols/authentication/)). OpenDJ and 389 DS continue to serve organizations that need on-premises directory services. The shift is not the elimination of LDAP but its demotion from primary store to compatibility interface, increasingly hidden behind REST/GraphQL APIs (Microsoft Graph, SCIM) and accessed directly only by legacy systems.
 
 ---
 
@@ -90,7 +90,7 @@ LDAP is not disappearing. Active Directory remains the dominant enterprise direc
 
 ### SAML 2.0: The Enterprise Standard
 
-SAML 2.0 (OASIS, 2005) became the dominant enterprise federation protocol by merging SAML 1.1, Liberty Alliance ID-FF, and Shibboleth concepts into a comprehensive XML-based framework (see [Chapter 3: Federation Protocols](03-federation-protocols.md)). OpenAM implements full SAML 2.0 IdP and SP capabilities with metadata management, all standard bindings (HTTP-Redirect, HTTP-POST, HTTP-Artifact, SOAP), and single logout.
+SAML 2.0 (OASIS, 2005) became the dominant enterprise federation protocol by merging SAML 1.1, Liberty Alliance ID-FF, and Shibboleth concepts into a comprehensive XML-based framework (see [Federation Protocols](/idp-research/protocols/federation/)). OpenAM implements full SAML 2.0 IdP and SP capabilities with metadata management, all standard bindings (HTTP-Redirect, HTTP-POST, HTTP-Artifact, SOAP), and single logout.
 
 SAML's strengths -- mature tooling, deep enterprise deployment, extensive metadata federations (InCommon, eduGAIN) -- are matched by weaknesses that modern architectures expose: XML complexity, verbose assertion payloads, lack of native mobile support, no built-in discovery mechanism, and manual metadata exchange that does not scale to thousands of relying parties.
 
@@ -118,7 +118,7 @@ SAML 2.0 is not being replaced overnight. Virtually every enterprise IdP (Okta, 
 
 ### The Agent Model
 
-The OIP stack enforces access policy through dedicated agents and gateways. OpenIG operates as an identity-aware reverse proxy with a filter/handler pipeline (50+ filter types, 16 handler types) that intercepts HTTP requests, evaluates policies against OpenAM, and either permits or blocks access (see [Chapter 10: OpenIG Analysis](10-openig-analysis.md)). OpenAM also provided J2EE and web server policy agents -- lightweight modules embedded directly in Apache, IIS, or Tomcat that intercepted requests at the container level.
+The OIP stack enforces access policy through dedicated agents and gateways. OpenIG operates as an identity-aware reverse proxy with a filter/handler pipeline (50+ filter types, 16 handler types) that intercepts HTTP requests, evaluates policies against OpenAM, and either permits or blocks access (see [OpenIG Analysis](/idp-research/openam-lineage/openig/)). OpenAM also provided J2EE and web server policy agents -- lightweight modules embedded directly in Apache, IIS, or Tomcat that intercepted requests at the container level.
 
 This model assumed a known set of web applications running on known infrastructure. The agent must be installed and configured on each application server. Scaling meant deploying agents everywhere. Updates required touching every agent instance.
 
@@ -130,7 +130,7 @@ Modern architectures decouple policy enforcement from application servers throug
 
 **Sidecar proxies** (Envoy in Istio, Linkerd proxy) run alongside each service in a mesh, providing mTLS, authorization policy enforcement, and observability without application code changes. The sidecar intercepts all traffic to and from the service, applying policy decisions from a control plane (e.g., Istio's istiod). This is conceptually similar to the J2EE agent model but implemented at the network layer rather than the application layer.
 
-**External authorization** (OPA, Ory Oathkeeper, Cedar via Amazon Verified Permissions) decouples policy decision from policy enforcement. The gateway or sidecar calls an external policy decision point (PDP) for authorization checks. OPA's Rego language and Cedar's formally verifiable policies represent a significant advance over OpenAM's XACML-based entitlements engine in developer usability and cloud-native integration (see [Chapter 4: Authorization Frameworks](04-authorization-frameworks.md)).
+**External authorization** (OPA, Ory Oathkeeper, Cedar via Amazon Verified Permissions) decouples policy decision from policy enforcement. The gateway or sidecar calls an external policy decision point (PDP) for authorization checks. OPA's Rego language and Cedar's formally verifiable policies represent a significant advance over OpenAM's XACML-based entitlements engine in developer usability and cloud-native integration (see [Authorization Frameworks](/idp-research/protocols/authorization/)).
 
 ### Comparison with OIP Approach
 
@@ -149,7 +149,7 @@ Modern architectures decouple policy enforcement from application servers throug
 
 ### The Connector Framework Model
 
-OpenICF (Open Identity Connector Framework) provides a Java SPI for building provisioning connectors -- LDAP, database, CSV, SSH, Kerberos, Groovy-scripted (see [Chapter 11: OpenICF Analysis](11-openicf-analysis.md)). OpenIDM orchestrates these connectors for identity lifecycle operations: joiner/mover/leaver workflows, reconciliation, and synchronization. Each target system requires a dedicated connector implementation. The framework uses a pull-based reconciliation model where OpenIDM periodically scans source and target systems to detect and resolve differences.
+OpenICF (Open Identity Connector Framework) provides a Java SPI for building provisioning connectors -- LDAP, database, CSV, SSH, Kerberos, Groovy-scripted (see [OpenICF Analysis](/idp-research/openam-lineage/openicf/)). OpenIDM orchestrates these connectors for identity lifecycle operations: joiner/mover/leaver workflows, reconciliation, and synchronization. Each target system requires a dedicated connector implementation. The framework uses a pull-based reconciliation model where OpenIDM periodically scans source and target systems to detect and resolve differences.
 
 ### SCIM 2.0 as Universal Provisioning API
 
@@ -175,11 +175,11 @@ The trajectory is clear: connector frameworks like OpenICF serve on-premises and
 
 ### Server-Side Sessions and Domain Cookies
 
-Traditional IAM systems, including OpenAM, manage sessions server-side. OpenAM issues an `iPlanetDirectoryPro` cookie containing a session ID; the session state (user attributes, authentication level, timeout) lives in server memory or a shared store (see [Chapter 7: OpenAM Analysis](07-openam-analysis.md)). This model requires sticky sessions or a distributed session store (OpenAM supports CTS -- Core Token Service backed by OpenDJ, or Cassandra). Domain cookies limit SSO to a single DNS domain unless combined with federation protocols.
+Traditional IAM systems, including OpenAM, manage sessions server-side. OpenAM issues an `iPlanetDirectoryPro` cookie containing a session ID; the session state (user attributes, authentication level, timeout) lives in server memory or a shared store (see [OpenAM Analysis](/idp-research/openam-lineage/openam/)). This model requires sticky sessions or a distributed session store (OpenAM supports CTS -- Core Token Service backed by OpenDJ, or Cassandra). Domain cookies limit SSO to a single DNS domain unless combined with federation protocols.
 
 ### Stateless JWT
 
-The OAuth 2.0/OIDC shift introduced stateless tokens. A JWT (RFC 7519) encodes claims, is signed by the issuer, and can be validated by any party with the public key -- no session store required (see [Chapter 6: Token Formats](06-token-formats.md)). This removed the scaling bottleneck of centralized session stores and enabled cross-domain, cross-service authentication without shared cookies.
+The OAuth 2.0/OIDC shift introduced stateless tokens. A JWT (RFC 7519) encodes claims, is signed by the issuer, and can be validated by any party with the public key -- no session store required (see [Token Formats](/idp-research/protocols/tokens/)). This removed the scaling bottleneck of centralized session stores and enabled cross-domain, cross-service authentication without shared cookies.
 
 However, stateless JWTs introduced new problems: tokens cannot be revoked before expiry without a revocation list (negating some of the statelessness benefit); long-lived tokens increase the blast radius of theft; and bearer tokens are vulnerable to replay if intercepted.
 
@@ -207,7 +207,7 @@ The current generation of token standards addresses bearer token weaknesses:
 
 ### The Password Problem
 
-For decades, passwords were the universal authentication credential. OpenAM's LDAP authentication module, DataStore module, and Active Directory module all ultimately validate a password against a directory store (see [Chapter 2: Authentication Protocols](02-authentication-protocols.md)). The limitations are well-documented: credential stuffing, phishing, password reuse, and the operational cost of password resets (Gartner estimated 20-50% of help desk calls are password-related).
+For decades, passwords were the universal authentication credential. OpenAM's LDAP authentication module, DataStore module, and Active Directory module all ultimately validate a password against a directory store (see [Authentication Protocols](/idp-research/protocols/authentication/)). The limitations are well-documented: credential stuffing, phishing, password reuse, and the operational cost of password resets (Gartner estimated 20-50% of help desk calls are password-related).
 
 Successive mitigations -- complexity requirements, HOTP (RFC 4226), TOTP (RFC 6238), SMS OTP, push notification -- added friction and security layers but did not solve the fundamental problem: the user possesses a shared secret that can be phished, leaked, or brute-forced.
 

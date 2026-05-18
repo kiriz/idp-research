@@ -1197,7 +1197,7 @@ Verifiable Credentials (W3C Recommendation, 2024) are cryptographically verifiab
 
 ### Selective Disclosure JWTs (SD-JWT)
 
-SD-JWT (IETF draft, 2024) enables selective disclosure of JWT claims. Holder can reveal subset of claims without exposing all data.
+SD-JWT (RFC 9701, January 2025) enables selective disclosure of JWT claims. Holder can reveal subset of claims without exposing all data.
 
 **Mechanism:**
 

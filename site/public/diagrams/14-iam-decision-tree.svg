@@ -1,7 +1,100 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
-  <!-- placeholder: 14-iam-decision-tree -->
-  <rect width="800" height="200" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="8"/>
-  <text x="400" y="85" font-family="system-ui, sans-serif" font-size="16" fill="#64748b" text-anchor="middle" font-weight="600">14-iam-decision-tree</text>
-  <text x="400" y="115" font-family="system-ui, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Excalidraw diagram — export manually from docs/diagrams/14-iam-decision-tree.excalidraw</text>
-  <text x="400" y="140" font-family="system-ui, sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Open excalidraw.com, load the file, export as SVG to site/public/diagrams/14-iam-decision-tree.svg</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20.00 10.00 2060.00 1020.00" width="2060" height="1020"><rect width="100%" height="100%" fill="#ffffff"/><defs><marker id="arrow-end-0" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-1" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-3" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-4" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-5" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-6" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-7" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-8" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-9" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-10" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-11" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-12" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-13" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-14" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-15" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-16" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-17" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-18" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-19" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-20" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker><marker id="arrow-end-21" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="rgba(28,40,51,1.00)"/></marker></defs>
+  <polygon points="1040.00,50.00 1160.00,100.00 1040.00,150.00 920.00,100.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="100" y="220" width="200" height="80" rx="8" fill="rgba(213,216,220,0.36)" stroke="rgba(46,64,83,0.60)" stroke-width="2" />
+  <rect x="860" y="220" width="200" height="80" rx="8" fill="rgba(213,216,220,0.36)" stroke="rgba(46,64,83,0.60)" stroke-width="2" />
+  <rect x="1620" y="220" width="220" height="80" rx="8" fill="rgba(213,216,220,0.36)" stroke="rgba(46,64,83,0.60)" stroke-width="2" />
+  <polygon points="200.00,360.00 310.00,405.00 200.00,450.00 90.00,405.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <polygon points="130.00,510.00 220.00,555.00 130.00,600.00 40.00,555.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="20" y="660" width="220" height="80" rx="8" fill="rgba(171,235,198,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <polygon points="380.00,510.00 480.00,555.00 380.00,600.00 280.00,555.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="270" y="660" width="160" height="60" rx="8" fill="rgba(171,235,198,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <rect x="480" y="660" width="180" height="60" rx="8" fill="rgba(171,235,198,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <polygon points="460.00,360.00 580.00,405.00 460.00,450.00 340.00,405.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="360" y="510" width="200" height="70" rx="8" fill="rgba(174,214,241,0.42)" stroke="rgba(93,173,226,0.70)" stroke-width="3" />
+  <rect x="620" y="510" width="160" height="60" rx="8" fill="rgba(171,235,198,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <polygon points="960.00,360.00 1060.00,405.00 960.00,450.00 860.00,405.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="800" y="510" width="180" height="80" rx="8" fill="rgba(174,214,241,0.36)" stroke="rgba(52,152,219,0.60)" stroke-width="2" />
+  <rect x="1020" y="510" width="220" height="80" rx="8" fill="rgba(174,214,241,0.36)" stroke="rgba(52,152,219,0.60)" stroke-width="2" />
+  <polygon points="1730.00,360.00 1820.00,405.00 1730.00,450.00 1640.00,405.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="1540" y="510" width="200" height="80" rx="8" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="1780" y="510" width="220" height="80" rx="8" fill="rgba(174,214,241,0.36)" stroke="rgba(52,152,219,0.60)" stroke-width="2" />
+  <polygon points="200.00,860.00 300.00,905.00 200.00,950.00 100.00,905.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="340" y="870" width="140" height="70" rx="8" fill="rgba(174,214,241,0.36)" stroke="rgba(93,173,226,0.60)" stroke-width="2" />
+  <polygon points="620.00,860.00 700.00,905.00 620.00,950.00 540.00,905.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="740" y="870" width="220" height="70" rx="8" fill="rgba(171,235,198,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <polygon points="1100.00,860.00 1180.00,905.00 1100.00,950.00 1020.00,905.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="1220" y="855" width="240" height="100" rx="8" fill="rgba(171,235,198,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <polygon points="1620.00,860.00 1720.00,905.00 1620.00,950.00 1520.00,905.00" fill="rgba(252,243,207,0.36)" stroke="rgba(243,156,18,0.60)" stroke-width="2" />
+  <rect x="1760" y="870" width="160" height="70" rx="8" fill="rgba(171,235,198,0.36)" stroke="rgba(39,174,96,0.60)" stroke-width="2" />
+  <line x1="940.00" y1="140.00" x2="275.90" y2="213.25" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-0)" />
+  <line x1="1040.00" y1="150.00" x2="972.04" y2="209.46" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-1)" />
+  <line x1="1140.00" y1="140.00" x2="1664.15" y2="212.80" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-2)" />
+  <line x1="200.00" y1="300.00" x2="200.00" y2="344.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-3)" />
+  <line x1="150.00" y1="450.00" x2="127.16" y2="495.69" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-4)" />
+  <line x1="130.00" y1="600.00" x2="130.00" y2="644.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-5)" />
+  <line x1="220.00" y1="555.00" x2="264.00" y2="555.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-6)" />
+  <line x1="350.00" y1="600.00" x2="350.00" y2="644.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-7)" />
+  <line x1="480.00" y1="555.00" x2="559.59" y2="647.85" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-8)" />
+  <line x1="310.00" y1="405.00" x2="324.00" y2="405.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-9)" />
+  <line x1="460.00" y1="450.00" x2="460.00" y2="494.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-10)" />
+  <line x1="580.00" y1="405.00" x2="650.30" y2="497.27" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-11)" />
+  <line x1="960.00" y1="300.00" x2="960.00" y2="344.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-12)" />
+  <line x1="930.00" y1="450.00" x2="898.88" y2="496.69" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-13)" />
+  <line x1="1060.00" y1="405.00" x2="1121.12" y2="496.69" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-14)" />
+  <line x1="1730.00" y1="300.00" x2="1730.00" y2="344.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-15)" />
+  <line x1="1690.00" y1="450.00" x2="1650.24" y2="497.71" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-16)" />
+  <line x1="1770.00" y1="450.00" x2="1827.85" y2="499.59" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-17)" />
+  <line x1="300.00" y1="905.00" x2="324.00" y2="905.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-18)" />
+  <line x1="700.00" y1="905.00" x2="724.00" y2="905.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-19)" />
+  <line x1="1180.00" y1="905.00" x2="1204.00" y2="905.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-20)" />
+  <line x1="1720.00" y1="905.00" x2="1744.00" y2="905.00" stroke="rgba(28,40,51,1.00)" stroke-width="2"  marker-end="url(#arrow-end-21)" />
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="1040.00" y="96.80">What do you</tspan><tspan x="1040.00" y="116.00">need?</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(46,64,83,1.00)" text-anchor="middle"><tspan x="200.00" y="256.80">Access</tspan><tspan x="200.00" y="276.00">Management</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(46,64,83,1.00)" text-anchor="middle"><tspan x="960.00" y="256.80">Directory</tspan><tspan x="960.00" y="276.00">Services</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(46,64,83,1.00)" text-anchor="middle"><tspan x="1730.00" y="247.20">Identity</tspan><tspan x="1730.00" y="266.40">Governance &amp;</tspan><tspan x="1730.00" y="285.60">Admin</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="200.00" y="411.40">Cloud-native?</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="130.00" y="561.40">SaaS OK?</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="150.00" y="485.60">Yes</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(39,174,96,1.00)" text-anchor="middle"><tspan x="130.00" y="687.20">Auth0 /</tspan><tspan x="130.00" y="706.40">Okta /</tspan><tspan x="130.00" y="725.60">Cognito</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="120.00" y="635.60">Yes</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="380.00" y="561.40">Microservices?</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="247.50" y="560.60">No</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(39,174,96,1.00)" text-anchor="middle"><tspan x="350.00" y="696.40">Ory Stack</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="340.00" y="635.60">Yes</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(39,174,96,1.00)" text-anchor="middle"><tspan x="570.00" y="686.80">Keycloak /</tspan><tspan x="570.00" y="706.00">Zitadel</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="517.50" y="612.60">No</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="460.00" y="401.80">WS-Fed or</tspan><tspan x="460.00" y="421.00">XACML needed?</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="322.50" y="410.60">No</tspan></text>
+  <text font-family="monospace" font-size="18" fill="rgba(93,173,226,1.00)" text-anchor="middle"><tspan x="460.00" y="552.20">OIP OpenAM</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="450.00" y="485.60">Yes</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(39,174,96,1.00)" text-anchor="middle"><tspan x="700.00" y="546.40">Keycloak</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="617.50" y="462.60">No</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="960.00" y="411.40">LDAP required?</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(52,152,219,1.00)" text-anchor="middle"><tspan x="890.00" y="546.80">OpenDJ /</tspan><tspan x="890.00" y="566.00">389 DS</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="905.00" y="485.60">Yes</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="890.00" y="614.00">Avoid building NEW</tspan><tspan x="890.00" y="630.80">LDAP dependencies</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(52,152,219,1.00)" text-anchor="middle"><tspan x="1130.00" y="546.80">PostgreSQL /</tspan><tspan x="1130.00" y="566.00">CockroachDB</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1092.50" y="462.60">No</tspan></text>
+  <text font-family="monospace" font-size="13" fill="rgba(52,152,219,1.00)" text-anchor="middle"><tspan x="1130.00" y="613.00">SCIM 2.0 as</tspan><tspan x="1130.00" y="628.60">wire protocol</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="1730.00" y="411.40">Budget?</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="1640.00" y="546.80">SailPoint /</tspan><tspan x="1640.00" y="566.00">Saviynt</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1665.00" y="485.60">$$$$</tspan></text>
+  <text font-family="monospace" font-size="13" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="1640.00" y="613.00">Full IGA features,</tspan><tspan x="1640.00" y="628.60">commercial support</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(52,152,219,1.00)" text-anchor="middle"><tspan x="1890.00" y="546.80">OpenIDM + OpenICF /</tspan><tspan x="1890.00" y="566.00">MidPoint</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1800.00" y="485.60">$</tspan></text>
+  <text font-family="monospace" font-size="13" fill="rgba(52,152,219,1.00)" text-anchor="middle"><tspan x="1890.00" y="613.00">Budget-friendly,</tspan><tspan x="1890.00" y="628.60">air-gap capable</tspan></text>
+  <text font-family="monospace" font-size="18" fill="rgba(46,64,83,1.00)" text-anchor="start"><tspan x="100.00" y="818.00">Additional Decision Paths:</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="200.00" y="901.80">Legacy app</tspan><tspan x="200.00" y="921.00">integration?</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(93,173,226,1.00)" text-anchor="middle"><tspan x="410.00" y="911.40">OpenIG</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="320.00" y="910.60">Yes</tspan></text>
+  <text font-family="monospace" font-size="11" fill="rgba(231,76,60,1.00)" text-anchor="middle"><tspan x="410.00" y="961.00">Cred replay</tspan><tspan x="410.00" y="974.20">has NO modern</tspan><tspan x="410.00" y="987.40">equivalent</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="620.00" y="911.40">PAM needed?</tspan></text>
+  <text font-family="monospace" font-size="15" fill="rgba(39,174,96,1.00)" text-anchor="middle"><tspan x="850.00" y="902.00">CyberArk /</tspan><tspan x="850.00" y="920.00">HashiCorp Vault</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="720.00" y="910.60">Yes</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="1100.00" y="911.40">ITDR needed?</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(39,174,96,1.00)" text-anchor="middle"><tspan x="1340.00" y="882.60">CrowdStrike /</tspan><tspan x="1340.00" y="901.80">Silverfort /</tspan><tspan x="1340.00" y="921.00">Entra ID</tspan><tspan x="1340.00" y="940.20">Protection</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1200.00" y="910.60">Yes</tspan></text>
+  <text font-family="monospace" font-size="16" fill="rgba(243,156,18,1.00)" text-anchor="middle"><tspan x="1620.00" y="901.80">Workload</tspan><tspan x="1620.00" y="921.00">identity?</tspan></text>
+  <text font-family="monospace" font-size="15" fill="rgba(39,174,96,1.00)" text-anchor="middle"><tspan x="1840.00" y="902.00">SPIFFE /</tspan><tspan x="1840.00" y="920.00">SPIRE</tspan></text>
+  <text font-family="monospace" font-size="14" fill="rgba(28,40,51,1.00)" text-anchor="middle"><tspan x="1740.00" y="910.60">Yes</tspan></text>
 </svg>
