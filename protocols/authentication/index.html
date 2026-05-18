@@ -1,0 +1,789 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Authentication Protocols | IAM Deep Dive</title><link rel="canonical" href="https://kiriz.github.io/idp-research/protocols/authentication/"/><link rel="sitemap" href="/idp-research/sitemap-index.xml"/><link rel="shortcut icon" href="/idp-research/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.1"/><meta name="generator" content="Starlight v0.33.2"/><meta property="og:title" content="Authentication Protocols"/><meta property="og:type" content="article"/><meta property="og:url" content="https://kiriz.github.io/idp-research/protocols/authentication/"/><meta property="og:locale" content="en"/><meta property="og:description" content="LDAP, Kerberos, SAML, OAuth, OIDC, FIDO2 — complete analysis of 40+ authentication standards from 1993 to passkeys."/><meta property="og:site_name" content="IAM Deep Dive"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="LDAP, Kerberos, SAML, OAuth, OIDC, FIDO2 — complete analysis of 40+ authentication standards from 1993 to passkeys."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/idp-research/_astro/print.BJ0teN4y.css" media="print"><link rel="stylesheet" href="/idp-research/_astro/index.C9VqBXpQ.css">
+<style>:root{--sl-badge-default-border: var(--sl-color-accent);--sl-badge-default-bg: var(--sl-color-accent-low);--sl-badge-default-text: #fff;--sl-badge-note-border: var(--sl-color-blue);--sl-badge-note-bg: var(--sl-color-blue-low);--sl-badge-note-text: #fff;--sl-badge-danger-border: var(--sl-color-red);--sl-badge-danger-bg: var(--sl-color-red-low);--sl-badge-danger-text: #fff;--sl-badge-success-border: var(--sl-color-green);--sl-badge-success-bg: var(--sl-color-green-low);--sl-badge-success-text: #fff;--sl-badge-caution-border: var(--sl-color-orange);--sl-badge-caution-bg: var(--sl-color-orange-low);--sl-badge-caution-text: #fff;--sl-badge-tip-border: var(--sl-color-purple);--sl-badge-tip-bg: var(--sl-color-purple-low);--sl-badge-tip-text: #fff}[data-theme=light]:root{--sl-badge-default-bg: var(--sl-color-accent-high);--sl-badge-note-bg: var(--sl-color-blue-high);--sl-badge-danger-bg: var(--sl-color-red-high);--sl-badge-success-bg: var(--sl-color-green-high);--sl-badge-caution-bg: var(--sl-color-orange-high);--sl-badge-tip-bg: var(--sl-color-purple-high)}.sl-badge:where(.astro-avdet4wd){display:inline-block;border:1px solid var(--sl-color-border-badge);border-radius:.25rem;font-family:var(--sl-font-system-mono);line-height:normal;color:var(--sl-color-text-badge);background-color:var(--sl-color-bg-badge);overflow-wrap:anywhere}.sidebar-content .sl-badge:where(.astro-avdet4wd){line-height:1;font-size:var(--sl-text-xs);padding:.125rem .375rem}.sidebar-content a[aria-current=page]>.sl-badge:where(.astro-avdet4wd){--sl-color-bg-badge: transparent;--sl-color-border-badge: currentColor;color:inherit}.default:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-default-bg);--sl-color-border-badge: var(--sl-badge-default-border);--sl-color-text-badge: var(--sl-badge-default-text)}.note:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-note-bg);--sl-color-border-badge: var(--sl-badge-note-border);--sl-color-text-badge: var(--sl-badge-note-text)}.danger:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-danger-bg);--sl-color-border-badge: var(--sl-badge-danger-border);--sl-color-text-badge: var(--sl-badge-danger-text)}.success:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-success-bg);--sl-color-border-badge: var(--sl-badge-success-border);--sl-color-text-badge: var(--sl-badge-success-text)}.tip:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-tip-bg);--sl-color-border-badge: var(--sl-badge-tip-border);--sl-color-text-badge: var(--sl-badge-tip-text)}.caution:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-caution-bg);--sl-color-border-badge: var(--sl-badge-caution-border);--sl-color-text-badge: var(--sl-badge-caution-text)}.small:where(.astro-avdet4wd){font-size:var(--sl-text-xs);padding:.125rem .25rem}.medium:where(.astro-avdet4wd){font-size:var(--sl-text-sm);padding:.175rem .35rem}.large:where(.astro-avdet4wd){font-size:var(--sl-text-base);padding:.225rem .45rem}.sl-markdown-content :is(h1,h2,h3,h4,h5,h6) .sl-badge:where(.astro-avdet4wd){vertical-align:middle}
+.card:where(.astro-v5tidmuc){--sl-card-border: var(--sl-color-purple);--sl-card-bg: var(--sl-color-purple-low);border:1px solid var(--sl-color-gray-5);background-color:var(--sl-color-black);padding:clamp(1rem,calc(.125rem + 3vw),2.5rem);flex-direction:column;gap:clamp(.5rem,calc(.125rem + 1vw),1rem)}.card:where(.astro-v5tidmuc):nth-child(4n+1){--sl-card-border: var(--sl-color-orange);--sl-card-bg: var(--sl-color-orange-low)}.card:where(.astro-v5tidmuc):nth-child(4n+3){--sl-card-border: var(--sl-color-green);--sl-card-bg: var(--sl-color-green-low)}.card:where(.astro-v5tidmuc):nth-child(4n+4){--sl-card-border: var(--sl-color-red);--sl-card-bg: var(--sl-color-red-low)}.card:where(.astro-v5tidmuc):nth-child(4n+5){--sl-card-border: var(--sl-color-blue);--sl-card-bg: var(--sl-color-blue-low)}.title:where(.astro-v5tidmuc){font-weight:600;font-size:var(--sl-text-h4);color:var(--sl-color-white);line-height:var(--sl-line-height-headings);gap:1rem;align-items:center}.card:where(.astro-v5tidmuc) .icon:where(.astro-v5tidmuc){border:1px solid var(--sl-card-border);background-color:var(--sl-card-bg);padding:.2em;border-radius:.25rem}.card:where(.astro-v5tidmuc) .body:where(.astro-v5tidmuc){margin:0;font-size:clamp(var(--sl-text-sm),calc(.5rem + 1vw),var(--sl-text-body))}
+.card-grid:where(.astro-zntqmydn){display:grid;grid-template-columns:100%;gap:1rem}.card-grid:where(.astro-zntqmydn)>*{margin-top:0!important}@media(min-width:50rem){.card-grid:where(.astro-zntqmydn){grid-template-columns:1fr 1fr;gap:1.5rem}.stagger:where(.astro-zntqmydn){--stagger-height: 5rem;padding-bottom:var(--stagger-height)}.stagger:where(.astro-zntqmydn)>*:nth-child(2n){transform:translateY(var(--stagger-height))}}
+svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}
+.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}
+.sl-link-button:where(.astro-xwgiixxa){align-items:center;border:1px solid transparent;border-radius:999rem;display:inline-flex;font-size:var(--sl-text-sm);gap:.5em;line-height:1.1875;outline-offset:.25rem;padding:.4375rem 1.125rem;text-decoration:none}.sl-link-button:where(.astro-xwgiixxa).primary{background:var(--sl-color-text-accent);border-color:var(--sl-color-text-accent);color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).primary:hover{color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).secondary{border-color:inherit;color:var(--sl-color-white)}.sl-link-button:where(.astro-xwgiixxa).minimal{color:var(--sl-color-white);padding-inline:0}.sl-link-button:where(.astro-xwgiixxa) svg{flex-shrink:0}@media(min-width:50rem){.sl-link-button:where(.astro-xwgiixxa){font-size:var(--sl-text-base);padding:.9375rem 1.25rem}}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa){margin-inline-end:1rem}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa):not(:where(p *)){margin-block:1rem}
+</style><script type="module" src="/idp-research/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="page sl-flex astro-vrdttmbt"> <header class="header astro-vrdttmbt"><div class="header sl-flex astro-kmkmnagf"> <div class="title-wrapper sl-flex astro-kmkmnagf"> <a href="/idp-research/" class="site-title sl-flex astro-m46x6ez3">  <span class="astro-m46x6ez3" translate="no"> IAM Deep Dive </span> </a>  </div> <div class="sl-flex print:hidden astro-kmkmnagf"> <site-search class="astro-kmkmnagf astro-v37mnknz" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-v37mnknz"> <svg aria-hidden="true" class="astro-v37mnknz astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg> <span class="sl-hidden md:sl-block astro-v37mnknz" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-v37mnknz" style="display: none;"> <kbd class="astro-v37mnknz">Ctrl</kbd><kbd class="astro-v37mnknz">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-v37mnknz"> <div class="dialog-frame sl-flex astro-v37mnknz">  <button data-close-modal class="sl-flex md:sl-hidden astro-v37mnknz"> Cancel </button> <div class="search-container astro-v37mnknz"> <div id="starlight__search" class="astro-v37mnknz"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script> <script type="module" src="/idp-research/_astro/Search.astro_astro_type_script_index_0_lang.5f7Mm-QF.js"></script>   </div> <div class="sl-hidden md:sl-flex print:hidden right-group astro-kmkmnagf"> <div class="sl-flex social-icons astro-kmkmnagf"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script> <script type="module">const r="starlight-theme",o=e=>e==="auto"||e==="dark"||e==="light"?e:"auto",c=()=>o(typeof localStorage<"u"&&localStorage.getItem(r));function n(e){typeof localStorage<"u"&&localStorage.setItem(r,e==="light"||e==="dark"?e:"")}const l=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?l():e,n(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{c()==="auto"&&t("auto")});class s extends HTMLElement{constructor(){super(),t(c()),this.querySelector("select")?.addEventListener("change",a=>{a.currentTarget instanceof HTMLSelectElement&&t(o(a.currentTarget.value))})}}customElements.define("starlight-theme-select",s);</script> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </div> </header> <nav class="sidebar print:hidden astro-vrdttmbt" aria-label="Main"> <starlight-menu-button class="print:hidden astro-jif73yzw"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="open-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg> <svg aria-hidden="true" class="close-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg> </button> </starlight-menu-button> <script type="module">class s extends HTMLElement{constructor(){super(),this.btn=this.querySelector("button"),this.btn.addEventListener("click",()=>this.toggleExpanded());const t=this.closest("nav");t&&t.addEventListener("keyup",e=>this.closeOnEscape(e))}setExpanded(t){this.setAttribute("aria-expanded",String(t)),document.body.toggleAttribute("data-mobile-menu-expanded",t)}toggleExpanded(){this.setExpanded(this.getAttribute("aria-expanded")!=="true")}closeOnEscape(t){t.code==="Escape"&&(this.setExpanded(!1),this.btn.focus())}}customElements.define("starlight-menu-button",s);</script>   <div id="starlight__sidebar" class="sidebar-pane astro-vrdttmbt"> <div class="sidebar-content sl-flex astro-vrdttmbt"> <sl-sidebar-state-persist data-hash="0whlfhn" class="astro-kku4brbg"> <script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script>  <ul class="top-level astro-3ii7xxms"> <li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="0"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Overview</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/history/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">20-Year History of Open-Source IAM</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="1"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Protocol Deep Dives</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authentication/" aria-current="page" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authentication Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/federation/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Federation Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authorization/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authorization Frameworks</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/directory/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Directory Services</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/tokens/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Token Formats &amp; Sessions</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="2"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">OpenAM Lineage</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">The ForgeRock Story — OpenAM Lineage</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openam/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenAM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/opendj/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenDJ Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openidm/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIDM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openig/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIG Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openicf/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenICF Analysis</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="3"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Modern Landscape</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/modern-landscape/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Where IAM Is Today — Modern Landscape</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="4"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Decision Guide</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/comparison/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Platform Comparison Matrices</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/migration/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Migration Recommendations</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/lessons/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Lessons from History</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="5"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Reference Data</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/reference/protocols/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Protocol Inventory (40+ Protocols)</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/cve-history/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">CVE History &amp; Patch Matrix</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/git-analysis/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Git History Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/pre-computer/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Pre-Computer Authentication History</span>  </a> </li> </ul>  </details> </li> </ul>   <script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script> </sl-sidebar-state-persist>  <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-wu23bvmt"> <div class="sl-flex social-icons astro-wu23bvmt"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div>  </div> </div> </div> </nav> <div class="main-frame astro-vrdttmbt">  <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <div class="lg:sl-flex astro-67yu43on"> <aside class="right-sidebar-container print:hidden astro-67yu43on"> <div class="right-sidebar astro-67yu43on"> <script type="module" src="/idp-research/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C181hMzK.js"></script><script type="module" src="/idp-research/_astro/TableOfContents.astro_astro_type_script_index_0_lang.CKWWgpjV.js"></script><div class="lg:sl-hidden astro-pb3aqygn"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><div class="toggle sl-flex astro-doynk5tl">On this page<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></div><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#directory-based-authentication" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Directory-Based Authentication</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#ldap-bind" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">LDAP Bind</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#active-directory-ad" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Active Directory (AD)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#datastore-identity-repository-abstraction" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">DataStore (Identity Repository Abstraction)</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#certificate-based-authentication" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Certificate-Based Authentication</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#x509-client-certificates" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">X.509 Client Certificates</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#mutual-tls-mtls" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Mutual TLS (mTLS)</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#one-time-passwords-otp" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">One-Time Passwords (OTP)</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#hotp-hmac-based-otp-rfc-4226" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">HOTP (HMAC-Based OTP, RFC 4226)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#totp-time-based-otp-rfc-6238--oath" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">TOTP (Time-Based OTP, RFC 6238) / OATH</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#push-notifications" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Push Notifications</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#legacy-token-systems" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Legacy Token Systems</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#radius" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">RADIUS</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#rsa-securid" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">RSA SecurID</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#modern-passwordless" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Modern Passwordless</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#webauthn--fido2" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">WebAuthn / FIDO2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#passkeys-synced-webauthn-credentials" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Passkeys (Synced WebAuthn Credentials)</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#social-and-federated-authentication" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Social and Federated Authentication</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#oauth2-social-login" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OAuth2 Social Login</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openid-connect-oidc-as-authentication-module" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenID Connect (OIDC) as Authentication Module</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#adaptive-and-risk-based-authentication" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Adaptive and Risk-Based Authentication</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#risk-based-authentication" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Risk-Based Authentication</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#device-fingerprinting" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Device Fingerprinting</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#scripted-authentication" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Scripted Authentication</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#protocol-relevance-summary" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Protocol Relevance Summary</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#cross-references" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Cross-References</span> </a>  </li> </ul> </div></details></nav></mobile-starlight-toc></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-pb3aqygn"><div class="sl-container astro-pb3aqygn"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#directory-based-authentication" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Directory-Based Authentication</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#ldap-bind" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">LDAP Bind</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#active-directory-ad" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Active Directory (AD)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#datastore-identity-repository-abstraction" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">DataStore (Identity Repository Abstraction)</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#certificate-based-authentication" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Certificate-Based Authentication</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#x509-client-certificates" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">X.509 Client Certificates</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#mutual-tls-mtls" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Mutual TLS (mTLS)</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#one-time-passwords-otp" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">One-Time Passwords (OTP)</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#hotp-hmac-based-otp-rfc-4226" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">HOTP (HMAC-Based OTP, RFC 4226)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#totp-time-based-otp-rfc-6238--oath" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">TOTP (Time-Based OTP, RFC 6238) / OATH</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#push-notifications" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Push Notifications</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#legacy-token-systems" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Legacy Token Systems</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#radius" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">RADIUS</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#rsa-securid" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">RSA SecurID</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#modern-passwordless" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Modern Passwordless</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#webauthn--fido2" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">WebAuthn / FIDO2</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#passkeys-synced-webauthn-credentials" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Passkeys (Synced WebAuthn Credentials)</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#social-and-federated-authentication" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Social and Federated Authentication</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#oauth2-social-login" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OAuth2 Social Login</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openid-connect-oidc-as-authentication-module" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenID Connect (OIDC) as Authentication Module</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#adaptive-and-risk-based-authentication" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Adaptive and Risk-Based Authentication</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#risk-based-authentication" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Risk-Based Authentication</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#device-fingerprinting" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Device Fingerprinting</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#scripted-authentication" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Scripted Authentication</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#protocol-relevance-summary" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Protocol Relevance Summary</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#cross-references" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Cross-References</span> </a>  </li> </ul> </nav></starlight-toc></div></div> </div> </aside> <div class="main-pane astro-67yu43on">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">Authentication Protocols</h1>  </div> </div>  <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content"> <h1 id="chapter-2-authentication-protocols">Chapter 2: Authentication Protocols</h1>
+<p>Authentication protocols in the Open Identity Platform represent three decades of identity verification evolution, from LDAP bind operations to phishing-resistant FIDO2 credentials. OpenAM implements 34+ distinct authentication modules spanning directory-based, certificate-based, one-time password, legacy token, modern passwordless, social, and adaptive authentication mechanisms. This chapter examines each protocol family, its technical implementation, current relevance, migration paths, and position in the broader industry shift toward zero-trust architectures.</p>
+<h2 id="directory-based-authentication">Directory-Based Authentication</h2>
+<h3 id="ldap-bind">LDAP Bind</h3>
+<p><strong>Problem Solved:</strong> Direct credential verification against LDAP directories without intermediate authentication layers. Eliminates need for credential replication when directories already contain user passwords.</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>Client submits username/password to authentication module</li>
+<li>Module constructs DN from username via template (e.g., <code dir="auto">uid=%USERNAME%,ou=people,dc=example,dc=com</code>)</li>
+<li>Establishes LDAP connection to configured server (supports failover between primary/secondary)</li>
+<li>Issues LDAP Bind operation with DN and password</li>
+<li>Directory validates credentials against password attribute (userPassword, typically SSHA-512 hash)</li>
+<li>On success, optionally retrieves user attributes for session enrichment</li>
+<li>Optional: StartTLS upgrade for encrypted credential transmission</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-ldap/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">com.sun.identity.authentication.modules.ldap.LDAP</code> (extends <code dir="auto">AMLoginModule</code>)</li>
+<li><code dir="auto">LDAPAuthUtils</code> - DN construction, connection pooling, SSL/TLS configuration</li>
+<li><code dir="auto">LDAPCallbacks</code> - Username/password callback handling</li>
+</ul>
+</li>
+<li><strong>Backend Integration:</strong> Uses OpenDJ LDAPv3 client libraries from <code dir="auto">OpenDJ/opendj-core/</code></li>
+<li><strong>Configuration:</strong> LDAP URL, bind DN template, SSL keystore, password policies, search scope</li>
+</ul>
+<p><strong>Current Relevance:</strong> Active and ubiquitous. Every enterprise directory (Active Directory, OpenDJ, 389DS, OpenLDAP) supports LDAP bind. Remains the dominant authentication method for on-premises identity stores. However, plaintext password transmission (even over TLS) is increasingly problematic in zero-trust environments.</p>
+<p><strong>What Replaces It:</strong> OAuth2/OIDC authentication with directory acting as backing identity store rather than authentication endpoint. Passwordless methods (WebAuthn/passkeys) eliminate credential transmission entirely. Certificate-based authentication provides stronger cryptographic proof.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>LDAP bind remains necessary for legacy application compatibility</li>
+<li>Wrap LDAP authentication behind OIDC provider (OpenAM serves as translation layer)</li>
+<li>Implement password policies (account lockout, complexity requirements) at directory level</li>
+<li>Use StartTLS or LDAPS for all LDAP communication</li>
+<li>Consider migrating to certificate-based bind for service accounts</li>
+</ul>
+<h3 id="active-directory-ad">Active Directory (AD)</h3>
+<p><strong>Problem Solved:</strong> Specialized LDAP variant addressing Windows domain controller authentication quirks, including NTLM password encoding and AD-specific attributes (sAMAccountName, userPrincipalName, memberOf).</p>
+<p><strong>Technical Flow:</strong></p>
+<p>Similar to LDAP bind but with AD-specific enhancements:</p>
+<ol>
+<li>Accepts both UPN format (<code dir="auto">user@domain.com</code>) and sAMAccountName (<code dir="auto">DOMAIN\user</code>)</li>
+<li>Converts username to AD DN search (e.g., via <code dir="auto">(&#x26;(objectClass=user)(sAMAccountName=%USERNAME%))</code>)</li>
+<li>Issues LDAP bind with discovered DN</li>
+<li>Retrieves AD-specific attributes: memberOf (group DNs), tokenGroups (SIDs), pwdLastSet, accountExpires</li>
+<li>Maps Windows security groups to OpenAM roles/privileges</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-ad/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">com.sun.identity.authentication.modules.ad.AD</code></li>
+<li><code dir="auto">ADPrincipal</code> - Wraps AD user attributes</li>
+</ul>
+</li>
+<li><strong>Integration:</strong> Shares <code dir="auto">LDAPAuthUtils</code> with LDAP module; extends with AD password encoding</li>
+</ul>
+<p><strong>Current Relevance:</strong> Essential for hybrid cloud environments. Azure AD Connect (now Entra ID Connect) replicates on-premises AD to cloud but many organizations retain AD as authoritative source. Windows Desktop SSO (Kerberos/SPNEGO) depends on AD infrastructure.</p>
+<p><strong>What Replaces It:</strong> Azure AD (Entra ID) for cloud-native applications. Hybrid authentication via OIDC federation between on-premises AD (via ADFS or OpenAM) and cloud IdPs. Certificate-based authentication for device trust.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>AD remains unavoidable for Windows-centric enterprises</li>
+<li>Federate AD authentication to OIDC/SAML providers for modern apps</li>
+<li>Use Windows Hello for Business (certificate/biometric) instead of password authentication</li>
+<li>Implement Privileged Access Workstations (PAWs) for admin accounts</li>
+<li>Monitor deprecated NTLMv1 usage; enforce Kerberos or certificate authentication</li>
+</ul>
+<h3 id="datastore-identity-repository-abstraction">DataStore (Identity Repository Abstraction)</h3>
+<p><strong>Problem Solved:</strong> Decouples authentication from specific directory implementations. Allows pluggable identity stores (LDAP, SQL, custom) without authentication module changes.</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>Module queries configured identity repository plugin via abstraction layer</li>
+<li>Plugin translates query to backend-specific operations (LDAP search, SQL SELECT, REST API call)</li>
+<li>Retrieves user object with hashed password</li>
+<li>Module validates submitted password against hash (PBKDF2, bcrypt, SSHA-512)</li>
+<li>Session established on validation success</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-datastore/</code></li>
+<li><strong>Key Abstraction:</strong> <code dir="auto">com.sun.identity.idm.IdRepo</code> interface</li>
+<li><strong>Plugins:</strong>
+<ul>
+<li><code dir="auto">AMSDKRepo</code> - Legacy OpenAM SDK</li>
+<li><code dir="auto">LDAPRepo</code> - LDAP via opendj-core</li>
+<li><code dir="auto">JDBCRepo</code> - SQL databases</li>
+<li>Custom implementations via SPI</li>
+</ul>
+</li>
+</ul>
+<p><strong>Current Relevance:</strong> Active for multi-repository environments. Enables gradual migration from legacy datastores to modern identity platforms without authentication interruption.</p>
+<p><strong>What Replaces It:</strong> Cloud identity platforms (Okta, Auth0, Azure AD) with SCIM provisioning for source-of-truth sync. Direct OIDC integration eliminates need for password storage in application-specific datastores.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Use DataStore as transitional abstraction during identity consolidation projects</li>
+<li>Migrate password hashing to modern algorithms (Argon2, scrypt) via gradual rehash-on-login</li>
+<li>Decommission redundant identity stores after federation establishes single authoritative source</li>
+<li>Avoid replicating passwords across multiple stores; use federation instead</li>
+</ul>
+<h2 id="certificate-based-authentication">Certificate-Based Authentication</h2>
+<h3 id="x509-client-certificates">X.509 Client Certificates</h3>
+<p><strong>Problem Solved:</strong> Phishing-resistant mutual TLS authentication. Eliminates password transmission by proving possession of private key corresponding to certificate’s public key. Binds authentication to specific device (hardware-backed keys prevent credential theft).</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>TLS handshake between client and server negotiates mutual authentication</li>
+<li>Server requests client certificate via CertificateRequest message</li>
+<li>Client presents certificate chain from browser/OS keystore</li>
+<li>Server validates certificate: issuer trust (CA chain), validity period, revocation status (CRL/OCSP)</li>
+<li>Client proves private key possession via CertificateVerify signature</li>
+<li>Authentication module extracts certificate DN or Subject Alternative Name (SAN)</li>
+<li>Maps certificate identity to user account (DN matching, LDAP lookup via serialNumber, email in SAN)</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-cert/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">com.sun.identity.authentication.modules.cert.Cert</code></li>
+<li><code dir="auto">CertAuthPrincipal</code> - Principal representing certificate subject</li>
+</ul>
+</li>
+<li><strong>Certificate Extraction:</strong> From <code dir="auto">javax.servlet.request.X509Certificate</code> attribute (requires TLS termination at OpenAM or reverse proxy passing cert headers)</li>
+<li><strong>Validation:</strong> Java PKIX APIs (<code dir="auto">CertPathValidator</code>), optional CRL/OCSP checks</li>
+</ul>
+<p><strong>Current Relevance:</strong> Resurging in zero-trust architectures. Device-bound certificates (TPM/Secure Enclave) prevent lateral movement after compromise. Federal agencies (PIV/CAC cards) and enterprises (YubiKey, smartcards) use certificate authentication for high-assurance access.</p>
+<p><strong>What Replaces It:</strong> WebAuthn/FIDO2 subsumes client certificate authentication with better UX (biometric unlock vs. PIN entry). However, traditional mTLS certificates remain dominant for service-to-service authentication in microservices (Istio, Linkerd service mesh).</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Issue certificates with hardware-backed private keys (TPM 2.0, Secure Enclave, YubiKey)</li>
+<li>Use short validity periods (90 days) with automated rotation via ACME protocol</li>
+<li>Implement certificate-based step-up authentication for privileged operations</li>
+<li>Plan for WebAuthn migration for user-facing authentication while retaining mTLS for services</li>
+<li>Handle certificate revocation gracefully (OCSP stapling, short-lived certificates)</li>
+</ul>
+<h3 id="mutual-tls-mtls">Mutual TLS (mTLS)</h3>
+<p><strong>Problem Solved:</strong> Bidirectional authentication for service-to-service communication. Both client and server prove identity via certificates, establishing encrypted authenticated channel without shared secrets.</p>
+<p><strong>Technical Flow:</strong></p>
+<p>Identical to X.509 client certificates but symmetric (both parties present certificates). In microservices:</p>
+<ol>
+<li>Service A initiates connection to Service B</li>
+<li>Service B presents server certificate (validates identity of backend)</li>
+<li>Service B requests client certificate (validates identity of caller)</li>
+<li>Both parties validate peer certificates against trusted CA bundles</li>
+<li>Application-layer authorization checks certificate attributes (SANs, organization)</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<p>Supported at infrastructure level rather than authentication module:</p>
+<ul>
+<li><strong>OpenAM OAuth2 Endpoints:</strong> Client certificate binding for token issuance (RFC 8705 OAuth 2.0 mTLS)</li>
+<li><strong>OpenDJ Replication:</strong> mTLS for changelog replication between data centers</li>
+<li><strong>OpenICF Connector Server:</strong> mTLS for remote connector communication</li>
+</ul>
+<p><strong>Current Relevance:</strong> Standard practice in service mesh architectures. Kubernetes clusters use mTLS via SPIFFE/SPIRE for workload identity. Increasing adoption driven by zero-trust mandate for lateral movement prevention.</p>
+<p><strong>What Replaces It:</strong> Nothing. mTLS is the current state-of-the-art for service authentication. OAuth2 mTLS (RFC 8705) combines bearer tokens with certificate-bound proof-of-possession.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Automate certificate lifecycle via service mesh control plane or internal CA (cert-manager, Vault PKI)</li>
+<li>Use short-lived certificates (hours to days) rather than revocation</li>
+<li>Implement certificate rotation without service restart (hot reload)</li>
+<li>Monitor certificate expiry via Prometheus exporters</li>
+<li>Use mTLS for east-west traffic, OIDC/OAuth2 for north-south (user-to-service)</li>
+</ul>
+<h2 id="one-time-passwords-otp">One-Time Passwords (OTP)</h2>
+<h3 id="hotp-hmac-based-otp-rfc-4226">HOTP (HMAC-Based OTP, RFC 4226)</h3>
+<p><strong>Problem Solved:</strong> Time-independent second factor. Counter-based OTP survives clock skew and offline validation. Prevents password replay attacks via single-use codes.</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>During enrollment, server generates random shared secret (160-256 bits)</li>
+<li>Shared secret provisioned to user device (QR code, manual entry, hardware token)</li>
+<li>Authentication attempt: user increments counter (device-side), computes HMAC-SHA1(secret, counter), truncates to 6-8 digits</li>
+<li>Server-side validation: computes HMAC for counter window (current ± look-ahead window, e.g., 5)</li>
+<li>On match, server updates stored counter to prevent replay</li>
+<li>Failed validation: counter desynchronization requires resync procedure</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-hotp/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">com.sun.identity.authentication.modules.hotp.HOTP</code></li>
+<li><code dir="auto">HOTPAlgorithm</code> - RFC 4226 HMAC truncation</li>
+<li><code dir="auto">SMSGateway</code> interface, <code dir="auto">DefaultSMSGatewayImpl</code> - SMS delivery for counter resync</li>
+</ul>
+</li>
+<li><strong>Storage:</strong> Shared secret and counter stored in user LDAP attributes</li>
+</ul>
+<p><strong>Current Relevance:</strong> Largely superseded by TOTP. HOTP hardware tokens (RSA SecurID, YubiKey OTP mode) still deployed in high-security environments where network isolation prevents time sync.</p>
+<p><strong>What Replaces It:</strong> TOTP (time-based, no counter desync issues), WebAuthn (phishing-resistant), push notifications (better UX).</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Replace HOTP with TOTP for software tokens (Google Authenticator, Authy)</li>
+<li>Retain HOTP for hardware tokens until WebAuthn/FIDO2 keys available</li>
+<li>Implement counter resync UX (multi-code validation to detect offset)</li>
+<li>Plan sunset timeline aligned with hardware token refresh cycle (typically 3-5 years)</li>
+</ul>
+<h3 id="totp-time-based-otp-rfc-6238--oath">TOTP (Time-Based OTP, RFC 6238) / OATH</h3>
+<p><strong>Problem Solved:</strong> Time-synchronized OTP eliminates counter desynchronization. 30-second time window balances security (short validity) with usability (clock skew tolerance).</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>Enrollment: generate shared secret, provision to authenticator app via <code dir="auto">otpauth://totp/</code> URI</li>
+<li>Authentication: compute HMAC-SHA1(secret, floor(current_time / 30)), truncate to 6 digits</li>
+<li>Server validation: accept codes from current time window and ±1 window (90-second total validity)</li>
+<li>Time skew detection: track validation offsets, adjust server-side window if drift detected</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-oath/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">org.forgerock.openam.authentication.modules.oath.OATH</code></li>
+<li><code dir="auto">TOTPAlgorithm</code> - RFC 6238 time-based computation</li>
+<li><code dir="auto">SharedSecretProvider</code> interface, <code dir="auto">DefaultSharedSecretProvider</code> - Secret storage abstraction</li>
+</ul>
+</li>
+<li><strong>Configurable Parameters:</strong> Time step (default 30s), code length (6 or 8 digits), HMAC algorithm (SHA-1/SHA-256/SHA-512)</li>
+</ul>
+<p><strong>Current Relevance:</strong> Dominant software-based second factor. Every major service (Google, Microsoft, GitHub, AWS) supports TOTP. Authenticator apps (Google Authenticator, Microsoft Authenticator, Authy, 1Password) achieve broad adoption.</p>
+<p><strong>What Replaces It:</strong> WebAuthn/passkeys provide phishing resistance TOTP lacks. TOTP remains vulnerable to real-time phishing (attacker proxies code immediately after user entry). However, TOTP persists due to zero infrastructure requirements (no push notification service, no WebAuthn browser support dependencies).</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>TOTP remains recommended second factor for next 5+ years</li>
+<li>Combine with adaptive authentication (risk-based step-up)</li>
+<li>Educate users on phishing risks (adversary-in-the-middle attacks bypass TOTP)</li>
+<li>Offer WebAuthn as alternative for security-conscious users</li>
+<li>Use TOTP as backup authentication method if primary WebAuthn credential lost</li>
+</ul>
+<h3 id="push-notifications">Push Notifications</h3>
+<p><strong>Problem Solved:</strong> Superior UX compared to code entry. User taps “Approve” on mobile device instead of typing 6-digit code. Enables context display (IP address, location, device) for informed approval decision.</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>User initiates login on desktop browser</li>
+<li>OpenAM generates push challenge, stores pending authentication request</li>
+<li>Push notification sent to registered mobile device (via APNs/FCM)</li>
+<li>User sees login context: “Login from Chrome on Windows, IP 203.0.113.42, New York”</li>
+<li>User approves/denies</li>
+<li>Mobile app sends signed approval to OpenAM</li>
+<li>Desktop session established on approval</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-push/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">org.forgerock.openam.authentication.modules.push.AbstractPushModule</code></li>
+<li><code dir="auto">AuthenticatorPushRegistration</code> - Device enrollment</li>
+<li><code dir="auto">UserPushDeviceProfileManager</code> - Multi-device management</li>
+</ul>
+</li>
+<li><strong>Push Delivery:</strong> APNs (iOS), FCM (Android), WebSockets (fallback)</li>
+</ul>
+<p><strong>Current Relevance:</strong> Active and growing. Microsoft Authenticator, Duo Mobile, Okta Verify, Authy achieve high enterprise adoption. Better UX than TOTP drives user preference.</p>
+<p><strong>What Replaces It:</strong> WebAuthn/passkeys eliminate separate approval step (biometric authentication embedded in primary authentication flow). However, push notifications remain valuable for high-risk transaction approval (financial transfers, privilege escalation).</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Push notifications vulnerable to “notification fatigue” attacks (bombard user until accidental approval)</li>
+<li>Implement number matching (display 2-digit code on desktop, user enters on mobile)</li>
+<li>Use push as passwordless primary authentication (not just second factor)</li>
+<li>Plan WebAuthn migration for phishing resistance</li>
+<li>Retain push for out-of-band transaction approval</li>
+</ul>
+<h2 id="legacy-token-systems">Legacy Token Systems</h2>
+<h3 id="radius">RADIUS</h3>
+<p><strong>Problem Solved:</strong> Network access authentication for dial-up, VPN, Wi-Fi (802.1X). Centralizes credential validation for network infrastructure devices (switches, wireless controllers, VPN gateways) lacking integrated LDAP clients.</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>User attempts network connection (Wi-Fi association, VPN dial)</li>
+<li>Network Access Server (NAS) sends Access-Request to RADIUS server (UDP port 1812)</li>
+<li>OpenAM RADIUS module receives request, extracts username/password</li>
+<li>Validates credentials against configured backend (LDAP, DataStore)</li>
+<li>Returns Access-Accept (with VLAN assignment, session timeout) or Access-Reject</li>
+<li>NAS grants/denies network access based on response</li>
+<li>Accounting records sent to RADIUS accounting port (UDP 1813)</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-radius/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">com.sun.identity.authentication.modules.radius.RADIUS</code></li>
+<li><code dir="auto">RADIUSServer</code> - Protocol handler</li>
+<li><code dir="auto">RadiusConn</code> - UDP socket management</li>
+<li><code dir="auto">ChallengeException</code>, <code dir="auto">RejectException</code> - Multi-round auth flow</li>
+</ul>
+</li>
+<li><strong>Configuration:</strong> Primary/secondary server, shared secret, timeout (default 5s)</li>
+</ul>
+<p><strong>Current Relevance:</strong> Active but aging. RADIUS ubiquitous for Wi-Fi (WPA2-Enterprise via 802.1X), VPN, switch management. However, fundamental security issues (MD5-based, shared secrets, UDP) drive migration to modern protocols.</p>
+<p><strong>What Replaces It:</strong> RadSec (RFC 6614, RADIUS over TLS) addresses transport security. Long-term replacement: OAuth2/OIDC for application access, 802.1X with EAP-TLS (certificate-based) for network access, SAML/OIDC federation for VPN.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>RADIUS remains essential for network infrastructure (switches, APs) lacking modern auth protocols</li>
+<li>Deploy RadSec gateways for encrypted RADIUS communication</li>
+<li>Use EAP-TLS (certificate-based) instead of EAP-PEAP (password-based) for Wi-Fi</li>
+<li>Migrate VPN authentication to OIDC/SAML (supported by modern VPN solutions like Zscaler, Cloudflare Access)</li>
+<li>Plan 5-10 year sunset timeline aligned with network hardware refresh</li>
+</ul>
+<h3 id="rsa-securid">RSA SecurID</h3>
+<p><strong>Problem Solved:</strong> Hardware token-based OTP predating TOTP standardization. Time-synchronized token displays 6-digit code refreshing every 60 seconds. Server validates code against synchronized token seed.</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>User receives hardware token (key fob) with embedded seed value</li>
+<li>Token displays time-based code (proprietary algorithm, not TOTP)</li>
+<li>User enters PIN + token code during authentication</li>
+<li>OpenAM forwards authentication request to RSA Authentication Manager via proprietary protocol</li>
+<li>RSA server validates code against token database</li>
+<li>Returns success/failure to OpenAM</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-securid/</code></li>
+<li><strong>Integration:</strong> RSA SecureID agent library (proprietary binary)</li>
+<li><strong>Limitation:</strong> Requires RSA Authentication Manager infrastructure</li>
+</ul>
+<p><strong>Current Relevance:</strong> Declining. RSA SecurID still deployed in regulated industries (finance, defense) with legacy hardware token inventory. High TCO (token procurement, battery replacement, user training) drives migration.</p>
+<p><strong>What Replaces It:</strong> TOTP (software tokens eliminate hardware costs), WebAuthn/FIDO2 (security keys like YubiKey provide hardware-backed auth without battery issues), push notifications (better UX).</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Replace hardware tokens at end-of-battery-life (typically 3-5 years)</li>
+<li>Offer TOTP/push/WebAuthn alternatives for new users</li>
+<li>Migrate RSA Authentication Manager dependency to OpenAM native TOTP module</li>
+<li>Plan complete sunset within 5 years to eliminate licensing costs</li>
+</ul>
+<h2 id="modern-passwordless">Modern Passwordless</h2>
+<h3 id="webauthn--fido2">WebAuthn / FIDO2</h3>
+<p><strong>Problem Solved:</strong> Phishing-resistant passwordless authentication. Public key cryptography eliminates shared secrets (no password database to breach). Origin binding prevents credential use on phishing sites (cryptographic proof credential only valid for legitimate domain).</p>
+<p><strong>Technical Flow:</strong></p>
+<p><strong>Registration (Credential Creation):</strong></p>
+<ol>
+<li>User initiates registration on website (clicks “Register passkey”)</li>
+<li>Server generates challenge (random bytes)</li>
+<li>JavaScript invokes <code dir="auto">navigator.credentials.create({ publicKey: { challenge, rp, user, ... } })</code></li>
+<li>Browser prompts user for biometric (Touch ID, Face ID, Windows Hello) or security key</li>
+<li>Authenticator generates key pair (private key stored in hardware, public key returned)</li>
+<li>Authenticator creates attestation signature proving authentic hardware</li>
+<li>Server validates attestation, stores public key + credential ID</li>
+</ol>
+<p><strong>Authentication (Assertion):</strong></p>
+<ol>
+<li>User initiates login</li>
+<li>Server generates challenge</li>
+<li>JavaScript invokes <code dir="auto">navigator.credentials.get({ publicKey: { challenge, allowCredentials, ... } })</code></li>
+<li>Browser/authenticator locates credential for origin</li>
+<li>User performs biometric/PIN verification</li>
+<li>Authenticator signs challenge with private key</li>
+<li>Server validates signature using stored public key</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-webauthn/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">org.openidentityplatform.openam.authentication.modules.webauthn.WebAuthnAuthentication</code></li>
+<li><code dir="auto">WebAuthnRegistration</code> - Credential enrollment flow</li>
+<li><code dir="auto">WebAuthnAuthenticationProcessor</code> - Assertion validation</li>
+<li><code dir="auto">WebAuthnRegistrationProcessor</code> - Attestation validation</li>
+<li><code dir="auto">Base64Utils</code> - Credential data encoding</li>
+</ul>
+</li>
+<li><strong>Storage:</strong> Credential ID, public key, signature counter stored in user profile</li>
+</ul>
+<p><strong>Current Relevance:</strong> Rapid adoption trajectory. W3C Recommendation (2019), supported in all major browsers (Chrome, Safari, Firefox, Edge). Apple/Google/Microsoft shipped synced passkey support (2022-2023). GitHub, Google, Microsoft, PayPal, Best Buy, eBay, Shopify offer passkey login.</p>
+<p><strong>What Replaces It:</strong> Nothing imminent. WebAuthn represents current state-of-the-art for user authentication. Future enhancements (WebAuthn Level 3) add features without replacing core protocol.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Implement WebAuthn as optional authentication method alongside existing flows</li>
+<li>Offer security keys (YubiKey, Titan) for device-bound credentials (enterprise use cases)</li>
+<li>Enable synced passkeys (iCloud Keychain, Google Password Manager) for consumer convenience</li>
+<li>Require WebAuthn for privileged access (admin consoles, financial transactions)</li>
+<li>Plan 5-year timeline for password elimination in favor of passkeys</li>
+<li>Handle recovery scenarios (lost device, no backup passkey)</li>
+</ul>
+<h3 id="passkeys-synced-webauthn-credentials">Passkeys (Synced WebAuthn Credentials)</h3>
+<p><strong>Problem Solved:</strong> WebAuthn credential portability. Traditional WebAuthn credentials tied to single device; passkeys sync across user’s devices via platform credential manager (iCloud Keychain, Google Password Manager). Survives device loss without backup codes.</p>
+<p><strong>Technical Flow:</strong></p>
+<p>Identical to WebAuthn with credential synchronization layer:</p>
+<ol>
+<li>User registers passkey on iPhone</li>
+<li>Private key stored in iCloud Keychain (encrypted, synced to user’s other Apple devices)</li>
+<li>User logs in on Mac: credential available without re-enrollment</li>
+<li>Cross-device authentication: QR code + Bluetooth proximity for non-synced devices</li>
+</ol>
+<p><strong>Platform Support:</strong></p>
+<ul>
+<li><strong>Apple:</strong> iOS 16+, macOS Ventura+, iCloud Keychain sync</li>
+<li><strong>Google:</strong> Android 9+, Chrome, Google Password Manager sync</li>
+<li><strong>Microsoft:</strong> Windows 11 23H2+, Windows Hello, Microsoft account sync</li>
+<li><strong>Third-party:</strong> 1Password, Dashlane, Bitwarden (passkey storage/sync)</li>
+</ul>
+<p><strong>OIP Implementation:</strong></p>
+<p>Uses same WebAuthn module (<code dir="auto">openam-auth-webauthn</code>). No protocol-level difference; passkey sync handled by platform.</p>
+<p><strong>Current Relevance:</strong> Mainstream adoption accelerating. Apple/Google ecosystem users automatically gain passkey support. Industry consensus: passkeys represent future of consumer authentication.</p>
+<p><strong>What Replaces It:</strong> Nothing on horizon. Passkeys solve WebAuthn’s device portability limitation while preserving phishing resistance.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>No implementation differences from WebAuthn (server-side)</li>
+<li>User education: “Save passkey” vs. “Register security key” terminology</li>
+<li>Offer both synced passkeys (convenience) and device-bound keys (high assurance)</li>
+<li>Monitor passkey adoption metrics to inform password sunset timeline</li>
+<li>Plan account recovery flows (device-bound backup passkey, TOTP fallback)</li>
+</ul>
+<h2 id="social-and-federated-authentication">Social and Federated Authentication</h2>
+<h3 id="oauth2-social-login">OAuth2 Social Login</h3>
+<p><strong>Problem Solved:</strong> Delegate authentication to existing identity providers (Google, Facebook, GitHub, Microsoft). Eliminates password management burden. Reduces registration friction (no new account creation).</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>User clicks “Sign in with Google” on application</li>
+<li>Application redirects to Google OAuth2 authorization endpoint with client_id, redirect_uri, scope</li>
+<li>User authenticates to Google (if not already logged in)</li>
+<li>Google prompts consent for requested scopes (email, profile)</li>
+<li>User approves; Google redirects to application callback with authorization code</li>
+<li>Application exchanges code for access token (backend request with client_secret)</li>
+<li>Application calls Google UserInfo endpoint with access token</li>
+<li>Retrieves user profile (email, name, picture)</li>
+<li>Application creates/updates local user account, establishes session</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-oauth2/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">OAuthProxy</code> - Generic OAuth2 flow handler</li>
+<li><code dir="auto">ProfileProvider</code> - Provider-specific profile mapping</li>
+<li><code dir="auto">EmailGateway</code> - Email verification for account linking</li>
+</ul>
+</li>
+<li><strong>Supported Providers:</strong> Configurable endpoints support any OAuth2 provider (Google, Facebook, GitHub, Azure AD, Okta)</li>
+<li><strong>Configuration:</strong> Client ID/secret, authorization/token/userinfo endpoints, scope, attribute mapping</li>
+</ul>
+<p><strong>Current Relevance:</strong> Dominant consumer authentication pattern. Estimated 70%+ of consumer websites offer social login. Enterprise adoption via “Login with Microsoft” for B2B SaaS.</p>
+<p><strong>What Replaces It:</strong> OpenID Connect (OAuth2 extension with standardized identity layer). OIDC provides ID tokens (JWT with user claims) instead of requiring separate UserInfo call. Most “social login” implementations now use OIDC instead of bare OAuth2.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Prefer OIDC over OAuth2 for new integrations (standardized claims, ID token validation)</li>
+<li>Implement account linking flow (associate existing account with social identity)</li>
+<li>Privacy considerations: minimize requested scopes, explain data usage</li>
+<li>Handle provider account deletion/deactivation (webhook notifications)</li>
+<li>Offer multiple social providers to avoid vendor lock-in</li>
+</ul>
+<h3 id="openid-connect-oidc-as-authentication-module">OpenID Connect (OIDC) as Authentication Module</h3>
+<p><strong>Problem Solved:</strong> Standardized authentication delegation. OIDC adds identity layer on OAuth2: ID token (signed JWT with user claims), UserInfo endpoint, Discovery metadata, Dynamic Registration. Enables authentication federation without SAML complexity.</p>
+<p><strong>Technical Flow:</strong></p>
+<p>Similar to OAuth2 social login with ID token addition:</p>
+<ol>
+<li>Redirect to OIDC provider with <code dir="auto">response_type=code</code>, <code dir="auto">scope=openid email profile</code></li>
+<li>Provider authentication + consent</li>
+<li>Authorization code returned to callback</li>
+<li>Exchange code for access token + ID token (JWT)</li>
+<li>Validate ID token signature, issuer, audience, expiration</li>
+<li>Extract claims from ID token: <code dir="auto">sub</code> (subject identifier), <code dir="auto">email</code>, <code dir="auto">name</code>, <code dir="auto">picture</code>, etc.</li>
+<li>Optional: call UserInfo endpoint for additional claims</li>
+<li>Establish session based on validated identity</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-oidc/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">org.forgerock.openam.authentication.modules.oidc.OpenIdConnectConfig</code></li>
+<li><code dir="auto">JwtHandlerConfig</code> - JWT signature validation</li>
+<li><code dir="auto">JwtAttributeMapper</code> - Claim-to-attribute mapping</li>
+<li><code dir="auto">OpenIdConnectToken</code> - ID token representation</li>
+</ul>
+</li>
+<li><strong>Discovery:</strong> Automatic configuration via <code dir="auto">/.well-known/openid-configuration</code></li>
+</ul>
+<p><strong>Current Relevance:</strong> Industry standard for federation. Replacing SAML for new integrations. Cloud IdPs (Okta, Auth0, Azure AD, Google Cloud Identity) default to OIDC. Education (InCommon, eduGAIN) adding OIDC alongside SAML.</p>
+<p><strong>What Replaces It:</strong> Nothing. OIDC is current-generation protocol. Future enhancements (OIDC Federation for automatic trust, SIOP for self-issued credentials) build on OIDC foundation.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Use OIDC for new authentication integrations (not SAML)</li>
+<li>Migrate existing SAML integrations to OIDC where provider supports both</li>
+<li>Implement OIDC Provider role in OpenAM to service OIDC clients</li>
+<li>Use Authorization Code + PKCE flow (never Implicit flow)</li>
+<li>Validate ID token signatures using provider’s JWKS endpoint</li>
+</ul>
+<h2 id="adaptive-and-risk-based-authentication">Adaptive and Risk-Based Authentication</h2>
+<h3 id="risk-based-authentication">Risk-Based Authentication</h3>
+<p><strong>Problem Solved:</strong> Context-aware authentication decisions. Low-risk scenarios (known device, known location) allow password-only authentication. High-risk scenarios (new device, suspicious location, impossible travel) trigger step-up authentication (MFA requirement).</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>User initiates authentication</li>
+<li>Adaptive module collects context signals:
+<ul>
+<li>Device fingerprint (browser, OS, screen resolution)</li>
+<li>IP address geolocation</li>
+<li>Time of day</li>
+<li>Velocity checks (location changes, login frequency)</li>
+<li>Threat intelligence (known bot IPs, Tor exit nodes)</li>
+</ul>
+</li>
+<li>Risk scoring algorithm computes aggregate risk (0-100)</li>
+<li>Policy decision based on risk score:
+<ul>
+<li>Low (0-30): password only</li>
+<li>Medium (31-70): password + TOTP</li>
+<li>High (71-100): password + TOTP + push approval, or deny access</li>
+</ul>
+</li>
+<li>Log risk score for analytics/tuning</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-adaptive/</code></li>
+<li><strong>Risk Scoring:</strong> Pluggable risk evaluators</li>
+<li><strong>Integration:</strong> Combines with device fingerprinting module (<code dir="auto">openam-auth-device-id</code>)</li>
+</ul>
+<p><strong>Current Relevance:</strong> Standard practice for consumer-facing applications. Microsoft, Google, Apple, financial institutions use adaptive authentication extensively. Regulatory drivers: PSD2 Strong Customer Authentication (SCA), NIST SP 800-63B Authenticator Assurance Levels.</p>
+<p><strong>What Replaces It:</strong> Continuous authentication (CAEP - Continuous Access Evaluation Protocol). Instead of point-in-time risk assessment, continuous monitoring revokes sessions on risk change (e.g., session token revocation when device reports compromise).</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Start with logging mode (collect risk signals without enforcement)</li>
+<li>Tune risk thresholds based on observed false positive/negative rates</li>
+<li>Combine with CAEP/Shared Signals for real-time session termination</li>
+<li>Implement user feedback loop (“Not you? Secure your account”)</li>
+<li>Privacy considerations: minimize PII collection for risk scoring</li>
+</ul>
+<h3 id="device-fingerprinting">Device Fingerprinting</h3>
+<p><strong>Problem Solved:</strong> Device recognition without cookies or persistent storage. Combines browser/device attributes into stable identifier. Enables “trusted device” authentication bypass (no MFA on recognized devices).</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>JavaScript collects device attributes: User-Agent, screen resolution, timezone, fonts, canvas fingerprint, WebGL renderer, audio context, installed plugins</li>
+<li>Attributes hashed into fingerprint (e.g., MurmurHash of concatenated values)</li>
+<li>Fingerprint stored in user profile (LDAP attribute) or external datastore</li>
+<li>Future authentication: compute fingerprint, compare against stored values</li>
+<li>Match: recognize device, skip MFA</li>
+<li>No match: new device, require full authentication</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-device-id/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">org.forgerock.openam.authentication.modules.deviceprint.DeviceIdMatch</code></li>
+<li><code dir="auto">DevicePrintDao</code> - Fingerprint storage abstraction</li>
+<li><code dir="auto">ProfilePersister</code> - Device profile persistence</li>
+<li><code dir="auto">PersistModuleProcessor</code>, <code dir="auto">DeviceIdSave</code> - Enrollment flow</li>
+</ul>
+</li>
+<li><strong>Fingerprint Components:</strong> User-Agent, screen dimensions, timezone, installed fonts, canvas/WebGL signatures</li>
+</ul>
+<p><strong>Current Relevance:</strong> Widespread but increasingly fragile. Privacy-focused browsers (Safari, Firefox, Brave) actively resist fingerprinting via randomization and API blocking. iOS/iPadOS fingerprinting severely limited.</p>
+<p><strong>What Replaces It:</strong> Platform-native device attestation (iOS App Attest, Android SafetyNet/Play Integrity, Windows TPM attestation). WebAuthn credentials provide cryptographic device binding without fingerprinting fragility.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Use device fingerprinting as weak signal (not security control)</li>
+<li>Combine with persistent cookie (Secure, HttpOnly, SameSite=Strict)</li>
+<li>Plan migration to WebAuthn device-bound credentials</li>
+<li>Handle fingerprint mismatch gracefully (don’t lock out legitimate users)</li>
+<li>Privacy compliance: disclose fingerprinting in privacy policy</li>
+</ul>
+<h3 id="scripted-authentication">Scripted Authentication</h3>
+<p><strong>Problem Solved:</strong> Custom authentication flows without Java compilation. Groovy/JavaScript execution enables dynamic decision trees, external API calls, complex business logic unavailable in standard modules.</p>
+<p><strong>Technical Flow:</strong></p>
+<ol>
+<li>Administrator uploads Groovy/JavaScript authentication script via OpenAM console</li>
+<li>Script has access to request context, session, HTTP client, LDAP queries</li>
+<li>Authentication flow:
+<ul>
+<li>Script prompts for username/password via callbacks</li>
+<li>Validates credentials against LDAP</li>
+<li>Calls risk API to compute fraud score</li>
+<li>Decides: allow, deny, or step-up to MFA based on API response</li>
+</ul>
+</li>
+<li>Script sets authentication level, session properties, user attributes</li>
+</ol>
+<p><strong>OIP Implementation:</strong></p>
+<ul>
+<li><strong>Module Path:</strong> <code dir="auto">OpenAM/openam-authentication/openam-auth-scripted/</code></li>
+<li><strong>Key Classes:</strong>
+<ul>
+<li><code dir="auto">org.forgerock.openam.authentication.modules.scripted.Scripted</code></li>
+<li><code dir="auto">ScriptIdentityRepository</code> - Identity store access from scripts</li>
+<li><code dir="auto">ScriptedClientUtilityFunctions</code> - HTTP client for external API calls</li>
+<li><code dir="auto">ScriptHttpRequestWrapper</code> - Request object access</li>
+</ul>
+</li>
+<li><strong>Language Support:</strong> Groovy, JavaScript (Nashorn/GraalVM)</li>
+<li><strong>Sandboxing:</strong> Limited for security (no file I/O, restricted Java class access)</li>
+</ul>
+<p><strong>Current Relevance:</strong> Active for complex enterprise authentication flows. Enables rapid prototyping and business logic customization without deployment cycles.</p>
+<p><strong>What Replaces It:</strong> Authentication trees/journeys (visual flow designer). ForgeRock Access Management (commercial OpenAM successor) replaces scripted auth with declarative authentication trees. However, scripted auth remains necessary for edge cases tree model cannot express.</p>
+<p><strong>Migration Considerations:</strong></p>
+<ul>
+<li>Use scripted authentication sparingly (difficult to test, debug, maintain)</li>
+<li>Prefer declarative configuration (authentication chains, policy conditions)</li>
+<li>Version control scripts in Git</li>
+<li>Implement script validation/testing pipeline</li>
+<li>Monitor script execution time (timeout-prone)</li>
+<li>Plan migration to authentication trees if upgrading to commercial ForgeRock AM</li>
+</ul>
+<h2 id="protocol-relevance-summary">Protocol Relevance Summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Protocol</th><th>Current Status</th><th>Migration Timeline</th><th>Replacement Technology</th></tr></thead><tbody><tr><td>LDAP Bind</td><td>Active, ubiquitous</td><td>10+ years</td><td>OIDC with LDAP backing store</td></tr><tr><td>Active Directory</td><td>Active, essential</td><td>10+ years (hybrid)</td><td>Azure AD/Entra ID federation</td></tr><tr><td>DataStore</td><td>Active, transitional</td><td>5 years</td><td>Cloud IdP with SCIM sync</td></tr><tr><td>X.509 Certificates</td><td>Resurging (zero-trust)</td><td>Not applicable</td><td>WebAuthn for users, mTLS for services</td></tr><tr><td>HOTP</td><td>Declining</td><td>3-5 years</td><td>TOTP, WebAuthn</td></tr><tr><td>TOTP</td><td>Dominant</td><td>5-10 years</td><td>WebAuthn/passkeys</td></tr><tr><td>Push Notifications</td><td>Growing</td><td>Not applicable</td><td>WebAuthn (long-term)</td></tr><tr><td>RADIUS</td><td>Active, aging</td><td>5-10 years</td><td>RadSec, OIDC for VPN</td></tr><tr><td>RSA SecurID</td><td>Declining</td><td>3-5 years</td><td>TOTP, WebAuthn</td></tr><tr><td>WebAuthn/FIDO2</td><td>Rapid adoption</td><td>Current standard</td><td>None imminent</td></tr><tr><td>Passkeys</td><td>Accelerating</td><td>Current standard</td><td>None imminent</td></tr><tr><td>OAuth2 Social</td><td>Dominant</td><td>Not applicable</td><td>OIDC (already transitioning)</td></tr><tr><td>OIDC</td><td>Industry standard</td><td>Current standard</td><td>None imminent</td></tr><tr><td>Adaptive Auth</td><td>Standard practice</td><td>Current standard</td><td>Continuous evaluation (CAEP)</td></tr><tr><td>Device Fingerprinting</td><td>Fragile</td><td>3-5 years</td><td>WebAuthn device binding</td></tr><tr><td>Scripted Auth</td><td>Niche</td><td>Ongoing</td><td>Authentication trees/journeys</td></tr></tbody></table>
+<h2 id="cross-references">Cross-References</h2>
+<ul>
+<li><strong>Token Formats:</strong> See Chapter 6 for JWT, SAML assertion, and CTS token implementation details</li>
+<li><strong>Federation Protocols:</strong> See Chapter 3 for SAML 2.0, OIDC as federation protocol (vs. authentication module)</li>
+<li><strong>Authorization:</strong> See Chapter 4 for OAuth2 authorization flows, XACML policy evaluation</li>
+<li><strong>Modern Architecture:</strong> See Chapter 12 for authentication’s role in zero-trust continuous verification</li>
+</ul> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-u2l5gyhi" dir="ltr"> <a href="/idp-research/history/" rel="prev" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg> <span class="astro-u2l5gyhi"> Previous <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">20-Year History of Open-Source IAM</span> </span> </a> <a href="/idp-research/protocols/federation/" rel="next" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg> <span class="astro-u2l5gyhi"> Next <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">Federation Protocols</span> </span> </a> </div>   </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>

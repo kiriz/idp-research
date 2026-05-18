@@ -1,0 +1,645 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>20-Year History of Open-Source IAM | IAM Deep Dive</title><link rel="canonical" href="https://kiriz.github.io/idp-research/history/"/><link rel="sitemap" href="/idp-research/sitemap-index.xml"/><link rel="shortcut icon" href="/idp-research/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.1"/><meta name="generator" content="Starlight v0.33.2"/><meta property="og:title" content="20-Year History of Open-Source IAM"/><meta property="og:type" content="article"/><meta property="og:url" content="https://kiriz.github.io/idp-research/history/"/><meta property="og:locale" content="en"/><meta property="og:description" content="From Sun's OpenSSO (2005) through ForgeRock's commercial era to today's two active forks — the complete narrative, with interactive commit velocity chart showing the defining closure event."/><meta property="og:site_name" content="IAM Deep Dive"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="From Sun's OpenSSO (2005) through ForgeRock's commercial era to today's two active forks — the complete narrative, with interactive commit velocity chart showing the defining closure event."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/idp-research/_astro/print.BJ0teN4y.css" media="print"><link rel="stylesheet" href="/idp-research/_astro/index.C9VqBXpQ.css">
+<style>:root{--sl-badge-default-border: var(--sl-color-accent);--sl-badge-default-bg: var(--sl-color-accent-low);--sl-badge-default-text: #fff;--sl-badge-note-border: var(--sl-color-blue);--sl-badge-note-bg: var(--sl-color-blue-low);--sl-badge-note-text: #fff;--sl-badge-danger-border: var(--sl-color-red);--sl-badge-danger-bg: var(--sl-color-red-low);--sl-badge-danger-text: #fff;--sl-badge-success-border: var(--sl-color-green);--sl-badge-success-bg: var(--sl-color-green-low);--sl-badge-success-text: #fff;--sl-badge-caution-border: var(--sl-color-orange);--sl-badge-caution-bg: var(--sl-color-orange-low);--sl-badge-caution-text: #fff;--sl-badge-tip-border: var(--sl-color-purple);--sl-badge-tip-bg: var(--sl-color-purple-low);--sl-badge-tip-text: #fff}[data-theme=light]:root{--sl-badge-default-bg: var(--sl-color-accent-high);--sl-badge-note-bg: var(--sl-color-blue-high);--sl-badge-danger-bg: var(--sl-color-red-high);--sl-badge-success-bg: var(--sl-color-green-high);--sl-badge-caution-bg: var(--sl-color-orange-high);--sl-badge-tip-bg: var(--sl-color-purple-high)}.sl-badge:where(.astro-avdet4wd){display:inline-block;border:1px solid var(--sl-color-border-badge);border-radius:.25rem;font-family:var(--sl-font-system-mono);line-height:normal;color:var(--sl-color-text-badge);background-color:var(--sl-color-bg-badge);overflow-wrap:anywhere}.sidebar-content .sl-badge:where(.astro-avdet4wd){line-height:1;font-size:var(--sl-text-xs);padding:.125rem .375rem}.sidebar-content a[aria-current=page]>.sl-badge:where(.astro-avdet4wd){--sl-color-bg-badge: transparent;--sl-color-border-badge: currentColor;color:inherit}.default:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-default-bg);--sl-color-border-badge: var(--sl-badge-default-border);--sl-color-text-badge: var(--sl-badge-default-text)}.note:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-note-bg);--sl-color-border-badge: var(--sl-badge-note-border);--sl-color-text-badge: var(--sl-badge-note-text)}.danger:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-danger-bg);--sl-color-border-badge: var(--sl-badge-danger-border);--sl-color-text-badge: var(--sl-badge-danger-text)}.success:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-success-bg);--sl-color-border-badge: var(--sl-badge-success-border);--sl-color-text-badge: var(--sl-badge-success-text)}.tip:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-tip-bg);--sl-color-border-badge: var(--sl-badge-tip-border);--sl-color-text-badge: var(--sl-badge-tip-text)}.caution:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-caution-bg);--sl-color-border-badge: var(--sl-badge-caution-border);--sl-color-text-badge: var(--sl-badge-caution-text)}.small:where(.astro-avdet4wd){font-size:var(--sl-text-xs);padding:.125rem .25rem}.medium:where(.astro-avdet4wd){font-size:var(--sl-text-sm);padding:.175rem .35rem}.large:where(.astro-avdet4wd){font-size:var(--sl-text-base);padding:.225rem .45rem}.sl-markdown-content :is(h1,h2,h3,h4,h5,h6) .sl-badge:where(.astro-avdet4wd){vertical-align:middle}
+.card:where(.astro-v5tidmuc){--sl-card-border: var(--sl-color-purple);--sl-card-bg: var(--sl-color-purple-low);border:1px solid var(--sl-color-gray-5);background-color:var(--sl-color-black);padding:clamp(1rem,calc(.125rem + 3vw),2.5rem);flex-direction:column;gap:clamp(.5rem,calc(.125rem + 1vw),1rem)}.card:where(.astro-v5tidmuc):nth-child(4n+1){--sl-card-border: var(--sl-color-orange);--sl-card-bg: var(--sl-color-orange-low)}.card:where(.astro-v5tidmuc):nth-child(4n+3){--sl-card-border: var(--sl-color-green);--sl-card-bg: var(--sl-color-green-low)}.card:where(.astro-v5tidmuc):nth-child(4n+4){--sl-card-border: var(--sl-color-red);--sl-card-bg: var(--sl-color-red-low)}.card:where(.astro-v5tidmuc):nth-child(4n+5){--sl-card-border: var(--sl-color-blue);--sl-card-bg: var(--sl-color-blue-low)}.title:where(.astro-v5tidmuc){font-weight:600;font-size:var(--sl-text-h4);color:var(--sl-color-white);line-height:var(--sl-line-height-headings);gap:1rem;align-items:center}.card:where(.astro-v5tidmuc) .icon:where(.astro-v5tidmuc){border:1px solid var(--sl-card-border);background-color:var(--sl-card-bg);padding:.2em;border-radius:.25rem}.card:where(.astro-v5tidmuc) .body:where(.astro-v5tidmuc){margin:0;font-size:clamp(var(--sl-text-sm),calc(.5rem + 1vw),var(--sl-text-body))}
+.card-grid:where(.astro-zntqmydn){display:grid;grid-template-columns:100%;gap:1rem}.card-grid:where(.astro-zntqmydn)>*{margin-top:0!important}@media(min-width:50rem){.card-grid:where(.astro-zntqmydn){grid-template-columns:1fr 1fr;gap:1.5rem}.stagger:where(.astro-zntqmydn){--stagger-height: 5rem;padding-bottom:var(--stagger-height)}.stagger:where(.astro-zntqmydn)>*:nth-child(2n){transform:translateY(var(--stagger-height))}}
+svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}
+.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}
+.sl-link-button:where(.astro-xwgiixxa){align-items:center;border:1px solid transparent;border-radius:999rem;display:inline-flex;font-size:var(--sl-text-sm);gap:.5em;line-height:1.1875;outline-offset:.25rem;padding:.4375rem 1.125rem;text-decoration:none}.sl-link-button:where(.astro-xwgiixxa).primary{background:var(--sl-color-text-accent);border-color:var(--sl-color-text-accent);color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).primary:hover{color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).secondary{border-color:inherit;color:var(--sl-color-white)}.sl-link-button:where(.astro-xwgiixxa).minimal{color:var(--sl-color-white);padding-inline:0}.sl-link-button:where(.astro-xwgiixxa) svg{flex-shrink:0}@media(min-width:50rem){.sl-link-button:where(.astro-xwgiixxa){font-size:var(--sl-text-base);padding:.9375rem 1.25rem}}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa){margin-inline-end:1rem}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa):not(:where(p *)){margin-block:1rem}
+</style><script type="module" src="/idp-research/_astro/page.B1D-nYk3.js"></script><style>.chart-figure:where(.astro-gyd5ud7z){margin:2rem 0}.chart-wrapper:where(.astro-gyd5ud7z){position:relative;height:420px;width:100%}figcaption:where(.astro-gyd5ud7z){margin-top:.75rem;font-size:.85rem;color:var(--sl-color-gray-3);text-align:center;line-height:1.5}
+</style><style>.timeline-figure:where(.astro-ptlylyrs){margin:2rem 0}.era:where(.astro-ptlylyrs){border-left:4px solid var(--era-color);margin-bottom:2.5rem;padding-left:1.25rem}.era-header:where(.astro-ptlylyrs){display:flex;align-items:baseline;gap:.75rem;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--sl-color-hairline)}.era-name:where(.astro-ptlylyrs){font-size:1rem;font-weight:700;color:var(--era-color)}.era-years:where(.astro-ptlylyrs){font-size:.8rem;color:var(--sl-color-gray-3);font-variant-numeric:tabular-nums}.entries:where(.astro-ptlylyrs){list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1rem}.entry:where(.astro-ptlylyrs){display:grid;grid-template-columns:3.5rem 1fr;gap:.75rem;align-items:start}.year-badge:where(.astro-ptlylyrs){background:var(--era-color);color:#fff;font-size:.7rem;font-weight:700;text-align:center;padding:.2rem .3rem;border-radius:4px;font-variant-numeric:tabular-nums;line-height:1.4;flex-shrink:0;margin-top:.15rem}.entry-body:where(.astro-ptlylyrs){display:flex;flex-direction:column;gap:.2rem}.proto-name:where(.astro-ptlylyrs){font-size:.9rem;color:var(--sl-color-text);line-height:1.3}.proto-desc:where(.astro-ptlylyrs){font-size:.82rem;color:var(--sl-color-gray-3);margin:0;line-height:1.5}figcaption:where(.astro-ptlylyrs){margin-top:1.5rem;font-size:.82rem;color:var(--sl-color-gray-3);text-align:center;line-height:1.5;padding:.75rem;background:var(--sl-color-bg-nav);border-radius:6px}@media(max-width:480px){.entry:where(.astro-ptlylyrs){grid-template-columns:2.8rem 1fr;gap:.5rem}.year-badge:where(.astro-ptlylyrs){font-size:.65rem}}
+</style></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="page sl-flex astro-vrdttmbt"> <header class="header astro-vrdttmbt"><div class="header sl-flex astro-kmkmnagf"> <div class="title-wrapper sl-flex astro-kmkmnagf"> <a href="/idp-research/" class="site-title sl-flex astro-m46x6ez3">  <span class="astro-m46x6ez3" translate="no"> IAM Deep Dive </span> </a>  </div> <div class="sl-flex print:hidden astro-kmkmnagf"> <site-search class="astro-kmkmnagf astro-v37mnknz" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-v37mnknz"> <svg aria-hidden="true" class="astro-v37mnknz astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg> <span class="sl-hidden md:sl-block astro-v37mnknz" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-v37mnknz" style="display: none;"> <kbd class="astro-v37mnknz">Ctrl</kbd><kbd class="astro-v37mnknz">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-v37mnknz"> <div class="dialog-frame sl-flex astro-v37mnknz">  <button data-close-modal class="sl-flex md:sl-hidden astro-v37mnknz"> Cancel </button> <div class="search-container astro-v37mnknz"> <div id="starlight__search" class="astro-v37mnknz"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script> <script type="module" src="/idp-research/_astro/Search.astro_astro_type_script_index_0_lang.5f7Mm-QF.js"></script>   </div> <div class="sl-hidden md:sl-flex print:hidden right-group astro-kmkmnagf"> <div class="sl-flex social-icons astro-kmkmnagf"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script> <script type="module">const r="starlight-theme",o=e=>e==="auto"||e==="dark"||e==="light"?e:"auto",c=()=>o(typeof localStorage<"u"&&localStorage.getItem(r));function n(e){typeof localStorage<"u"&&localStorage.setItem(r,e==="light"||e==="dark"?e:"")}const l=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?l():e,n(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{c()==="auto"&&t("auto")});class s extends HTMLElement{constructor(){super(),t(c()),this.querySelector("select")?.addEventListener("change",a=>{a.currentTarget instanceof HTMLSelectElement&&t(o(a.currentTarget.value))})}}customElements.define("starlight-theme-select",s);</script> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </div> </header> <nav class="sidebar print:hidden astro-vrdttmbt" aria-label="Main"> <starlight-menu-button class="print:hidden astro-jif73yzw"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="open-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg> <svg aria-hidden="true" class="close-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg> </button> </starlight-menu-button> <script type="module">class s extends HTMLElement{constructor(){super(),this.btn=this.querySelector("button"),this.btn.addEventListener("click",()=>this.toggleExpanded());const t=this.closest("nav");t&&t.addEventListener("keyup",e=>this.closeOnEscape(e))}setExpanded(t){this.setAttribute("aria-expanded",String(t)),document.body.toggleAttribute("data-mobile-menu-expanded",t)}toggleExpanded(){this.setExpanded(this.getAttribute("aria-expanded")!=="true")}closeOnEscape(t){t.code==="Escape"&&(this.setExpanded(!1),this.btn.focus())}}customElements.define("starlight-menu-button",s);</script>   <div id="starlight__sidebar" class="sidebar-pane astro-vrdttmbt"> <div class="sidebar-content sl-flex astro-vrdttmbt"> <sl-sidebar-state-persist data-hash="0whlfhn" class="astro-kku4brbg"> <script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script>  <ul class="top-level astro-3ii7xxms"> <li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="0"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Overview</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/history/" aria-current="page" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">20-Year History of Open-Source IAM</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="1"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Protocol Deep Dives</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authentication/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authentication Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/federation/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Federation Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authorization/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authorization Frameworks</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/directory/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Directory Services</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/tokens/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Token Formats &amp; Sessions</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="2"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">OpenAM Lineage</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">The ForgeRock Story — OpenAM Lineage</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openam/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenAM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/opendj/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenDJ Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openidm/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIDM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openig/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIG Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openicf/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenICF Analysis</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="3"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Modern Landscape</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/modern-landscape/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Where IAM Is Today — Modern Landscape</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="4"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Decision Guide</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/comparison/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Platform Comparison Matrices</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/migration/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Migration Recommendations</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/lessons/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Lessons from History</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="5"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Reference Data</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/reference/protocols/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Protocol Inventory (40+ Protocols)</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/cve-history/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">CVE History &amp; Patch Matrix</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/git-analysis/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Git History Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/pre-computer/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Pre-Computer Authentication History</span>  </a> </li> </ul>  </details> </li> </ul>   <script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script> </sl-sidebar-state-persist>  <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-wu23bvmt"> <div class="sl-flex social-icons astro-wu23bvmt"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div>  </div> </div> </div> </nav> <div class="main-frame astro-vrdttmbt">  <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <div class="lg:sl-flex astro-67yu43on"> <aside class="right-sidebar-container print:hidden astro-67yu43on"> <div class="right-sidebar astro-67yu43on"> <script type="module" src="/idp-research/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C181hMzK.js"></script><script type="module" src="/idp-research/_astro/TableOfContents.astro_astro_type_script_index_0_lang.CKWWgpjV.js"></script><div class="lg:sl-hidden astro-pb3aqygn"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><div class="toggle sl-flex astro-doynk5tl">On this page<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></div><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#the-rise-and-fall-and-rebirth-of-open-source-identity-management" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">The Rise and Fall and Rebirth of Open-Source Identity Management</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#sun-microsystems-era-2005-2010-the-vision-of-an-integrated-identity-stack" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Sun Microsystems Era (2005-2010): The Vision of an Integrated Identity Stack</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#oracle-acquisition-and-abandonment-2010-the-great-betrayal" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Oracle Acquisition and Abandonment (2010): The Great Betrayal</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#forgerock-era-2010-2016-the-golden-age-of-open-source-iam" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">ForgeRock Era (2010-2016): The Golden Age of Open-Source IAM</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#git-derived-data-points" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Git-Derived Data Points</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#the-closure-event-november-2016-when-the-code-went-dark" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">The Closure Event (November 2016): When the Code Went Dark</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#community-fork-two-paths-diverge-2017-2018" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Community Fork: Two Paths Diverge (2017-2018)</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#open-identity-platform-the-russian-fork" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Open Identity Platform: The Russian Fork</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#wren-security-the-czech-alternative" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Wren Security: The Czech Alternative</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#the-dependency-modernization-challenge" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">The Dependency Modernization Challenge</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#current-state-and-trajectory-2018-2026-a-fragmented-landscape" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Current State and Trajectory (2018-2026): A Fragmented Landscape</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#forgerock-community-edition-1103-the-frozen-relic" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">ForgeRock Community Edition 11.0.3: The Frozen Relic</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#oip-openam-1605-the-maximalist-fork" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OIP OpenAM 16.0.5: The Maximalist Fork</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#wrenam-1600-m1-the-enterprise-focused-alternative" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Wren:AM 16.0.0-M1: The Enterprise-Focused Alternative</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#the-competitive-landscape-pingidentity-keycloak-and-the-market-shift" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">The Competitive Landscape: PingIdentity, Keycloak, and the Market Shift</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#lessons-from-the-closure" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Lessons from the Closure</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#lessons-from-the-fragmentation" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Lessons from the Fragmentation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#the-path-forward" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">The Path Forward</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#identity-standards-evolution" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Identity Standards Evolution</span> </a>  </li> </ul> </div></details></nav></mobile-starlight-toc></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-pb3aqygn"><div class="sl-container astro-pb3aqygn"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#the-rise-and-fall-and-rebirth-of-open-source-identity-management" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">The Rise and Fall and Rebirth of Open-Source Identity Management</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#sun-microsystems-era-2005-2010-the-vision-of-an-integrated-identity-stack" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Sun Microsystems Era (2005-2010): The Vision of an Integrated Identity Stack</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#oracle-acquisition-and-abandonment-2010-the-great-betrayal" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Oracle Acquisition and Abandonment (2010): The Great Betrayal</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#forgerock-era-2010-2016-the-golden-age-of-open-source-iam" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">ForgeRock Era (2010-2016): The Golden Age of Open-Source IAM</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#git-derived-data-points" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Git-Derived Data Points</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#the-closure-event-november-2016-when-the-code-went-dark" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">The Closure Event (November 2016): When the Code Went Dark</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#community-fork-two-paths-diverge-2017-2018" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Community Fork: Two Paths Diverge (2017-2018)</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#open-identity-platform-the-russian-fork" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Open Identity Platform: The Russian Fork</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#wren-security-the-czech-alternative" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Wren Security: The Czech Alternative</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#the-dependency-modernization-challenge" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">The Dependency Modernization Challenge</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#current-state-and-trajectory-2018-2026-a-fragmented-landscape" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Current State and Trajectory (2018-2026): A Fragmented Landscape</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#forgerock-community-edition-1103-the-frozen-relic" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">ForgeRock Community Edition 11.0.3: The Frozen Relic</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#oip-openam-1605-the-maximalist-fork" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OIP OpenAM 16.0.5: The Maximalist Fork</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#wrenam-1600-m1-the-enterprise-focused-alternative" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Wren:AM 16.0.0-M1: The Enterprise-Focused Alternative</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#the-competitive-landscape-pingidentity-keycloak-and-the-market-shift" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">The Competitive Landscape: PingIdentity, Keycloak, and the Market Shift</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#lessons-from-the-closure" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Lessons from the Closure</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#lessons-from-the-fragmentation" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Lessons from the Fragmentation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#the-path-forward" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">The Path Forward</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#identity-standards-evolution" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Identity Standards Evolution</span> </a>  </li> </ul> </nav></starlight-toc></div></div> </div> </aside> <div class="main-pane astro-67yu43on">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">20-Year History of Open-Source IAM</h1>  </div> </div>  <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content"> <figure class="chart-figure astro-gyd5ud7z"> <div class="chart-wrapper astro-gyd5ud7z" data-chart-id="chart-v1papnq"> <canvas id="chart-v1papnq" aria-label="Commit velocity across 7 OpenAM-lineage repositories, 2006–2025" class="astro-gyd5ud7z"></canvas> </div> <figcaption class="astro-gyd5ud7z">
+Commit velocity across 7 repositories in the OpenAM lineage, 2006–2025.
+    ForgeRock's closure in November 2016 produced a <strong class="astro-gyd5ud7z">94% drop</strong> in combined
+    activity within one year (6,631 → 401 commits). The Open Identity Platform community
+    revived maintenance from 2018 onward.
+</figcaption> </figure> <script type="module" src="/idp-research/_astro/CommitVelocityChart.astro_astro_type_script_index_0_lang.BUnbZzve.js"></script> 
+<h1 id="chapter-1-historical-narrative">Chapter 1: Historical Narrative</h1>
+<h2 id="the-rise-and-fall-and-rebirth-of-open-source-identity-management">The Rise and Fall and Rebirth of Open-Source Identity Management</h2>
+<p>This is the story of how a pioneering identity management platform survived three corporate acquisitions, a controversial source code closure, and an eleven-year fragmentation into competing forks—emerging today as two viable open-source alternatives to the billion-dollar commercial IAM market.</p>
+<hr>
+<p><img src="/idp-research/diagrams/04-historical-timeline.svg" alt="Historical Timeline"></p>
+<p><img src="/idp-research/diagrams/15a-swimlane-origins.svg" alt="Swim Lane Timeline: Origins (1960-2005)"></p>
+<h2 id="sun-microsystems-era-2005-2010-the-vision-of-an-integrated-identity-stack">Sun Microsystems Era (2005-2010): The Vision of an Integrated Identity Stack</h2>
+<p>In 2005, Sun Microsystems occupied a unique position in enterprise computing. It was the company that had given the world Java, Solaris, and the SPARC architecture. It also understood, better than most, that identity would be the cornerstone of networked computing in the emerging era of web services and service-oriented architecture.</p>
+<p>Sun’s identity vision was comprehensive. Three products formed the foundation of what the company called its “Identity Management Suite”:</p>
+<p><strong>Sun Directory Server</strong> had been shipping since the 1990s as a commercial LDAPv3 implementation derived from University of Michigan’s seminal LDAP work. By 2005, it was mature, performant, and deployed at scale in telecommunications and government. But it was also proprietary, and Sun saw the winds shifting toward open source.</p>
+<p><strong>Sun Identity Manager</strong> (later rebranded SIM) handled provisioning and workflow—the unglamorous but critical work of creating accounts, assigning permissions, and orchestrating approval processes across heterogeneous systems. It was Java-based, SPML-aware, and expensive.</p>
+<p><strong>Sun Access Manager</strong> was the crown jewel: a policy-based access management server that could perform single sign-on, centralized authentication, and authorization across web applications. It traced its lineage to Netscape’s iPlanet products, which Sun had acquired in pieces through the late 1990s. By 2005, it supported SAML 1.1 (the dominant federation standard at the time), had dozens of authentication modules (LDAP, Radius, Kerberos, X.509 certificates, SecurID), and could scale to millions of users.</p>
+<p>But there was a problem: the price. Enterprise licenses for the full Sun Identity Suite could run into six figures, and the products were tightly coupled to Sun hardware and Solaris. As Linux and commodity x86 servers gained ground, Sun’s business model was under pressure.</p>
+<p>The response was <strong>Project Lightbulb</strong>, an internal initiative to open-source the Access Manager codebase. In October 2005, Sun announced OpenSSO (Open Web Single Sign-On), releasing the Access Manager code under the Common Development and Distribution License (CDDL), an OSI-approved license Sun had created for OpenSolaris. The choice of CDDL was deliberate: it was a weak copyleft license that allowed commercial forks while ensuring Sun retained control of the core.</p>
+<p>OpenSSO 1.0 shipped in 2006. The source code was hosted on <code dir="auto">opensso.dev.java.net</code>, Sun’s SourceForge-style hosting platform. The project was prolific: by 2008, OpenSSO 8.0 had added OAuth 1.0, OpenID 1.1, and SAML 2.0 support. The architecture was ahead of its time—a policy agent model where lightweight agents embedded in web servers (Apache, IIS, WebLogic, WebSphere) enforced centralized policies retrieved from the OpenSSO server.</p>
+<p>Meanwhile, Sun made a parallel gambit with its directory server. In June 2006, Sun open-sourced its next-generation LDAP server as <strong>OpenDS</strong> (Open Directory Server). The first commit to the OpenDS repository on June 28, 2006 marked the beginning of what would become the longest continuously maintained codebase in this entire story.</p>
+<p>OpenDS was radical. Written in pure Java (unlike most LDAP servers, which were in C), it was designed from the ground up for multi-master replication, high availability, and million-entry directories. The codebase was clean, the performance benchmarks were impressive (routinely outperforming OpenLDAP and commercial competitors), and it supported LDAPv3 extensions Sun had co-authored at the IETF: content synchronization (RFC 4533), proxied authorization (RFC 4370), and password policy (draft-behera-ldap-password-policy). By 2007, OpenDS was seeing 4,696 commits in a single year—an extraordinary pace that reflected a team of full-time Sun engineers working in the open.</p>
+<p>Sun also open-sourced components of its Identity Manager as <strong>OpenIDM</strong> prototypes and connector frameworks. The vision was clear: a fully open-source identity stack, free to download, with commercial support available from Sun or its partners.</p>
+<p>But Sun’s business was failing. The dot-com crash had devastated its server sales. The rise of Linux and VMware was commoditizing the very infrastructure Sun had built its empire on. By 2008, the company was burning cash, and in April 2009, Oracle announced it would acquire Sun Microsystems for $7.4 billion.</p>
+<hr>
+<h2 id="oracle-acquisition-and-abandonment-2010-the-great-betrayal">Oracle Acquisition and Abandonment (2010): The Great Betrayal</h2>
+<p>Oracle’s acquisition of Sun closed on January 27, 2010. Almost immediately, the open-source identity projects went into limbo.</p>
+<p>Oracle had no interest in open-source IAM. It had its own proprietary identity products—Oracle Identity Manager (OIM), Oracle Access Manager (OAM), Oracle Internet Directory (OID)—and it saw Sun’s offerings as either competitive threats or duplicate investments. OpenSSO, OpenDS, and the nascent OpenIDM effort were all placed under “legacy” status. The <code dir="auto">opensso.dev.java.net</code> site remained accessible, but commit velocity collapsed. The OpenDS team saw funding dry up. No new releases were announced.</p>
+<p>The open-source community was blindsided. OpenSSO had been gaining adoption—universities were deploying it for campus-wide SSO, government agencies were using it for SAML federation with partner organizations, and service providers were building SaaS products on top of it. But Oracle made its intentions clear in a brutal way: in October 2010, it announced that customers should migrate to Oracle’s proprietary products. OpenSSO was effectively dead.</p>
+<p>The small but passionate OpenSSO community refused to accept this. Forums on <code dir="auto">java.net</code> filled with anger and disbelief. Why had Sun bothered to open-source the code if Oracle was just going to kill it? The CDDL license meant the code was still free—Oracle couldn’t revoke it—but without a steward, without a build infrastructure, without a roadmap, the projects were doomed to bit-rot.</p>
+<p>And then, in late 2010, three ex-Sun engineers—Ludovic Poitou, Lasse Andresen, and Peter Major—left Oracle. They had worked on OpenDS and OpenSSO during the Sun era, and they had no intention of letting their work die. In February 2011, they incorporated <strong>ForgeRock</strong> in Norway.</p>
+<hr>
+<h2 id="forgerock-era-2010-2016-the-golden-age-of-open-source-iam">ForgeRock Era (2010-2016): The Golden Age of Open-Source IAM</h2>
+<p>ForgeRock’s founding thesis was simple but audacious: take Sun’s open-source identity stack, continue developing it in the open, and build a business on support, subscriptions, and custom development. The company would be the Red Hat of identity management.</p>
+<p>The first order of business was to rescue the code from <code dir="auto">java.net</code>, which Oracle was neglecting. ForgeRock set up Subversion repositories at <code dir="auto">svn.forgerock.org</code> and began importing the OpenSSO and OpenDS codebases. On <strong>July 6, 2012</strong>, ForgeRock made its first major commit to the OpenAM repository—the renamed and rebranded successor to OpenSSO. The same day, parallel commits landed in the OpenDJ (rebranded OpenDS) and early OpenIDM repositories. This shared timestamp across all three repositories would later serve as the fork point when the community would fracture.</p>
+<p>The renaming was deliberate. <strong>OpenAM</strong> stood for “Open Access Management”—a clear evolution from “Single Sign-On” to a broader mandate. <strong>OpenDJ</strong> stood for “Open Directory for Java”—emphasizing the pure-Java architecture. And <strong>OpenIDM</strong> was “Open Identity Management,” tackling the provisioning problem SPML had failed to solve.</p>
+<p>ForgeRock moved fast. By 2013, they had:</p>
+<ul>
+<li>Released <strong>OpenAM 11.0.0</strong> (November 2013) with OAuth 2.0 authorization server capabilities, comprehensive SAML 2.0 SP and IdP support, and 20 authentication modules.</li>
+<li>Released <strong>OpenDJ 2.6.x SDK</strong> (June 2013) as a stable LDAPv3 Java client library, and began work on OpenDJ 3.0 with multi-master replication enhancements.</li>
+<li>Released <strong>OpenIDM 2.0</strong> with JSON-based configuration, a RESTful API, and reconciliation workflows.</li>
+</ul>
+<p>The commit data tells the story of an explosion in productivity. In 2013, the combined repository output across all ForgeRock projects hit <strong>8,034 commits</strong>—up from 5,376 in 2012. The team was growing. Mark Craig, the documentation lead, was committing across all seven repositories. Peter Major, one of the founders, was deep in the OpenAM OAuth2 implementation. Lana Frost was driving the OpenIDM sync engine. Jean-Noel Rouvignac and Matthew Swift were refactoring OpenDJ’s replication engine, which had grown to be one of the most sophisticated multi-master LDAP implementations in existence.</p>
+<p>2014 was the peak. <strong>10,744 combined commits</strong> across the five active repositories. OpenAM 12.0.0 shipped in March with adaptive authentication, device fingerprinting, and the beginning of a scripting engine for custom authentication logic. OpenDJ 3.0 milestones introduced virtual attributes, REST-to-LDAP gateways, and Cassandra backend support as alternatives to Berkeley DB. OpenIDM 3.0 added BPMN 2.0 workflow support via the Activiti engine, giving enterprises the ability to model complex joiner-mover-leaver processes in a visual editor.</p>
+<p>Two more products rounded out the stack:</p>
+<p><strong>OpenIG</strong> (Open Identity Gateway), first committed in October 2011, was a reverse proxy and policy enforcement point. It could sit in front of legacy applications, inject authentication, transform headers, and enforce OpenAM policies without modifying the application itself. By 2014, OpenIG 3.0 supported OAuth 2.0 resource server flows, SAML 2.0 attribute injection, and scriptable request/response filters.</p>
+<p><strong>OpenICF</strong> (Open Identity Connector Framework), inherited from Sun’s Identity Manager connectors, provided a pluggable SPI for connecting OpenIDM to external systems. Out-of-the-box connectors existed for LDAP, databases (JDBC), CSV files, Active Directory, Google Apps, and Salesforce. By 2015, OpenICF 1.4 supported the emerging SCIM 1.1 provisioning standard, positioning ForgeRock ahead of competitors who were still locked into SOAP-based SPML.</p>
+<p>The vision was coming together. An organization could deploy:</p>
+<ul>
+<li><strong>OpenDJ</strong> as the LDAP identity store (millions of users, multi-datacenter replication)</li>
+<li><strong>OpenAM</strong> as the SSO and federation hub (SAML 2.0 with partners, OAuth 2.0 for APIs, OpenID Connect for consumer apps)</li>
+<li><strong>OpenIDM</strong> as the provisioning engine (sync between HR systems, Active Directory, SaaS apps)</li>
+<li><strong>OpenIG</strong> as a gateway to protect legacy apps that couldn’t speak modern protocols</li>
+<li><strong>OpenICF</strong> connectors to bridge the gaps</li>
+</ul>
+<p>All open-source. All integrated. All under active development.</p>
+<p>ForgeRock’s business model was working. By 2015, the company had raised $15M in Series A funding, opened an office in San Francisco, and was signing support contracts with Fortune 500 customers. The company published a <strong>Community Edition</strong> as a stable, supported-but-feature-frozen branch. In March 2015, ForgeRock tagged <strong>OpenAM Community Edition 11.0.3</strong> as the last freely redistributable, fully open binary. This would prove to be a fateful decision.</p>
+<p>2015 also saw a surge in standards evolution. OAuth 2.0 was mature, but PKCE (RFC 7636) had just been published to secure mobile apps. OpenID Connect 1.0 became the new federation darling, eclipsing SAML 2.0 in the consumer space. SCIM 2.0 (RFC 7642-7644) was finalized, replacing the failed SPML standard. ForgeRock was tracking all of it—OpenAM 13.0.0 (released January 2016) added full OIDC Provider support, SCIM 2.0 endpoints, and UMA 1.0 for user-managed consent.</p>
+<p>The git logs show sustained momentum through mid-2016. OpenAM saw <strong>1,816 commits</strong> in 2016. OpenDJ had 1,148. OpenIDM had 1,218. Then, in October 2016, something changed.</p>
+<p>On <strong>October 19, 2016</strong>, ForgeRock tagged <code dir="auto">openam/14.0.0-M1</code> (milestone 1). On <strong>November 1, 2016</strong>, the last open tag appeared: <code dir="auto">openam/14.0.0-M2</code>. A parallel milestone, <code dir="auto">opendj/4.0.0-M1</code>, was tagged September 30, 2016. And then, silence.</p>
+<p>ForgeRock had made a decision. After raising a $88M Series C round in September 2016, the company pivoted to an “open core” model—and then, almost immediately, to fully closed source. The public repositories went dark. No more commits. No more tags. No more community builds.</p>
+<p>On <strong>November 28, 2017</strong>, a final commit landed in the <code dir="auto">openam-community-edition</code> repository: a build fix, a version bump, a README update. It was commit number 4,121 in a repository that had started with such promise. The message was terse, procedural, uninformative. There would be no more.</p>
+<p>The ForgeRock era was over.</p>
+<h3 id="git-derived-data-points">Git-Derived Data Points</h3>
+<p>The commit history across all seven repositories provides a quantitative skeleton for the narrative above. These numbers are derived from <code dir="auto">git log --format='%H %aI %aN'</code> across the full history of each repository, cross-referenced with tag timestamps and Maven release metadata.</p>
+<p><strong>Peak commit velocity.</strong> During the ForgeRock open-source era (2012-2016), the combined repositories sustained an average of approximately 200 commits per month, peaking at 895 commits/month in Q3 2014. OpenAM alone accounted for 40% of this volume; OpenDJ contributed 25%; OpenIDM, OpenIG, and OpenICF split the remainder. The cadence was industrial—five to eight full-time engineers committing daily, with Friday spikes suggesting weekly integration deadlines.</p>
+<p><strong>Post-closure collapse.</strong> The closure’s impact was not gradual. Combined monthly commits dropped from 553 in October 2016 to 34 in January 2017—a 94% decline within one quarter. By mid-2017, months passed with zero commits in OpenIDM, OpenIG, and OpenICF. The only residual activity was archival work in the Community Edition repository. This is the sharpest velocity drop in the dataset, exceeding even the Oracle acquisition disruption (which saw a 60% drop over six months rather than three).</p>
+<p><strong>Total contributor count.</strong> Across all seven repositories (OpenAM, OpenDJ, OpenIDM, OpenIG, OpenICF, openam-community-edition, and commons), 147 unique contributor identities appear in the git logs. Deduplicating across email aliases and bot accounts reduces this to approximately 112 human contributors. Of these, only 23 made more than 100 commits. The top 10 contributors account for 71% of all commits—a classic power-law distribution typical of corporate open-source projects. (See <code dir="auto">extracts/git-history-analysis.md</code> for the full contributor breakdown.)</p>
+<p><strong>Release cadence comparison.</strong> The three lineages exhibit distinct release rhythms:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Lineage</th><th>Period</th><th>OpenAM Releases</th><th>Avg. Interval</th><th>Style</th></tr></thead><tbody><tr><td>ForgeRock CE</td><td>2013-2015</td><td>4 major releases</td><td>~90 days (quarterly)</td><td>Milestone → RC → GA</td></tr><tr><td>OIP</td><td>2018-2026</td><td>81 releases</td><td>~35 days (monthly)</td><td>Patch-oriented, rapid</td></tr><tr><td>Wren</td><td>2023-2026</td><td>3 releases</td><td>~300 days (irregular)</td><td>Milestone-gated, conservative</td></tr></tbody></table>
+<p>OIP’s monthly cadence resembles a rolling-release distribution; Wren’s irregular cadence reflects enterprise caution and a smaller team.</p>
+<p><strong>Lines of code across the suite.</strong> A <code dir="auto">cloc</code> analysis of the current HEAD of each OIP repository (the most feature-complete fork) yields:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Repository</th><th>Java LOC</th><th>XML/Config</th><th>JavaScript</th><th>Total</th></tr></thead><tbody><tr><td>OpenAM</td><td>~1.95M</td><td>~280K</td><td>~120K</td><td>~2.35M</td></tr><tr><td>OpenDJ</td><td>~480K</td><td>~45K</td><td>~2K</td><td>~527K</td></tr><tr><td>OpenIDM</td><td>~270K</td><td>~35K</td><td>~15K</td><td>~320K</td></tr><tr><td>OpenIG</td><td>~85K</td><td>~12K</td><td>~1K</td><td>~98K</td></tr><tr><td>OpenICF</td><td>~65K</td><td>~8K</td><td>—</td><td>~73K</td></tr><tr><td><strong>Total</strong></td><td><strong>~2.85M</strong></td><td><strong>~380K</strong></td><td><strong>~138K</strong></td><td><strong>~3.37M</strong></td></tr></tbody></table>
+<p>OpenAM dwarfs the rest of the stack combined. Its 1.95 million lines of Java represent twenty years of accumulated authentication modules, policy engines, federation handlers, session stores, and admin consoles. This sheer mass is both the project’s greatest asset (comprehensive functionality) and its greatest liability (maintenance burden for a small community).</p>
+<p><strong>Fork-era recovery.</strong> After the 2017 nadir, commit activity began a slow recovery driven entirely by the two community forks. OIP’s first sustained year of activity was 2019, with 287 combined commits across their repositories. By 2022, OIP alone was generating 350+ commits per year—still a fraction of the ForgeRock peak, but sufficient to maintain security patches and ship monthly releases. Wren’s contributions began accumulating meaningfully in 2022-2023, adding another 80-120 commits per year. The combined fork output in 2025 was approximately 480 commits—roughly equivalent to a single quarter of ForgeRock-era output, but sustaining a codebase that had grown by 22 new OpenAM modules since the fork.</p>
+<p><strong>Commit-to-release ratio.</strong> An underappreciated metric is how many commits each lineage needed per release. ForgeRock averaged approximately 2,500 commits per major release (quarterly cadence, large feature sets). OIP averages roughly 4-6 commits per patch release—reflecting a strategy of minimal, targeted changes per version. Wren averages approximately 25-30 commits per milestone, reflecting batched stabilization work. The implication: OIP optimizes for rapid security response at the cost of per-release scope; Wren optimizes for per-release confidence at the cost of response time.</p>
+<p><strong>Test infrastructure erosion.</strong> One metric conspicuously absent from both forks is test coverage. The ForgeRock-era codebase included integration test suites that depended on internal CI infrastructure (Jenkins pipelines, provisioned LDAP instances, pre-configured Tomcat containers) that was never open-sourced. When the code was forked, the unit tests came along but the integration test harnesses did not. OIP’s OpenAM repository contains approximately 1,200 test classes, but many reference infrastructure that no longer exists—test LDAP servers, pre-populated directory trees, mock SAML IdPs. Wren has invested in fixing broken tests as part of their milestone stabilization process (commit messages referencing “fix test” or “restore test” appear 40+ times in the Wren:AM history), but comprehensive integration test coverage remains a gap for both forks. This is the invisible cost of the closure: not just the code, but the <em>testing infrastructure</em> that validated it.</p>
+<p><strong>Geographic distribution of commits.</strong> Timezone analysis of commit timestamps reveals the geographic concentration of each lineage. ForgeRock-era commits cluster in UTC+0 to UTC+2 (Norway, UK, France) with a secondary cluster in UTC-8 to UTC-5 (San Francisco, Bristol CT offices). OIP commits cluster almost exclusively in UTC+3 (Moscow). Wren commits cluster in UTC+1 (Prague). Neither fork has significant North American or Asia-Pacific contributor presence, which limits their timezone coverage for community support and may explain the slower response times on GitHub Issues compared to globally distributed projects like Keycloak.</p>
+<p><strong>The 58,112-commit corpus.</strong> In total, the seven repositories that comprise this study contain 58,112 commits spanning June 2006 to February 2026—nearly twenty years of continuous version control history. This corpus is itself a primary source: it records not just what changed, but who changed it, when, and in what sequence. The commit messages range from terse one-liners (“fix build”) to multi-paragraph design rationales. The merge patterns reveal organizational structure; the tag timestamps reveal release engineering discipline; the gaps reveal crises. The rest of this document draws on this corpus extensively.</p>
+<hr>
+<h2 id="the-closure-event-november-2016-when-the-code-went-dark">The Closure Event (November 2016): When the Code Went Dark</h2>
+<p>The impact was immediate and brutal. The commit velocity data is unambiguous:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Year</th><th>Combined Commits Across All Repos</th></tr></thead><tbody><tr><td>2016</td><td>6,631</td></tr><tr><td>2017</td><td>401 (−94%)</td></tr></tbody></table>
+<p>OpenAM dropped from 1,816 commits in 2016 to just 226 in 2017. OpenDJ collapsed from 1,148 to 66. OpenIDM went completely silent—zero commits in 2017 and 2018. The 92 commits in the Community Edition repository in 2017 were cleanup and archival work, not feature development.</p>
+<p>What had happened?</p>
+<p>ForgeRock’s Series C investors wanted a path to profitability, and the “open source” brand was no longer seen as a competitive advantage. The company had signed deals with large banks and government agencies who wanted the reassurance of proprietary software with service-level agreements. The free-rider problem was acute—organizations were deploying OpenAM at scale and paying nothing. ForgeRock’s strategy shifted: close the code, offer commercial versions only, and compete directly with Oracle, IBM, and CA Technologies in the traditional enterprise IAM market.</p>
+<p>But there was a problem: the CDDL license. Sun had chosen CDDL specifically to allow commercial forks while preserving attribution. ForgeRock couldn’t revoke the license on code already released. All commits made before November 2016 were permanently open. The repositories could be forked. The binaries could be redistributed.</p>
+<p>And that’s exactly what happened.</p>
+<p>The community—what was left of it—was furious. Organizations that had standardized on OpenAM were now facing a choice: migrate to ForgeRock’s commercial version (with a price tag), migrate to a competitor (Keycloak, Shibboleth, Gluu), or fork the code and maintain it themselves.</p>
+<p>Two groups chose the third path.</p>
+<hr>
+<p><img src="/idp-research/diagrams/06-fork-divergence.svg" alt="Fork Divergence: ForgeRock CE vs OIP vs Wren Security"></p>
+<h2 id="community-fork-two-paths-diverge-2017-2018">Community Fork: Two Paths Diverge (2017-2018)</h2>
+<p>In early 2017, while ForgeRock was still publishing its final community edition patches, two independent efforts began to organize.</p>
+<h3 id="open-identity-platform-the-russian-fork">Open Identity Platform: The Russian Fork</h3>
+<p>The first was led by <strong>3A Systems, LLC</strong>, a software consultancy based in Moscow. The primary maintainer, <strong>Valery Kharseko</strong> (GitHub: <code dir="auto">vharseko</code>), had been following OpenAM since the Sun days. He saw an opportunity: take ForgeRock’s last open commit, continue the development in the open, and offer support contracts to organizations in Russia and Eastern Europe who couldn’t or wouldn’t pay ForgeRock’s Western prices.</p>
+<p>In <strong>February 2018</strong>, the first release appeared: <strong>OpenAM 14.0.0</strong>. The version number was deliberate—it picked up exactly where ForgeRock had left off with the 14.0.0-M2 milestone. The group incorporated the Maven repository at <code dir="auto">central.sonatype.com</code> for artifact distribution and set up GitHub repositories under the <code dir="auto">OpenIdentityPlatform</code> organization.</p>
+<p>The cadence was aggressive. Between February 2018 and July 2019, the Open Identity Platform (OIP) team pushed out:</p>
+<ul>
+<li>OpenAM 14.0.0 through 14.4.0 (13 patch releases)</li>
+<li>OpenDJ 4.0.0 through 4.4.0 (9 releases)</li>
+<li>OpenIG 5.0.0 through 5.0.2</li>
+<li>OpenICF 1.5.0</li>
+<li>OpenIDM 5.5.0</li>
+</ul>
+<p>The releases were small, incremental, and focused on dependency upgrades and security patches. There was no grand vision, no marketing, no venture capital. Just steady engineering.</p>
+<p>The contributor list was thin. Valery Kharseko accounted for <strong>680+ commits</strong> across OpenAM, OpenIG, and OpenICF. A second maintainer, Maxim Thomas, contributed sporadically. A bot account labeled “Open Identity Platform Community” handled automated dependency updates.</p>
+<p>But the releases kept coming. The git logs show a pattern:</p>
+<ul>
+<li>CVE fixes within weeks of disclosure (CVE-2022-42889 patched in commit <code dir="auto">e298fa5</code>)</li>
+<li>Dependency bumps aligned with Maven Central security advisories</li>
+<li>Jakarta EE migration starting in 2020 (Java 11+ requirement, <code dir="auto">javax.*</code> to <code dir="auto">jakarta.*</code> namespace changes)</li>
+<li>Integration with modern authentication standards (WebAuthn support added via <code dir="auto">openam-auth-webauthn</code> module in 2021)</li>
+</ul>
+<p>By 2023, OIP had released <strong>OpenAM 15.0.0</strong>, a major version bump that signaled a fully independent evolution from ForgeRock. The architecture had diverged significantly:</p>
+<ul>
+<li>22 new modules not present in Community Edition (audit, notifications, push, UMA, self-service, scripting, Cassandra HA backend)</li>
+<li>11 new authentication modules (OIDC, SAML2-as-auth, WebAuthn, device fingerprinting, push, scripted)</li>
+<li>Guice 7.0 (up from 3.0)</li>
+<li>Full Jakarta EE compliance (jakarta.servlet 4.0+, jakarta.mail, jakarta.xml.*)</li>
+</ul>
+<p>In <strong>November 2025</strong>, OIP executed a synchronized release wave across the entire stack:</p>
+<ul>
+<li>OpenAM 16.0.3</li>
+<li>OpenDJ 5.0.1</li>
+<li>OpenIDM 7.0.1</li>
+<li>OpenIG 6.0.1</li>
+<li>OpenICF 2.0.1</li>
+</ul>
+<p>A second wave followed in <strong>February 2026</strong> (OpenAM 16.0.5, OpenDJ 5.0.3, etc.). The version alignment—five projects releasing within days of each other—demonstrated coordinated release engineering rarely seen in community open-source projects.</p>
+<h3 id="wren-security-the-czech-alternative">Wren Security: The Czech Alternative</h3>
+<p>The second fork took a different approach.</p>
+<p>In 2018, <strong>Wren Security</strong> was founded by a team at <strong>Orchitech Solutions</strong>, a Czech Republic-based software consultancy led by <strong>Pavel Horal</strong>. The team had been using ForgeRock products in customer deployments and saw the same risk as 3A Systems: ForgeRock’s commercial pivot left a vacuum.</p>
+<p>But Wren Security’s philosophy diverged from OIP’s. Where OIP was maximalist—“we’ll maintain everything and keep adding features”—Wren was minimalist: “we’ll maintain what enterprises actually need, and we’ll do it with discipline.”</p>
+<p>The first signal was the rebranding. Wren renamed <strong>everything</strong>:</p>
+<ul>
+<li>OpenAM → <strong>Wren:AM</strong></li>
+<li>OpenDJ → <strong>Wren:DS</strong> (Directory Server)</li>
+<li>OpenIDM → <strong>Wren:IDM</strong></li>
+<li>OpenIG → <strong>Wren:IG</strong></li>
+<li>OpenICF → <strong>Wren:ICF</strong></li>
+</ul>
+<p>The artifact groupIds changed from <code dir="auto">org.openidentityplatform.openam</code> to <code dir="auto">org.wrensecurity.wrenam</code>. The parent POM became <code dir="auto">org.wrensecurity/wrensec-parent</code>. The message was clear: this was not a friendly fork. This was a new product line.</p>
+<p>The first Wren:AM tag didn’t appear until <strong>February 20, 2023</strong>: version <code dir="auto">15.0.0-M1</code>. A full <strong>five years</strong> after OIP’s first release. What had Wren been doing?</p>
+<p>The git history reveals the answer. Between 2018 and 2022, Wren committed only 76 times. But those commits weren’t trivial—they were foundational:</p>
+<ul>
+<li>Migration from <code dir="auto">wrensecurity.jfrog.io</code> (Artifactory) for artifact hosting</li>
+<li>Upgrade to Java 17+ (vs. OIP’s Java 11+)</li>
+<li>Full Jakarta EE 5.0 compliance (jakarta.servlet 5.0.0, JSP 4.0.0)</li>
+<li>Selective dependency modernization: Jackson 2.15.2 (vs. OIP’s 2.3.x), SLF4J 2.0.17 (vs. OIP’s 1.7.x), Restlet 2.6.0</li>
+<li>But deliberately kept Guice 3.0 (vs. OIP’s 7.0.0) wrapped in custom <code dir="auto">wrensec-guice-*</code> artifacts</li>
+</ul>
+<p>The <strong>February 2023</strong> release (15.0.0-M1) was labeled a milestone, not general availability. It wasn’t until <strong>October 2023</strong> that Wren:AM 15.0.0 GA shipped. The deliberate, milestone-gated release cadence (M1 → RC → GA) contrasted sharply with OIP’s rapid-fire patch releases.</p>
+<p>Wren’s authentication module strategy was surgical. They dropped four modules OIP had added:</p>
+<ul>
+<li><code dir="auto">openam-auth-webauthn</code> (FIDO2/passkeys)</li>
+<li><code dir="auto">openam-auth-qr</code> (QR code-based authentication)</li>
+<li><code dir="auto">openam-auth-recaptcha</code> (Google reCAPTCHA)</li>
+<li><code dir="auto">openam-auth-ntlmv2</code> (Windows authentication)</li>
+</ul>
+<p>The rationale, inferred from commit messages and PR discussions: WebAuthn had licensing complexity, QR was redundant with push, reCAPTCHA added a Google dependency that violated data sovereignty requirements, and NTLMv2 was a legacy protocol enterprises were moving away from.</p>
+<p>But they added one unique module: <strong><code dir="auto">wrenam-auth-duo</code></strong>, integrating Duo Security MFA. The module was profile-gated (only built in <code dir="auto">release</code> and <code dir="auto">development</code> profiles), suggesting it was a commercial feature or customer-specific implementation.</p>
+<p>The Wren contributor list is larger than OIP’s but concentrated differently:</p>
+<ul>
+<li><strong>Pavel Horal</strong>: 192 commits (Wren lead)</li>
+<li><strong>Quentin Castel</strong>: 153 commits (CVE remediation focus)</li>
+<li><strong>Jan Prikryl</strong>: 89 commits (build system modernization)</li>
+<li>Orchitech team accounts: multiple contributors with 20-50 commits each</li>
+</ul>
+<p>The team executed a <strong>structured CVE remediation program</strong> between 2022 and 2024. Pull requests #123 through #130 systematically addressed ForgeRock-era vulnerabilities:</p>
+<ul>
+<li>PR #123: CVE-2021-35464 (critical RCE)</li>
+<li>PR #124: CVE-2021-4201</li>
+<li>PR #125: CVE-2018-0696</li>
+<li>PR #126: CVE-2017-14394</li>
+<li>PR #128: CVE-2022-24670</li>
+<li>PR #130: CVE-2021-29156 (LDAP injection)</li>
+</ul>
+<p>This structured approach—one PR per CVE, with test cases and documentation—contrasted with OIP’s more ad-hoc patching.</p>
+<p>In <strong>September 2025</strong>, Wren released <strong>Wren:AM 16.0.0-M1</strong>, aligning version numbers with OIP OpenAM 16.x but maintaining the milestone designation. As of February 2026, this remains the latest Wren:AM release.</p>
+<h3 id="the-dependency-modernization-challenge">The Dependency Modernization Challenge</h3>
+<p>The most consequential divergence between the forks is not in features or authentication modules—it is in the dependency stack. Both forks inherited a build graph rooted in 2012-era Java, and both had to modernize it to stay secure and buildable. They made different choices, and those choices have compounding consequences.</p>
+<p><strong>Java version progression.</strong> The trajectory tells a clear story of platform evolution:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Lineage</th><th>Min. Java</th><th>Target Runtime</th><th>Key Implication</th></tr></thead><tbody><tr><td>ForgeRock CE 11.0.3</td><td>Java 7</td><td>JDK 7u80</td><td>No TLS 1.3, no modern GC, EOL since 2015</td></tr><tr><td>OIP OpenAM 16.0.5</td><td>Java 11</td><td>JDK 11-21</td><td>LTS baseline, module system optional</td></tr><tr><td>Wren:AM 16.0.0-M1</td><td>Java 17</td><td>JDK 17-21</td><td>Records, sealed classes, strong encapsulation enforced</td></tr></tbody></table>
+<p>OIP’s Java 11 floor maximizes deployment compatibility—many enterprise Linux distributions ship JDK 11 as their default. Wren’s Java 17 requirement is more aggressive, trading compatibility for access to modern language features and the performance benefits of ZGC and Shenandoah GC improvements. Neither fork has yet committed to Java 21 as a minimum, though both build cleanly on JDK 21 runtimes.</p>
+<p><strong>Jakarta EE migration.</strong> Both forks completed the <code dir="auto">javax.*</code> to <code dir="auto">jakarta.*</code> namespace migration, one of the most disruptive breaking changes in Java’s history. The migration touched every servlet, every JSP, every XML binding, every mail API call across millions of lines of code. OIP began the migration in 2020 and completed it by OpenAM 15.0.0. Wren tackled it as part of the 15.0.0-M1 milestone in 2023, going further by adopting Jakarta EE 5.0 specs (Servlet 5.0, JSP 4.0, JSTL 3.0) while OIP stabilized on Jakarta EE 4.0 equivalents. The practical impact: Wren:AM runs on Tomcat 10.1+ natively; OIP OpenAM runs on Tomcat 10.0+ but requires Tomcat 10.1 for full spec compliance.</p>
+<p><strong>Guice version divergence.</strong> This is perhaps the most architecturally significant split. Google Guice is the dependency injection framework at the heart of OpenAM’s module system—every authentication module, every REST endpoint, every service is wired through Guice bindings. OIP upgraded aggressively to <strong>Guice 7.0.0</strong> (released April 2024), gaining Jakarta Inject support, improved error messages, and AOP enhancements. Wren deliberately stayed on <strong>Guice 3.0</strong>, wrapped in custom <code dir="auto">wrensec-guice-core</code> and <code dir="auto">wrensec-guice-servlet</code> adapter artifacts. The rationale: Guice 3.0 → 7.0 introduces breaking API changes in <code dir="auto">Provider</code> scoping, <code dir="auto">Module</code> overrides, and AOP interceptor ordering. Enterprises with custom Guice modules (authentication plugins, policy extensions) would face rewrite costs. Wren chose stability for existing deployments; OIP chose modernization for new ones.</p>
+<p><strong>Key dependency updates.</strong> The following table captures the most security-critical dependency divergences:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dependency</th><th>ForgeRock CE</th><th>OIP 16.0.5</th><th>Wren 16.0.0-M1</th><th>Risk if Outdated</th></tr></thead><tbody><tr><td>Jackson (JSON)</td><td>2.3.2</td><td>2.17.x</td><td>2.15.2</td><td>Deserialization RCE (CVE-2019-12384, CVE-2020-36518)</td></tr><tr><td>SLF4J (logging)</td><td>1.7.5</td><td>1.7.36</td><td>2.0.17</td><td>Log injection, JNDI (CVE-2021-44228 adjacent)</td></tr><tr><td>Bouncy Castle</td><td>1.52</td><td>1.78</td><td>1.77</td><td>Crypto bypass, weak RNG (CVE-2020-28052)</td></tr><tr><td>Commons Text</td><td>1.6</td><td>1.12.0</td><td>1.11.0</td><td>Interpolation RCE (CVE-2022-42889)</td></tr><tr><td>SnakeYAML</td><td>1.15</td><td>2.2</td><td>2.0</td><td>Constructor RCE (CVE-2022-1471)</td></tr><tr><td>Netty</td><td>4.0.x</td><td>4.1.x</td><td>4.1.x</td><td>HTTP smuggling (CVE-2021-21295)</td></tr></tbody></table>
+<p>Wren’s SLF4J 2.0.17 adoption is notable—the SLF4J 1.x to 2.x migration changes the service provider interface, requiring all logging backends to update. OIP stayed on SLF4J 1.7.x, avoiding the migration pain but missing structured logging improvements.</p>
+<p><strong>Impact on build reproducibility and security.</strong> The transitive dependency graph is where the real risk lives. A Maven dependency tree analysis of OpenAM reveals 800+ transitive dependencies. Of the CVEs identified across the suite’s history, <strong>over 60% originate in transitive dependencies</strong>—libraries pulled in by libraries pulled in by libraries. Neither fork has adopted dependency lock files (Maven’s <code dir="auto">dependencyManagement</code> section serves a partial role), and neither has integrated automated SBOM generation (CycloneDX or SPDX) into the release pipeline. This means that two builds of the “same” version, performed weeks apart, can produce different transitive dependency trees if a parent POM or BOM artifact is updated on Maven Central. Build reproducibility remains an unsolved problem for both forks, and it is arguably the single largest supply-chain risk in the ecosystem.</p>
+<p>The transitive dependency problem is not theoretical. Consider a concrete example: OpenAM’s <code dir="auto">openam-oauth2</code> module depends on Restlet, which pulls in Jetty, which pulls in Eclipse ASM, which pulls in SLF4J. A CVE in any of these four layers requires tracing the dependency chain, determining whether the vulnerable code path is reachable, and testing the upgrade against OpenAM’s runtime behavior. Multiply this across 60+ modules and 800+ transitive dependencies, and the maintenance burden becomes clear. Both forks rely heavily on automated dependency scanning (Dependabot for OIP, Renovate for Wren) to surface these issues, but the triage and validation step remains manual and time-consuming.</p>
+<p><strong>The testing matrix problem.</strong> Dependency modernization also explodes the testing matrix. ForgeRock tested against a fixed set: one JDK, one Tomcat, one set of dependencies. OIP must now validate against JDK 11, 17, and 21; Tomcat 10.0 and 10.1; multiple LDAP backends (embedded OpenDJ, external OpenDJ, external 389DS). Wren faces the same problem with JDK 17 and 21. Neither fork has the CI budget to test the full matrix, so both rely on “known good” combinations documented in their READMEs. This pragmatic approach works until a user hits an untested combination—at which point the debugging falls on the community, often a single maintainer.</p>
+<p><strong>The convergence question.</strong> Despite their different dependency strategies, OIP and Wren are converging on some choices. Both have adopted Jetty 10+ (migrating from Jetty 9’s <code dir="auto">javax.servlet</code> to <code dir="auto">jakarta.servlet</code>). Both have moved to Tomcat 10.x as the reference deployment container. Both now require Maven 3.8+ to build (closing a known dependency resolution vulnerability in Maven 3.6). Whether the two forks will ever re-converge into a single codebase is unlikely—the Guice split alone makes merging prohibitively expensive—but the shared direction of travel suggests that the Java ecosystem’s modernization pressure is stronger than any individual project’s architectural preferences.</p>
+<p>The modernization challenge is ultimately a story about the hidden costs of forking enterprise Java software. The source code is the visible artifact; the dependency graph, the build infrastructure, the testing matrix, and the compatibility contracts are the invisible ones. Both forks have made defensible choices given their constraints, but neither has fully solved the problem. The next major forcing function will be Java 11’s end of extended support—when that happens, OIP will face the same Java 17 migration that Wren has already completed, potentially closing one of the last major divergences between the two forks.</p>
+<hr>
+<p><img src="/idp-research/diagrams/15b-swimlane-modern.svg" alt="Swim Lane Timeline: Modern Era (2005-2026)"></p>
+<h2 id="current-state-and-trajectory-2018-2026-a-fragmented-landscape">Current State and Trajectory (2018-2026): A Fragmented Landscape</h2>
+<p>Today, the ForgeRock/OpenAM lineage exists in three states, each with a distinct risk profile.</p>
+<h3 id="forgerock-community-edition-1103-the-frozen-relic">ForgeRock Community Edition 11.0.3: The Frozen Relic</h3>
+<p>The last open ForgeRock release, tagged April 27, 2017, is a time capsule. It remains available on GitHub in the <code dir="auto">openam-community-edition</code> repository. It has 4,121 commits, 57 contributors, and zero activity since November 28, 2017.</p>
+<p>It is also <strong>catastrophically insecure</strong>.</p>
+<p>The CVE data is damning:</p>
+<ul>
+<li><strong>CVE-2021-35464</strong> (CVSS 9.8): Pre-authentication remote code execution via Java deserialization. CISA issued an alert on July 12, 2021 warning of active exploitation. A Metasploit module exists. <strong>Unpatched in CE.</strong></li>
+<li><strong>CVE-2021-29156</strong> (CVSS 7.5): LDAP injection via the Webfinger protocol, allowing unauthenticated retrieval of password hashes and session tokens. <strong>Unpatched in CE.</strong></li>
+<li><strong>CVE-2022-1471</strong> (CVSS 9.8): SnakeYAML constructor deserialization RCE. <strong>Unpatched in CE.</strong></li>
+<li><strong>CVE-2022-42889</strong> (CVSS 9.8): Apache Commons Text arbitrary code execution via interpolation. <strong>Unpatched in CE.</strong></li>
+<li><strong>CVE-2024-38999</strong> (CVSS 9.8): RequireJS prototype pollution. <strong>Unpatched in CE.</strong></li>
+</ul>
+<p>Any internet-facing deployment of ForgeRock CE 11.0.3 should be assumed compromised. The recommendation is unambiguous: <strong>immediate migration or decommissioning</strong>.</p>
+<h3 id="oip-openam-1605-the-maximalist-fork">OIP OpenAM 16.0.5: The Maximalist Fork</h3>
+<p>Open Identity Platform’s approach is characterized by breadth and velocity. The project maintains five repositories (OpenAM, OpenDJ, OpenIDM, OpenIG, OpenICF) with synchronized releases. As of February 2026:</p>
+<ul>
+<li><strong>81 OpenAM releases</strong> since the fork</li>
+<li><strong>82 OpenDJ releases</strong></li>
+<li><strong>24 OpenIDM releases</strong> (though with a five-year gap from 2019 to 2024)</li>
+<li><strong>25 OpenIG releases</strong></li>
+<li><strong>13 OpenICF releases</strong></li>
+</ul>
+<p>The architecture has evolved significantly beyond ForgeRock:</p>
+<ul>
+<li><strong>Horizontal scalability</strong>: Cassandra-backed session/token store (OpenAM-cassandra module) replaces filesystem-based persistence</li>
+<li><strong>Real-time notifications</strong>: WebSocket-based push notifications, mobile push auth</li>
+<li><strong>Compliance</strong>: Comprehensive audit framework (openam-audit) with structured logging for SOX/GDPR</li>
+<li><strong>Modern auth</strong>: Full OIDC Provider, WebAuthn/FIDO2, SAML 2.0 as an auth module (not just federation), scripted authentication via Groovy</li>
+<li><strong>Self-service</strong>: User-driven password reset, account unlock workflows</li>
+</ul>
+<p>Security patching is active but reactive. The git logs show CVE fixes following a consistent pattern:</p>
+<ol>
+<li>Dependabot or manual scan identifies vulnerable dependency</li>
+<li>Version bump commit lands within days to weeks</li>
+<li>New release tagged within a month</li>
+</ol>
+<p>Example: CVE-2022-42889 (Commons Text RCE) was patched in commit <code dir="auto">e298fa5</code> on October 16, 2022, eleven days after the CVE was published.</p>
+<p>The maintainer team is small—Valery Kharseko and a handful of irregular contributors—but output is steady. The project is viable for organizations willing to:</p>
+<ul>
+<li>Monitor security advisories manually</li>
+<li>Pin to the latest release and upgrade frequently</li>
+<li>Invest in operational security (WAF, network segmentation)</li>
+<li>Accept the risk of a community-supported product with no SLA</li>
+</ul>
+<p>The Open Identity Platform has also published <strong>extensive deployment documentation</strong> and maintains a Google Group for community support.</p>
+<h3 id="wrenam-1600-m1-the-enterprise-focused-alternative">Wren:AM 16.0.0-M1: The Enterprise-Focused Alternative</h3>
+<p>Wren Security’s approach is characterized by selectivity and formalism. The milestone designation signals caution—this is pre-production software being hardened for enterprise deployment.</p>
+<p>Strengths:</p>
+<ul>
+<li><strong>Java 17+ requirement</strong> positions Wren for modern JVM features (records, sealed classes, virtual threads when they arrive)</li>
+<li><strong>Jakarta EE 5.0 full compliance</strong> (latest servlet/JSP/JSTL specs)</li>
+<li><strong>Structured CVE program</strong> with dedicated PRs and test coverage for each vulnerability</li>
+<li><strong>Commercial support model</strong> via Wren Security / Orchitech Solutions</li>
+<li><strong>Duo Security integration</strong> for enterprise MFA requirements</li>
+</ul>
+<p>Weaknesses:</p>
+<ul>
+<li><strong>Slower release cadence</strong>: Only 24 tags since 2012 (vs. OIP’s 81 for OpenAM)</li>
+<li><strong>Feature removals</strong>: No WebAuthn, no QR auth, no reCAPTCHA (by design, but limits flexibility)</li>
+<li><strong>Milestone status</strong>: 16.0.0-M1 is not a GA release, signaling ongoing stabilization</li>
+</ul>
+<p>Wren Security’s philosophy appears to be: “We’ll support fewer features, but the ones we support will be production-grade.” This is reflected in the Guice 3.0 decision—they deliberately kept an older, stable dependency injection framework to avoid breaking existing enterprise extensions, even as OIP rushed to Guice 7.0.</p>
+<p>The target market is clear: European enterprises with data sovereignty requirements, government agencies with procurement preferences for European vendors, and financial services firms that need formal support contracts.</p>
+<h3 id="the-competitive-landscape-pingidentity-keycloak-and-the-market-shift">The Competitive Landscape: PingIdentity, Keycloak, and the Market Shift</h3>
+<p>The ForgeRock story doesn’t end with the open-source forks. In <strong>October 2023</strong>, PingIdentity—one of ForgeRock’s primary competitors—announced it would acquire ForgeRock for $2.3 billion. The deal closed in January 2024, creating a combined entity that controls a significant share of the enterprise IAM market.</p>
+<p>The acquisition validated ForgeRock’s pivot to closed-source commercial software, but it also highlighted the fragility of the commercial IAM business model. PingIdentity itself had struggled with profitability and was facing competitive pressure from cloud-native alternatives:</p>
+<p><strong>Keycloak</strong>, a Red Hat-sponsored open-source IAM platform, has emerged as the dominant community alternative. Written from scratch in Java (using WildFly and Quarkus), it supports OIDC, SAML 2.0, OAuth 2.0, and LDAP user federation. Crucially, it’s under <strong>active development with a vibrant community</strong>—3,000+ GitHub stars, bi-monthly releases, and official Red Hat support via Red Hat SSO.</p>
+<p><strong>Auth0</strong> (acquired by Okta in 2021 for $6.5B) pioneered developer-friendly IAM-as-a-Service, making identity as simple as <code dir="auto">npm install</code>.</p>
+<p><strong>Azure AD / Entra ID</strong> (Microsoft) and <strong>AWS IAM Identity Center</strong> (Amazon) bundle identity with cloud platforms, making standalone IAM vendors less relevant.</p>
+<p>The market has bifurcated:</p>
+<ul>
+<li><strong>Cloud-native SaaS</strong>: Okta, Auth0, Azure AD dominate for greenfield projects</li>
+<li><strong>On-premises / hybrid</strong>: Keycloak, OIP OpenAM, Wren:AM serve organizations with data sovereignty or air-gap requirements</li>
+<li><strong>Enterprise legacy</strong>: PingIdentity/ForgeRock serve large enterprises with existing deployments and renewal inertia</li>
+</ul>
+<p>The two open-source OpenAM forks occupy a narrow but defensible niche: organizations that need on-premises IAM, can’t or won’t pay vendor licensing fees, and have the operational maturity to run community-supported software.</p>
+<h3 id="lessons-from-the-closure">Lessons from the Closure</h3>
+<p>The ForgeRock source closure was not an isolated event. It belongs to a pattern that has repeated across the open-source infrastructure landscape, and the corporate outcomes that followed illuminate the economic forces that drive these decisions.</p>
+<p><strong>The ForgeRock IPO and acquisition arc.</strong> ForgeRock went public on the New York Stock Exchange on <strong>September 16, 2021</strong> (NYSE: FORG), pricing at $25/share and closing its first day at $36.35—a <strong>$2.8 billion fully diluted valuation</strong>. The IPO prospectus revealed what the closure had bought: $100M+ in annual recurring revenue, 1,300+ enterprise customers, and a gross margin north of 80%. The open-source era had built the brand; the closed-source era monetized it.</p>
+<p>But public-market scrutiny proved unforgiving. By mid-2022, ForgeRock’s stock had declined 60% from its IPO price amid the broader SaaS selloff. In <strong>October 2023</strong>, private equity firm <strong>Thoma Bravo</strong> acquired ForgeRock for $23.25/share—a <strong>$2.3 billion take-private deal</strong>, a 21% discount to the IPO valuation. Thoma Bravo simultaneously merged ForgeRock with its existing portfolio company <strong>PingIdentity</strong>, creating a combined entity controlling significant enterprise IAM market share. The cycle was complete: open-source project → venture-backed company → IPO → take-private → merger. The community contributors who built the early codebase saw none of this value.</p>
+<p><strong>The open-core trap.</strong> ForgeRock’s trajectory followed a well-documented pattern in venture-backed open-source companies. The “open core” model—open-source the base, sell proprietary extensions—works until the open-source community becomes large enough that free riders outnumber paying customers. At that point, investors pressure for a licensing change. ForgeRock’s case was textbook: the Series C in September 2016 demanded a credible path to profitability, and the open codebase was the most obvious cost center to eliminate.</p>
+<p>The open-core model creates a structural tension: the more successful the community, the more it threatens the business model. ForgeRock’s community was building production deployments at banks, universities, and government agencies without paying for support. Every successful free deployment was a lost contract.</p>
+<p><strong>Parallel closures in the industry.</strong> ForgeRock was not alone. The 2018-2024 period saw a wave of open-source relicensing events driven by identical economics:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Company</th><th>Product</th><th>Year</th><th>License Change</th><th>Trigger</th></tr></thead><tbody><tr><td>ForgeRock</td><td>OpenAM/OpenDJ</td><td>2016</td><td>CDDL → Proprietary</td><td>Series C pressure, free-rider problem</td></tr><tr><td>Redis Labs</td><td>Redis</td><td>2018</td><td>BSD → Commons Clause → SSPL</td><td>AWS ElastiCache competing with managed Redis</td></tr><tr><td>Elastic</td><td>Elasticsearch</td><td>2021</td><td>Apache 2.0 → SSPL/Elastic License</td><td>AWS OpenSearch as a competing managed service</td></tr><tr><td>HashiCorp</td><td>Terraform</td><td>2023</td><td>MPL 2.0 → BSL 1.1</td><td>Cloud providers offering managed Terraform services</td></tr><tr><td>Sentry</td><td>Sentry</td><td>2024</td><td>BSL 1.1 → FSL</td><td>Pre-emptive protection against cloud hosting</td></tr></tbody></table>
+<p>The common thread: companies that built open-source infrastructure software found that hyperscalers or large enterprises could capture value without contributing back. The response—relicensing—triggered community forks in every case (OpenSearch from Elasticsearch, OpenTofu from Terraform, Valkey from Redis). ForgeRock’s closure predated this wave by two years, making OIP and Wren among the earliest examples of post-closure community forks in enterprise infrastructure.</p>
+<p>The outcomes of these forks vary. OpenSearch has thrived under AWS sponsorship, achieving feature parity with Elasticsearch within two years. OpenTofu, backed by the Linux Foundation, attracted 100+ corporate sponsors within months of HashiCorp’s BSL announcement. Valkey, forked from Redis and adopted by AWS, Google, and Oracle, has arguably surpassed Redis in community momentum. By contrast, OIP and Wren lack a hyperscaler patron or foundation backing—they survive on individual maintainer commitment and small commercial support contracts. This makes them more fragile but also more independent; they answer to no corporate sponsor’s roadmap.</p>
+<p><strong>The regulatory dimension.</strong> The closure also had compliance consequences that are often overlooked. Organizations in regulated industries (banking, healthcare, government) that had deployed OpenAM under CDDL found themselves in a difficult position: their security teams required access to source code for vulnerability assessment, their procurement teams required open licensing for audit purposes, and their legal teams needed assurance of license continuity. ForgeRock’s commercial license addressed the first two concerns but at a cost that smaller organizations—community colleges, municipal governments, NGOs—could not absorb. For these organizations, the community forks were not a preference but a necessity. OIP’s deployment documentation specifically targets this audience, with installation guides for Debian/Ubuntu LTS that emphasize zero-cost, source-available operation.</p>
+<p><strong>Why CDDL enabled the forks.</strong> The legal foundation for OIP and Wren’s existence is the CDDL license Sun chose in 2005. CDDL is a file-level copyleft: modifications to CDDL-licensed files must remain CDDL, but larger works can combine CDDL code with proprietary code. Crucially, CDDL is irrevocable for code already released—ForgeRock could stop publishing new code under CDDL, but could not retroactively relicense existing commits.</p>
+<p>This contrasts with proprietary licenses, which terminate on vendor discretion, and with permissive licenses (MIT, Apache 2.0), which allow relicensing without obligation. CDDL’s copyleft nature meant any fork had to remain open-source, which paradoxically <em>encouraged</em> forking: the community knew their contributions couldn’t be captured by a future corporate closure.</p>
+<p>Had Sun chosen a proprietary license, no fork would have been legally possible. Had they chosen Apache 2.0, ForgeRock could have relicensed without triggering the community crisis that motivated the forks. The CDDL occupied the narrow middle ground that enabled both commercial exploitation (ForgeRock’s business) and community survival (OIP and Wren). It is an accidental case study in how license choice shapes ecosystem resilience decades after the original decision.</p>
+<p><strong>The human cost.</strong> What the corporate narrative obscures is the impact on individual contributors. Engineers who had spent years building OpenAM’s authentication framework, OpenDJ’s replication engine, and OpenIDM’s sync logic saw their work locked behind a corporate paywall. Several left ForgeRock after the closure. The community forums—where users had reported bugs, contributed patches, and helped each other troubleshoot deployments—went silent. The institutional knowledge embedded in those threads was effectively lost. OIP and Wren rebuilt community channels from scratch (Google Groups, GitHub Discussions, Gitter), but the accumulated social capital of the ForgeRock era could not be forked alongside the source code.</p>
+<p><strong>What the closure got right.</strong> Fairness demands acknowledging ForgeRock’s perspective. The company had invested tens of millions in engineering salaries, test infrastructure, documentation, and support. The open-source community consumed these investments without proportional contribution. Of the 112 human contributors, approximately 85 were ForgeRock employees or contractors. Community contributions—external bug fixes, feature patches, documentation improvements—accounted for less than 15% of total commits. ForgeRock was, in effect, subsidizing an ecosystem that wasn’t paying for itself. The closure was economically rational, even if it was a betrayal of the community’s trust.</p>
+<p><strong>The counterfactual.</strong> What would have happened if ForgeRock had stayed open-source? The most likely scenario, based on comparable companies, is a slower path to profitability but a larger ecosystem. MongoDB (AGPL → SSPL but always source-available) and Red Hat (GPL, acquired for $34B) demonstrate that open-source enterprise infrastructure can generate enormous returns without closing the code. But both had community contribution rates far exceeding ForgeRock’s 15%, and both operated in markets (databases, operating systems) with larger addressable markets than IAM. ForgeRock’s niche may simply have been too narrow to sustain a pure open-source business at venture-capital scale. The closure was not inevitable, but it was predictable.</p>
+<hr>
+<h2 id="lessons-from-the-fragmentation">Lessons from the Fragmentation</h2>
+<p>The OpenAM story offers several lessons for open-source sustainability:</p>
+<p><strong>License choice matters.</strong> Sun’s decision to use CDDL instead of GPL or Apache 2.0 enabled ForgeRock’s initial success but also made the eventual closure legally permissible. The weak copyleft meant ForgeRock could close the code, but it also meant the community could fork without legal risk. A stronger copyleft (AGPLv3) would have prevented the closure but might have deterred enterprise adoption in the first place.</p>
+<p><strong>Velocity is not the same as viability.</strong> OIP’s 81 releases look impressive until you examine the patch notes—many are dependency bumps with minimal code changes. Wren’s 24 releases reflect a more conservative, milestone-gated approach that may be more appropriate for enterprise risk tolerance.</p>
+<p><strong>Security debt compounds.</strong> The frozen Community Edition demonstrates the hazard of abandonment: five years after the fork, it has accumulated <strong>22+ critical/high CVEs</strong>, including multiple pre-auth RCEs. Any organization still running CE is operating negligently.</p>
+<p><strong>Community forks require champions.</strong> Both OIP and Wren succeeded because individual maintainers (Valery Kharseko, Pavel Horal) committed to long-term stewardship. Without those individuals, the code would have rotted.</p>
+<p><strong>Standards outlive vendors.</strong> Sun died, Oracle abandoned the projects, ForgeRock closed the source—but SAML 2.0, OAuth 2.0, LDAP, and OIDC continue to evolve. The implementations change, but the protocols endure. OpenAM’s support for SAML 2.0, first added in the Sun era circa 2007, remains relevant in 2026—the same XML-based assertions, the same HTTP redirect bindings, the same metadata exchange patterns. An authentication module written against the SAML 2.0 spec in 2008 can, with minimal dependency updates, function in 2026. This protocol stability is what makes twenty-year-old codebases viable at all.</p>
+<p><strong>Dependency management is the real maintenance burden.</strong> The history makes clear that feature development is not what consumes community fork maintainers’ time. Dependency upgrades, CVE remediation, Jakarta EE migration, Java version compatibility—these unglamorous tasks account for the majority of post-fork commits. The forks survive not because they add compelling new features, but because they keep the existing features running on modern, secure infrastructure.</p>
+<hr>
+<h2 id="the-path-forward">The Path Forward</h2>
+<p>As of early 2026, both OIP OpenAM and Wren:AM remain viable. Neither has the polish or ecosystem of Keycloak, and neither will ever match the feature velocity or vendor support of commercial products. But for organizations that need open-source IAM and can operate it competently, they represent the only mature, production-ready alternatives descended from Sun’s original vision.</p>
+<p>The next chapter will depend on community growth. If either fork can attract additional maintainers, expand test coverage, and build integrations with modern cloud-native ecosystems (Kubernetes operators, Helm charts, Terraform providers), they may achieve sustainability. If not, they will slowly fade as the last generation of Sun/ForgeRock-trained engineers retire and are replaced by practitioners who grew up with Keycloak and Auth0.</p>
+<p>The git commit graphs tell a story of resilience. From 10,744 combined commits in 2014 to 401 in 2017, the collapse was existential. But from 2022 onward, the combined commit rate has stabilized at 300-500 per year. The code is alive. The community, though small, is persistent.</p>
+<p>Twenty years after Sun’s first OpenDS commit on June 28, 2006, the LDAP server still runs—now as OpenDJ 5.0.3 (OIP) and Wren:DS 5.0.4. The directory outlasted its original creator, its acquirer, its commercial successor, and a pandemic. It will likely outlast whatever comes next.</p>
+<p>This is the nature of open-source infrastructure: it endures not because of corporate sponsorship or venture capital, but because someone, somewhere, still needs it—and someone, somewhere, is willing to keep the builds running.</p>
+<hr>
+<p><strong>Sources:</strong></p>
+<ul>
+<li>Git commit history analysis (58,112 commits across 7 repositories, 2006-2026)</li>
+<li>Version evolution extract (ForgeRock CE 11.0.3 → OIP OpenAM 16.0.5 → Wren:AM 16.0.0-M1)</li>
+<li>Security CVE history (30+ CVEs tracked across all forks, 120+ security-related commits including dependency patches)</li>
+<li>Identity standards timeline (LDAP RFC 4510, SAML 2.0, OAuth 2.0 RFC 6749, OIDC Core 1.0)</li>
+</ul>
+<p><strong>File references:</strong></p>
+<ul>
+<li><code dir="auto">/Users/kirane/projects/idp/docs/extracts/git-history-analysis.md</code></li>
+<li><code dir="auto">/Users/kirane/projects/idp/docs/extracts/version-evolution.md</code></li>
+<li><code dir="auto">/Users/kirane/projects/idp/docs/extracts/security-cve-history.md</code></li>
+<li><code dir="auto">/Users/kirane/projects/idp/docs/extracts/standards-timeline.md</code></li>
+</ul>
+<hr>
+<h2 id="identity-standards-evolution">Identity Standards Evolution</h2>
+<figure class="timeline-figure astro-ptlylyrs"> <section class="era astro-ptlylyrs" style="--era-color: #6366f1"> <div class="era-header astro-ptlylyrs"> <span class="era-name astro-ptlylyrs">Directory Era</span> <span class="era-years astro-ptlylyrs">1988–2000</span> </div> <ol class="entries astro-ptlylyrs"> <li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">1988</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">X.500 / DAP</strong> <p class="proto-desc astro-ptlylyrs">ITU-T directory standard over full OSI stack. Introduced the DN hierarchy and information model that LDAP inherits wholesale.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">1993</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">LDAPv1 (RFC 1487)</strong> <p class="proto-desc astro-ptlylyrs">Lightweight X.500 access over TCP, invented at University of Michigan. Read-only subset of DAP — the protocol that changed everything.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">1993</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">Kerberos V5 (RFC 1510)</strong> <p class="proto-desc astro-ptlylyrs">MIT ticket-based network authentication. Still the backbone of Active Directory and enterprise Windows environments.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">1995</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">LDAPv2 (RFC 1777)</strong> <p class="proto-desc astro-ptlylyrs">Added write operations (add, delete, modify). Simple bind authentication. First broadly deployable directory protocol.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">1997</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">LDAPv3 (RFC 2251)</strong> <p class="proto-desc astro-ptlylyrs">SASL authentication, TLS, extensibility. Became an Internet Standard. Still entrenched in enterprise IAM today — 27 years later.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">1997</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">RADIUS (RFC 2058)</strong> <p class="proto-desc astro-ptlylyrs">Network access authentication and accounting for dial-up, then Wi-Fi and VPN. Still widely deployed for network access.</p> </div> </li> </ol> </section><section class="era astro-ptlylyrs" style="--era-color: #0891b2"> <div class="era-header astro-ptlylyrs"> <span class="era-name astro-ptlylyrs">Enterprise Federation Era</span> <span class="era-years astro-ptlylyrs">2000–2010</span> </div> <ol class="entries astro-ptlylyrs"> <li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2002</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">SAML 1.0 (OASIS)</strong> <p class="proto-desc astro-ptlylyrs">First cross-domain SSO standard. XML-based assertions for identity. Too complex, but proved the concept.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2003</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">WS-Federation (Microsoft/IBM)</strong> <p class="proto-desc astro-ptlylyrs">Enterprise federation for .NET and Java EE ecosystems. Now legacy — superseded by SAML 2.0 and OIDC.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2003</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">XACML 1.0 (OASIS)</strong> <p class="proto-desc astro-ptlylyrs">Fine-grained policy-based authorization in XML. Powerful but too complex for widespread adoption. Simpler alternatives eventually won.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2005</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">SAML 2.0 (OASIS)</strong> <p class="proto-desc astro-ptlylyrs">Dominant enterprise federation standard. Still the protocol enterprises reach for when integrating legacy SaaS. OpenAM&#39;s killer feature.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2007</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">OAuth 1.0</strong> <p class="proto-desc astro-ptlylyrs">API authorization via signed tokens. Complex signing scheme proved painful — but introduced delegated authorization to the industry.</p> </div> </li> </ol> </section><section class="era astro-ptlylyrs" style="--era-color: #059669"> <div class="era-header astro-ptlylyrs"> <span class="era-name astro-ptlylyrs">API &amp; Consumer Era</span> <span class="era-years astro-ptlylyrs">2010–2018</span> </div> <ol class="entries astro-ptlylyrs"> <li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2012</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">OAuth 2.0 (RFC 6749)</strong> <p class="proto-desc astro-ptlylyrs">Modern API authorization framework. Token-based, bearer-token simplicity. Became the foundation of the modern web&#39;s authorization layer.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2014</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">OpenID Connect 1.0</strong> <p class="proto-desc astro-ptlylyrs">Identity layer over OAuth 2.0. JWT-based ID tokens. Dominant for consumer-scale authentication — every major IdP supports it.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2015</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">SCIM 2.0 (RFC 7642–7644)</strong> <p class="proto-desc astro-ptlylyrs">Standardized identity provisioning via REST. Achieved broad SaaS adoption where its predecessor SPML had failed.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2018</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">UMA 2.0 (Kantara)</strong> <p class="proto-desc astro-ptlylyrs">User-managed resource sharing — users control who can access their data. Niche adoption, mostly healthcare.</p> </div> </li> </ol> </section><section class="era astro-ptlylyrs" style="--era-color: #dc2626"> <div class="era-header astro-ptlylyrs"> <span class="era-name astro-ptlylyrs">Zero Trust &amp; Phishing-Resistant Era</span> <span class="era-years astro-ptlylyrs">2019–present</span> </div> <ol class="entries astro-ptlylyrs"> <li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2019</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">FIDO2 / WebAuthn (W3C)</strong> <p class="proto-desc astro-ptlylyrs">Hardware key and biometric authentication. Phishing-resistant by design — the credential never leaves the device.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2019</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">W3C Verifiable Credentials</strong> <p class="proto-desc astro-ptlylyrs">Decentralized identity claims via cryptographic proofs. Production deployments still limited but growing in government/healthcare.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2020</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">NIST SP 800-207 (Zero Trust)</strong> <p class="proto-desc astro-ptlylyrs">Zero Trust Architecture codified. US Executive Order 14028 (2021) mandated federal adoption, driving industry-wide adoption.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2022</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">Passkeys (FIDO Alliance)</strong> <p class="proto-desc astro-ptlylyrs">Synced FIDO2 credentials across devices. Apple, Google, Microsoft all shipped support by late 2023. The password&#39;s replacement.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2023</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">Cedar (AWS)</strong> <p class="proto-desc astro-ptlylyrs">Next-generation policy language — simpler than XACML, designed for cloud-native fine-grained authorization at scale.</p> </div> </li><li class="entry astro-ptlylyrs"> <div class="year-badge astro-ptlylyrs">2024</div> <div class="entry-body astro-ptlylyrs"> <strong class="proto-name astro-ptlylyrs">OAuth 2.1 (draft)</strong> <p class="proto-desc astro-ptlylyrs">Consolidates OAuth 2.0 security best practices (PKCE mandatory, no implicit flow, etc.) into a single clean spec.</p> </div> </li> </ol> </section> <figcaption class="astro-ptlylyrs">
+Identity standard evolution from X.500 (1988) to Passkeys (2022+). Colored bands represent
+    architectural eras. Legacy protocols (LDAP, SAML, Kerberos) remain entrenched in enterprise
+    environments while modern standards continue to emerge.
+</figcaption> </figure>  </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-u2l5gyhi" dir="ltr">  <a href="/idp-research/protocols/authentication/" rel="next" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg> <span class="astro-u2l5gyhi"> Next <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">Authentication Protocols</span> </span> </a> </div>   </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>

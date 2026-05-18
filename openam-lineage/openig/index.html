@@ -1,0 +1,656 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>OpenIG Analysis | IAM Deep Dive</title><link rel="canonical" href="https://kiriz.github.io/idp-research/openam-lineage/openig/"/><link rel="sitemap" href="/idp-research/sitemap-index.xml"/><link rel="shortcut icon" href="/idp-research/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.1"/><meta name="generator" content="Starlight v0.33.2"/><meta property="og:title" content="OpenIG Analysis"/><meta property="og:type" content="article"/><meta property="og:url" content="https://kiriz.github.io/idp-research/openam-lineage/openig/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Identity gateway with credential replay — the capability with no modern equivalent. Policy enforcement point for legacy applications."/><meta property="og:site_name" content="IAM Deep Dive"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Identity gateway with credential replay — the capability with no modern equivalent. Policy enforcement point for legacy applications."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/idp-research/_astro/print.BJ0teN4y.css" media="print"><link rel="stylesheet" href="/idp-research/_astro/index.C9VqBXpQ.css">
+<style>:root{--sl-badge-default-border: var(--sl-color-accent);--sl-badge-default-bg: var(--sl-color-accent-low);--sl-badge-default-text: #fff;--sl-badge-note-border: var(--sl-color-blue);--sl-badge-note-bg: var(--sl-color-blue-low);--sl-badge-note-text: #fff;--sl-badge-danger-border: var(--sl-color-red);--sl-badge-danger-bg: var(--sl-color-red-low);--sl-badge-danger-text: #fff;--sl-badge-success-border: var(--sl-color-green);--sl-badge-success-bg: var(--sl-color-green-low);--sl-badge-success-text: #fff;--sl-badge-caution-border: var(--sl-color-orange);--sl-badge-caution-bg: var(--sl-color-orange-low);--sl-badge-caution-text: #fff;--sl-badge-tip-border: var(--sl-color-purple);--sl-badge-tip-bg: var(--sl-color-purple-low);--sl-badge-tip-text: #fff}[data-theme=light]:root{--sl-badge-default-bg: var(--sl-color-accent-high);--sl-badge-note-bg: var(--sl-color-blue-high);--sl-badge-danger-bg: var(--sl-color-red-high);--sl-badge-success-bg: var(--sl-color-green-high);--sl-badge-caution-bg: var(--sl-color-orange-high);--sl-badge-tip-bg: var(--sl-color-purple-high)}.sl-badge:where(.astro-avdet4wd){display:inline-block;border:1px solid var(--sl-color-border-badge);border-radius:.25rem;font-family:var(--sl-font-system-mono);line-height:normal;color:var(--sl-color-text-badge);background-color:var(--sl-color-bg-badge);overflow-wrap:anywhere}.sidebar-content .sl-badge:where(.astro-avdet4wd){line-height:1;font-size:var(--sl-text-xs);padding:.125rem .375rem}.sidebar-content a[aria-current=page]>.sl-badge:where(.astro-avdet4wd){--sl-color-bg-badge: transparent;--sl-color-border-badge: currentColor;color:inherit}.default:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-default-bg);--sl-color-border-badge: var(--sl-badge-default-border);--sl-color-text-badge: var(--sl-badge-default-text)}.note:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-note-bg);--sl-color-border-badge: var(--sl-badge-note-border);--sl-color-text-badge: var(--sl-badge-note-text)}.danger:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-danger-bg);--sl-color-border-badge: var(--sl-badge-danger-border);--sl-color-text-badge: var(--sl-badge-danger-text)}.success:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-success-bg);--sl-color-border-badge: var(--sl-badge-success-border);--sl-color-text-badge: var(--sl-badge-success-text)}.tip:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-tip-bg);--sl-color-border-badge: var(--sl-badge-tip-border);--sl-color-text-badge: var(--sl-badge-tip-text)}.caution:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-caution-bg);--sl-color-border-badge: var(--sl-badge-caution-border);--sl-color-text-badge: var(--sl-badge-caution-text)}.small:where(.astro-avdet4wd){font-size:var(--sl-text-xs);padding:.125rem .25rem}.medium:where(.astro-avdet4wd){font-size:var(--sl-text-sm);padding:.175rem .35rem}.large:where(.astro-avdet4wd){font-size:var(--sl-text-base);padding:.225rem .45rem}.sl-markdown-content :is(h1,h2,h3,h4,h5,h6) .sl-badge:where(.astro-avdet4wd){vertical-align:middle}
+.card:where(.astro-v5tidmuc){--sl-card-border: var(--sl-color-purple);--sl-card-bg: var(--sl-color-purple-low);border:1px solid var(--sl-color-gray-5);background-color:var(--sl-color-black);padding:clamp(1rem,calc(.125rem + 3vw),2.5rem);flex-direction:column;gap:clamp(.5rem,calc(.125rem + 1vw),1rem)}.card:where(.astro-v5tidmuc):nth-child(4n+1){--sl-card-border: var(--sl-color-orange);--sl-card-bg: var(--sl-color-orange-low)}.card:where(.astro-v5tidmuc):nth-child(4n+3){--sl-card-border: var(--sl-color-green);--sl-card-bg: var(--sl-color-green-low)}.card:where(.astro-v5tidmuc):nth-child(4n+4){--sl-card-border: var(--sl-color-red);--sl-card-bg: var(--sl-color-red-low)}.card:where(.astro-v5tidmuc):nth-child(4n+5){--sl-card-border: var(--sl-color-blue);--sl-card-bg: var(--sl-color-blue-low)}.title:where(.astro-v5tidmuc){font-weight:600;font-size:var(--sl-text-h4);color:var(--sl-color-white);line-height:var(--sl-line-height-headings);gap:1rem;align-items:center}.card:where(.astro-v5tidmuc) .icon:where(.astro-v5tidmuc){border:1px solid var(--sl-card-border);background-color:var(--sl-card-bg);padding:.2em;border-radius:.25rem}.card:where(.astro-v5tidmuc) .body:where(.astro-v5tidmuc){margin:0;font-size:clamp(var(--sl-text-sm),calc(.5rem + 1vw),var(--sl-text-body))}
+.card-grid:where(.astro-zntqmydn){display:grid;grid-template-columns:100%;gap:1rem}.card-grid:where(.astro-zntqmydn)>*{margin-top:0!important}@media(min-width:50rem){.card-grid:where(.astro-zntqmydn){grid-template-columns:1fr 1fr;gap:1.5rem}.stagger:where(.astro-zntqmydn){--stagger-height: 5rem;padding-bottom:var(--stagger-height)}.stagger:where(.astro-zntqmydn)>*:nth-child(2n){transform:translateY(var(--stagger-height))}}
+svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}
+.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}
+.sl-link-button:where(.astro-xwgiixxa){align-items:center;border:1px solid transparent;border-radius:999rem;display:inline-flex;font-size:var(--sl-text-sm);gap:.5em;line-height:1.1875;outline-offset:.25rem;padding:.4375rem 1.125rem;text-decoration:none}.sl-link-button:where(.astro-xwgiixxa).primary{background:var(--sl-color-text-accent);border-color:var(--sl-color-text-accent);color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).primary:hover{color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).secondary{border-color:inherit;color:var(--sl-color-white)}.sl-link-button:where(.astro-xwgiixxa).minimal{color:var(--sl-color-white);padding-inline:0}.sl-link-button:where(.astro-xwgiixxa) svg{flex-shrink:0}@media(min-width:50rem){.sl-link-button:where(.astro-xwgiixxa){font-size:var(--sl-text-base);padding:.9375rem 1.25rem}}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa){margin-inline-end:1rem}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa):not(:where(p *)){margin-block:1rem}
+</style><script type="module" src="/idp-research/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="page sl-flex astro-vrdttmbt"> <header class="header astro-vrdttmbt"><div class="header sl-flex astro-kmkmnagf"> <div class="title-wrapper sl-flex astro-kmkmnagf"> <a href="/idp-research/" class="site-title sl-flex astro-m46x6ez3">  <span class="astro-m46x6ez3" translate="no"> IAM Deep Dive </span> </a>  </div> <div class="sl-flex print:hidden astro-kmkmnagf"> <site-search class="astro-kmkmnagf astro-v37mnknz" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-v37mnknz"> <svg aria-hidden="true" class="astro-v37mnknz astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg> <span class="sl-hidden md:sl-block astro-v37mnknz" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-v37mnknz" style="display: none;"> <kbd class="astro-v37mnknz">Ctrl</kbd><kbd class="astro-v37mnknz">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-v37mnknz"> <div class="dialog-frame sl-flex astro-v37mnknz">  <button data-close-modal class="sl-flex md:sl-hidden astro-v37mnknz"> Cancel </button> <div class="search-container astro-v37mnknz"> <div id="starlight__search" class="astro-v37mnknz"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script> <script type="module" src="/idp-research/_astro/Search.astro_astro_type_script_index_0_lang.5f7Mm-QF.js"></script>   </div> <div class="sl-hidden md:sl-flex print:hidden right-group astro-kmkmnagf"> <div class="sl-flex social-icons astro-kmkmnagf"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script> <script type="module">const r="starlight-theme",o=e=>e==="auto"||e==="dark"||e==="light"?e:"auto",c=()=>o(typeof localStorage<"u"&&localStorage.getItem(r));function n(e){typeof localStorage<"u"&&localStorage.setItem(r,e==="light"||e==="dark"?e:"")}const l=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?l():e,n(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{c()==="auto"&&t("auto")});class s extends HTMLElement{constructor(){super(),t(c()),this.querySelector("select")?.addEventListener("change",a=>{a.currentTarget instanceof HTMLSelectElement&&t(o(a.currentTarget.value))})}}customElements.define("starlight-theme-select",s);</script> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </div> </header> <nav class="sidebar print:hidden astro-vrdttmbt" aria-label="Main"> <starlight-menu-button class="print:hidden astro-jif73yzw"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="open-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg> <svg aria-hidden="true" class="close-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg> </button> </starlight-menu-button> <script type="module">class s extends HTMLElement{constructor(){super(),this.btn=this.querySelector("button"),this.btn.addEventListener("click",()=>this.toggleExpanded());const t=this.closest("nav");t&&t.addEventListener("keyup",e=>this.closeOnEscape(e))}setExpanded(t){this.setAttribute("aria-expanded",String(t)),document.body.toggleAttribute("data-mobile-menu-expanded",t)}toggleExpanded(){this.setExpanded(this.getAttribute("aria-expanded")!=="true")}closeOnEscape(t){t.code==="Escape"&&(this.setExpanded(!1),this.btn.focus())}}customElements.define("starlight-menu-button",s);</script>   <div id="starlight__sidebar" class="sidebar-pane astro-vrdttmbt"> <div class="sidebar-content sl-flex astro-vrdttmbt"> <sl-sidebar-state-persist data-hash="0whlfhn" class="astro-kku4brbg"> <script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script>  <ul class="top-level astro-3ii7xxms"> <li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="0"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Overview</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/history/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">20-Year History of Open-Source IAM</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="1"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Protocol Deep Dives</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authentication/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authentication Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/federation/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Federation Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authorization/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authorization Frameworks</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/directory/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Directory Services</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/tokens/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Token Formats &amp; Sessions</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="2"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">OpenAM Lineage</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">The ForgeRock Story — OpenAM Lineage</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openam/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenAM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/opendj/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenDJ Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openidm/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIDM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openig/" aria-current="page" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIG Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openicf/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenICF Analysis</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="3"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Modern Landscape</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/modern-landscape/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Where IAM Is Today — Modern Landscape</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="4"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Decision Guide</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/comparison/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Platform Comparison Matrices</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/migration/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Migration Recommendations</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/lessons/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Lessons from History</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="5"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Reference Data</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/reference/protocols/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Protocol Inventory (40+ Protocols)</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/cve-history/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">CVE History &amp; Patch Matrix</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/git-analysis/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Git History Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/pre-computer/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Pre-Computer Authentication History</span>  </a> </li> </ul>  </details> </li> </ul>   <script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script> </sl-sidebar-state-persist>  <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-wu23bvmt"> <div class="sl-flex social-icons astro-wu23bvmt"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div>  </div> </div> </div> </nav> <div class="main-frame astro-vrdttmbt">  <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <div class="lg:sl-flex astro-67yu43on"> <aside class="right-sidebar-container print:hidden astro-67yu43on"> <div class="right-sidebar astro-67yu43on"> <script type="module" src="/idp-research/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C181hMzK.js"></script><script type="module" src="/idp-research/_astro/TableOfContents.astro_astro_type_script_index_0_lang.CKWWgpjV.js"></script><div class="lg:sl-hidden astro-pb3aqygn"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><div class="toggle sl-flex astro-doynk5tl">On this page<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></div><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#1-what-openig-does" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">1. What OpenIG Does</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2-architecture-overview" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2. Architecture Overview</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#21-filterhandler-pipeline" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.1 Filter/Handler Pipeline</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#22-route-configuration-json" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.2 Route Configuration (JSON)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#23-expression-language" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.3 Expression Language</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#24-filter-inventory-50-types" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.4 Filter Inventory (50+ Types)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#25-handler-inventory-16-types" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.5 Handler Inventory (16+ Types)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#26-module-structure" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.6 Module Structure</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#3-strengths" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">3. Strengths</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#4-weaknesses" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">4. Weaknesses</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#5-modern-alternatives" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">5. Modern Alternatives</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#51-openig-vs-kong" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.1 OpenIG vs Kong</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#52-openig-vs-envoy--istio" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.2 OpenIG vs Envoy / Istio</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#53-openig-vs-aws-api-gateway" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.3 OpenIG vs AWS API Gateway</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#54-openig-vs-traefik" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.4 OpenIG vs Traefik</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#55-openig-vs-apisix" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.5 OpenIG vs APISIX</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#6-the-gateway-evolution" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">6. The Gateway Evolution</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#generation-1-policy-agents-2000-2010" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Generation 1: Policy Agents (2000-2010)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#generation-2-reverse-proxy-gateways-2010-2018" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Generation 2: Reverse Proxy Gateways (2010-2018)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#generation-3-api-gateways-2016-2022" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Generation 3: API Gateways (2016-2022)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#generation-4-service-mesh-sidecars-2018-present" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Generation 4: Service Mesh Sidecars (2018-Present)</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#7-credential-replay-openigs-unique-capability" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">7. Credential Replay: OpenIG’s Unique Capability</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#the-problem" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">The Problem</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-openig-solves-it" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How OpenIG Solves It</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#when-credential-replay-is-needed" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">When Credential Replay Is Needed</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#modern-alternatives-to-credential-replay" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Modern Alternatives to Credential Replay</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#8-production-deployment-topology" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">8. Production Deployment Topology</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#dmz-reverse-proxy-pattern" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">DMZ Reverse Proxy Pattern</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#horizontal-scaling-with-stateless-filter-chains" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Horizontal Scaling with Stateless Filter Chains</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#route-based-configuration-and-hot-reload" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Route-Based Configuration and Hot Reload</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openam-integration-for-policy-agent-replacement" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenAM Integration for Policy Agent Replacement</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#docker-deployment" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Docker Deployment</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#9-migration-cost-analysis" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">9. Migration Cost Analysis</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-to-kong" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenIG to Kong</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-to-traefik" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenIG to Traefik</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-to-envoy--ext_authz" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenIG to Envoy + ext_authz</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#key-risk-credential-replay-has-no-modern-equivalent" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Key Risk: Credential Replay Has No Modern Equivalent</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#10-codebase-navigation-guide" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">10. Codebase Navigation Guide</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-core-router-and-pipeline-engine" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-core: Router and Pipeline Engine</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-oauth2-oauth-20-resource-server-and-client" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-oauth2: OAuth 2.0 Resource Server and Client</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-saml-saml-20-federation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-saml: SAML 2.0 Federation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-openam-policy-enforcement-pep" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-openam: Policy Enforcement (PEP)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-doc-route-configuration-examples" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-doc: Route Configuration Examples</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#11-verdict" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">11. Verdict</span> </a>  </li> </ul> </div></details></nav></mobile-starlight-toc></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-pb3aqygn"><div class="sl-container astro-pb3aqygn"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#1-what-openig-does" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">1. What OpenIG Does</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2-architecture-overview" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2. Architecture Overview</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#21-filterhandler-pipeline" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.1 Filter/Handler Pipeline</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#22-route-configuration-json" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.2 Route Configuration (JSON)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#23-expression-language" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.3 Expression Language</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#24-filter-inventory-50-types" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.4 Filter Inventory (50+ Types)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#25-handler-inventory-16-types" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.5 Handler Inventory (16+ Types)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#26-module-structure" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.6 Module Structure</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#3-strengths" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">3. Strengths</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#4-weaknesses" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">4. Weaknesses</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#5-modern-alternatives" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">5. Modern Alternatives</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#51-openig-vs-kong" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.1 OpenIG vs Kong</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#52-openig-vs-envoy--istio" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.2 OpenIG vs Envoy / Istio</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#53-openig-vs-aws-api-gateway" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.3 OpenIG vs AWS API Gateway</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#54-openig-vs-traefik" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.4 OpenIG vs Traefik</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#55-openig-vs-apisix" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.5 OpenIG vs APISIX</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#6-the-gateway-evolution" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">6. The Gateway Evolution</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#generation-1-policy-agents-2000-2010" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Generation 1: Policy Agents (2000-2010)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#generation-2-reverse-proxy-gateways-2010-2018" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Generation 2: Reverse Proxy Gateways (2010-2018)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#generation-3-api-gateways-2016-2022" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Generation 3: API Gateways (2016-2022)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#generation-4-service-mesh-sidecars-2018-present" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Generation 4: Service Mesh Sidecars (2018-Present)</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#7-credential-replay-openigs-unique-capability" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">7. Credential Replay: OpenIG’s Unique Capability</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#the-problem" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">The Problem</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#how-openig-solves-it" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">How OpenIG Solves It</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#when-credential-replay-is-needed" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">When Credential Replay Is Needed</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#modern-alternatives-to-credential-replay" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Modern Alternatives to Credential Replay</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#8-production-deployment-topology" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">8. Production Deployment Topology</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#dmz-reverse-proxy-pattern" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">DMZ Reverse Proxy Pattern</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#horizontal-scaling-with-stateless-filter-chains" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Horizontal Scaling with Stateless Filter Chains</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#route-based-configuration-and-hot-reload" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Route-Based Configuration and Hot Reload</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openam-integration-for-policy-agent-replacement" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenAM Integration for Policy Agent Replacement</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#docker-deployment" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Docker Deployment</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#9-migration-cost-analysis" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">9. Migration Cost Analysis</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-to-kong" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenIG to Kong</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-to-traefik" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenIG to Traefik</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-to-envoy--ext_authz" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OpenIG to Envoy + ext_authz</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#key-risk-credential-replay-has-no-modern-equivalent" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Key Risk: Credential Replay Has No Modern Equivalent</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#10-codebase-navigation-guide" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">10. Codebase Navigation Guide</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-core-router-and-pipeline-engine" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-core: Router and Pipeline Engine</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-oauth2-oauth-20-resource-server-and-client" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-oauth2: OAuth 2.0 Resource Server and Client</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-saml-saml-20-federation" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-saml: SAML 2.0 Federation</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-openam-policy-enforcement-pep" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-openam: Policy Enforcement (PEP)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#openig-doc-route-configuration-examples" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">openig-doc: Route Configuration Examples</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#11-verdict" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">11. Verdict</span> </a>  </li> </ul> </nav></starlight-toc></div></div> </div> </aside> <div class="main-pane astro-67yu43on">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">OpenIG Analysis</h1>  </div> </div>  <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content"> <h1 id="chapter-10-openig-analysis">Chapter 10: OpenIG Analysis</h1>
+<p>OpenIG (Open Identity Gateway) is the policy enforcement and credential mediation layer in the Open Identity Platform suite. It sits between clients and backend applications as a reverse proxy, intercepting HTTP traffic and applying authentication, authorization, header manipulation, and credential replay through a composable filter/handler pipeline. Its architectural signature — declarative JSON route configuration, an Expression Language for dynamic behavior, and a Promise-based asynchronous execution model — positions it as a programmable identity gateway rather than a general-purpose reverse proxy. This chapter examines OpenIG’s architecture, evaluates its strengths and weaknesses against modern alternatives, and traces the broader evolution from policy agents to service mesh sidecars.</p>
+<hr>
+<h2 id="1-what-openig-does">1. What OpenIG Does</h2>
+<p>OpenIG serves three primary functions within the OIP integration architecture described in <a href="12-modern-architecture.md">Chapter 12: Modern Architecture Patterns</a>:</p>
+<p><strong>Policy Enforcement Gateway.</strong> OpenIG intercepts HTTP requests destined for protected applications and delegates authentication and authorization decisions to OpenAM. It validates SSO tokens, enforces access policies, and blocks unauthorized requests before they reach the backend. This decouples security enforcement from application code — applications need not implement any authentication logic themselves.</p>
+<p><strong>Credential Replay Proxy.</strong> OpenIG’s most distinctive capability is credential replay: the ability to authenticate users via modern protocols (OAuth 2.0, SAML 2.0, OIDC) and then inject legacy credentials (HTTP Basic, form POST, custom headers) into upstream requests. This bridges the gap between modern identity providers and legacy applications that cannot be modified to support contemporary authentication standards.</p>
+<p><strong>Identity-Aware Reverse Proxy.</strong> Beyond authentication, OpenIG transforms requests and responses as they transit the pipeline. It can add, remove, or rewrite HTTP headers; query databases for user attributes; enforce rate limits; perform CSRF validation; and route requests conditionally based on any combination of request properties, session state, and external data. The gateway pattern described in the OIP architecture diagram (<code dir="auto">Users/Apps --> OpenIG --> OpenAM --> OpenDJ</code>) positions OpenIG as the single entry point through which all external traffic flows.</p>
+<p>Within the five-component OIP stack, OpenIG has the smallest codebase (~12 modules) but occupies a critical position in the request path. Every request to a protected resource passes through its filter chain.</p>
+<hr>
+<h2 id="2-architecture-overview">2. Architecture Overview</h2>
+<h3 id="21-filterhandler-pipeline">2.1 Filter/Handler Pipeline</h3>
+<p>The core abstraction in OpenIG is a pipeline composed of <strong>Filters</strong> and <strong>Handlers</strong>. The architecture uses the Decorator pattern combined with Promise-based asynchronous execution.</p>
+<p>The two fundamental interfaces, located in <code dir="auto">OpenIG/openig-core/src/main/java/</code>, define the contract:</p>
+<div class="expressive-code"><link rel="stylesheet" href="/idp-research/_astro/ec.ppgh1.css"><script type="module" src="/idp-research/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="java"><code><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5D6376">// Filter: intercepts request, delegates to next handler</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">public</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C792EA;--1:#8844AE">interface</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#FFCB8B;--1:#111111">Filter</span><span style="--0:#D6DEEB;--1:#403F53"> {</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#C792EA;--1:#8844AE">Promise</span><span style="--0:#D6DEEB;--1:#403F53">&#x3C;</span><span style="--0:#C792EA;--1:#8844AE">Response</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#C792EA;--1:#8844AE">NeverThrowsException</span><span style="--0:#D6DEEB;--1:#403F53">> </span><span style="--0:#82AAFF;--1:#3B61B0">filter</span><span style="--0:#D9F5DD;--1:#111111">(</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#C792EA;--1:#8844AE">Context</span><span style="--1:#403F53"><span style="--0:#D6DEEB"> </span><span style="--0:#D7DBE0">context</span><span style="--0:#D6DEEB">, </span></span><span style="--0:#C792EA;--1:#8844AE">Request</span><span style="--1:#403F53"><span style="--0:#D6DEEB"> </span><span style="--0:#D7DBE0">request</span><span style="--0:#D6DEEB">, </span></span><span style="--0:#C792EA;--1:#8844AE">Handler</span><span style="--1:#403F53"><span style="--0:#D6DEEB"> </span><span style="--0:#D7DBE0">next</span></span><span style="--0:#D9F5DD;--1:#111111">)</span><span style="--0:#D6DEEB;--1:#403F53">;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5D6376">// Handler: terminal endpoint of pipeline, produces response</span></div></div><div class="ec-line"><div class="code"><span style="--0:#C792EA;--1:#8844AE">public</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#C792EA;--1:#8844AE">interface</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#FFCB8B;--1:#111111">Handler</span><span style="--0:#D6DEEB;--1:#403F53"> {</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#C792EA;--1:#8844AE">Promise</span><span style="--0:#D6DEEB;--1:#403F53">&#x3C;</span><span style="--0:#C792EA;--1:#8844AE">Response</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#C792EA;--1:#8844AE">NeverThrowsException</span><span style="--0:#D6DEEB;--1:#403F53">> </span><span style="--0:#82AAFF;--1:#3B61B0">handle</span><span style="--0:#D9F5DD;--1:#111111">(</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#C792EA;--1:#8844AE">Context</span><span style="--1:#403F53"><span style="--0:#D6DEEB"> </span><span style="--0:#D7DBE0">context</span><span style="--0:#D6DEEB">, </span></span><span style="--0:#C792EA;--1:#8844AE">Request</span><span style="--1:#403F53"><span style="--0:#D6DEEB"> </span><span style="--0:#D7DBE0">request</span></span><span style="--0:#D9F5DD;--1:#111111">)</span><span style="--0:#D6DEEB;--1:#403F53">;</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="// Filter: intercepts request, delegates to next handlerpublic interface Filter {    Promise<Response, NeverThrowsException> filter(        Context context, Request request, Handler next);}// Handler: terminal endpoint of pipeline, produces responsepublic interface Handler {    Promise<Response, NeverThrowsException> handle(        Context context, Request request);}"><div></div></button></div></figure></div>
+<p>Execution flows through filters sequentially. Each filter performs pre-processing on the request, delegates to the next handler in the chain via <code dir="auto">next.handle(...)</code>, and optionally performs post-processing on the response via <code dir="auto">thenOnResult()</code>. The final handler in the chain — typically a <code dir="auto">ClientHandler</code> — forwards the request to the upstream backend application.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">HTTP Request</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">  </span></span><span style="--0:#d6deeb;--1:#403f53">|</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">  </span></span><span style="--0:#d6deeb;--1:#403f53">Filter 1 (pre-process) --> next.handle() --> Filter 1 (post-process)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">    </span></span><span style="--0:#d6deeb;--1:#403f53">|</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">    </span></span><span style="--0:#d6deeb;--1:#403f53">Filter 2 (pre-process) --> next.handle() --> Filter 2 (post-process)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">      </span></span><span style="--0:#d6deeb;--1:#403f53">|</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">      </span></span><span style="--0:#d6deeb;--1:#403f53">...</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">        </span></span><span style="--0:#d6deeb;--1:#403f53">|</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">        </span></span><span style="--0:#d6deeb;--1:#403f53">ClientHandler --> HTTP Backend</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">                       </span></span><span style="--0:#d6deeb;--1:#403f53">&#x3C;-- HTTP Response</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="HTTP Request  |  Filter 1 (pre-process) --> next.handle() --> Filter 1 (post-process)    |    Filter 2 (pre-process) --> next.handle() --> Filter 2 (post-process)      |      ...        |        ClientHandler --> HTTP Backend                       <-- HTTP Response"><div></div></button></div></figure></div>
+<p>The Promise-based return type (<code dir="auto">Promise&#x3C;Response, NeverThrowsException></code>) enables non-blocking, asynchronous request processing. Filters compose via <code dir="auto">thenAsync()</code>, <code dir="auto">thenOnResult()</code>, and <code dir="auto">thenOnException()</code> — a monadic chaining pattern that avoids blocking threads while requests are in flight. A thread pool handles concurrent requests, and backpressure is implicit in the Promise chain: if the backend is slow, the response Promise simply takes longer to resolve.</p>
+<p>The <strong>Context</strong> object provides a parent-child hierarchy for nested calls and an attributes map for inter-filter communication. Filters read and write to <code dir="auto">context.asContext(AttributesContext.class)</code> to pass data downstream — for example, a token validation filter might set <code dir="auto">attributes['userId']</code> for a subsequent header injection filter to consume.</p>
+<h3 id="22-route-configuration-json">2.2 Route Configuration (JSON)</h3>
+<p>Routes are defined as JSON files in the <code dir="auto">config/routes/</code> directory of the OpenIG deployment. Each route declares a condition (when the route applies), a sequence of filters, and a terminal handler. Routes are <strong>hot-reloadable</strong>: modifying a route file takes effect without restart or downtime.</p>
+<p>A representative route:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="json"><code><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#7FDBCA;--1:#096E72">"name"</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">protected-api</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#7FDBCA;--1:#096E72">"baseURI"</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">http://backend-server:8080</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#7FDBCA;--1:#096E72">"condition"</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">${request.uri.path =~ '/api/.*'}</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#7FDBCA;--1:#096E72">"filters"</span><span style="--0:#D6DEEB;--1:#403F53">: [</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#7FDBCA;--1:#096E72">"type"</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">OAuth2ResourceServerFilter</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#7FDBCA;--1:#096E72">"config"</span><span style="--0:#D6DEEB;--1:#403F53">: {</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#7FDBCA;--1:#096E72">"providerHandler"</span><span style="--0:#D6DEEB;--1:#403F53">: { </span><span style="--0:#7FDBCA;--1:#096E72">"type"</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">ClientHandler</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53"> },</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#7FDBCA;--1:#096E72">"scopes"</span><span style="--0:#D6DEEB;--1:#403F53">: [</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">read</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53">, </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">write</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53">],</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#7FDBCA;--1:#096E72">"realm"</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">example</span><span style="--0:#D9F5DD;--1:#111111">"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">      </span></span><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">},</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#7FDBCA;--1:#096E72">"type"</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">AddHeaderFilter</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#7FDBCA;--1:#096E72">"config"</span><span style="--0:#D6DEEB;--1:#403F53">: {</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#7FDBCA;--1:#096E72">"headers"</span><span style="--0:#D6DEEB;--1:#403F53">: {</span></div></div><div class="ec-line"><div class="code"><span class="indent">          </span><span style="--0:#7FDBCA;--1:#096E72">"X-Authenticated-User"</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">${attributes.openid.sub}</span><span style="--0:#D9F5DD;--1:#111111">"</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">        </span></span><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">      </span></span><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">    </span></span><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">  </span></span><span style="--0:#D6DEEB;--1:#403F53">],</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#7FDBCA;--1:#096E72">"handler"</span><span style="--0:#D6DEEB;--1:#403F53">: { </span><span style="--0:#7FDBCA;--1:#096E72">"type"</span><span style="--0:#D6DEEB;--1:#403F53">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#C789D6;--1:#7C5686">ClientHandler</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53"> }</span></div></div><div class="ec-line"><div class="code"><span style="--0:#D6DEEB;--1:#403F53">}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;name&#x22;: &#x22;protected-api&#x22;,  &#x22;baseURI&#x22;: &#x22;http://backend-server:8080&#x22;,  &#x22;condition&#x22;: &#x22;${request.uri.path =~ &#x27;/api/.*&#x27;}&#x22;,  &#x22;filters&#x22;: [    {      &#x22;type&#x22;: &#x22;OAuth2ResourceServerFilter&#x22;,      &#x22;config&#x22;: {        &#x22;providerHandler&#x22;: { &#x22;type&#x22;: &#x22;ClientHandler&#x22; },        &#x22;scopes&#x22;: [&#x22;read&#x22;, &#x22;write&#x22;],        &#x22;realm&#x22;: &#x22;example&#x22;      }    },    {      &#x22;type&#x22;: &#x22;AddHeaderFilter&#x22;,      &#x22;config&#x22;: {        &#x22;headers&#x22;: {          &#x22;X-Authenticated-User&#x22;: &#x22;${attributes.openid.sub}&#x22;        }      }    }  ],  &#x22;handler&#x22;: { &#x22;type&#x22;: &#x22;ClientHandler&#x22; }}"><div></div></button></div></figure></div>
+<p>Route matching follows a <strong>first-match-wins</strong> strategy. Routes are processed in filename alphabetical order. A catch-all route (no condition) typically appears last as a default handler. This declarative configuration model means that non-developers — security engineers or operations staff — can define and modify gateway policies without writing Java code.</p>
+<h3 id="23-expression-language">2.3 Expression Language</h3>
+<p>The Expression Language (EL) embedded in route configurations provides dynamic access to request state:</p>
+<ul>
+<li>Request properties: <code dir="auto">${request.headers['Authorization']}</code>, <code dir="auto">${request.uri.path}</code>, <code dir="auto">${request.method}</code></li>
+<li>Context attributes: <code dir="auto">${attributes.userId}</code>, <code dir="auto">${session.user.id}</code></li>
+<li>Functions: <code dir="auto">${request.headers['name'][0].toLowerCase()}</code></li>
+<li>Conditionals: <code dir="auto">${request.method == 'POST' ? 'write' : 'read'}</code></li>
+<li>Null coalescing: <code dir="auto">${request.headers['X-Custom'] ?: 'default'}</code></li>
+<li>Regex matching: <code dir="auto">${request.uri.path =~ '/admin/.*'}</code></li>
+</ul>
+<p>The EL is evaluated at runtime for each request, enabling routes to make dynamic decisions without custom code. It is Turing-incomplete by design — complex logic that exceeds EL capabilities can be delegated to <code dir="auto">ScriptableFilter</code> (Groovy or JavaScript).</p>
+<h3 id="24-filter-inventory-50-types">2.4 Filter Inventory (50+ Types)</h3>
+<p>OpenIG ships with a rich catalog of built-in filters organized by function:</p>
+<p><strong>Authentication Filters (5+):</strong>
+<code dir="auto">HttpBasicAuthFilter</code>, <code dir="auto">OAuth2ResourceServerFilter</code>, <code dir="auto">SamlFederationFilter</code>, <code dir="auto">OpenAmAuthenticationFilter</code>, <code dir="auto">WindowsAuthenticationFilter</code></p>
+<p><strong>Credential Replay Filters (2):</strong>
+<code dir="auto">CredentialReplayFilter</code>, <code dir="auto">CredentialInjectFilter</code></p>
+<p><strong>Header and Cookie Manipulation (4+):</strong>
+<code dir="auto">AddHeaderFilter</code>, <code dir="auto">RemoveHeaderFilter</code>, <code dir="auto">ReplaceHeaderFilter</code>, <code dir="auto">CookieFilter</code></p>
+<p><strong>Security Filters (2+):</strong>
+<code dir="auto">CsrfTokenFilter</code>, <code dir="auto">RateLimitFilter</code></p>
+<p><strong>Routing Filters (3+):</strong>
+<code dir="auto">SwitchFilter</code>, <code dir="auto">RouterHandler</code> (trie-based), <code dir="auto">SequenceHandler</code></p>
+<p><strong>Observability (3+):</strong>
+<code dir="auto">CaptureFilter</code>, <code dir="auto">MetricsFilter</code>, <code dir="auto">LogAttachedExceptionFilter</code></p>
+<p><strong>Performance (2+):</strong>
+<code dir="auto">ThrottlingFilter</code>, <code dir="auto">RateLimitFilter</code></p>
+<p><strong>Data Integration (2+):</strong>
+<code dir="auto">SqlAttributesFilter</code>, <code dir="auto">SetAttributesFilter</code></p>
+<p><strong>Scripting (1):</strong>
+<code dir="auto">ScriptableFilter</code> — arbitrary Groovy or JavaScript logic without redeployment</p>
+<p><strong>Response Processing (1+):</strong>
+<code dir="auto">LocationHeaderFilter</code> — rewrites backend URLs to client-visible URLs</p>
+<h3 id="25-handler-inventory-16-types">2.5 Handler Inventory (16+ Types)</h3>
+<p>Handlers serve as pipeline endpoints or routing decision points:</p>
+<p><code dir="auto">ClientHandler</code> (HTTP forwarding with connection pooling, timeouts, certificate pinning), <code dir="auto">StaticContentHandler</code> (static file serving), <code dir="auto">RouterHandler</code> (path-based sub-routing), <code dir="auto">SwitchHandler</code> (conditional routing), <code dir="auto">SequenceHandler</code> (sequential handler chain), <code dir="auto">ExceptionHandler</code> (error transformation), <code dir="auto">RedirectHandler</code> (HTTP redirects), <code dir="auto">NotFoundHandler</code> (404 responses), <code dir="auto">OpenAmHandler</code> (OpenAM policy delegation), <code dir="auto">SamlFederationHandler</code> (SAML SSO), <code dir="auto">OAuth2Handler</code> (OAuth grant flows), <code dir="auto">UmaHandler</code> (User-Managed Access), <code dir="auto">ScriptableHandler</code> (custom Groovy/JS logic).</p>
+<h3 id="26-module-structure">2.6 Module Structure</h3>
+<p>The OpenIG codebase is organized into approximately 12 Maven modules:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Module</th><th>Purpose</th></tr></thead><tbody><tr><td><code dir="auto">openig-core</code></td><td>Filter/handler framework, routing, EL engine, scripting</td></tr><tr><td><code dir="auto">openig-oauth2</code></td><td>OAuth 2.0 resource server and client filters</td></tr><tr><td><code dir="auto">openig-saml</code></td><td>SAML 2.0 federation filters and handlers</td></tr><tr><td><code dir="auto">openig-uma</code></td><td>User-Managed Access 2.0 integration</td></tr><tr><td><code dir="auto">openig-openam</code></td><td>OpenAM-specific policy agent, session validation</td></tr><tr><td><code dir="auto">openig-war</code></td><td>WAR packaging for servlet container deployment</td></tr><tr><td><code dir="auto">openig-doc</code></td><td>Documentation and examples</td></tr></tbody></table>
+<p>The commercial equivalent of OpenIG is now <strong>PingGateway</strong>, part of the Ping Identity product suite following the Ping-ForgeRock merger in 2023 (see <a href="01-history.md">Chapter 1: Historical Narrative</a>).</p>
+<hr>
+<h2 id="3-strengths">3. Strengths</h2>
+<p><strong>Flexible, composable pipeline.</strong> The filter/handler model is genuinely elegant. Any combination of authentication, transformation, routing, and security filters can be composed declaratively without writing code. The Promise-based async model avoids thread-per-request scaling bottlenecks. This architecture is well-suited to organizations that need to define many distinct access policies for different backend applications.</p>
+<p><strong>Credential replay for legacy applications.</strong> This is OpenIG’s most compelling differentiator. Many enterprises operate legacy applications (mainframes, packaged COTS software, older internal tools) that support only HTTP Basic, form-based login, or proprietary header-based authentication. OpenIG can authenticate users via OIDC or SAML at the gateway, then inject the appropriate legacy credentials into upstream requests. This avoids costly application rewrites. No modern API gateway provides this capability natively.</p>
+<p><strong>Declarative JSON configuration.</strong> Route definitions are human-readable JSON files, not code. Operations teams can modify gateway policies without Java expertise. Routes are stored as flat files, amenable to version control, code review, and GitOps workflows.</p>
+<p><strong>Hot-reload without downtime.</strong> Route file changes take effect immediately. In environments with many protected applications, this enables rapid policy iteration without the restart cycles typical of WAR-deployed Java applications.</p>
+<p><strong>Scriptable extensibility.</strong> When built-in filters are insufficient, <code dir="auto">ScriptableFilter</code> and <code dir="auto">ScriptableHandler</code> allow inline Groovy or JavaScript. This provides an escape hatch for custom logic without requiring a full Java development cycle, compilation, or redeployment.</p>
+<p><strong>Deep OpenAM integration.</strong> The <code dir="auto">openig-openam</code> module provides first-class integration with OpenAM for session validation, policy enforcement, and token introspection. For organizations running the full OIP stack, this integration is seamless.</p>
+<p><strong>Expression Language for dynamic behavior.</strong> The EL enables conditional routing, dynamic header values, and request-dependent logic without resorting to scripting. For many common patterns (route-by-path, inject-user-header, strip-sensitive-header), EL expressions are sufficient.</p>
+<hr>
+<h2 id="4-weaknesses">4. Weaknesses</h2>
+<p><strong>Java overhead for a proxy role.</strong> OpenIG is a Java application deployed as a WAR in a servlet container. For the reverse proxy use case — which is fundamentally about forwarding HTTP requests with minimal transformation — Java’s memory footprint and startup time are disadvantages compared to purpose-built proxies written in C++ (Envoy), Go (Traefik), or Lua-on-C (Kong/Nginx). A cold-start OpenIG instance consumes hundreds of megabytes; a cold-start Envoy sidecar consumes tens of megabytes.</p>
+<p><strong>Limited observability compared to modern gateways.</strong> OpenIG provides <code dir="auto">CaptureFilter</code> for debugging and <code dir="auto">MetricsFilter</code> for basic instrumentation, but it lacks native integration with modern observability stacks. There is no built-in OpenTelemetry support, no distributed tracing propagation, no Prometheus metrics endpoint, and no structured logging in formats expected by Elasticsearch, Datadog, or Grafana Loki. Modern gateways (Envoy, Kong, Traefik) ship with these integrations by default.</p>
+<p><strong>Niche use case.</strong> The identity gateway concept — a reverse proxy specifically designed for authentication mediation — occupies a narrow space between general-purpose reverse proxies and full API gateways. Organizations evaluating gateway technology today are far more likely to encounter Kong, Envoy, or Traefik in vendor-neutral architecture discussions. OpenIG’s identity-specific capabilities are valuable but not widely known outside the ForgeRock/OIP ecosystem.</p>
+<p><strong>No native container orchestration support.</strong> OpenIG predates the Kubernetes era and lacks a Helm chart, Kubernetes Operator, or native sidecar deployment model. Deploying OpenIG in Kubernetes requires manual containerization of the WAR file and custom health check configuration. Modern gateways are designed container-first.</p>
+<p><strong>Small community.</strong> OpenIG’s community is a subset of the already-small OIP community. Feature requests, bug reports, and community-contributed filters are sparse compared to Kong (300+ contributors), Envoy (1,000+ contributors), or Traefik (780+ contributors).</p>
+<p><strong>No native gRPC or HTTP/2 support.</strong> Modern microservices increasingly communicate via gRPC. OpenIG’s servlet-container deployment model is HTTP/1.1-centric. While HTTP/2 support depends on the underlying servlet container, gRPC proxying is not a supported use case.</p>
+<p><strong>Vendor lock-in within OIP stack.</strong> The <code dir="auto">openig-openam</code> integration module creates a tight coupling to OpenAM for policy decisions. Using OpenIG with a non-OIP identity provider (Keycloak, Ory, Auth0) requires custom development via <code dir="auto">ScriptableFilter</code> rather than first-class integration.</p>
+<hr>
+<h2 id="5-modern-alternatives">5. Modern Alternatives</h2>
+<h3 id="51-openig-vs-kong">5.1 OpenIG vs Kong</h3>
+<p><strong>Kong</strong> is the most widely deployed open-source API gateway, built on Nginx with Lua plugin extensibility (Kong Gateway OSS) and a Go-based control plane (Kong Gateway Enterprise).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenIG</th><th>Kong</th></tr></thead><tbody><tr><td>Language</td><td>Java (servlet WAR)</td><td>C (Nginx core) + Lua (plugins) + Go (control plane)</td></tr><tr><td>Plugin system</td><td>Java filters + Groovy scripts</td><td>Lua plugins, Go plugins, Python plugins, JS plugins</td></tr><tr><td>Configuration</td><td>JSON route files</td><td>Declarative YAML/JSON, Admin API, DB-backed</td></tr><tr><td>Performance</td><td>Moderate (JVM overhead)</td><td>High (Nginx event loop, C-level proxying)</td></tr><tr><td>Observability</td><td>Basic (<code dir="auto">MetricsFilter</code>, <code dir="auto">CaptureFilter</code>)</td><td>Prometheus, OpenTelemetry, Datadog, Zipkin, StatsD</td></tr><tr><td>Auth integration</td><td>Deep OpenAM integration</td><td>OIDC plugin, JWT plugin, basic-auth, key-auth, LDAP</td></tr><tr><td>Rate limiting</td><td><code dir="auto">RateLimitFilter</code>, <code dir="auto">ThrottlingFilter</code></td><td>Advanced rate limiting (sliding window, fixed window, local/cluster)</td></tr><tr><td>Service mesh</td><td>None</td><td>Kong Mesh (Envoy-based, Kuma)</td></tr><tr><td>Kubernetes</td><td>Manual WAR containerization</td><td>Kong Ingress Controller, Helm charts, Operator</td></tr><tr><td>Community</td><td>Small (OIP ecosystem)</td><td>Large (300+ contributors, 40k+ GitHub stars)</td></tr><tr><td>Credential replay</td><td>Native (<code dir="auto">CredentialReplayFilter</code>)</td><td>Not native; requires custom Lua plugin</td></tr><tr><td>License</td><td>CDDL 1.0</td><td>Apache 2.0 (OSS), proprietary (Enterprise)</td></tr></tbody></table>
+<p>Kong excels where OpenIG falls short: performance, observability, ecosystem breadth, and Kubernetes-native deployment. OpenIG’s advantage is limited to credential replay and deep OIP stack integration.</p>
+<h3 id="52-openig-vs-envoy--istio">5.2 OpenIG vs Envoy / Istio</h3>
+<p><strong>Envoy</strong> is a high-performance L4/L7 proxy designed for service mesh deployments. <strong>Istio</strong> is the most widely adopted service mesh control plane, using Envoy as its data plane sidecar.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenIG</th><th>Envoy / Istio</th></tr></thead><tbody><tr><td>Deployment model</td><td>Centralized reverse proxy</td><td>Sidecar proxy per service (or ambient mode)</td></tr><tr><td>Protocol support</td><td>HTTP/1.1, HTTPS</td><td>HTTP/1.1, HTTP/2, gRPC, TCP, UDP, WebSocket</td></tr><tr><td>Auth integration</td><td>OpenAM session validation, OAuth2, SAML</td><td>External AuthZ (OPA, custom gRPC service), JWT validation</td></tr><tr><td>mTLS</td><td>Via servlet container TLS config</td><td>Automatic mTLS between all services (Istio)</td></tr><tr><td>Observability</td><td>Basic</td><td>Built-in distributed tracing, metrics, access logs</td></tr><tr><td>Configuration</td><td>JSON route files</td><td>xDS API (dynamic), YAML (static)</td></tr><tr><td>Performance</td><td>Moderate</td><td>Very high (C++, event-driven, zero-copy)</td></tr><tr><td>Identity model</td><td>User identity (SSO tokens, headers)</td><td>Workload identity (SPIFFE SVIDs, mTLS certificates)</td></tr><tr><td>Credential replay</td><td>Native</td><td>Not applicable (different problem domain)</td></tr></tbody></table>
+<p>Envoy and Istio operate at a different architectural layer than OpenIG. They solve the service-to-service communication problem with mTLS, workload identity, and traffic management. OpenIG solves the user-to-application authentication mediation problem. In a modern architecture, both concerns may exist simultaneously: Istio handles east-west traffic, while an API gateway (Kong, Traefik, or conceivably OpenIG) handles north-south traffic.</p>
+<h3 id="53-openig-vs-aws-api-gateway">5.3 OpenIG vs AWS API Gateway</h3>
+<p><strong>AWS API Gateway</strong> is a fully managed service for creating, publishing, and managing APIs at any scale.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenIG</th><th>AWS API Gateway</th></tr></thead><tbody><tr><td>Deployment</td><td>Self-hosted (WAR)</td><td>Fully managed (AWS)</td></tr><tr><td>Scaling</td><td>Manual (cluster + load balancer)</td><td>Automatic (serverless)</td></tr><tr><td>Auth integration</td><td>OpenAM, OAuth2, SAML</td><td>Cognito, Lambda authorizers, IAM</td></tr><tr><td>Customization</td><td>Filters, scripts, EL</td><td>Lambda functions, VTL transforms</td></tr><tr><td>Protocol</td><td>HTTP/1.1</td><td>HTTP, WebSocket, REST, HTTP API</td></tr><tr><td>Pricing</td><td>Infrastructure cost only</td><td>Per-request ($1-3.50 per million)</td></tr><tr><td>Vendor lock-in</td><td>OIP stack coupling</td><td>AWS ecosystem lock-in</td></tr><tr><td>Credential replay</td><td>Native</td><td>Not available</td></tr></tbody></table>
+<p>AWS API Gateway is the pragmatic choice for AWS-native deployments. Its serverless scaling model eliminates capacity planning entirely. However, it provides no credential replay capability and ties the organization to the AWS ecosystem. OpenIG’s self-hosted model avoids cloud vendor lock-in but shifts operational burden to the deploying organization.</p>
+<h3 id="54-openig-vs-traefik">5.4 OpenIG vs Traefik</h3>
+<p><strong>Traefik</strong> is a Go-based edge router designed for automatic service discovery in containerized environments.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenIG</th><th>Traefik</th></tr></thead><tbody><tr><td>Language</td><td>Java</td><td>Go</td></tr><tr><td>Discovery</td><td>Manual route configuration</td><td>Auto-discovery (Docker, K8s, Consul, etc.)</td></tr><tr><td>Configuration</td><td>JSON files</td><td>Labels, YAML, TOML, dynamic providers</td></tr><tr><td>Let’s Encrypt</td><td>Manual TLS cert management</td><td>Automatic ACME certificate provisioning</td></tr><tr><td>Dashboard</td><td>None built-in</td><td>Real-time dashboard</td></tr><tr><td>Middleware</td><td>50+ Java filters</td><td>25+ Go middleware (chain of responsibility)</td></tr><tr><td>Kubernetes</td><td>Manual</td><td>Native Ingress Controller, CRDs, Helm</td></tr><tr><td>Auth</td><td>Deep OpenAM integration</td><td>ForwardAuth, BasicAuth, DigestAuth</td></tr><tr><td>Community</td><td>Small</td><td>Large (780+ contributors, 52k+ GitHub stars)</td></tr><tr><td>Credential replay</td><td>Native</td><td>Not native</td></tr></tbody></table>
+<p>Traefik’s auto-discovery capability — automatically detecting new services in Docker or Kubernetes and configuring routes — is a paradigm OpenIG does not address. For dynamic, containerized environments, Traefik requires less manual configuration. For static environments with legacy applications requiring credential replay, OpenIG remains relevant.</p>
+<h3 id="55-openig-vs-apisix">5.5 OpenIG vs APISIX</h3>
+<p><strong>Apache APISIX</strong> is a high-performance, cloud-native API gateway built on Nginx and Lua (etcd-backed).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenIG</th><th>APISIX</th></tr></thead><tbody><tr><td>Language</td><td>Java</td><td>C (Nginx) + Lua</td></tr><tr><td>Performance</td><td>Moderate</td><td>Very high (Nginx event loop)</td></tr><tr><td>Configuration</td><td>JSON files</td><td>etcd-backed, Admin API, declarative YAML</td></tr><tr><td>Plugins</td><td>50+ filters</td><td>80+ plugins (auth, observability, traffic, serverless)</td></tr><tr><td>Service discovery</td><td>None</td><td>Consul, Nacos, Eureka, DNS, Kubernetes</td></tr><tr><td>Observability</td><td>Basic</td><td>Prometheus, Grafana, SkyWalking, Zipkin</td></tr><tr><td>Auth plugins</td><td>OpenAM, OAuth2, SAML</td><td>OIDC, JWT, key-auth, basic-auth, LDAP, wolf-rbac</td></tr><tr><td>gRPC</td><td>Not supported</td><td>Native gRPC proxying and transcoding</td></tr><tr><td>Community</td><td>Small</td><td>Active (Apache Top-Level Project, 600+ contributors)</td></tr></tbody></table>
+<p>APISIX offers comparable plugin breadth to Kong with Apache Foundation governance and no dual-licensing concerns. Like all general-purpose API gateways, it lacks credential replay.</p>
+<hr>
+<h2 id="6-the-gateway-evolution">6. The Gateway Evolution</h2>
+<p>The architectural role that OpenIG fills has evolved through four distinct generations:</p>
+<h3 id="generation-1-policy-agents-2000-2010">Generation 1: Policy Agents (2000-2010)</h3>
+<p>Sun Access Manager and early ForgeRock deployments used <strong>policy agents</strong> — lightweight native modules (C or Java) embedded directly in web servers (Apache httpd, IIS) or application servers (WebLogic, WebSphere, Tomcat). The agent intercepted requests at the container level, checked session cookies against the centralized policy decision point (OpenAM/OpenSSO), and enforced access decisions.</p>
+<p>Agents were fast (in-process, no network hop for request interception) but operationally burdensome: they required installation on every web server, version compatibility with specific web server releases, and coordinated upgrades across the fleet. A single agent bug could destabilize the hosting web server.</p>
+<h3 id="generation-2-reverse-proxy-gateways-2010-2018">Generation 2: Reverse Proxy Gateways (2010-2018)</h3>
+<p>OpenIG represents this generation. Instead of embedding agents in every web server, a dedicated reverse proxy sits in front of all protected applications. The proxy centralizes policy enforcement, eliminates per-server agent installation, and enables credential replay for legacy applications that cannot accommodate agents.</p>
+<p>This model traded the agent’s in-process performance for operational simplicity: one gateway to deploy, configure, and monitor instead of agents on every server. The tradeoff was acceptable because network latency between the gateway and backends (typically milliseconds on a LAN) was negligible compared to authentication processing time.</p>
+<h3 id="generation-3-api-gateways-2016-2022">Generation 3: API Gateways (2016-2022)</h3>
+<p>Kong, Traefik, AWS API Gateway, and APISIX shifted the gateway concept from identity-centric to API-centric. The gateway became the entry point for all API traffic, not just identity-related traffic. Authentication was one capability among many: rate limiting, request transformation, load balancing, circuit breaking, caching, and observability were equally important.</p>
+<p>This generation also introduced programmatic API management: developer portals, API keys, usage analytics, monetization, and lifecycle management. Identity was a plugin, not the raison d’etre.</p>
+<h3 id="generation-4-service-mesh-sidecars-2018-present">Generation 4: Service Mesh Sidecars (2018-Present)</h3>
+<p>Envoy, Istio, and Linkerd moved policy enforcement from a centralized gateway to per-service sidecar proxies. Every service instance gets its own proxy, which handles mTLS, authorization, load balancing, and observability. The sidecar model provides defense in depth — even if the outer gateway is bypassed, inter-service communication is authenticated and encrypted.</p>
+<p>Service meshes operate primarily on workload identity (SPIFFE SVIDs, Kubernetes service accounts) rather than user identity (SSO tokens, JWTs). They solve a different problem than OpenIG: east-west inter-service security rather than north-south user authentication.</p>
+<p><strong>The implication for OpenIG:</strong> modern architectures often require both an edge gateway (for user authentication, rate limiting, and API management) and a service mesh (for inter-service mTLS and authorization). OpenIG can serve as the edge gateway, but it competes against purpose-built tools with larger communities, better performance, and deeper integrations with cloud-native infrastructure.</p>
+<hr>
+<h2 id="7-credential-replay-openigs-unique-capability">7. Credential Replay: OpenIG’s Unique Capability</h2>
+<p>Credential replay is worth examining in detail because it is the one capability where OpenIG has no direct modern equivalent.</p>
+<h3 id="the-problem">The Problem</h3>
+<p>Many enterprise applications — particularly COTS (commercial off-the-shelf) software, ERP systems, mainframe web frontends, and internally built tools from the 2000s era — authenticate users via HTTP Basic, form-based login (POST to a login endpoint with username/password fields), or proprietary header-based authentication (e.g., <code dir="auto">X-Forwarded-User</code>). These applications cannot be modified to support OIDC or SAML because:</p>
+<ul>
+<li>The vendor no longer provides updates</li>
+<li>The source code is unavailable</li>
+<li>The application’s authentication module is deeply coupled to its internal architecture</li>
+<li>The cost of modification exceeds the application’s remaining business value</li>
+</ul>
+<h3 id="how-openig-solves-it">How OpenIG Solves It</h3>
+<p>OpenIG’s credential replay pipeline works as follows, using the OAuth2-to-HTTP-Basic scenario as a representative example:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">1. User presents OAuth2 bearer token to OpenIG</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">2. OAuth2ResourceServerFilter validates token (introspection or JWT verification)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">3. Filter extracts user identity: attributes['userId'] = "john"</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">4. CredentialReplayFilter reads attributes['userId']</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">5. Filter looks up credentials from secure store (vault, database, or attribute mapping)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">6. Filter adds header: Authorization: Basic base64("john:password123")</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">7. Request forwarded to backend with injected HTTP Basic credentials</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">8. Backend validates credentials (unaware of OAuth2 or OpenIG)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">9. Response returns through filter chain</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">10. CredentialReplayFilter optionally strips auth header from response</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="1. User presents OAuth2 bearer token to OpenIG2. OAuth2ResourceServerFilter validates token (introspection or JWT verification)3. Filter extracts user identity: attributes[&#x27;userId&#x27;] = &#x22;john&#x22;4. CredentialReplayFilter reads attributes[&#x27;userId&#x27;]5. Filter looks up credentials from secure store (vault, database, or attribute mapping)6. Filter adds header: Authorization: Basic base64(&#x22;john:password123&#x22;)7. Request forwarded to backend with injected HTTP Basic credentials8. Backend validates credentials (unaware of OAuth2 or OpenIG)9. Response returns through filter chain10. CredentialReplayFilter optionally strips auth header from response"><div></div></button></div></figure></div>
+<p>Credential sources include context attributes, session state, external vaults (HashiCorp Vault, AWS Secrets Manager), and database lookups (<code dir="auto">SqlAttributesFilter</code>). Supported injection schemes include HTTP Basic (<code dir="auto">Authorization: Basic</code>), bearer tokens (<code dir="auto">Authorization: Bearer</code>), form POST (injecting form fields into request body), and custom headers (<code dir="auto">X-API-Key</code>, <code dir="auto">X-Forwarded-User</code>).</p>
+<h3 id="when-credential-replay-is-needed">When Credential Replay Is Needed</h3>
+<p>Credential replay is a transitional technology. It is appropriate when:</p>
+<ul>
+<li>An organization is modernizing its authentication infrastructure (moving to OIDC/SAML) but cannot modify all downstream applications simultaneously</li>
+<li>Legacy applications have a defined end-of-life but must remain operational during the migration period</li>
+<li>The application is vendor-managed and the vendor does not support modern authentication standards</li>
+<li>The application handles low-sensitivity data where the security implications of credential replay (passwords in transit, stored credentials) are acceptable given compensating controls (TLS, vault-based secret management, audit logging)</li>
+</ul>
+<p>Credential replay is not appropriate as a permanent architecture. The stored credentials create a secret management burden, the replayed credentials are vulnerable to interception if TLS is misconfigured, and the pattern masks authentication failures (the backend sees valid credentials even if the upstream token was fraudulently obtained).</p>
+<h3 id="modern-alternatives-to-credential-replay">Modern Alternatives to Credential Replay</h3>
+<p>Where credential replay can be avoided, organizations have better options:</p>
+<ul>
+<li><strong>Header-based identity propagation</strong>: Backend trusts a header (<code dir="auto">X-Forwarded-User</code>) set by the gateway. Simpler than full credential replay but requires the backend to accept header-based identity.</li>
+<li><strong>Token exchange (RFC 8693)</strong>: Exchange the upstream token for a downstream token that the backend understands.</li>
+<li><strong>Application modernization</strong>: Add OIDC support to the backend via a library (if source code is available).</li>
+<li><strong>Application wrapping</strong>: Deploy a sidecar or adapter that handles OIDC authentication and exposes a simpler auth interface to the legacy application.</li>
+</ul>
+<hr>
+<h2 id="8-production-deployment-topology">8. Production Deployment Topology</h2>
+<p>OpenIG’s design assumes a centralized reverse proxy deployment, which maps cleanly to a DMZ-based topology. Understanding this deployment model is essential for evaluating migration costs and operational trade-offs.</p>
+<h3 id="dmz-reverse-proxy-pattern">DMZ Reverse Proxy Pattern</h3>
+<p>In a typical production deployment, OpenIG sits in the network DMZ as the sole externally reachable component. Backend applications — portals, REST APIs, legacy web apps — reside in an internal network segment unreachable from the internet. OpenIG terminates TLS, enforces authentication and authorization via OpenAM, and forwards authenticated requests to the appropriate backend based on route matching. This topology eliminates the need for policy agents on every backend server (the Generation 1 model described in Section 6) and centralizes security enforcement at a single chokepoint.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">Internet --> Load Balancer --> OpenIG (DMZ) --> Backend App 1 (internal)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">                                            </span></span><span style="--0:#d6deeb;--1:#403f53">--> Backend App 2 (internal)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">                                            </span></span><span style="--0:#d6deeb;--1:#403f53">--> OpenAM (internal, auth decisions)</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="Internet --> Load Balancer --> OpenIG (DMZ) --> Backend App 1 (internal)                                            --> Backend App 2 (internal)                                            --> OpenAM (internal, auth decisions)"><div></div></button></div></figure></div>
+<h3 id="horizontal-scaling-with-stateless-filter-chains">Horizontal Scaling with Stateless Filter Chains</h3>
+<p>OpenIG filter chains are stateless by default — request processing depends only on the incoming request, the route configuration, and external services (OpenAM, databases, vaults). This means multiple OpenIG instances can sit behind a standard HTTP load balancer (HAProxy, Nginx, AWS ALB) with no session affinity or inter-instance coordination required. The load balancer distributes requests round-robin; each OpenIG instance evaluates routes independently. Scaling is horizontal: add instances to increase throughput, remove them to reduce cost.</p>
+<p>The exception to statelessness is <code dir="auto">SessionFilter</code>, which binds session state to the OpenIG instance via a servlet HTTP session. Deployments using <code dir="auto">SessionFilter</code> require sticky sessions at the load balancer or an external session store (e.g., Redis via a custom filter). In practice, most production deployments avoid <code dir="auto">SessionFilter</code> in favor of passing all necessary state via tokens and headers, keeping the filter chain fully stateless.</p>
+<h3 id="route-based-configuration-and-hot-reload">Route-Based Configuration and Hot Reload</h3>
+<p>Routes are JSON files in the <code dir="auto">$OPENIG_BASE/config/routes/</code> directory. The <code dir="auto">RouterHandler</code> (in <code dir="auto">openig-core</code>) uses a <code dir="auto">DirectoryMonitor</code> that polls the routes directory on a configurable interval (default: 10 seconds). When a route file is added, modified, or deleted, <code dir="auto">RouterHandler</code> rebuilds its routing table without restarting the JVM or dropping in-flight requests. Routes are sorted lexicographically by filename and evaluated in order — a naming convention like <code dir="auto">01-api.json</code>, <code dir="auto">02-portal.json</code>, <code dir="auto">99-default.json</code> provides explicit ordering.</p>
+<p>This hot-reload capability enables a GitOps workflow: route files are stored in version control, pushed to the OpenIG instance via CI/CD, and take effect within the polling interval. No restart, no deployment artifact rebuild, no downtime.</p>
+<h3 id="openam-integration-for-policy-agent-replacement">OpenAM Integration for Policy Agent Replacement</h3>
+<p>The <code dir="auto">openig-openam</code> module provides <code dir="auto">PolicyEnforcementFilter</code> and <code dir="auto">SingleSignOnFilter</code> as drop-in replacements for legacy OpenAM policy agents. <code dir="auto">SingleSignOnFilter</code> validates the OpenAM SSO token (typically the <code dir="auto">iPlanetDirectoryPro</code> cookie) against OpenAM’s session service. <code dir="auto">PolicyEnforcementFilter</code> evaluates OpenAM access policies for the requested resource, returning allow/deny decisions. Together, these filters replicate the full policy agent lifecycle — session validation, policy evaluation, attribute injection — without requiring agent installation on each backend.</p>
+<p>This is the primary upgrade path for organizations migrating from per-server policy agents to a centralized gateway model: replace all agents with a single OpenIG deployment that performs the same authentication and authorization checks.</p>
+<h3 id="docker-deployment">Docker Deployment</h3>
+<p>OIP provides an official Dockerfile in the <code dir="auto">openig-docker/</code> module. The image is based on Tomcat 11 (JRE 25), deploys the OpenIG WAR as <code dir="auto">ROOT.war</code>, and exposes port 8080. The <code dir="auto">OPENIG_BASE</code> environment variable (<code dir="auto">/var/openig</code>) is the mount point for route configuration and keystores. A health check endpoint at <code dir="auto">/openig/</code> is configured with 30-second intervals.</p>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#919F9F;--1:#5F636F"># Build and run with custom routes</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">docker</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">build</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-t</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">openig:latest</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">OpenIG/openig-docker/</span></div></div><div class="ec-line"><div class="code"><span style="--0:#82AAFF;--1:#3B61B0">docker</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">run</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-d</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-p</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">8080:8080</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">-v</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">/path/to/routes:/var/openig/config/routes</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#ECC48D;--1:#3B61B0">openig:latest</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="docker build -t openig:latest OpenIG/openig-docker/docker run -d -p 8080:8080 -v /path/to/routes:/var/openig/config/routes openig:latest"><div></div></button></div></figure></div>
+<p>For Kubernetes deployments, the Docker image serves as the base, but no official Helm chart or Operator exists. Organizations must create their own Deployment, Service, and ConfigMap (for routes) resources. Liveness and readiness probes can target the <code dir="auto">/openig/</code> health endpoint.</p>
+<hr>
+<h2 id="9-migration-cost-analysis">9. Migration Cost Analysis</h2>
+<p>Migrating away from OpenIG is a common consideration for organizations seeking better performance, observability, or community support. The migration cost varies significantly depending on the target platform and the OpenIG features in use.</p>
+<h3 id="openig-to-kong">OpenIG to Kong</h3>
+<p><strong>Filter-to-plugin mapping.</strong> Most OpenIG filters have Kong plugin equivalents: <code dir="auto">OAuth2ResourceServerFilter</code> maps to Kong’s <code dir="auto">openid-connect</code> plugin, <code dir="auto">HeaderFilter</code> maps to <code dir="auto">request-transformer</code>, <code dir="auto">ThrottlingFilter</code> maps to <code dir="auto">rate-limiting</code>, and <code dir="auto">CookieFilter</code> maps to <code dir="auto">response-transformer</code>. The conceptual model is similar — both use an ordered chain of middleware units applied to matched routes.</p>
+<p><strong>Configuration gap.</strong> OpenIG routes are JSON files with an embedded Expression Language; Kong routes are configured via declarative YAML (decK), an Admin API, or database-backed entries. The migration requires translating EL expressions into Kong’s plugin configuration parameters or custom Lua logic. Kong has no EL equivalent — dynamic behavior requires Lua plugins or the Enterprise expression language.</p>
+<p><strong>Plugin development model.</strong> Where no built-in Kong plugin exists, custom plugins must be written in Lua (PDK), Go, Python, or JavaScript. This is a different skill set than OpenIG’s Java filters and Groovy scripts. Organizations with Java-heavy teams face a retraining cost.</p>
+<p><strong>Policy agent gap.</strong> Kong has no native equivalent to <code dir="auto">PolicyEnforcementFilter</code> or <code dir="auto">SingleSignOnFilter</code>. Integrating with OpenAM for centralized policy decisions requires a custom plugin that calls OpenAM’s REST API for session validation and policy evaluation. This is feasible but non-trivial to implement correctly, particularly around session caching and policy decision caching.</p>
+<h3 id="openig-to-traefik">OpenIG to Traefik</h3>
+<p><strong>Middleware mapping.</strong> Traefik’s middleware model is simpler than OpenIG’s filter chain. <code dir="auto">ForwardAuth</code> middleware can delegate authentication to an external service (including OpenAM), roughly replacing <code dir="auto">SingleSignOnFilter</code>. <code dir="auto">Headers</code> middleware replaces <code dir="auto">HeaderFilter</code>. <code dir="auto">RateLimit</code> middleware replaces <code dir="auto">ThrottlingFilter</code>. However, Traefik has fewer built-in middleware types than OpenIG has filters — the gap is filled by Traefik plugins (Go, WebAssembly) or by delegating to external services via <code dir="auto">ForwardAuth</code>.</p>
+<p><strong>Simpler but less capable.</strong> Traefik excels at auto-discovery and TLS management but has a shallower identity feature set than OpenIG. There is no built-in OAuth2 resource server filter, no SAML federation handler, and no credential replay. Organizations using OpenIG primarily as a simple reverse proxy with header injection will find Traefik a straightforward replacement. Organizations using OAuth2 validation, SAML, or credential replay will find significant gaps.</p>
+<h3 id="openig-to-envoy--ext_authz">OpenIG to Envoy + ext_authz</h3>
+<p><strong>Architecture shift.</strong> Envoy uses an <code dir="auto">ext_authz</code> filter that delegates authorization decisions to an external gRPC or HTTP service. This pattern can replicate OpenIG’s <code dir="auto">PolicyEnforcementFilter</code> by pointing <code dir="auto">ext_authz</code> at an authorization service that calls OpenAM. The architecture is more modern (sidecar-compatible, gRPC-native, xDS-driven) but requires building and maintaining the external authorization service — a component that OpenIG provides out of the box.</p>
+<p><strong>Sidecar vs. gateway trade-off.</strong> Envoy is designed as a sidecar proxy (one instance per service) rather than a centralized gateway. Using Envoy as a centralized edge proxy is possible but not its primary deployment model. Organizations migrating from OpenIG’s centralized gateway pattern to Envoy’s sidecar pattern face a fundamental architectural change, not just a tool swap.</p>
+<p><strong>WebAssembly extensibility.</strong> Envoy supports Wasm filters for custom logic, which could theoretically implement credential replay. However, Wasm filters run in a sandbox with limited I/O capabilities — calling external vaults or databases for credential lookups is more constrained than in OpenIG’s Java environment.</p>
+<h3 id="key-risk-credential-replay-has-no-modern-equivalent">Key Risk: Credential Replay Has No Modern Equivalent</h3>
+<p>The hardest feature to replace in any migration is <code dir="auto">PasswordReplayFilter</code> (located in <code dir="auto">openig-core</code> as <code dir="auto">PasswordReplayFilterHeaplet</code>). This filter authenticates users via modern protocols and then replays credentials (HTTP Basic, form POST, custom headers) to legacy backends. No modern API gateway — Kong, Traefik, Envoy, APISIX, or AWS API Gateway — provides this capability natively. Replacing it requires:</p>
+<ol>
+<li><strong>Custom plugin development</strong> in the target gateway (Lua for Kong, Go for Traefik, Wasm for Envoy) that replicates the credential lookup, injection, and session management logic.</li>
+<li><strong>Secure credential storage integration</strong> — the custom plugin must retrieve credentials from a vault or database, adding a dependency that OpenIG handles transparently via <code dir="auto">SqlAttributesFilter</code> and <code dir="auto">ScriptableFilter</code>.</li>
+<li><strong>Form POST replay logic</strong> — for applications that authenticate via HTML form submission, the plugin must construct and submit a POST request with the correct form fields, follow redirects, and capture session cookies. This is brittle, application-specific logic that is notoriously difficult to maintain.</li>
+</ol>
+<p>Organizations with a significant estate of legacy applications behind <code dir="auto">PasswordReplayFilter</code> should treat credential replay as the binding constraint in any migration decision. The migration cannot proceed until either (a) legacy applications are modernized to accept header-based identity or token-based auth, or (b) a custom credential replay plugin is built and validated for the target gateway.</p>
+<hr>
+<h2 id="10-codebase-navigation-guide">10. Codebase Navigation Guide</h2>
+<p>For developers and architects who need to read, extend, or understand OpenIG’s internals, the following guide maps key capabilities to their source locations within the <code dir="auto">OpenIG/</code> repository.</p>
+<h3 id="openig-core-router-and-pipeline-engine">openig-core: Router and Pipeline Engine</h3>
+<p>The core module at <code dir="auto">OpenIG/openig-core/</code> contains the filter/handler pipeline, route management, and all general-purpose filters. Key entry points:</p>
+<ul>
+<li><strong><code dir="auto">handler/router/RouterHandler.java</code></strong> — the central routing engine. Loads route JSON files from disk, monitors the directory for changes via <code dir="auto">DirectoryMonitor</code>, and dispatches requests to the first matching route. Routes are sorted via <code dir="auto">LexicographicalRouteComparator</code> and evaluated in order.</li>
+<li><strong><code dir="auto">handler/router/Route.java</code></strong> and <strong><code dir="auto">RouteBuilder.java</code></strong> — parse individual route JSON files into executable filter/handler chains. Each route is an isolated heap (dependency injection container) with its own filter instances.</li>
+<li><strong><code dir="auto">filter/PasswordReplayFilterHeaplet.java</code></strong> — the credential replay filter that injects legacy credentials into upstream requests. This is the filter with no modern equivalent, as discussed in Sections 7 and 9.</li>
+<li><strong><code dir="auto">filter/ScriptableFilter.java</code></strong> and <strong><code dir="auto">handler/ScriptableHandler.java</code></strong> — Groovy/JavaScript extensibility points. Scripts have access to the full <code dir="auto">Context</code>, <code dir="auto">Request</code>, and <code dir="auto">Response</code> objects.</li>
+<li><strong><code dir="auto">filter/SwitchFilter.java</code></strong> — conditional routing within a filter chain, enabling if/else branching based on EL expressions.</li>
+<li><strong><code dir="auto">el/</code></strong> — the Expression Language engine that evaluates <code dir="auto">${...}</code> expressions in route configurations at runtime.</li>
+</ul>
+<h3 id="openig-oauth2-oauth-20-resource-server-and-client">openig-oauth2: OAuth 2.0 Resource Server and Client</h3>
+<p>Located at <code dir="auto">OpenIG/openig-oauth2/</code>, this module provides OAuth2 token validation for protected APIs:</p>
+<ul>
+<li><strong><code dir="auto">OAuth2ResourceServerFilterHeaplet.java</code></strong> — configures the resource server filter that validates bearer tokens via introspection or JWT verification.</li>
+<li><strong><code dir="auto">client/</code></strong> — OAuth2 client logic for token introspection, UserInfo endpoint calls, and access token resolution.</li>
+<li><strong><code dir="auto">ScriptableAccessTokenResolver.java</code></strong> — allows custom Groovy/JS logic for non-standard token validation flows.</li>
+</ul>
+<h3 id="openig-saml-saml-20-federation">openig-saml: SAML 2.0 Federation</h3>
+<p>Located at <code dir="auto">OpenIG/openig-saml/</code>, this module enables OpenIG to act as a SAML Service Provider:</p>
+<ul>
+<li><strong><code dir="auto">handler/saml/SamlFederationHandler.java</code></strong> — handles SAML SSO flows (AuthnRequest, Assertion consumption, artifact resolution). Parses SAML assertions and populates session attributes with identity information for downstream filters to consume.</li>
+<li><strong><code dir="auto">handler/saml/RequestAdapter.java</code></strong> and <strong><code dir="auto">ResponseAdapter.java</code></strong> — bridge OpenIG’s HTTP request/response model to the SAML library’s servlet API expectations.</li>
+</ul>
+<h3 id="openig-openam-policy-enforcement-pep">openig-openam: Policy Enforcement (PEP)</h3>
+<p>Located at <code dir="auto">OpenIG/openig-openam/</code>, this module provides the OpenAM-specific integration filters:</p>
+<ul>
+<li><strong><code dir="auto">openam/PolicyEnforcementFilter.java</code></strong> — the Policy Enforcement Point (PEP). Evaluates OpenAM access policies for the requested resource and either allows or denies the request. Populates <code dir="auto">PolicyDecisionContext</code> with the decision details.</li>
+<li><strong><code dir="auto">openam/SingleSignOnFilter.java</code></strong> — validates OpenAM SSO tokens (the <code dir="auto">iPlanetDirectoryPro</code> cookie) and populates <code dir="auto">SsoTokenContext</code> with session attributes.</li>
+<li><strong><code dir="auto">openam/TokenTransformationFilter.java</code></strong> — transforms tokens via OpenAM’s Security Token Service (STS), enabling protocol bridging (e.g., OIDC-to-SAML token exchange).</li>
+<li><strong><code dir="auto">openam/HeadlessAuthenticationFilter.java</code></strong> — authenticates programmatically against OpenAM without browser redirects, useful for API-to-API credential exchange.</li>
+</ul>
+<h3 id="openig-doc-route-configuration-examples">openig-doc: Route Configuration Examples</h3>
+<p>Located at <code dir="auto">OpenIG/openig-doc/src/main/docbkx/gateway-guide/</code>, this directory contains reference route configurations demonstrating common patterns:</p>
+<ul>
+<li><strong><code dir="auto">loginSimple.json</code></strong> — basic form-based login replay to a backend application.</li>
+<li><strong><code dir="auto">loginMixed.json</code></strong> — combines multiple authentication methods in a single route.</li>
+<li><strong><code dir="auto">loginAMHeaders.json</code></strong> — injects OpenAM session attributes as headers for the backend.</li>
+<li><strong><code dir="auto">loginHiddenValue.json</code></strong> — extracts hidden form fields from a login page before replaying credentials (handles CSRF tokens in legacy login forms).</li>
+<li><strong><code dir="auto">loginWithCookie.json</code></strong> and <strong><code dir="auto">loginWithCookieExtract.json</code></strong> — credential replay with cookie-based session management.</li>
+<li><strong><code dir="auto">OWAOnline.json</code></strong> — Outlook Web Access integration, a representative example of credential replay for a complex COTS application.</li>
+<li><strong><code dir="auto">capture.json</code></strong> — debugging route that logs full request/response details via <code dir="auto">CaptureFilter</code>.</li>
+<li><strong><code dir="auto">multipleApplications.json</code></strong> — demonstrates routing to multiple backends from a single OpenIG instance.</li>
+</ul>
+<p>These examples serve as practical templates for new route development and illustrate the credential replay patterns that are unique to OpenIG.</p>
+<hr>
+<h2 id="11-verdict">11. Verdict</h2>
+<p>OpenIG is a well-designed identity gateway whose architectural elegance — the composable filter/handler pipeline, declarative JSON configuration, and Promise-based async execution — compares favorably to any gateway framework from a software engineering perspective. The credential replay capability addresses a real enterprise problem that no modern API gateway solves natively.</p>
+<p>However, OpenIG faces headwinds on multiple fronts. Its Java-based deployment model is heavy for a proxy role. Its observability, Kubernetes integration, and community support lag far behind Kong, Envoy, Traefik, and APISIX. Its identity-centric positioning is a narrow niche in a market dominated by general-purpose API gateways.</p>
+<p><strong>For new greenfield deployments</strong>, there is little reason to choose OpenIG over a modern API gateway (Kong, Traefik, or APISIX) combined with standard OIDC/OAuth2 plugins. These tools offer superior performance, observability, Kubernetes integration, and community support.</p>
+<p><strong>For existing OIP deployments</strong> that rely on deep OpenAM integration and credential replay for legacy applications, OpenIG remains the most practical option. Replacing it requires either modernizing the legacy applications (eliminating the need for credential replay) or implementing custom credential replay logic in another gateway’s plugin system.</p>
+<p><strong>For credential replay specifically</strong>, OpenIG has no peer. Organizations with a significant estate of legacy applications that cannot support modern authentication should evaluate OpenIG for this capability alone, potentially deploying it behind a modern API gateway that handles rate limiting, observability, and general API management.</p>
+<p>The broader market trajectory is clear: centralized identity gateways are giving way to API gateways with identity plugins and service mesh sidecars with workload identity (see <a href="12-modern-architecture.md">Chapter 12: Modern Architecture Patterns</a>, Section 4). OpenIG’s future relevance depends on either its community adding modern integrations (OpenTelemetry, Kubernetes Operator, gRPC support) or its users migrating to general-purpose gateways as their legacy application estates shrink.</p> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-u2l5gyhi" dir="ltr"> <a href="/idp-research/openam-lineage/openidm/" rel="prev" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg> <span class="astro-u2l5gyhi"> Previous <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">OpenIDM Analysis</span> </span> </a> <a href="/idp-research/openam-lineage/openicf/" rel="next" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg> <span class="astro-u2l5gyhi"> Next <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">OpenICF Analysis</span> </span> </a> </div>   </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>

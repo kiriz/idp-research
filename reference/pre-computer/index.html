@@ -1,0 +1,441 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Pre-Computer Authentication History | IAM Deep Dive</title><link rel="canonical" href="https://kiriz.github.io/idp-research/reference/pre-computer/"/><link rel="sitemap" href="/idp-research/sitemap-index.xml"/><link rel="shortcut icon" href="/idp-research/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.1"/><meta name="generator" content="Starlight v0.33.2"/><meta property="og:title" content="Pre-Computer Authentication History"/><meta property="og:type" content="article"/><meta property="og:url" content="https://kiriz.github.io/idp-research/reference/pre-computer/"/><meta property="og:locale" content="en"/><meta property="og:description" content="5,000 years of authentication patterns — from Sumerian cylinder seals to medieval guild marks to Cold War spy tradecraft — and the timeless principles they reveal."/><meta property="og:site_name" content="IAM Deep Dive"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="5,000 years of authentication patterns — from Sumerian cylinder seals to medieval guild marks to Cold War spy tradecraft — and the timeless principles they reveal."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/idp-research/_astro/print.BJ0teN4y.css" media="print"><link rel="stylesheet" href="/idp-research/_astro/index.C9VqBXpQ.css">
+<style>:root{--sl-badge-default-border: var(--sl-color-accent);--sl-badge-default-bg: var(--sl-color-accent-low);--sl-badge-default-text: #fff;--sl-badge-note-border: var(--sl-color-blue);--sl-badge-note-bg: var(--sl-color-blue-low);--sl-badge-note-text: #fff;--sl-badge-danger-border: var(--sl-color-red);--sl-badge-danger-bg: var(--sl-color-red-low);--sl-badge-danger-text: #fff;--sl-badge-success-border: var(--sl-color-green);--sl-badge-success-bg: var(--sl-color-green-low);--sl-badge-success-text: #fff;--sl-badge-caution-border: var(--sl-color-orange);--sl-badge-caution-bg: var(--sl-color-orange-low);--sl-badge-caution-text: #fff;--sl-badge-tip-border: var(--sl-color-purple);--sl-badge-tip-bg: var(--sl-color-purple-low);--sl-badge-tip-text: #fff}[data-theme=light]:root{--sl-badge-default-bg: var(--sl-color-accent-high);--sl-badge-note-bg: var(--sl-color-blue-high);--sl-badge-danger-bg: var(--sl-color-red-high);--sl-badge-success-bg: var(--sl-color-green-high);--sl-badge-caution-bg: var(--sl-color-orange-high);--sl-badge-tip-bg: var(--sl-color-purple-high)}.sl-badge:where(.astro-avdet4wd){display:inline-block;border:1px solid var(--sl-color-border-badge);border-radius:.25rem;font-family:var(--sl-font-system-mono);line-height:normal;color:var(--sl-color-text-badge);background-color:var(--sl-color-bg-badge);overflow-wrap:anywhere}.sidebar-content .sl-badge:where(.astro-avdet4wd){line-height:1;font-size:var(--sl-text-xs);padding:.125rem .375rem}.sidebar-content a[aria-current=page]>.sl-badge:where(.astro-avdet4wd){--sl-color-bg-badge: transparent;--sl-color-border-badge: currentColor;color:inherit}.default:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-default-bg);--sl-color-border-badge: var(--sl-badge-default-border);--sl-color-text-badge: var(--sl-badge-default-text)}.note:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-note-bg);--sl-color-border-badge: var(--sl-badge-note-border);--sl-color-text-badge: var(--sl-badge-note-text)}.danger:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-danger-bg);--sl-color-border-badge: var(--sl-badge-danger-border);--sl-color-text-badge: var(--sl-badge-danger-text)}.success:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-success-bg);--sl-color-border-badge: var(--sl-badge-success-border);--sl-color-text-badge: var(--sl-badge-success-text)}.tip:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-tip-bg);--sl-color-border-badge: var(--sl-badge-tip-border);--sl-color-text-badge: var(--sl-badge-tip-text)}.caution:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-caution-bg);--sl-color-border-badge: var(--sl-badge-caution-border);--sl-color-text-badge: var(--sl-badge-caution-text)}.small:where(.astro-avdet4wd){font-size:var(--sl-text-xs);padding:.125rem .25rem}.medium:where(.astro-avdet4wd){font-size:var(--sl-text-sm);padding:.175rem .35rem}.large:where(.astro-avdet4wd){font-size:var(--sl-text-base);padding:.225rem .45rem}.sl-markdown-content :is(h1,h2,h3,h4,h5,h6) .sl-badge:where(.astro-avdet4wd){vertical-align:middle}
+.card:where(.astro-v5tidmuc){--sl-card-border: var(--sl-color-purple);--sl-card-bg: var(--sl-color-purple-low);border:1px solid var(--sl-color-gray-5);background-color:var(--sl-color-black);padding:clamp(1rem,calc(.125rem + 3vw),2.5rem);flex-direction:column;gap:clamp(.5rem,calc(.125rem + 1vw),1rem)}.card:where(.astro-v5tidmuc):nth-child(4n+1){--sl-card-border: var(--sl-color-orange);--sl-card-bg: var(--sl-color-orange-low)}.card:where(.astro-v5tidmuc):nth-child(4n+3){--sl-card-border: var(--sl-color-green);--sl-card-bg: var(--sl-color-green-low)}.card:where(.astro-v5tidmuc):nth-child(4n+4){--sl-card-border: var(--sl-color-red);--sl-card-bg: var(--sl-color-red-low)}.card:where(.astro-v5tidmuc):nth-child(4n+5){--sl-card-border: var(--sl-color-blue);--sl-card-bg: var(--sl-color-blue-low)}.title:where(.astro-v5tidmuc){font-weight:600;font-size:var(--sl-text-h4);color:var(--sl-color-white);line-height:var(--sl-line-height-headings);gap:1rem;align-items:center}.card:where(.astro-v5tidmuc) .icon:where(.astro-v5tidmuc){border:1px solid var(--sl-card-border);background-color:var(--sl-card-bg);padding:.2em;border-radius:.25rem}.card:where(.astro-v5tidmuc) .body:where(.astro-v5tidmuc){margin:0;font-size:clamp(var(--sl-text-sm),calc(.5rem + 1vw),var(--sl-text-body))}
+.card-grid:where(.astro-zntqmydn){display:grid;grid-template-columns:100%;gap:1rem}.card-grid:where(.astro-zntqmydn)>*{margin-top:0!important}@media(min-width:50rem){.card-grid:where(.astro-zntqmydn){grid-template-columns:1fr 1fr;gap:1.5rem}.stagger:where(.astro-zntqmydn){--stagger-height: 5rem;padding-bottom:var(--stagger-height)}.stagger:where(.astro-zntqmydn)>*:nth-child(2n){transform:translateY(var(--stagger-height))}}
+svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}
+.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}
+.sl-link-button:where(.astro-xwgiixxa){align-items:center;border:1px solid transparent;border-radius:999rem;display:inline-flex;font-size:var(--sl-text-sm);gap:.5em;line-height:1.1875;outline-offset:.25rem;padding:.4375rem 1.125rem;text-decoration:none}.sl-link-button:where(.astro-xwgiixxa).primary{background:var(--sl-color-text-accent);border-color:var(--sl-color-text-accent);color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).primary:hover{color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).secondary{border-color:inherit;color:var(--sl-color-white)}.sl-link-button:where(.astro-xwgiixxa).minimal{color:var(--sl-color-white);padding-inline:0}.sl-link-button:where(.astro-xwgiixxa) svg{flex-shrink:0}@media(min-width:50rem){.sl-link-button:where(.astro-xwgiixxa){font-size:var(--sl-text-base);padding:.9375rem 1.25rem}}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa){margin-inline-end:1rem}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa):not(:where(p *)){margin-block:1rem}
+</style><script type="module" src="/idp-research/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="page sl-flex astro-vrdttmbt"> <header class="header astro-vrdttmbt"><div class="header sl-flex astro-kmkmnagf"> <div class="title-wrapper sl-flex astro-kmkmnagf"> <a href="/idp-research/" class="site-title sl-flex astro-m46x6ez3">  <span class="astro-m46x6ez3" translate="no"> IAM Deep Dive </span> </a>  </div> <div class="sl-flex print:hidden astro-kmkmnagf"> <site-search class="astro-kmkmnagf astro-v37mnknz" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-v37mnknz"> <svg aria-hidden="true" class="astro-v37mnknz astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg> <span class="sl-hidden md:sl-block astro-v37mnknz" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-v37mnknz" style="display: none;"> <kbd class="astro-v37mnknz">Ctrl</kbd><kbd class="astro-v37mnknz">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-v37mnknz"> <div class="dialog-frame sl-flex astro-v37mnknz">  <button data-close-modal class="sl-flex md:sl-hidden astro-v37mnknz"> Cancel </button> <div class="search-container astro-v37mnknz"> <div id="starlight__search" class="astro-v37mnknz"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script> <script type="module" src="/idp-research/_astro/Search.astro_astro_type_script_index_0_lang.5f7Mm-QF.js"></script>   </div> <div class="sl-hidden md:sl-flex print:hidden right-group astro-kmkmnagf"> <div class="sl-flex social-icons astro-kmkmnagf"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script> <script type="module">const r="starlight-theme",o=e=>e==="auto"||e==="dark"||e==="light"?e:"auto",c=()=>o(typeof localStorage<"u"&&localStorage.getItem(r));function n(e){typeof localStorage<"u"&&localStorage.setItem(r,e==="light"||e==="dark"?e:"")}const l=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?l():e,n(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{c()==="auto"&&t("auto")});class s extends HTMLElement{constructor(){super(),t(c()),this.querySelector("select")?.addEventListener("change",a=>{a.currentTarget instanceof HTMLSelectElement&&t(o(a.currentTarget.value))})}}customElements.define("starlight-theme-select",s);</script> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </div> </header> <nav class="sidebar print:hidden astro-vrdttmbt" aria-label="Main"> <starlight-menu-button class="print:hidden astro-jif73yzw"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="open-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg> <svg aria-hidden="true" class="close-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg> </button> </starlight-menu-button> <script type="module">class s extends HTMLElement{constructor(){super(),this.btn=this.querySelector("button"),this.btn.addEventListener("click",()=>this.toggleExpanded());const t=this.closest("nav");t&&t.addEventListener("keyup",e=>this.closeOnEscape(e))}setExpanded(t){this.setAttribute("aria-expanded",String(t)),document.body.toggleAttribute("data-mobile-menu-expanded",t)}toggleExpanded(){this.setExpanded(this.getAttribute("aria-expanded")!=="true")}closeOnEscape(t){t.code==="Escape"&&(this.setExpanded(!1),this.btn.focus())}}customElements.define("starlight-menu-button",s);</script>   <div id="starlight__sidebar" class="sidebar-pane astro-vrdttmbt"> <div class="sidebar-content sl-flex astro-vrdttmbt"> <sl-sidebar-state-persist data-hash="0whlfhn" class="astro-kku4brbg"> <script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script>  <ul class="top-level astro-3ii7xxms"> <li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="0"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Overview</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/history/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">20-Year History of Open-Source IAM</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="1"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Protocol Deep Dives</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authentication/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authentication Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/federation/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Federation Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authorization/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authorization Frameworks</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/directory/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Directory Services</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/tokens/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Token Formats &amp; Sessions</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="2"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">OpenAM Lineage</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">The ForgeRock Story — OpenAM Lineage</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openam/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenAM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/opendj/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenDJ Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openidm/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIDM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openig/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIG Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openicf/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenICF Analysis</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="3"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Modern Landscape</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/modern-landscape/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Where IAM Is Today — Modern Landscape</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="4"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Decision Guide</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/comparison/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Platform Comparison Matrices</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/migration/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Migration Recommendations</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/lessons/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Lessons from History</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="5"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Reference Data</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/reference/protocols/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Protocol Inventory (40+ Protocols)</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/cve-history/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">CVE History &amp; Patch Matrix</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/git-analysis/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Git History Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/pre-computer/" aria-current="page" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Pre-Computer Authentication History</span>  </a> </li> </ul>  </details> </li> </ul>   <script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script> </sl-sidebar-state-persist>  <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-wu23bvmt"> <div class="sl-flex social-icons astro-wu23bvmt"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div>  </div> </div> </div> </nav> <div class="main-frame astro-vrdttmbt">  <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <div class="lg:sl-flex astro-67yu43on"> <aside class="right-sidebar-container print:hidden astro-67yu43on"> <div class="right-sidebar astro-67yu43on"> <script type="module" src="/idp-research/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C181hMzK.js"></script><script type="module" src="/idp-research/_astro/TableOfContents.astro_astro_type_script_index_0_lang.CKWWgpjV.js"></script><div class="lg:sl-hidden astro-pb3aqygn"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><div class="toggle sl-flex astro-doynk5tl">On this page<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></div><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#executive-summary" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Executive Summary</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#detailed-findings" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Detailed Findings</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#historical-trust-mechanisms" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Historical Trust Mechanisms</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#untranslated-patterns-academic-research" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Untranslated Patterns: Academic Research</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#summary-mapping-table" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Summary Mapping Table</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#known-gaps" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Known Gaps</span> </a>  </li> </ul> </div></details></nav></mobile-starlight-toc></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-pb3aqygn"><div class="sl-container astro-pb3aqygn"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#executive-summary" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Executive Summary</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#detailed-findings" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Detailed Findings</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#historical-trust-mechanisms" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Historical Trust Mechanisms</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#untranslated-patterns-academic-research" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Untranslated Patterns: Academic Research</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#summary-mapping-table" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Summary Mapping Table</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#known-gaps" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Known Gaps</span> </a>  </li> </ul> </nav></starlight-toc></div></div> </div> </aside> <div class="main-pane astro-67yu43on">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">Pre-Computer Authentication History</h1>  </div> </div>  <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content"> <h1 id="pre-computer-authentication--trust-mechanisms">Pre-Computer Authentication &#x26; Trust Mechanisms</h1>
+<h2 id="executive-summary">Executive Summary</h2>
+<p>Human societies have employed authentication and trust mechanisms for over 5,000 years, long before digital computers existed. This extract catalogs eleven historical mechanisms with verified citations, maps each to its modern IAM equivalent, and identifies “untranslated patterns” — trust models from antiquity that have no robust digital counterpart despite clear applicability. Key findings: (1) Most fundamental IAM concepts (bearer tokens, challenge-response, delegated trust, multi-factor verification, role-based access, non-repudiation) have direct historical antecedents predating computers by centuries or millennia. (2) At least six patterns remain under-digitized: progressive/competence-based trust escalation, community attestation, proximity-as-auth, ritual-as-multi-party-authorization, reputation decay over absence, and lineage/provenance chains. (3) Academic research on digitizing these patterns exists but is fragmented — continuous authentication and threshold cryptography are the most mature; social trust graphs and trust decay scoring remain largely theoretical. (4) The W3C Verifiable Credentials Data Model 2.0 (published 2025) and decentralized identity work represent the most promising vector for translating several of these ancient patterns into standards-based digital systems.</p>
+<h2 id="detailed-findings">Detailed Findings</h2>
+<h3 id="historical-trust-mechanisms">Historical Trust Mechanisms</h3>
+<h4 id="1-mesopotamian-cylinder-seals-3500500-bc">1. Mesopotamian Cylinder Seals (~3500–500 BC)</h4>
+<p><strong>Mechanism:</strong> Small stone cylinders carved in intaglio (reverse) with unique designs and inscriptions. Rolled across wet clay tablets or envelope surfaces to produce a raised impression that authenticated documents, goods containers, and legal agreements. Each seal was unique to its owner and carried personal identifiers including name, genealogy, profession, and hometown.</p>
+<p><strong>How it functioned as authentication:</strong></p>
+<ul>
+<li>The seal impression served as a tamper-evident personal signature — equivalent to signing one’s name</li>
+<li>Impressions on clay envelopes provided message integrity (breaking the envelope to read the tablet destroyed the seal impression)</li>
+<li>Unique carving made forgery difficult (analogous to private key uniqueness)</li>
+<li>Seal ownership was registered and socially recognized within administrative systems</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> Digital signatures, non-repudiation, PKI (the seal is the private key; the impression is the signature; social recognition of seal ownership parallels certificate authority trust)</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>Mark, Joshua J. “Cylinder Seals in Ancient Mesopotamia — Their History and Significance.” <em>World History Encyclopedia</em>, 2015. <a href="https://www.worldhistory.org/article/846/cylinder-seals-in-ancient-mesopotamia---their-hist/">https://www.worldhistory.org/article/846/cylinder-seals-in-ancient-mesopotamia---their-hist/</a></li>
+<li>Tanaka, Terri. “Mesopotamian Cylinder Seal Inscriptions.” Freer and Sackler Galleries, Smithsonian Institution. <a href="https://publications.asia.si.edu/seals/mesopotamian-cylinder-seal-inscriptions.php">https://publications.asia.si.edu/seals/mesopotamian-cylinder-seal-inscriptions.php</a></li>
+<li>Spurlock Museum, University of Illinois. “Mesopotamian Cylinder Seals Collection.” <a href="https://www.spurlock.illinois.edu/collections/notable-collections/profiles/cylinder-seals.html">https://www.spurlock.illinois.edu/collections/notable-collections/profiles/cylinder-seals.html</a></li>
+<li>“Signatures meant more in Mesopotamia than they do now — what cylinder seals say about ancient and modern life.” <em>Archaeology Magazine</em>, November 2025. <a href="https://archaeologymag.com/2025/11/what-cylinder-seals-say-about-ancient-and-modern-life/">https://archaeologymag.com/2025/11/what-cylinder-seals-say-about-ancient-and-modern-life/</a></li>
+</ul>
+<hr>
+<h4 id="2-roman-tessera-hospitalis-500-bc500-ad">2. Roman Tessera Hospitalis (~500 BC–500 AD)</h4>
+<p><strong>Mechanism:</strong> Small tokens of bronze, bone, or ivory, broken in two halves. Each party to a hospitality agreement kept one half. When a traveler presented their half, it was matched against the host’s half to authenticate the relationship. The agreement was hereditary — descendants could present ancestral tokens.</p>
+<p><strong>How it functioned as authentication:</strong></p>
+<ul>
+<li>Physical token possession proved membership in a trust relationship (bearer token)</li>
+<li>The break pattern was unique and unmatchable by forgery (shared secret)</li>
+<li>Tokens often bore the image of Jupiter Hospitalis as an authority stamp</li>
+<li>The system provided legal rights: representation in courts, protection, lodging</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> Bearer tokens (OAuth access tokens), hardware security tokens (FIDO keys), split-knowledge systems, session tokens. The hereditary aspect parallels token refresh chains and delegated authorization.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>Smith, William. “Tessera.” <em>A Dictionary of Greek and Roman Antiquities</em>, 1875. LacusCurtius/University of Chicago. <a href="https://penelope.uchicago.edu/Thayer/E/Roman/Texts/secondary/SMIGRA*/Tessera.html">https://penelope.uchicago.edu/Thayer/E/Roman/Texts/secondary/SMIGRA*/Tessera.html</a></li>
+<li>Smith, William. “Hospitium.” <em>A Dictionary of Greek and Roman Antiquities</em>, 1875. <a href="https://penelope.uchicago.edu/Thayer/E/Roman/Texts/secondary/SMIGRA*/Hospitium.html">https://penelope.uchicago.edu/Thayer/E/Roman/Texts/secondary/SMIGRA*/Hospitium.html</a></li>
+<li>“Hospitium.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Hospitium">https://en.wikipedia.org/wiki/Hospitium</a></li>
+<li>Crisà, A. “Tesseram conferre: Etruscan, Greek, Latin, and Celtiberian tesserae hospitales.” <em>Historia</em> 69, no. 4 (2020): 482–518. <a href="https://zaguan.unizar.es/record/128031/files/texto_completo.pdf">https://zaguan.unizar.es/record/128031/files/texto_completo.pdf</a></li>
+</ul>
+<hr>
+<h4 id="3-shibboleth-1200-bc">3. Shibboleth (~1200 BC)</h4>
+<p><strong>Mechanism:</strong> In the Book of Judges 12:5-6, the Gileadites used a linguistic challenge to identify fleeing Ephraimites at the Jordan River fords. Ephraimites could not pronounce the “sh” sound in “shibboleth” (meaning “ear of grain” or “stream”), instead saying “sibboleth.” This phonetic difference served as an unforgeable identity marker.</p>
+<p><strong>How it functioned as authentication:</strong></p>
+<ul>
+<li>Knowledge-based authentication via something inherent to the subject (accent/dialect)</li>
+<li>Binary pass/fail test with no partial credit</li>
+<li>Unforgeable: pronunciation habits are deeply ingrained and cannot be quickly faked</li>
+<li>Challenge-response format: guard issues challenge (“say shibboleth”), subject responds</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> Knowledge-based authentication (KBA), CAPTCHAs (distinguishing humans from bots via tasks easy for one group, hard for another), biometric voice authentication, linguistic analysis. The concept of testing an unforgeable characteristic maps to biometric factors.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>“Shibboleth.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Shibboleth">https://en.wikipedia.org/wiki/Shibboleth</a></li>
+<li>Kemmer, Suzanne. “Words in English: The Story of the Shibboleth.” Rice University. <a href="http://www.ruf.rice.edu/~kemmer/Words/shibboleth">http://www.ruf.rice.edu/~kemmer/Words/shibboleth</a></li>
+<li>Book of Judges 12:5-6, King James Bible. <a href="https://biblehub.com/judges/12-6.htm">https://biblehub.com/judges/12-6.htm</a></li>
+<li>“The long history, and short future, of the password.” <em>The Conversation</em>. <a href="https://theconversation.com/the-long-history-and-short-future-of-the-password-76690">https://theconversation.com/the-long-history-and-short-future-of-the-password-76690</a></li>
+</ul>
+<hr>
+<h4 id="4-wax-seals--signet-rings-ancient-egypt-through-medieval-period">4. Wax Seals &#x26; Signet Rings (Ancient Egypt through Medieval Period)</h4>
+<p><strong>Mechanism:</strong> Unique designs carved in intaglio on rings or stamps, pressed into heated wax to seal documents and letters. The wax formed a tamper-evident closure; breaking the seal to read the document destroyed the authentication mark. By the 13th century, all levels of European society used seals for business and personal correspondence.</p>
+<p><strong>How it functioned as authentication:</strong></p>
+<ul>
+<li>Message integrity: intact seal proved document had not been tampered with</li>
+<li>Sender authentication: unique heraldic design identified the sender</li>
+<li>Non-repudiation: seal impression served as legally binding signature</li>
+<li>Dual-control variants: some royal chanceries required both a seal and counter-seal held by different officials</li>
+<li>Color coding: different wax colors distinguished document types and jurisdictions</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> Private keys (signet ring = private key), digital signatures (wax impression = signature), message authentication codes (MAC), Hardware Security Modules (HSM — the ring is a physical device that never reveals the “key” pattern). The dual-seal requirement maps to multi-party signing and m-of-n approval workflows.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>“Seal (emblem).” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Seal_(emblem)">https://en.wikipedia.org/wiki/Seal_(emblem)</a></li>
+<li>“Signets and Wax Seals.” <em>Erica Weiner</em>. <a href="https://www.ericaweiner.com/history-lessons/signets-and-wax-seals">https://www.ericaweiner.com/history-lessons/signets-and-wax-seals</a></li>
+<li>“The History of Signet Rings.” <em>Victor Mayer</em>. <a href="https://www.victor-mayer.com/en/signet-rings/history/">https://www.victor-mayer.com/en/signet-rings/history/</a></li>
+<li>“Trust Seals: From Medieval Kings to Ecommerce Conversions.” <em>TrustSignals</em>. <a href="https://www.trustsignals.com/blog/trust-seals-from-medieval-kings-to-ecommerce">https://www.trustsignals.com/blog/trust-seals-from-medieval-kings-to-ecommerce</a></li>
+<li>“Seals of Identity.” <em>Historic St. Mary’s City Museum</em>. <a href="https://www.hsmcdigshistory.org/clues-to-early-maryland-21-seals-of-identity/">https://www.hsmcdigshistory.org/clues-to-early-maryland-21-seals-of-identity/</a></li>
+</ul>
+<hr>
+<h4 id="5-guild-master-marks--apprentice-progression-12th18th-century">5. Guild Master Marks &#x26; Apprentice Progression (12th–18th Century)</h4>
+<p><strong>Mechanism:</strong> Medieval craft guilds enforced a strict three-tier hierarchy: Apprentice → Journeyman → Master. Advancement required demonstrated competence (producing a “masterpiece”), peer assessment, time served (typically 7+ years as apprentice), and proven trustworthiness with trade secrets. Each tier granted incrementally greater privileges: apprentices learned only basic techniques, journeymen could work for pay, and masters could open workshops and train others.</p>
+<p><strong>How it functioned as authentication/authorization:</strong></p>
+<ul>
+<li>Role-based access: privileges strictly matched to demonstrated tier</li>
+<li>Progressive trust: secrets and techniques revealed only as trust was earned over time</li>
+<li>Peer attestation: advancement required vouching by existing members</li>
+<li>Competence verification: the “masterpiece” was a practical exam</li>
+<li>Revocation: non-cooperative behavior led to expulsion and loss of reputation</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> Role-Based Access Control (RBAC), graduated/progressive access escalation, peer review and attestation, competency-based authorization, professional certification systems.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>“Guilds in medieval Europe.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Guilds_in_medieval_Europe">https://en.wikipedia.org/wiki/Guilds_in_medieval_Europe</a></li>
+<li>“The Medieval Guild: Apprentice, Journeyman, and Master.” <em>Brewminate</em>, 2019. <a href="https://brewminate.com/the-medieval-guild-apprentice-journeyman-and-master/">https://brewminate.com/the-medieval-guild-apprentice-journeyman-and-master/</a></li>
+<li>“Mechanisms of Apprenticeship in Late Medieval Genoa.” <em>Annales de démographie historique</em>. <a href="https://journals.openedition.org/acrh/25438">https://journals.openedition.org/acrh/25438</a></li>
+<li>“Master.” <em>Encyclopædia Britannica</em>. <a href="https://www.britannica.com/topic/master-craft-guild">https://www.britannica.com/topic/master-craft-guild</a></li>
+</ul>
+<hr>
+<h4 id="6-royal-letters-of-introduction--safe-conduct-passes-12th-century-onward">6. Royal Letters of Introduction / Safe-Conduct Passes (12th Century onward)</h4>
+<p><strong>Mechanism:</strong> Official documents issued by a sovereign or authority granting the bearer safe passage through foreign jurisdictions. Contained: bearer’s identity, purpose of travel, destination/route, and the issuing authority’s seal or signature. The receiving state was obligated to honor the pass — violating safe conduct was a serious diplomatic offense.</p>
+<p><strong>How it functioned as authentication:</strong></p>
+<ul>
+<li>Delegated trust: the issuing sovereign vouched for the bearer to foreign authorities</li>
+<li>Scope-limited: passes applied only to specific jurisdictions and purposes</li>
+<li>Identity binding: named a specific individual with stated attributes</li>
+<li>Guarantor system: travelers could provide character references or pay bonds</li>
+<li>Revocable: safe conduct could be withdrawn</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> SAML assertions (identity provider vouches for user to service provider), OAuth delegation, federated identity (cross-domain trust), passports, JWT claims (scoped assertions about a subject). The jurisdiction-specific nature maps to SAML circle-of-trust and OIDC federation.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>“The Passport’s Medieval Forebear: Grants of Safe-conduct in Medieval Britain.” <em>Epoch Magazine</em>. <a href="https://www.epoch-magazine.com/post/the-passport-s-medieval-forebear-grants-of-safe-conduct-in-medieval-britain">https://www.epoch-magazine.com/post/the-passport-s-medieval-forebear-grants-of-safe-conduct-in-medieval-britain</a></li>
+<li>“Safe conduct.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Safe_conduct">https://en.wikipedia.org/wiki/Safe_conduct</a></li>
+<li>“Passports Through Time: From ‘Safe-Conduct Letters’ to Modern Documents.” <em>Ancient Origins</em>. <a href="https://www.ancient-origins.net/history/passports-0019508">https://www.ancient-origins.net/history/passports-0019508</a></li>
+<li>“Protection and Immunity in Later Medieval England.” Oxford University Research Archive. <a href="https://ora.ox.ac.uk/objects/uuid:68e9c5ec-48c7-4737-aa4d-173f0faec1b3">https://ora.ox.ac.uk/objects/uuid:68e9c5ec-48c7-4737-aa4d-173f0faec1b3</a></li>
+</ul>
+<hr>
+<h4 id="7-military-challenge-response-watchwords-ancient-through-modern">7. Military Challenge-Response Watchwords (Ancient through Modern)</h4>
+<p><strong>Mechanism:</strong> Sentries challenged approaching persons with a pre-arranged word or phrase; the correct counter-response proved authorization. Systems evolved from simple passwords (Roman “watchword” passed down from the commander) to structured challenge-response pairs (e.g., D-Day: challenge “Flash”, password “Thunder”, countersign “Welcome”). The U.S. military later developed DRYAD and AKAC-1553 cipher systems for radio authentication.</p>
+<p><strong>How it functioned as authentication:</strong></p>
+<ul>
+<li>Shared-secret verification: both parties must know the pre-arranged words</li>
+<li>Time-limited validity: watchwords changed daily or per-operation</li>
+<li>Multi-factor variants: some systems used mathematical challenges (challenge number + response number = pre-agreed sum)</li>
+<li>Steganographic embedding: passwords worked into sentences to hide them from eavesdroppers</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> Challenge-Response Authentication Mechanism (CRAM), SCRAM (Salted Challenge Response Authentication Mechanism), CHAP, time-based one-time passwords (TOTP), nonce-based protocols.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>“Countersign (military).” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Countersign_(military)">https://en.wikipedia.org/wiki/Countersign_(military)</a></li>
+<li>“Challenge-response authentication.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Challenge%E2%80%93response_authentication">https://en.wikipedia.org/wiki/Challenge%E2%80%93response_authentication</a></li>
+<li>“The Language of Espionage: Signs, Countersigns and Recognition.” <em>ITS Tactical</em>. <a href="https://www.itstactical.com/intellicom/tradecraft/the-language-of-espionage-signs-countersigns-and-recognition/">https://www.itstactical.com/intellicom/tradecraft/the-language-of-espionage-signs-countersigns-and-recognition/</a></li>
+<li>U.S. Army Security Studies, Lesson 3 (DRYAD/AKAC systems). <a href="https://www.globalsecurity.org/military/library/policy/army/accp/ss0002/le3.htm">https://www.globalsecurity.org/military/library/policy/army/accp/ss0002/le3.htm</a></li>
+</ul>
+<hr>
+<h4 id="8-split-key-banking--dual-control-medieval-through-modern">8. Split-Key Banking &#x26; Dual Control (Medieval through Modern)</h4>
+<p><strong>Mechanism:</strong> Critical assets (vaults, treasuries, safe deposits) required multiple key-holders acting simultaneously to gain access. No single individual possessed all necessary credentials. The practice formalized into the “two-man rule” in military and nuclear contexts, and “dual control” in banking. The main vault at Fort Knox requires multiple combinations held by different individuals.</p>
+<p><strong>How it functioned as authentication:</strong></p>
+<ul>
+<li>Threshold authorization: m-of-n parties required to authorize action</li>
+<li>Split knowledge: no single party has complete information</li>
+<li>Collusion resistance: compromise requires coordinating multiple independent actors</li>
+<li>Separation of duties: different roles hold different key fragments</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> Shamir’s Secret Sharing (Adi Shamir, 1979), multi-party computation (MPC), threshold cryptography (NIST standardization in progress, workshop January 2026), HSM key ceremonies, m-of-n approval workflows, nuclear launch authorization protocols.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>Shamir, Adi. “How to share a secret.” <em>Communications of the ACM</em> 22, no. 11 (1979): 612–613.</li>
+<li>“Shamir’s secret sharing.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing">https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing</a></li>
+<li>“Multi-Party Threshold Cryptography.” NIST Computer Security Resource Center. <a href="https://csrc.nist.gov/projects/threshold-cryptography">https://csrc.nist.gov/projects/threshold-cryptography</a></li>
+<li>“Split Knowledge and Dual Control: Safeguarding Your Payment Card Data.” <em>The Architect Guild</em>, 2024. <a href="https://thearchitectguild.com/2024/03/27/split-knowledge-and-dual-control-safeguarding-your-payment-card-data/">https://thearchitectguild.com/2024/03/27/split-knowledge-and-dual-control-safeguarding-your-payment-card-data/</a></li>
+<li>“A Comprehensive Survey of Threshold Digital Signatures.” <em>arXiv</em>, 2023. <a href="https://arxiv.org/html/2311.05514v2">https://arxiv.org/html/2311.05514v2</a></li>
+</ul>
+<hr>
+<h4 id="9-merchant-reputation-networks--silk-road--hanseatic-league-12th17th-century">9. Merchant Reputation Networks — Silk Road &#x26; Hanseatic League (12th–17th Century)</h4>
+<p><strong>Mechanism:</strong> The Hanseatic League (~1200–1669) was a network of ~200 merchant towns across Northern Europe. Trust operated through: common cultural identity and language, reciprocal trading relationships, reputation tracking via kontore (trading posts with judicial authority), and social/kinship networks. Sanctions for fraud ranged from reputation loss and expulsion to criminal penalties. Individual merchants maintained networks of 40–1,100+ trading partners built on personal relationships, not written contracts.</p>
+<p><strong>How it functioned as authentication/authorization:</strong></p>
+<ul>
+<li>Reputation-based trust: merchants earned access to trade networks through demonstrated reliability</li>
+<li>Decentralized verification: kontore in different cities independently verified merchant standing</li>
+<li>Social trust graph: relationships formed through family, apprenticeship, and repeated transactions</li>
+<li>Graduated trust: new merchants started with limited access, earned wider trade privileges</li>
+<li>Sanctions and revocation: fraudulent behavior led to expulsion from the network</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> Web of trust (PGP), decentralized identity (DID), reputation systems (eBay, Uber), social trust graphs, peer-to-peer credential networks. The kontore parallel decentralized verifiers in W3C Verifiable Credentials.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>“Hanseatic League.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Hanseatic_League">https://en.wikipedia.org/wiki/Hanseatic_League</a></li>
+<li>Schulte Beerbühl, Margrit. “Networks of the Hanseatic League.” <em>European History Online (EGO)</em>. <a href="https://www.ieg-ego.eu/en/threads/european-networks/economic-networks/margrit-schulte-beerbuehl-networks-of-the-hanseatic-league">https://www.ieg-ego.eu/en/threads/european-networks/economic-networks/margrit-schulte-beerbuehl-networks-of-the-hanseatic-league</a></li>
+<li>“Identity in Trade — Evidence from the Legacy of the Hanseatic League.” University of Heidelberg Working Paper. <a href="https://www.awi.uni-heidelberg.de/md/awi/professuren/amnpoe/01wpfr_updatehanse_102022.pdf">https://www.awi.uni-heidelberg.de/md/awi/professuren/amnpoe/01wpfr_updatehanse_102022.pdf</a></li>
+<li>“Institutions of Hanseatic Trade.” <em>OAPEN Library</em>. <a href="https://library.oapen.org/bitstream/id/571582cc-1258-4b26-8247-6b75f7e05fe0/1000248.pdf">https://library.oapen.org/bitstream/id/571582cc-1258-4b26-8247-6b75f7e05fe0/1000248.pdf</a></li>
+<li>“The rise and fall of the Hanseatic League.” <em>Works in Progress Magazine</em>. <a href="https://worksinprogress.co/issue/the-rise-and-fall-of-the-hanseatic-league/">https://worksinprogress.co/issue/the-rise-and-fall-of-the-hanseatic-league/</a></li>
+</ul>
+<hr>
+<h4 id="10-freemasonic-multi-step-initiation-rituals-17th-century-onward">10. Freemasonic Multi-Step Initiation Rituals (17th Century onward)</h4>
+<p><strong>Mechanism:</strong> Freemasonry employs a three-degree system — Entered Apprentice, Fellow Craft, Master Mason — each requiring separate initiation ceremonies. At each degree, the candidate takes new obligations and is entrusted with secret “modes of recognition”: specific handshakes (grips/tokens), passwords, and hand gestures (signs). Advancement requires: demonstrated proficiency (memorization, research papers), active participation, and minimum time between degrees (often one year).</p>
+<p><strong>How it functioned as authentication:</strong></p>
+<ul>
+<li>Multi-factor verification per degree: something you know (password), something you can do (grip/gesture), something you’ve demonstrated (proficiency)</li>
+<li>Progressive disclosure: secrets revealed only at each new level</li>
+<li>In-person verification: grips and signs require physical presence</li>
+<li>Peer gatekeeping: advancement depends on Lodge approval</li>
+<li>Revocation: members could be expelled, losing all recognition tokens</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> Multi-factor authentication (MFA), step-up authentication, progressive access escalation, in-person identity proofing (NIST IAL3), ceremony-based key management.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>“Freemasonry.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Freemasonry">https://en.wikipedia.org/wiki/Freemasonry</a></li>
+<li>“Masonic ritual and symbolism.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Masonic_ritual_and_symbolism">https://en.wikipedia.org/wiki/Masonic_ritual_and_symbolism</a></li>
+<li>Duncan, Malcolm C. <em>Duncan’s Masonic Ritual and Monitor</em>. <a href="https://sacred-texts.com/mas/dun/dun02.htm">https://sacred-texts.com/mas/dun/dun02.htm</a></li>
+<li>“Initiated, Passed, and Raised: Meaning in Freemasonry.” <em>MasonicFind</em>. <a href="https://masonicfind.com/initiated-passed-and-raised-meaning">https://masonicfind.com/initiated-passed-and-raised-meaning</a></li>
+<li>“The Ceremony of Initiation or First Degree: A QuickStart Guide.” Province of Berkshire, United Grand Lodge of England. <a href="https://www.berkspgl.org.uk/wp-content/uploads/2021/08/The-First-Degree-or-Ceremony-of-Initiation-A-QuickStart-Guide-bw.pdf">https://www.berkspgl.org.uk/wp-content/uploads/2021/08/The-First-Degree-or-Ceremony-of-Initiation-A-QuickStart-Guide-bw.pdf</a></li>
+</ul>
+<hr>
+<h4 id="11-diplomatic-pouches--courier-immunity-12th-century-onward-codified-1961">11. Diplomatic Pouches &#x26; Courier Immunity (12th Century onward, codified 1961)</h4>
+<p><strong>Mechanism:</strong> Diplomatic correspondence transported in sealed pouches by designated couriers who enjoy personal inviolability. The practice dates to 12th-century English King’s Messengers and was codified in Article 27 of the 1961 Vienna Convention on Diplomatic Relations: diplomatic bags cannot be opened or detained, and couriers are immune from arrest.</p>
+<p><strong>How it functioned as authentication/security:</strong></p>
+<ul>
+<li>End-to-end confidentiality: contents protected from origin to destination</li>
+<li>Tamper evidence: sealed pouches reveal if opened</li>
+<li>Courier authentication: designated individuals with diplomatic credentials</li>
+<li>Channel immunity: the transport medium itself is protected, not just the content</li>
+<li>Jurisdictional bypass: pouches cross borders without inspection</li>
+</ul>
+<p><strong>Modern IAM parallel:</strong> End-to-end encryption, TLS/mTLS transport security, secure enclaves (SGX, ARM TrustZone), diplomatic pouches as hardware security modules, VPN tunnels with certificate-based auth.</p>
+<p><strong>Citations:</strong></p>
+<ul>
+<li>“Diplomatic bag.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Diplomatic_bag">https://en.wikipedia.org/wiki/Diplomatic_bag</a></li>
+<li>“Diplomatic courier.” <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/Diplomatic_courier">https://en.wikipedia.org/wiki/Diplomatic_courier</a></li>
+<li>“Vienna Convention on Diplomatic Relations 1961.” United Nations. <a href="https://legal.un.org/ilc/texts/instruments/english/conventions/9_1_1961.pdf">https://legal.un.org/ilc/texts/instruments/english/conventions/9_1_1961.pdf</a></li>
+<li>“U.S. Diplomatic Couriers — Department History.” U.S. Department of State, Office of the Historian. <a href="https://history.state.gov/departmenthistory/diplomatic-couriers">https://history.state.gov/departmenthistory/diplomatic-couriers</a></li>
+<li>“12 FAM 140: Diplomatic Courier Documentation and Status.” U.S. Department of State. <a href="https://fam.state.gov/fam/12fam/12fam0140.html">https://fam.state.gov/fam/12fam/12fam0140.html</a></li>
+</ul>
+<hr>
+<h3 id="untranslated-patterns-academic-research">Untranslated Patterns: Academic Research</h3>
+<p>The following historical patterns have partial or no robust digital equivalents in modern IAM systems, despite clear applicability. For each, academic research and experimental systems are cited.</p>
+<h4 id="pattern-1-progressive-trust-guild-apprenticeship-model">Pattern 1: Progressive Trust (Guild Apprenticeship Model)</h4>
+<p><strong>Historical basis:</strong> Guild apprentice → journeyman → master progression over 7+ years, with secrets revealed incrementally based on demonstrated competence and peer trust.</p>
+<p><strong>Why it’s underused digitally:</strong> Modern RBAC grants full role access instantly upon assignment. Time-in-role and competence demonstration are rarely factors in authorization decisions.</p>
+<p><strong>Digital opportunity:</strong> Time-based + competence-based access escalation. New employees start with minimal permissions that expand as they demonstrate proficiency and accumulate trusted tenure.</p>
+<p><strong>Academic research:</strong></p>
+<ul>
+<li>Sandhu, Ravi et al. “Role-Based Access Control Models.” <em>IEEE Computer</em> 29, no. 2 (1996): 38–47. (Foundational RBAC paper; does not address progressive trust within roles)</li>
+<li>The concept of “trust levels” in NIST SP 800-63 Digital Identity Guidelines implicitly supports graduated assurance, but focuses on identity proofing rather than ongoing trust escalation</li>
+</ul>
+<h4 id="pattern-2-community-attestation--vouching">Pattern 2: Community Attestation / Vouching</h4>
+<p><strong>Historical basis:</strong> Hanseatic merchant networks, guild peer assessment, character references for medieval safe-conduct passes.</p>
+<p><strong>Why it’s underused digitally:</strong> Decentralized identity (W3C DIDs) exists technically but hasn’t solved usability. No mainstream IAM system allows “N peers vouch for this person’s access.”</p>
+<p><strong>Digital opportunity:</strong> Social trust graphs for authorization — access decisions that incorporate attestations from multiple trusted community members.</p>
+<p><strong>Academic research:</strong></p>
+<ul>
+<li>Kotsogiannis, I. et al. “Digital Identity: The Effect of Trust and Reputation Information on User Judgement in the Sharing Economy.” <em>PLOS One</em> 13, no. 12 (2018): e0209071. <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0209071">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0209071</a></li>
+<li>NIST IR 8149: “Developing Trust Frameworks to Support Identity Federations.” <a href="https://nvlpubs.nist.gov/nistpubs/ir/2018/nist.ir.8149.pdf">https://nvlpubs.nist.gov/nistpubs/ir/2018/nist.ir.8149.pdf</a></li>
+<li>W3C Verifiable Credentials Data Model v2.0 (2025): supports multi-issuer attestations but lacks native “N-of-M vouching” semantics. <a href="https://www.w3.org/TR/vc-data-model-2.0/">https://www.w3.org/TR/vc-data-model-2.0/</a></li>
+</ul>
+<h4 id="pattern-3-physical-proximity-as-trust-signal">Pattern 3: Physical Proximity as Trust Signal</h4>
+<p><strong>Historical basis:</strong> Freemasonic handshakes (physical presence required), in-person guild examinations, face-to-face diplomatic credential exchange.</p>
+<p><strong>Why it’s underused digitally:</strong> BLE/NFC proximity auth exists (e.g., Apple Watch unlock) but is not a standard IAM factor. No OAuth scope or SAML attribute represents “user is physically near trusted device.”</p>
+<p><strong>Digital opportunity:</strong> Proximity as a continuous authentication signal — combining location, Bluetooth beacons, and NFC for contextual access decisions.</p>
+<p><strong>Academic research:</strong></p>
+<ul>
+<li>Ehatisham-ul-Haq, M. et al. “Continuous user authentication on smartphone via behavioral biometrics: a survey.” <em>Multimedia Tools and Applications</em> 81 (2022): 34441–34481. <a href="https://link.springer.com/article/10.1007/s11042-022-13245-9">https://link.springer.com/article/10.1007/s11042-022-13245-9</a></li>
+<li>Mahbub, U. et al. “Behavioral Biometrics for Continuous Authentication in the Internet-of-Things Era.” <em>IEEE Internet of Things Journal</em> 7, no. 9 (2020): 8127–8141. <a href="https://ieeexplore.ieee.org/document/9121981/">https://ieeexplore.ieee.org/document/9121981/</a></li>
+<li>“Security, Privacy, and Usability in Continuous Authentication: A Survey.” <em>PMC</em> (2021). <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8434648/">https://pmc.ncbi.nlm.nih.gov/articles/PMC8434648/</a></li>
+</ul>
+<h4 id="pattern-4-ritual-as-multi-party-authorization">Pattern 4: Ritual as Multi-Party Authorization</h4>
+<p><strong>Historical basis:</strong> Freemasonic degree ceremonies requiring multiple officials, dual-seal royal documents, split-key vault openings.</p>
+<p><strong>Why it’s underused digitally:</strong> Threshold cryptography (Shamir’s Secret Sharing) exists mathematically since 1979, but no mainstream IAM system uses it natively for authorization decisions. Approval workflows exist (e.g., manager approval) but are single-party.</p>
+<p><strong>Digital opportunity:</strong> N-of-M approval workflows beyond simple manager approval — cryptographically enforced threshold authorization for sensitive operations.</p>
+<p><strong>Academic research:</strong></p>
+<ul>
+<li>“Multi-Party Threshold Cryptography.” NIST CSRC (standardization in progress, 2026). <a href="https://csrc.nist.gov/projects/threshold-cryptography">https://csrc.nist.gov/projects/threshold-cryptography</a></li>
+<li>Doerner, J. et al. “Secure Multiparty Computation of Threshold Signatures Made More Efficient.” <em>NDSS Symposium</em>, 2024. <a href="https://www.ndss-symposium.org/wp-content/uploads/2024-601-paper.pdf">https://www.ndss-symposium.org/wp-content/uploads/2024-601-paper.pdf</a></li>
+<li>Lindell, Y. “Secure Multiparty Computation (MPC).” <em>IACR ePrint</em> 2020/300. <a href="https://eprint.iacr.org/2020/300.pdf">https://eprint.iacr.org/2020/300.pdf</a></li>
+<li>“A Comprehensive Survey of Threshold Digital Signatures.” <em>arXiv</em> 2311.05514 (2023). <a href="https://arxiv.org/html/2311.05514v2">https://arxiv.org/html/2311.05514v2</a></li>
+</ul>
+<h4 id="pattern-5-reputation-decay-over-absence">Pattern 5: Reputation Decay Over Absence</h4>
+<p><strong>Historical basis:</strong> Hanseatic merchants who stopped trading lost standing. Guild members who stopped practicing lost rank. Military passwords expired daily. Diplomatic safe-conduct passes had expiration dates.</p>
+<p><strong>Why it’s underused digitally:</strong> Tokens expire (TTL), but no IAM system models trust erosion over inactivity. A user absent for 2 years retains the same role permissions as an active daily user.</p>
+<p><strong>Digital opportunity:</strong> Continuous trust scoring that degrades without reinforcement — access levels that decay when not actively exercised, requiring re-verification after periods of inactivity.</p>
+<p><strong>Academic research:</strong></p>
+<ul>
+<li>“A Review on Blockchain-Based Trust &#x26; Reputation.” <em>Preprints.org</em>, October 2025. Describes reputation decay functions: “older actions lose weight over time.” <a href="https://www.preprints.org/manuscript/202510.1172/v1/download">https://www.preprints.org/manuscript/202510.1172/v1/download</a></li>
+<li>Risk-based / adaptive authentication systems (e.g., ForgeRock AM’s “adaptive risk” module) partially implement this concept by considering session recency, but do not model long-term trust erosion across the identity lifecycle</li>
+</ul>
+<h4 id="pattern-6-lineageprovenance-chains">Pattern 6: Lineage/Provenance Chains</h4>
+<p><strong>Historical basis:</strong> Hereditary tessera hospitalis (Roman guest-tokens passed to descendants), guild apprentice lineages tracing back to original masters, royal letters of introduction specifying chains of authority.</p>
+<p><strong>Why it’s underused digitally:</strong> W3C Verifiable Credentials (2025) support delegation chains but adoption is nascent. Most IAM systems have no concept of “this access was granted by X, who was authorized by Y, who was authorized by Z.”</p>
+<p><strong>Digital opportunity:</strong> Identity chains that prove delegation history — every access grant traceable to an original authority through a cryptographically verifiable chain.</p>
+<p><strong>Academic research:</strong></p>
+<ul>
+<li>W3C. “Verifiable Credentials Lifecycle 1.0.” (Delegation of authority, subordinate issuers, chain validation). <a href="https://w3c-ccg.github.io/vc-lifecycle/">https://w3c-ccg.github.io/vc-lifecycle/</a></li>
+<li>W3C. “Verifiable Credentials Data Model v2.0.” W3C Recommendation, 2025. <a href="https://www.w3.org/TR/vc-data-model-2.0/">https://www.w3.org/TR/vc-data-model-2.0/</a></li>
+<li>Stockburger, L. et al. “A Survey on Decentralized Identifiers and Verifiable Credentials.” <em>arXiv</em> 2402.02455 (2024). <a href="https://arxiv.org/html/2402.02455v1">https://arxiv.org/html/2402.02455v1</a></li>
+<li>GS1. “Verifiable Credentials and Decentralised Identifiers: Technical Landscape.” 2025. <a href="https://ref.gs1.org/docs/2025/VCs-and-DIDs-tech-landscape">https://ref.gs1.org/docs/2025/VCs-and-DIDs-tech-landscape</a></li>
+</ul>
+<hr>
+<h3 id="summary-mapping-table">Summary Mapping Table</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Historical Mechanism</th><th>Era</th><th>Modern IAM Equivalent</th><th>Status</th></tr></thead><tbody><tr><td>Cylinder seals</td><td>~3500 BC</td><td>Digital signatures, PKI</td><td><strong>Solved</strong></td></tr><tr><td>Tessera hospitalis</td><td>~500 BC</td><td>Bearer tokens, OAuth tokens</td><td><strong>Solved</strong></td></tr><tr><td>Shibboleth</td><td>~1200 BC</td><td>KBA, CAPTCHAs, voice biometrics</td><td><strong>Solved</strong></td></tr><tr><td>Wax seals / signet rings</td><td>~3000 BC–present</td><td>Digital signatures, MACs, HSMs</td><td><strong>Solved</strong></td></tr><tr><td>Guild apprentice progression</td><td>12th–18th c.</td><td>RBAC (static only)</td><td><strong>Underused</strong> — no progressive trust</td></tr><tr><td>Safe-conduct passes</td><td>12th c.–present</td><td>SAML assertions, federation, JWT</td><td><strong>Solved</strong></td></tr><tr><td>Military watchwords</td><td>Ancient–present</td><td>CRAM, SCRAM, TOTP, nonces</td><td><strong>Solved</strong></td></tr><tr><td>Split-key vaults</td><td>Medieval–present</td><td>Shamir’s SS, MPC, threshold crypto</td><td><strong>Partially solved</strong> — not in IAM</td></tr><tr><td>Merchant reputation networks</td><td>12th–17th c.</td><td>Web of trust, DIDs</td><td><strong>Underused</strong> — no mainstream impl</td></tr><tr><td>Masonic multi-step rituals</td><td>17th c.–present</td><td>MFA, step-up auth</td><td><strong>Partially solved</strong> — no ceremony model</td></tr><tr><td>Diplomatic pouches</td><td>12th c.–present</td><td>E2E encryption, TLS, enclaves</td><td><strong>Solved</strong></td></tr></tbody></table>
+<h2 id="known-gaps">Known Gaps</h2>
+<ul>
+<li>Web search access was initially denied to the subagent; research was completed by the orchestrator using direct WebSearch. All citations have been verified through web search results.</li>
+<li>Renaissance-era split-key banking practices lack detailed primary sources in accessible online archives; the entry relies on the well-documented modern continuation (Fort Knox, nuclear two-man rule) rather than specific historical banking vault references.</li>
+<li>Academic papers on “untranslated patterns” are sparse for some categories (particularly pattern 5: reputation decay in IAM). The blockchain/DeFi literature provides the closest analogues.</li>
+</ul> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-u2l5gyhi" dir="ltr"> <a href="/idp-research/reference/git-analysis/" rel="prev" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg> <span class="astro-u2l5gyhi"> Previous <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">Git History Analysis</span> </span> </a>  </div>   </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>

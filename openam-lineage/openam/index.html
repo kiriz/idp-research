@@ -1,0 +1,1088 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>OpenAM Analysis | IAM Deep Dive</title><link rel="canonical" href="https://kiriz.github.io/idp-research/openam-lineage/openam/"/><link rel="sitemap" href="/idp-research/sitemap-index.xml"/><link rel="shortcut icon" href="/idp-research/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.1"/><meta name="generator" content="Starlight v0.33.2"/><meta property="og:title" content="OpenAM Analysis"/><meta property="og:type" content="article"/><meta property="og:url" content="https://kiriz.github.io/idp-research/openam-lineage/openam/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Deep analysis of OpenAM architecture: 34+ auth modules, SAML 2.0 IdP, OAuth 2.0 provider, XACML 3.0 engine. OIP vs Wren:AM fork comparison."/><meta property="og:site_name" content="IAM Deep Dive"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Deep analysis of OpenAM architecture: 34+ auth modules, SAML 2.0 IdP, OAuth 2.0 provider, XACML 3.0 engine. OIP vs Wren:AM fork comparison."/><script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg><svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg><svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg></template><link rel="stylesheet" href="/idp-research/_astro/print.BJ0teN4y.css" media="print"><link rel="stylesheet" href="/idp-research/_astro/index.C9VqBXpQ.css">
+<style>:root{--sl-badge-default-border: var(--sl-color-accent);--sl-badge-default-bg: var(--sl-color-accent-low);--sl-badge-default-text: #fff;--sl-badge-note-border: var(--sl-color-blue);--sl-badge-note-bg: var(--sl-color-blue-low);--sl-badge-note-text: #fff;--sl-badge-danger-border: var(--sl-color-red);--sl-badge-danger-bg: var(--sl-color-red-low);--sl-badge-danger-text: #fff;--sl-badge-success-border: var(--sl-color-green);--sl-badge-success-bg: var(--sl-color-green-low);--sl-badge-success-text: #fff;--sl-badge-caution-border: var(--sl-color-orange);--sl-badge-caution-bg: var(--sl-color-orange-low);--sl-badge-caution-text: #fff;--sl-badge-tip-border: var(--sl-color-purple);--sl-badge-tip-bg: var(--sl-color-purple-low);--sl-badge-tip-text: #fff}[data-theme=light]:root{--sl-badge-default-bg: var(--sl-color-accent-high);--sl-badge-note-bg: var(--sl-color-blue-high);--sl-badge-danger-bg: var(--sl-color-red-high);--sl-badge-success-bg: var(--sl-color-green-high);--sl-badge-caution-bg: var(--sl-color-orange-high);--sl-badge-tip-bg: var(--sl-color-purple-high)}.sl-badge:where(.astro-avdet4wd){display:inline-block;border:1px solid var(--sl-color-border-badge);border-radius:.25rem;font-family:var(--sl-font-system-mono);line-height:normal;color:var(--sl-color-text-badge);background-color:var(--sl-color-bg-badge);overflow-wrap:anywhere}.sidebar-content .sl-badge:where(.astro-avdet4wd){line-height:1;font-size:var(--sl-text-xs);padding:.125rem .375rem}.sidebar-content a[aria-current=page]>.sl-badge:where(.astro-avdet4wd){--sl-color-bg-badge: transparent;--sl-color-border-badge: currentColor;color:inherit}.default:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-default-bg);--sl-color-border-badge: var(--sl-badge-default-border);--sl-color-text-badge: var(--sl-badge-default-text)}.note:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-note-bg);--sl-color-border-badge: var(--sl-badge-note-border);--sl-color-text-badge: var(--sl-badge-note-text)}.danger:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-danger-bg);--sl-color-border-badge: var(--sl-badge-danger-border);--sl-color-text-badge: var(--sl-badge-danger-text)}.success:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-success-bg);--sl-color-border-badge: var(--sl-badge-success-border);--sl-color-text-badge: var(--sl-badge-success-text)}.tip:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-tip-bg);--sl-color-border-badge: var(--sl-badge-tip-border);--sl-color-text-badge: var(--sl-badge-tip-text)}.caution:where(.astro-avdet4wd){--sl-color-bg-badge: var(--sl-badge-caution-bg);--sl-color-border-badge: var(--sl-badge-caution-border);--sl-color-text-badge: var(--sl-badge-caution-text)}.small:where(.astro-avdet4wd){font-size:var(--sl-text-xs);padding:.125rem .25rem}.medium:where(.astro-avdet4wd){font-size:var(--sl-text-sm);padding:.175rem .35rem}.large:where(.astro-avdet4wd){font-size:var(--sl-text-base);padding:.225rem .45rem}.sl-markdown-content :is(h1,h2,h3,h4,h5,h6) .sl-badge:where(.astro-avdet4wd){vertical-align:middle}
+.card:where(.astro-v5tidmuc){--sl-card-border: var(--sl-color-purple);--sl-card-bg: var(--sl-color-purple-low);border:1px solid var(--sl-color-gray-5);background-color:var(--sl-color-black);padding:clamp(1rem,calc(.125rem + 3vw),2.5rem);flex-direction:column;gap:clamp(.5rem,calc(.125rem + 1vw),1rem)}.card:where(.astro-v5tidmuc):nth-child(4n+1){--sl-card-border: var(--sl-color-orange);--sl-card-bg: var(--sl-color-orange-low)}.card:where(.astro-v5tidmuc):nth-child(4n+3){--sl-card-border: var(--sl-color-green);--sl-card-bg: var(--sl-color-green-low)}.card:where(.astro-v5tidmuc):nth-child(4n+4){--sl-card-border: var(--sl-color-red);--sl-card-bg: var(--sl-color-red-low)}.card:where(.astro-v5tidmuc):nth-child(4n+5){--sl-card-border: var(--sl-color-blue);--sl-card-bg: var(--sl-color-blue-low)}.title:where(.astro-v5tidmuc){font-weight:600;font-size:var(--sl-text-h4);color:var(--sl-color-white);line-height:var(--sl-line-height-headings);gap:1rem;align-items:center}.card:where(.astro-v5tidmuc) .icon:where(.astro-v5tidmuc){border:1px solid var(--sl-card-border);background-color:var(--sl-card-bg);padding:.2em;border-radius:.25rem}.card:where(.astro-v5tidmuc) .body:where(.astro-v5tidmuc){margin:0;font-size:clamp(var(--sl-text-sm),calc(.5rem + 1vw),var(--sl-text-body))}
+.card-grid:where(.astro-zntqmydn){display:grid;grid-template-columns:100%;gap:1rem}.card-grid:where(.astro-zntqmydn)>*{margin-top:0!important}@media(min-width:50rem){.card-grid:where(.astro-zntqmydn){grid-template-columns:1fr 1fr;gap:1.5rem}.stagger:where(.astro-zntqmydn){--stagger-height: 5rem;padding-bottom:var(--stagger-height)}.stagger:where(.astro-zntqmydn)>*:nth-child(2n){transform:translateY(var(--stagger-height))}}
+svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}
+.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}
+.sl-link-button:where(.astro-xwgiixxa){align-items:center;border:1px solid transparent;border-radius:999rem;display:inline-flex;font-size:var(--sl-text-sm);gap:.5em;line-height:1.1875;outline-offset:.25rem;padding:.4375rem 1.125rem;text-decoration:none}.sl-link-button:where(.astro-xwgiixxa).primary{background:var(--sl-color-text-accent);border-color:var(--sl-color-text-accent);color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).primary:hover{color:var(--sl-color-black)}.sl-link-button:where(.astro-xwgiixxa).secondary{border-color:inherit;color:var(--sl-color-white)}.sl-link-button:where(.astro-xwgiixxa).minimal{color:var(--sl-color-white);padding-inline:0}.sl-link-button:where(.astro-xwgiixxa) svg{flex-shrink:0}@media(min-width:50rem){.sl-link-button:where(.astro-xwgiixxa){font-size:var(--sl-text-base);padding:.9375rem 1.25rem}}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa){margin-inline-end:1rem}.sl-markdown-content .sl-link-button:where(.astro-xwgiixxa):not(:where(p *)){margin-block:1rem}
+</style><script type="module" src="/idp-research/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="page sl-flex astro-vrdttmbt"> <header class="header astro-vrdttmbt"><div class="header sl-flex astro-kmkmnagf"> <div class="title-wrapper sl-flex astro-kmkmnagf"> <a href="/idp-research/" class="site-title sl-flex astro-m46x6ez3">  <span class="astro-m46x6ez3" translate="no"> IAM Deep Dive </span> </a>  </div> <div class="sl-flex print:hidden astro-kmkmnagf"> <site-search class="astro-kmkmnagf astro-v37mnknz" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-v37mnknz"> <svg aria-hidden="true" class="astro-v37mnknz astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z"/></svg> <span class="sl-hidden md:sl-block astro-v37mnknz" aria-hidden="true">Search</span> <kbd class="sl-hidden md:sl-flex astro-v37mnknz" style="display: none;"> <kbd class="astro-v37mnknz">Ctrl</kbd><kbd class="astro-v37mnknz">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-v37mnknz"> <div class="dialog-frame sl-flex astro-v37mnknz">  <button data-close-modal class="sl-flex md:sl-hidden astro-v37mnknz"> Cancel </button> <div class="search-container astro-v37mnknz"> <div id="starlight__search" class="astro-v37mnknz"></div> </div> </div> </dialog> </site-search>  <script>
+	(() => {
+		const openBtn = document.querySelector('button[data-open-modal]');
+		const shortcut = openBtn?.querySelector('kbd');
+		if (!openBtn || !(shortcut instanceof HTMLElement)) return;
+		const platformKey = shortcut.querySelector('kbd');
+		if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+			platformKey.textContent = '⌘';
+			openBtn.setAttribute('aria-keyshortcuts', 'Meta+K');
+		}
+		shortcut.style.display = '';
+	})();
+</script> <script type="module" src="/idp-research/_astro/Search.astro_astro_type_script_index_0_lang.5f7Mm-QF.js"></script>   </div> <div class="sl-hidden md:sl-flex print:hidden right-group astro-kmkmnagf"> <div class="sl-flex social-icons astro-kmkmnagf"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script> <script type="module">const r="starlight-theme",o=e=>e==="auto"||e==="dark"||e==="light"?e:"auto",c=()=>o(typeof localStorage<"u"&&localStorage.getItem(r));function n(e){typeof localStorage<"u"&&localStorage.setItem(r,e==="light"||e==="dark"?e:"")}const l=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?l():e,n(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{c()==="auto"&&t("auto")});class s extends HTMLElement{constructor(){super(),t(c()),this.querySelector("select")?.addEventListener("change",a=>{a.currentTarget instanceof HTMLSelectElement&&t(o(a.currentTarget.value))})}}customElements.define("starlight-theme-select",s);</script> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </div> </header> <nav class="sidebar print:hidden astro-vrdttmbt" aria-label="Main"> <starlight-menu-button class="print:hidden astro-jif73yzw"> <button aria-expanded="false" aria-label="Menu" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="open-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg> <svg aria-hidden="true" class="close-menu astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="m13.41 12 6.3-6.29a1.004 1.004 0 1 0-1.42-1.42L12 10.59l-6.29-6.3a1.004 1.004 0 0 0-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 0 0 0 1.42.998.998 0 0 0 1.42 0l6.29-6.3 6.29 6.3a.999.999 0 0 0 1.42 0 1 1 0 0 0 0-1.42L13.41 12Z"/></svg> </button> </starlight-menu-button> <script type="module">class s extends HTMLElement{constructor(){super(),this.btn=this.querySelector("button"),this.btn.addEventListener("click",()=>this.toggleExpanded());const t=this.closest("nav");t&&t.addEventListener("keyup",e=>this.closeOnEscape(e))}setExpanded(t){this.setAttribute("aria-expanded",String(t)),document.body.toggleAttribute("data-mobile-menu-expanded",t)}toggleExpanded(){this.setExpanded(this.getAttribute("aria-expanded")!=="true")}closeOnEscape(t){t.code==="Escape"&&(this.setExpanded(!1),this.btn.focus())}}customElements.define("starlight-menu-button",s);</script>   <div id="starlight__sidebar" class="sidebar-pane astro-vrdttmbt"> <div class="sidebar-content sl-flex astro-vrdttmbt"> <sl-sidebar-state-persist data-hash="0whlfhn" class="astro-kku4brbg"> <script aria-hidden="true">
+		(() => {
+			try {
+				if (!matchMedia('(min-width: 50em)').matches) return;
+				/** @type {HTMLElement | null} */
+				const target = document.querySelector('sl-sidebar-state-persist');
+				const state = JSON.parse(sessionStorage.getItem('sl-sidebar-state') || '0');
+				if (!target || !state || target.dataset.hash !== state.hash) return;
+				window._starlightScrollRestore = state.scroll;
+				customElements.define(
+					'sl-sidebar-restore',
+					class SidebarRestore extends HTMLElement {
+						connectedCallback() {
+							try {
+								const idx = parseInt(this.dataset.index || '');
+								const details = this.closest('details');
+								if (details && typeof state.open[idx] === 'boolean') details.open = state.open[idx];
+							} catch {}
+						}
+					}
+				);
+			} catch {}
+		})();
+	</script>  <ul class="top-level astro-3ii7xxms"> <li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="0"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Overview</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/history/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">20-Year History of Open-Source IAM</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="1"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Protocol Deep Dives</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authentication/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authentication Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/federation/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Federation Protocols</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/authorization/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Authorization Frameworks</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/directory/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Directory Services</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/protocols/tokens/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Token Formats &amp; Sessions</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="2"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">OpenAM Lineage</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">The ForgeRock Story — OpenAM Lineage</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openam/" aria-current="page" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenAM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/opendj/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenDJ Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openidm/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIDM Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openig/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenIG Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/openam-lineage/openicf/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">OpenICF Analysis</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="3"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Modern Landscape</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/modern-landscape/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Where IAM Is Today — Modern Landscape</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="4"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Decision Guide</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/comparison/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Platform Comparison Matrices</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/migration/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Migration Recommendations</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/decision-guide/lessons/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Lessons from History</span>  </a> </li> </ul>  </details> </li><li class="astro-3ii7xxms"> <details open class="astro-3ii7xxms"> <sl-sidebar-restore data-index="5"></sl-sidebar-restore> <summary class="astro-3ii7xxms"> <div class="group-label astro-3ii7xxms"> <span class="large astro-3ii7xxms">Reference Data</span>  </div> <svg aria-hidden="true" class="caret astro-3ii7xxms astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </summary> <ul class="astro-3ii7xxms"> <li class="astro-3ii7xxms"> <a href="/idp-research/reference/protocols/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Protocol Inventory (40+ Protocols)</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/cve-history/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">CVE History &amp; Patch Matrix</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/git-analysis/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Git History Analysis</span>  </a> </li><li class="astro-3ii7xxms"> <a href="/idp-research/reference/pre-computer/" aria-current="false" class="astro-3ii7xxms"> <span class="astro-3ii7xxms">Pre-Computer Authentication History</span>  </a> </li> </ul>  </details> </li> </ul>   <script aria-hidden="true">
+		(() => {
+			const scroller = document.getElementById('starlight__sidebar');
+			if (!window._starlightScrollRestore || !scroller) return;
+			scroller.scrollTop = window._starlightScrollRestore;
+			delete window._starlightScrollRestore;
+		})();
+	</script> </sl-sidebar-state-persist>  <div class="md:sl-hidden"> <div class="mobile-preferences sl-flex astro-wu23bvmt"> <div class="sl-flex social-icons astro-wu23bvmt"> <a href="https://github.com/kiriz/idp-research" rel="me" class="sl-flex astro-wy4te6ga"><span class="sr-only astro-wy4te6ga">GitHub</span><svg aria-hidden="true" class="astro-wy4te6ga astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <starlight-theme-select>  <label style="--sl-select-width: 6.25em" class="astro-4yphtoen"> <span class="sr-only astro-4yphtoen">Select theme</span> <svg aria-hidden="true" class="icon label-icon astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> <select value="auto" autocomplete="off" class="astro-4yphtoen"> <option value="dark" class="astro-4yphtoen">Dark</option><option value="light" class="astro-4yphtoen">Light</option><option value="auto" selected class="astro-4yphtoen">Auto</option> </select> <svg aria-hidden="true" class="icon caret astro-4yphtoen astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M17 9.17a1 1 0 0 0-1.41 0L12 12.71 8.46 9.17a1 1 0 1 0-1.41 1.42l4.24 4.24a1.002 1.002 0 0 0 1.42 0L17 10.59a1.002 1.002 0 0 0 0-1.42Z"/></svg> </label>  </starlight-theme-select>  <script>
+	StarlightThemeProvider.updatePickers();
+</script>   </div>  </div> </div> </div> </nav> <div class="main-frame astro-vrdttmbt">  <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <div class="lg:sl-flex astro-67yu43on"> <aside class="right-sidebar-container print:hidden astro-67yu43on"> <div class="right-sidebar astro-67yu43on"> <script type="module" src="/idp-research/_astro/MobileTableOfContents.astro_astro_type_script_index_0_lang.C181hMzK.js"></script><script type="module" src="/idp-research/_astro/TableOfContents.astro_astro_type_script_index_0_lang.CKWWgpjV.js"></script><div class="lg:sl-hidden astro-pb3aqygn"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><div class="toggle sl-flex astro-doynk5tl">On this page<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg></div><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#1-what-openam-does" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">1. What OpenAM Does</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2-architecture-overview" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2. Architecture Overview</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#authentication-chain-model" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Authentication Chain Model</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#session-management" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Session Management</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#policy-engine-xacml-30" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Policy Engine (XACML 3.0)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#oauth-20--oidc-provider" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OAuth 2.0 / OIDC Provider</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#plugin-spi" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Plugin SPI</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#authentication-module-inventory" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Authentication Module Inventory</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#fork-divergence-in-dependencies" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Fork Divergence in Dependencies</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#production-deployment-topology" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Production Deployment Topology</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#3-strengths" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">3. Strengths</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#4-weaknesses" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">4. Weaknesses</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#5-modern-alternatives-comparison" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">5. Modern Alternatives Comparison</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#51-openam-vs-keycloak" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.1 OpenAM vs Keycloak</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#52-openam-vs-auth0okta" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.2 OpenAM vs Auth0/Okta</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#53-openam-vs-aws-cognito" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.3 OpenAM vs AWS Cognito</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#54-openam-vs-ory-stack" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.4 OpenAM vs Ory Stack</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#55-openam-vs-zitadel" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.5 OpenAM vs Zitadel</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#56-migration-cost-analysis" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.6 Migration Cost Analysis</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#6-feature-gap-analysis" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">6. Feature Gap Analysis</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#what-openam-has-that-alternatives-lack" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">What OpenAM Has That Alternatives Lack</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#what-alternatives-have-that-openam-lacks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">What Alternatives Have That OpenAM Lacks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#the-protocol-gap-what-each-alternative-misses" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">The Protocol Gap: What Each Alternative Misses</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#7-build-vs-buy-decision-framework" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">7. Build-vs-Buy Decision Framework</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#when-openam-makes-sense" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">When OpenAM Makes Sense</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#when-alternatives-are-better" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">When Alternatives Are Better</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#migration-cost-considerations" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Migration Cost Considerations</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#8-verdict" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">8. Verdict</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#9-codebase-navigation-guide" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">9. Codebase Navigation Guide</span> </a>  </li> </ul> </div></details></nav></mobile-starlight-toc></div><div class="right-sidebar-panel sl-hidden lg:sl-block astro-pb3aqygn"><div class="sl-container astro-pb3aqygn"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page"><h2 id="starlight__on-this-page">On this page</h2><ul class="astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">Overview</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#1-what-openam-does" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">1. What OpenAM Does</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2-architecture-overview" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2. Architecture Overview</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#authentication-chain-model" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Authentication Chain Model</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#session-management" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Session Management</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#policy-engine-xacml-30" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Policy Engine (XACML 3.0)</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#oauth-20--oidc-provider" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">OAuth 2.0 / OIDC Provider</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#plugin-spi" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Plugin SPI</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#authentication-module-inventory" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Authentication Module Inventory</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#fork-divergence-in-dependencies" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Fork Divergence in Dependencies</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#production-deployment-topology" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Production Deployment Topology</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#3-strengths" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">3. Strengths</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#4-weaknesses" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">4. Weaknesses</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#5-modern-alternatives-comparison" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">5. Modern Alternatives Comparison</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#51-openam-vs-keycloak" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.1 OpenAM vs Keycloak</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#52-openam-vs-auth0okta" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.2 OpenAM vs Auth0/Okta</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#53-openam-vs-aws-cognito" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.3 OpenAM vs AWS Cognito</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#54-openam-vs-ory-stack" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.4 OpenAM vs Ory Stack</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#55-openam-vs-zitadel" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.5 OpenAM vs Zitadel</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#56-migration-cost-analysis" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.6 Migration Cost Analysis</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#6-feature-gap-analysis" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">6. Feature Gap Analysis</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#what-openam-has-that-alternatives-lack" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">What OpenAM Has That Alternatives Lack</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#what-alternatives-have-that-openam-lacks" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">What Alternatives Have That OpenAM Lacks</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#the-protocol-gap-what-each-alternative-misses" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">The Protocol Gap: What Each Alternative Misses</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#7-build-vs-buy-decision-framework" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">7. Build-vs-Buy Decision Framework</span> </a> <ul class="astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#when-openam-makes-sense" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">When OpenAM Makes Sense</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#when-alternatives-are-better" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">When Alternatives Are Better</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#migration-cost-considerations" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">Migration Cost Considerations</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#8-verdict" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">8. Verdict</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#9-codebase-navigation-guide" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">9. Codebase Navigation Guide</span> </a>  </li> </ul> </nav></starlight-toc></div></div> </div> </aside> <div class="main-pane astro-67yu43on">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">OpenAM Analysis</h1>  </div> </div>  <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content"> <h1 id="chapter-7-openam-analysis">Chapter 7: OpenAM Analysis</h1>
+<p>OpenAM is the central access management component of the Open Identity Platform suite, providing single sign-on, multi-factor authentication, OAuth 2.0/OpenID Connect token issuance, SAML 2.0 federation, and XACML 3.0 policy evaluation within a single deployable WAR artifact. Descended from Sun Microsystems’ OpenSSO via ForgeRock’s stewardship (see Chapter 1), it carries one of the deepest feature sets of any open-source IAM system — 34+ pluggable authentication modules, a complete OAuth 2.0 authorization server, and an entitlement engine capable of fine-grained attribute-based access control. That breadth is both its greatest asset and its heaviest burden: the codebase spans roughly 51 Maven modules, carries legacy UI code from the Sun era, and demands significant operational expertise to deploy and maintain. This chapter examines OpenAM’s architecture in detail, evaluates its strengths and weaknesses, and positions it against modern alternatives ranging from Keycloak to the Ory stack to commercial SaaS platforms.</p>
+<hr>
+<p><img src="/idp-research/diagrams/01-oip-architecture.svg" alt="OIP Component Architecture"></p>
+<h2 id="1-what-openam-does">1. What OpenAM Does</h2>
+<p>OpenAM serves as a centralized authentication and authorization hub for web and API applications. Its core capabilities include:</p>
+<ul>
+<li><strong>Single sign-on (SSO)</strong> across web applications using cookie-based session management, with cross-domain SSO via the Core Token Service (CTS).</li>
+<li><strong>Authentication</strong> through 34+ pluggable modules organized into configurable chains, supporting LDAP, Kerberos, OAuth 2.0, OIDC, SAML 2.0, WebAuthn/FIDO2, HOTP/TOTP, push notifications, device fingerprinting, and scripted custom logic.</li>
+<li><strong>Authorization</strong> via an XACML 3.0-compliant policy engine implementing PEP/PDP architecture with resource pattern matching, subject/environment conditions, and deny-overrides combining.</li>
+<li><strong>Federation</strong> as both SAML 2.0 Identity Provider and Service Provider, with WS-Federation support and identity brokering for social login.</li>
+<li><strong>OAuth 2.0 / OpenID Connect</strong> authorization server with support for authorization code, client credentials, password, JWT bearer, and device code grant types, plus token introspection, revocation, and dynamic client registration.</li>
+</ul>
+<p>These capabilities make OpenAM suitable for enterprises requiring a self-hosted identity hub that can federate with partners, protect APIs, and authenticate users through multiple factors — all without vendor lock-in to a commercial SaaS platform.</p>
+<hr>
+<h2 id="2-architecture-overview">2. Architecture Overview</h2>
+<p><img src="/idp-research/diagrams/13-openam-auth-chain.svg" alt="OpenAM Authentication Chain (JAAS)"></p>
+<h3 id="authentication-chain-model">Authentication Chain Model</h3>
+<p>OpenAM’s authentication system is built on the Java Authentication and Authorization Service (JAAS) framework, implemented as a Chain of Responsibility pattern where multiple authentication modules execute in sequence according to configurable control flags.</p>
+<p>The core classes that implement this model reside in <code dir="auto">OpenAM/openam-core/src/main/java/com/sun/identity/authentication/</code>:</p>
+<ul>
+<li><strong><code dir="auto">AuthContext.java</code></strong> — The public client-facing API. Applications call <code dir="auto">AuthContext.login()</code> to initiate authentication and handle callbacks (username prompts, password prompts, OTP challenges) in a conversational loop.</li>
+<li><strong><code dir="auto">AMLoginContext.java</code></strong> — The orchestration layer. It instantiates the JAAS <code dir="auto">LoginContext</code>, wires up the configured chain of <code dir="auto">AMLoginModule</code> instances, and manages pre/post-authentication processing hooks.</li>
+<li><strong><code dir="auto">AMAuthenticationManager.java</code></strong> — The service locator. It loads authentication chain configurations and module instances from the LDAP-backed service schema, resolving module class names to concrete implementations at runtime.</li>
+<li><strong><code dir="auto">AMLoginModule.java</code></strong> (in the <code dir="auto">spi/</code> package) — The base class all authentication modules extend. It implements the JAAS <code dir="auto">LoginModule</code> contract (<code dir="auto">init()</code>, <code dir="auto">login()</code>, <code dir="auto">commit()</code>, <code dir="auto">abort()</code>, <code dir="auto">logout()</code>) and communicates with clients via <code dir="auto">Callback</code> objects.</li>
+<li><strong><code dir="auto">LoginState.java</code></strong> — Maintains stateful context across multi-step authentication flows, tracking the current module, failed attempts, and callback history.</li>
+</ul>
+<p>Each module in a chain carries a JAAS control flag — REQUIRED, REQUISITE, SUFFICIENT, or OPTIONAL — that determines how its success or failure affects the overall chain outcome. This design enables composable multi-factor flows: a chain might require LDAP password verification (REQUIRED), then offer TOTP as a second factor (REQUIRED), with a persistent cookie check as a bypass (SUFFICIENT).</p>
+<p>The data flow proceeds as:</p>
+<div class="expressive-code"><link rel="stylesheet" href="/idp-research/_astro/ec.ppgh1.css"><script type="module" src="/idp-research/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">Client -> AuthContext.login()</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">  </span></span><span style="--0:#d6deeb;--1:#403f53">-> AMLoginContext -> JAAS LoginContext.login()</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">    </span></span><span style="--0:#d6deeb;--1:#403f53">-> Chain of AMLoginModule instances</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">      </span></span><span style="--0:#d6deeb;--1:#403f53">-> DSAMECallbackHandler.handle(Callback[])</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">      </span></span><span style="--0:#d6deeb;--1:#403f53">-> Module validates credentials -> Subject population</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">    </span></span><span style="--0:#d6deeb;--1:#403f53">-> Final Subject with Principals + credentials</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">  </span></span><span style="--0:#d6deeb;--1:#403f53">-> SessionService.createSession()</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="Client -> AuthContext.login()  -> AMLoginContext -> JAAS LoginContext.login()    -> Chain of AMLoginModule instances      -> DSAMECallbackHandler.handle(Callback[])      -> Module validates credentials -> Subject population    -> Final Subject with Principals + credentials  -> SessionService.createSession()"><div></div></button></div></figure></div>
+<p>New authentication modules are added by extending <code dir="auto">AMLoginModule</code> and providing an XML service schema definition. Each module lives in its own Maven submodule under <code dir="auto">OpenAM/openam-authentication/</code> — for example, <code dir="auto">openam-auth-ldap/</code> contains <code dir="auto">LDAP.java</code> (the module implementation) and <code dir="auto">amAuthLDAP.xml</code> (the service schema). This structure enables selective inclusion at build time.</p>
+<h3 id="session-management">Session Management</h3>
+<p>Session management is handled by the <code dir="auto">SessionService</code> class at <code dir="auto">OpenAM/openam-core/src/main/java/com/iplanet/dpro/session/service/SessionService.java</code>. After successful authentication, the service creates an <code dir="auto">InternalSession</code> object containing the session ID, creation timestamp, expiration, idle timeout, and arbitrary string properties. The session ID is encrypted into an <code dir="auto">SSOToken</code> that travels to the client as a cookie or header value.</p>
+<p>Session storage is pluggable through backend adapters:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Backend</th><th>Module</th><th>Use Case</th></tr></thead><tbody><tr><td>CTS/LDAP (default)</td><td><code dir="auto">openam-core/</code></td><td>Single-node or small cluster, backed by OpenDJ</td></tr><tr><td>Cassandra</td><td><code dir="auto">openam-cassandra/</code></td><td>Horizontally scalable, multi-datacenter HA</td></tr><tr><td>Redis</td><td>OIP extensions</td><td>High-throughput caching layer</td></tr><tr><td>Custom</td><td><code dir="auto">SessionStore</code> interface</td><td>Organization-specific backends</td></tr></tbody></table>
+<p>The Cassandra backend (<code dir="auto">OpenAM/openam-cassandra/</code>) was added by the OIP community to address the CE-era limitation of single-node session stores. It supports multi-master replication across data centers with TTL-based token expiration, enabling the kind of horizontal scaling that production deployments require.</p>
+<p>Session lifecycle follows a well-defined sequence: creation after authentication success, token issuance with encrypted session ID, storage in the chosen backend, replication across cluster nodes, TTL-based or idle-timeout expiration, blacklist entry on logout, and final destruction. Session constraints (enforced by <code dir="auto">SessionConstraint.java</code>) limit concurrent sessions per user, preventing session abuse.</p>
+<h3 id="policy-engine-xacml-30">Policy Engine (XACML 3.0)</h3>
+<p>Authorization decisions are made by the entitlement engine in <code dir="auto">OpenAM/openam-entitlements/</code>. The engine implements a PEP/PDP architecture where Policy Enforcement Points request decisions from the Policy Decision Point:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">Client Request</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">  </span></span><span style="--0:#d6deeb;--1:#403f53">-> PolicyEvaluator.evaluate(resource, action, subject, environment)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">    </span></span><span style="--0:#d6deeb;--1:#403f53">-> Load applicable policies from PolicyStore</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">      </span></span><span style="--0:#d6deeb;--1:#403f53">-> Evaluate conditions (subject, resource, action, environment)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">        </span></span><span style="--0:#d6deeb;--1:#403f53">-> Short-circuit on DENY (deny-overrides combining)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">        </span></span><span style="--0:#d6deeb;--1:#403f53">-> Aggregate permits</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">      </span></span><span style="--0:#d6deeb;--1:#403f53">-> Return decision + obligations</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">    </span></span><span style="--0:#d6deeb;--1:#403f53">-> Cache result (TTL-based invalidation)</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="Client Request  -> PolicyEvaluator.evaluate(resource, action, subject, environment)    -> Load applicable policies from PolicyStore      -> Evaluate conditions (subject, resource, action, environment)        -> Short-circuit on DENY (deny-overrides combining)        -> Aggregate permits      -> Return decision + obligations    -> Cache result (TTL-based invalidation)"><div></div></button></div></figure></div>
+<p>Policies are structured as combinations of resource patterns (URI wildcards, regex), subjects (users, groups), actions (HTTP methods), environment conditions (IP range, time window, device type), and effects (Allow/Deny). Policies are stored in the OpenDJ LDAP backend as LDIF entries, making them subject to the same replication and backup mechanisms as identity data.</p>
+<p>Extension points include custom subject matchers (extending <code dir="auto">SubjectImplementation</code>), custom resource comparators (extending <code dir="auto">ResourceMatch</code>), and custom environment evaluators (extending <code dir="auto">EnvironmentImplementation</code>).</p>
+<h3 id="oauth-20--oidc-provider">OAuth 2.0 / OIDC Provider</h3>
+<p>The OAuth 2.0 implementation resides in <code dir="auto">OpenAM/openam-oauth2/src/main/java/org/forgerock/oauth2/core/</code> with approximately 80 classes. Key interfaces follow the Strategy pattern for extensibility:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Class</th><th>Role</th></tr></thead><tbody><tr><td><code dir="auto">AuthorizationService</code></td><td>Handles <code dir="auto">/authorize</code> endpoint</td></tr><tr><td><code dir="auto">AccessTokenService</code></td><td>Handles <code dir="auto">/token</code> endpoint</td></tr><tr><td><code dir="auto">ResponseTypeHandler</code></td><td>SPI for code, token, id_token response types</td></tr><tr><td><code dir="auto">GrantTypeHandler</code></td><td>SPI for authorization_code, client_credentials, password, jwt-bearer, device_code</td></tr><tr><td><code dir="auto">TokenStore</code></td><td>SPI for pluggable token persistence (CTS-backed default)</td></tr><tr><td><code dir="auto">ScopeValidator</code></td><td>SPI for custom scope validation logic</td></tr></tbody></table>
+<p>The authorization code flow proceeds through request validation, resource owner authentication (delegating to the authentication chain), consent verification, authorization code generation and storage, and finally token exchange. OIDC extensions add ID Token (JWT) issuance alongside access tokens, a UserInfo endpoint for profile claims, and a discovery endpoint at <code dir="auto">/.well-known/openid-configuration</code>.</p>
+<h3 id="plugin-spi">Plugin SPI</h3>
+<p>OpenAM’s extensibility is built on a Service Locator + Factory pattern. Authentication modules are discovered via classpath scanning for <code dir="auto">AMLoginModule</code> implementations, with XML/LDAP service definitions loaded at startup. Module properties are mapped from LDAP distinguished names to object attributes, and constructor instantiation occurs with configuration parameters injected from the service schema.</p>
+<p>Post-authentication processing is handled through the <code dir="auto">AMPostAuthProcessInterface</code>, which enables custom logic to execute after successful authentication — session attribute injection, audit logging, external system notification, or conditional step-up requirements.</p>
+<h3 id="authentication-module-inventory">Authentication Module Inventory</h3>
+<p>The complete module inventory spans seven categories, each living in its own Maven submodule under <code dir="auto">OpenAM/openam-authentication/</code>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Category</th><th>Modules</th><th>Description</th></tr></thead><tbody><tr><td>Directory/LDAP</td><td><code dir="auto">openam-auth-ldap</code>, <code dir="auto">openam-auth-ad</code>, <code dir="auto">openam-auth-nt</code>, <code dir="auto">openam-auth-ntlmv2</code>, <code dir="auto">openam-auth-membership</code></td><td>Standard directory authentication including Active Directory, LDAP bind, NTLM, and membership validation</td></tr><tr><td>Multi-factor</td><td><code dir="auto">openam-auth-hotp</code>, <code dir="auto">openam-auth-oath</code>, <code dir="auto">openam-auth-fr-oath</code>, <code dir="auto">openam-auth-push</code>, <code dir="auto">openam-auth-webauthn</code></td><td>HOTP, TOTP (OATH), ForgeRock OATH variant, mobile push approval, FIDO2/WebAuthn passkeys</td></tr><tr><td>Federation/Social</td><td><code dir="auto">openam-auth-oauth2</code>, <code dir="auto">openam-auth-oidc</code>, <code dir="auto">openam-auth-saml2</code></td><td>OAuth 2.0 social login, OpenID Connect authentication, SAML 2.0 as an authentication module</td></tr><tr><td>External</td><td><code dir="auto">openam-auth-radius</code>, <code dir="auto">openam-auth-msisdn</code>, <code dir="auto">openam-auth-securid</code>, <code dir="auto">openam-auth-cert</code>, <code dir="auto">openam-auth-recaptcha</code></td><td>RADIUS server, mobile subscriber MSISDN, RSA SecurID, X.509 client certificates, Google reCAPTCHA</td></tr><tr><td>Persistence</td><td><code dir="auto">openam-auth-persistentcookie</code>, <code dir="auto">openam-auth-windowsdesktopsso</code></td><td>Persistent cookie-based re-authentication, Windows Desktop SSO via Kerberos</td></tr><tr><td>Scripting</td><td><code dir="auto">openam-auth-scripted</code>, <code dir="auto">openam-auth-amster</code></td><td>Groovy-scripted custom auth logic, Amster-based admin provisioning auth</td></tr><tr><td>Advanced</td><td><code dir="auto">openam-auth-device-id</code>, <code dir="auto">openam-auth-qr</code>, <code dir="auto">openam-auth-application</code>, <code dir="auto">openam-auth-adaptive</code>, <code dir="auto">openam-auth-anonymous</code>, <code dir="auto">openam-auth-httpbasic</code>, <code dir="auto">openam-auth-jdbc</code></td><td>Device fingerprinting, QR code, application tokens, risk-adaptive scoring, anonymous access, HTTP Basic, JDBC database auth</td></tr></tbody></table>
+<p>The evolution across forks is significant. ForgeRock CE 11.0.3 shipped 20 modules. OIP 16.0.5 added 11 (OIDC, SAML2, WebAuthn, QR, push, device-id, scripted, recaptcha, ntlmv2, fr-oath, amster). Wren:AM 16.0.0-M1 adopted a selective subset: it kept 27 modules, dropped 4 (WebAuthn, QR, recaptcha, ntlmv2), and added its own Duo Security MFA integration (<code dir="auto">wrenam-auth-duo</code>). The Wren strategy favors quality over breadth — fewer modules to maintain, with Duo covering enterprise MFA requirements that the dropped modules partially served.</p>
+<h3 id="fork-divergence-in-dependencies">Fork Divergence in Dependencies</h3>
+<p>The three forks diverge significantly in their technology stacks, as detailed in <a href="01-history.md">Chapter 1</a> and the <a href="../extracts/version-evolution.md">version-evolution extract</a>. The most architecturally consequential divergence is Guice dependency injection:</p>
+<ul>
+<li><strong>ForgeRock CE 11.0.3:</strong> Guice 3.0</li>
+<li><strong>OIP 16.0.5:</strong> Guice 7.0.0 (modern DI, breaking changes vs 3.0)</li>
+<li><strong>Wren:AM 16.0.0-M1:</strong> Guice 3.0, wrapped in <code dir="auto">wrensec-guice-core</code> and <code dir="auto">wrensec-guice-servlet</code></li>
+</ul>
+<p>OIP’s upgrade to Guice 7.0.0 modernizes the DI container but breaks backward compatibility with extensions compiled against Guice 3.0. Wren deliberately retained Guice 3.0 to preserve enterprise extension compatibility, wrapping it in namespace-isolated artifacts. This divergence means that custom authentication modules, post-authentication processors, and policy plugins are not binary-compatible between OIP and Wren builds — a consideration for organizations maintaining custom extensions.</p>
+<p>Other notable dependency differences include Jackson (OIP conservative at 2.3.x, Wren modern at 2.15.2), SLF4J (OIP on 1.7.x, Wren on 2.0.17), Restlet (OIP 2.4.4, Wren 2.6.0), and Jakarta EE level (OIP partial jakarta.servlet 4.0+, Wren full jakarta.servlet 5.0.0). Wren’s aggressive dependency modernization, combined with its conservative Guice strategy, reflects a deliberate architectural choice: update everything except the plugin contract surface.</p>
+<p><img src="/idp-research/diagrams/02-ha-deployment.svg" alt="Production HA Deployment Topology"></p>
+<h3 id="production-deployment-topology">Production Deployment Topology</h3>
+<p>A production OpenAM deployment follows a well-established topology pattern that has evolved since the ForgeRock era. The reference architecture consists of three tiers: a load balancer layer, an application layer running multiple OpenAM instances, and a data layer backed by replicated OpenDJ.</p>
+<p><strong>High-availability deployment.</strong> The minimum HA configuration runs two or more OpenAM instances (Tomcat/Jetty) behind a load balancer configured for sticky sessions (cookie-based affinity using the <code dir="auto">amlbcookie</code>). Each OpenAM instance points to a shared OpenDJ topology — typically two OpenDJ instances in multi-master replication — for configuration, identity, and CTS data. The load balancer must be configured to route the initial authentication request and all subsequent callback exchanges to the same OpenAM node, since authentication state (<code dir="auto">LoginState</code>) is held in-memory during the JAAS chain execution. After authentication completes and a session is created, the session is persisted to CTS, and subsequent requests can be routed to any node.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">                        </span></span><span style="--0:#d6deeb;--1:#403f53">┌─── OpenAM-1 (Tomcat) ───┐</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">Internet → LB (sticky) ─┤                          ├─→ OpenDJ-1 ⟷ OpenDJ-2</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">                        </span></span><span style="--0:#d6deeb;--1:#403f53">└─── OpenAM-2 (Tomcat) ───┘      (multi-master replication)</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="                        ┌─── OpenAM-1 (Tomcat) ───┐Internet → LB (sticky) ─┤                          ├─→ OpenDJ-1 ⟷ OpenDJ-2                        └─── OpenAM-2 (Tomcat) ───┘      (multi-master replication)"><div></div></button></div></figure></div>
+<p>Horizontal scaling beyond two nodes is straightforward: add OpenAM instances behind the load balancer and point them at the same OpenDJ topology. The practical scaling limit is determined by the OpenDJ backend’s throughput — each authentication event, session creation, and policy evaluation triggers LDAP operations against the directory.</p>
+<p><strong>Session failover via CTS.</strong> The Core Token Service stores sessions, OAuth 2.0 tokens, and SAML 2.0 assertions in the OpenDJ backend. CTS enables session failover: if an OpenAM node crashes, active sessions are recoverable from the CTS store by any surviving node. CTS replication follows OpenDJ’s multi-master replication protocol, providing consistency guarantees across nodes. The CTS token store schema is defined in <code dir="auto">OpenAM/openam-core/</code> and uses LDAP entries with TTL-based expiration managed by OpenDJ’s entry-expiration plugin. For CTS to function correctly in a multi-node deployment, all OpenAM instances must share the same CTS backend (either a common OpenDJ instance or a replicated OpenDJ topology), and the <code dir="auto">com.iplanet.am.session.failover.cluster.stateCheck.timeout</code> property must be tuned to balance failover speed against false-positive node-down detection.</p>
+<p><strong>Multi-datacenter active-active topology.</strong> For geo-distributed deployments, the reference architecture extends to two or more data centers, each running its own OpenAM + OpenDJ pair. OpenDJ’s multi-master replication synchronizes identity and configuration data across sites. The CTS store must also replicate across data centers — either via OpenDJ replication (for LDAP-backed CTS) or via Cassandra’s multi-datacenter replication (for Cassandra-backed CTS). DNS-based global load balancing (e.g., Route 53, Cloudflare) directs users to the nearest data center. The key architectural constraint is that authentication state (<code dir="auto">LoginState</code>) is not replicated during a multi-step flow — if a user starts authentication at DC-1 and gets routed to DC-2 mid-flow, the flow fails. Global load balancing must therefore use session-persistent routing during authentication, relaxing to round-robin or latency-based routing for authenticated session validation.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">DC-1                                    DC-2</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">┌────────────────────────┐              ┌────────────────────────┐</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">│ LB → OpenAM-1, OpenAM-2│              │ LB → OpenAM-3, OpenAM-4│</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">│ OpenDJ-1 ⟷─────────────┼──replication─┼─⟷ OpenDJ-2             │</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">│ Cassandra-DC1 ⟷────────┼──replication─┼─⟷ Cassandra-DC2        │</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">└────────────────────────┘              └────────────────────────┘</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">          </span></span><span style="--0:#d6deeb;--1:#403f53">↑               Global DNS LB                ↑</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#d6deeb;--1:#403f53">          </span></span><span style="--0:#d6deeb;--1:#403f53">└──────────────── Users ─────────────────────┘</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="DC-1                                    DC-2┌────────────────────────┐              ┌────────────────────────┐│ LB → OpenAM-1, OpenAM-2│              │ LB → OpenAM-3, OpenAM-4││ OpenDJ-1 ⟷─────────────┼──replication─┼─⟷ OpenDJ-2             ││ Cassandra-DC1 ⟷────────┼──replication─┼─⟷ Cassandra-DC2        │└────────────────────────┘              └────────────────────────┘          ↑               Global DNS LB                ↑          └──────────────── Users ─────────────────────┘"><div></div></button></div></figure></div>
+<p><strong>Cassandra as alternative session store.</strong> For deployments requiring horizontal scaling beyond what OpenDJ can serve, the <code dir="auto">openam-cassandra/</code> module (<code dir="auto">openam-cassandra-cts</code>, <code dir="auto">openam-cassandra-datastore</code>, <code dir="auto">openam-cassandra-embedded</code>) provides a Cassandra-backed CTS implementation. The <code dir="auto">ConnectionFactoryProvider</code> and <code dir="auto">TokenStorageAdapter</code> classes in <code dir="auto">openam-cassandra-cts</code> wire OpenAM’s token lifecycle to Cassandra’s distributed storage. Key advantages over the LDAP-backed CTS: Cassandra supports multi-datacenter replication with tunable consistency (ONE, QUORUM, LOCAL_QUORUM), TTL-based row expiration without a background cleanup thread, and linear horizontal scaling by adding Cassandra nodes. The trade-off is operational complexity — Cassandra requires its own cluster management, compaction tuning, and monitoring infrastructure.</p>
+<p><strong>Docker and container deployment.</strong> The OIP project ships a Dockerfile at <code dir="auto">OpenAM/openam-distribution/openam-distribution-docker/Dockerfile</code> that builds an image based on <code dir="auto">tomcat:11-jre25</code>. The image downloads the OpenAM WAR, SSO Configurator Tools, and SSO Admin Tools from GitHub Releases at build time. It configures a non-root user (<code dir="auto">openam</code>, UID 1001), exposes port 8080, and includes a health check against <code dir="auto">/openam/isAlive.jsp</code>. The <code dir="auto">RemoteIpValve</code> is injected into Tomcat’s <code dir="auto">server.xml</code> to support <code dir="auto">X-Forwarded-*</code> headers from upstream load balancers or ingress controllers. For Kubernetes deployments, the image can be wrapped in a Deployment with a <code dir="auto">PersistentVolumeClaim</code> for <code dir="auto">/usr/openam/config</code> (the configuration directory), though no official Helm chart or Kubernetes Operator exists — a gap compared to Keycloak’s official Operator. Multi-node Kubernetes deployments require an external OpenDJ StatefulSet and careful handling of the <code dir="auto">amlbcookie</code> affinity at the Ingress layer.</p>
+<hr>
+<h2 id="3-strengths">3. Strengths</h2>
+<p><strong>Breadth of authentication modules.</strong> With 34+ authentication modules spanning LDAP, Kerberos, OAuth 2.0, OIDC, SAML 2.0, WebAuthn, HOTP/TOTP, push notifications, device fingerprinting, QR codes, scripted logic, and adaptive risk scoring, OpenAM covers more authentication scenarios in a single platform than any other open-source IAM system. The OIP fork (16.0.5) added 11 modules beyond the CE baseline, including WebAuthn/FIDO2, OIDC as an authentication method, SAML 2.0 as an authentication chain module, and push notification approval (see <a href="../extracts/version-evolution.md">version-evolution extract</a> for fork details).</p>
+<p><strong>Protocol convergence.</strong> OpenAM combines SAML 2.0 IdP/SP, OAuth 2.0 authorization server, OIDC provider, UMA 2.0, and WS-Federation in one deployment. Organizations operating in heterogeneous federation environments — where partners require SAML while internal APIs use OIDC — can serve both from a single system without deploying separate products.</p>
+<p><strong>XACML 3.0 policy engine.</strong> The entitlement engine supports fine-grained, attribute-based access control with resource pattern matching, environment conditions, and deny-overrides combining. Few open-source alternatives offer XACML-level policy expressiveness; most limit authorization to RBAC or simple scope checks.</p>
+<p><strong>Cassandra-backed high availability.</strong> The <code dir="auto">openam-cassandra</code> module enables horizontally scalable session and token storage across data centers, eliminating the single-node session bottleneck that plagued the CE era. Combined with OpenDJ’s multi-master replication for configuration and identity data, OpenAM can achieve active-active deployments across geographies.</p>
+<p><strong>Mature, battle-tested codebase.</strong> The codebase traces its lineage to Sun’s OpenSSO (2005), through ForgeRock’s development (2010-2016), to the OIP and Wren forks. Twenty years of production deployments across government agencies, universities, telecommunications providers, and financial institutions have exercised edge cases that newer platforms have not yet encountered. The commercial descendant (now Ping Identity’s PingOne Advanced Identity Cloud) validates the architectural foundations.</p>
+<p><strong>Comprehensive audit infrastructure.</strong> The OIP fork added a dedicated audit module (<code dir="auto">OpenAM/openam-audit/</code>) with four submodules: audit context capture, event streaming engine, policy configuration, and REST API for trail queries. This infrastructure supports SOX, GDPR, and HIPAA compliance requirements with structured logging, correlation IDs, and queryable audit history.</p>
+<p><strong>Scripting engine for custom logic.</strong> The <code dir="auto">openam-scripting</code> module enables Groovy-based custom authentication policies, token transformations, and authorization decisions without requiring a full rebuild — critical for organizations that need to adapt authentication flows to business-specific requirements.</p>
+<hr>
+<h2 id="4-weaknesses">4. Weaknesses</h2>
+<p><strong>Jato legacy UI.</strong> OpenAM’s administrative console is built on the Jato framework, a Sun-era JSP rendering library that predates modern web frameworks by nearly two decades. The Jato framework is also the source of CVE-2021-35464 (CVSS 9.8), a pre-authentication remote code execution vulnerability exploited in the wild (see Section 4.1 below). The UI is difficult to extend, provides a poor user experience by modern standards, and represents a significant technical debt burden.</p>
+<p><strong>Monolithic WAR deployment.</strong> Despite internal modularity (51 Maven submodules), OpenAM deploys as a single WAR file. Scaling requires scaling the entire application; a defect in the SAML engine can take down the OAuth 2.0 provider; upgrading one capability demands redeploying the whole system. The memory footprint grows with every feature, whether or not a given deployment uses it. This is the architectural pattern that modern IAM platforms (Ory, Zitadel, even Keycloak on Quarkus) have deliberately moved away from (see Chapter 12).</p>
+<p><strong>Configuration complexity.</strong> OpenAM stores its configuration in an embedded or external OpenDJ instance as LDAP entries. Configuration changes involve manipulating LDAP attributes through the Jato admin console, the <code dir="auto">ssoadm</code> command-line tool, or the REST API. There is no declarative configuration-as-code model comparable to Keycloak’s realm export/import, Ory’s YAML configuration, or Zitadel’s Terraform provider. This makes infrastructure-as-code workflows, GitOps, and reproducible deployments significantly harder to achieve.</p>
+<p><strong>Steep learning curve.</strong> The combination of JAAS-based authentication chains, LDAP-backed configuration, realm/sub-realm hierarchy, agent profiles, policy definitions, and OAuth 2.0 client configuration creates a steep learning curve. Documentation for the OIP fork is sparse compared to Keycloak’s official guides or Auth0’s developer tutorials. New operators must often consult the ForgeRock-era documentation (e.g., the OpenAM 12 Reference PDF in this workspace) for context that the OIP community documentation omits.</p>
+<p><strong>CVE history.</strong> OpenAM’s most serious vulnerability, CVE-2021-35464 (CVSS 9.8), enabled pre-authentication remote code execution via Java deserialization in the Jato framework’s <code dir="auto">/ccversion/*</code> endpoint. CISA issued advisory AA21-193A, and a Metasploit module exists. The OIP fork applied a workaround (PR #372), and Wren:AM patched it (PR #123), but the frozen ForgeRock CE 11.0.3 remains permanently unpatched. CVE-2021-29156 (CVSS 7.5) demonstrated LDAP injection via the Webfinger protocol, enabling character-by-character extraction of password hashes from the backing directory. Beyond these OpenAM-specific vulnerabilities, the deep Java dependency tree has accumulated CVEs in Commons FileUpload, Lodash, SnakeYAML, Apache Commons Text, Netty, and RequireJS (see <a href="../extracts/security-cve-history.md">security-cve-history extract</a> for the complete CVE history).</p>
+<p><strong>Small maintainer community.</strong> The OIP fork is maintained primarily by 3A Systems, LLC, with a small contributor base compared to Keycloak’s ~1,100 contributors backed by Red Hat’s engineering resources. Wren Security (Orchitech Solutions, Czech Republic) maintains an even smaller team. Critical vulnerability patches can lag weeks to months behind disclosure, and the pace of feature development cannot match commercially backed alternatives.</p>
+<p><strong>Limited stateless session support.</strong> Modern IAM platforms increasingly support stateless JWT-based sessions (or sender-constrained tokens via DPoP/mTLS) that eliminate server-side session storage entirely (see Chapter 12). OpenAM’s session model is fundamentally server-side: sessions are stored in CTS (backed by JPA, Cassandra, or Redis), and the SSOToken is an opaque reference, not a self-contained JWT. While the <code dir="auto">StatelessSessionActivator</code> exists as an interface in the codebase, stateless sessions are not the production-recommended path, and most deployments require the full CTS infrastructure. This architectural decision was appropriate in 2005 but adds operational burden in 2025 where stateless session models reduce infrastructure requirements.</p>
+<p><strong>Legacy CDDL license.</strong> The Common Development and Distribution License 1.0, created by Sun Microsystems for OpenSolaris, is a weak copyleft license that is not GPL-compatible. While CDDL is OSI-approved, it is less familiar to developers and legal teams than Apache 2.0, MIT, or GPL. Keycloak (Apache 2.0), Ory (Apache 2.0), and Zitadel (Apache 2.0) all use licenses with broader compatibility and better-understood obligations. The CDDL license is not a practical barrier to adoption but adds a minor friction point during legal review.</p>
+<hr>
+<h2 id="5-modern-alternatives-comparison">5. Modern Alternatives Comparison</h2>
+<h3 id="51-openam-vs-keycloak">5.1 OpenAM vs Keycloak</h3>
+<p>Keycloak, maintained by Red Hat and a CNCF Incubating project with approximately 26,000 GitHub stars, is the most direct open-source competitor to OpenAM. Both share Java roots and target the same use cases — SSO, federation, multi-factor authentication — but differ significantly in architecture, community, and trajectory.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenAM (OIP 16.0.5)</th><th>Keycloak (v26+)</th></tr></thead><tbody><tr><td><strong>Runtime</strong></td><td>Monolithic WAR (Tomcat/Jetty)</td><td>Quarkus-native standalone JAR</td></tr><tr><td><strong>Language</strong></td><td>Java 11+</td><td>Java 17+ (Quarkus)</td></tr><tr><td><strong>Admin UI</strong></td><td>Jato-based JSP (legacy)</td><td>React-based (rewritten v22+)</td></tr><tr><td><strong>OIDC Provider</strong></td><td>Yes</td><td>Yes (certified)</td></tr><tr><td><strong>SAML IdP/SP</strong></td><td>Yes</td><td>Yes</td></tr><tr><td><strong>Auth modules</strong></td><td>34+ pluggable modules</td><td>SPI-based providers, fewer built-in but extensible</td></tr><tr><td><strong>Authorization</strong></td><td>XACML 3.0 policy engine</td><td>UMA 2.0, policy-based (less expressive)</td></tr><tr><td><strong>Multi-tenancy</strong></td><td>Realms/sub-realms</td><td>Realms + Organizations (v26 GA)</td></tr><tr><td><strong>User federation</strong></td><td>Embedded OpenDJ, LDAP</td><td>LDAP, AD, custom SPI</td></tr><tr><td><strong>Passkey/WebAuthn</strong></td><td>Yes (OIP module)</td><td>Yes (v22+)</td></tr><tr><td><strong>Configuration model</strong></td><td>LDAP-backed</td><td>Database-backed, realm export/import</td></tr><tr><td><strong>Kubernetes support</strong></td><td>Manual Docker/Helm</td><td>Official Kubernetes Operator</td></tr><tr><td><strong>CNCF status</strong></td><td>None</td><td>Incubating (2023)</td></tr><tr><td><strong>GitHub stars</strong></td><td>~700</td><td>~26,000</td></tr><tr><td><strong>Contributors</strong></td><td>~30</td><td>~1,100</td></tr><tr><td><strong>License</strong></td><td>CDDL 1.0</td><td>Apache 2.0</td></tr><tr><td><strong>Startup time</strong></td><td>30-60s+ (WAR deployment)</td><td>~5-10s (Quarkus optimized)</td></tr><tr><td><strong>Native image</strong></td><td>No</td><td>Experimental (GraalVM)</td></tr><tr><td><strong>Commercial backing</strong></td><td>3A Systems (community)</td><td>Red Hat (~20 engineers)</td></tr></tbody></table>
+<p><strong>Architecture differences.</strong> Keycloak completed its migration from WildFly to Quarkus in v25 (2024), yielding roughly 50% faster startup, build-time provider optimization, and container-native immutable images. OpenAM remains a WAR-deployed application requiring a servlet container, with no path toward build-time optimization or native compilation.</p>
+<p><strong>Admin experience.</strong> Keycloak’s React-based admin console and account console (rewritten in v22+) provide a modern management experience with declarative user profiles (v24), realm export/import for configuration-as-code, and Terraform community providers. OpenAM’s Jato console has not been meaningfully updated in a decade.</p>
+<p><strong>Community and ecosystem.</strong> Keycloak’s CNCF incubation provides governance, security audits, and vendor neutrality. Its SPI ecosystem supports extensive third-party extensions for themes, providers, and protocol mappers. OpenAM’s community, while committed, lacks the scale to match this ecosystem.</p>
+<p><strong>Where OpenAM retains an edge.</strong> OpenAM’s 34+ authentication modules (vs. Keycloak’s more limited built-in set), its XACML 3.0 policy engine (vs. Keycloak’s simpler UMA-based authorization), and its SAML 2.0 maturity (tested across thousands of federation deployments) remain differentiators for organizations with complex, legacy-heavy environments.</p>
+<h3 id="52-openam-vs-auth0okta">5.2 OpenAM vs Auth0/Okta</h3>
+<p>Auth0 (now Okta’s Customer Identity Cloud) and Okta (Workforce Identity Cloud) represent the commercial SaaS end of the IAM spectrum.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenAM (OIP 16.0.5)</th><th>Auth0/Okta</th></tr></thead><tbody><tr><td><strong>Deployment</strong></td><td>Self-hosted (on-prem or cloud IaaS)</td><td>Multi-tenant SaaS</td></tr><tr><td><strong>Pricing</strong></td><td>Free (CDDL), operational cost only</td><td>Free tier: 25K MAU; Professional/Enterprise: custom</td></tr><tr><td><strong>Extensibility</strong></td><td>Java SPI, Groovy scripts</td><td>Actions (Node.js serverless), 7,000+ app integrations</td></tr><tr><td><strong>Social login</strong></td><td>Via openam-auth-oauth2 module</td><td>70+ pre-built social connections</td></tr><tr><td><strong>Compliance</strong></td><td>Self-managed (you prove compliance)</td><td>SOC 2 Type II, ISO 27001, PCI DSS, HIPAA BAA</td></tr><tr><td><strong>SLA</strong></td><td>Self-managed</td><td>99.99% (Enterprise tier)</td></tr><tr><td><strong>Admin experience</strong></td><td>Jato console, ssoadm CLI</td><td>Modern dashboard, Management API, Terraform provider</td></tr><tr><td><strong>CIAM features</strong></td><td>Limited (no progressive profiling, consent mgmt)</td><td>Universal Login, progressive profiling, bot detection, breached password detection</td></tr><tr><td><strong>IGA integration</strong></td><td>Via OpenIDM (separate product)</td><td>Okta Identity Governance (built-in)</td></tr><tr><td><strong>Vendor risk</strong></td><td>Open source, no vendor dependency</td><td>Oct 2023 support system breach impacted reputation</td></tr></tbody></table>
+<p><strong>When Auth0/Okta wins.</strong> For organizations that prioritize speed to production, developer experience, managed compliance, and do not need on-premises deployment, Auth0/Okta is the rational choice. The breadth of pre-built integrations (7,000+ in Okta’s Integration Network), the Actions extensibility model, and the managed infrastructure eliminate entire categories of operational burden.</p>
+<p><strong>When OpenAM wins.</strong> For organizations with strict data sovereignty requirements, air-gapped environments, complex legacy federation scenarios (dozens of SAML partners with custom metadata), or per-user cost sensitivity at scale (millions of users), self-hosted OpenAM avoids the per-MAU pricing that makes SaaS prohibitive. The CDDL license ensures no vendor lock-in, and the complete source code is auditable.</p>
+<h3 id="53-openam-vs-aws-cognito">5.3 OpenAM vs AWS Cognito</h3>
+<p>AWS Cognito provides managed authentication for applications deployed on AWS, with User Pools (user directory + auth) and Identity Pools (federated access to AWS services).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenAM (OIP 16.0.5)</th><th>AWS Cognito</th></tr></thead><tbody><tr><td><strong>Deployment</strong></td><td>Self-hosted, cloud-agnostic</td><td>AWS-only managed service</td></tr><tr><td><strong>Pricing</strong></td><td>Free (CDDL) + infrastructure</td><td>Free: 50K MAU; then $0.0055-0.025/MAU</td></tr><tr><td><strong>SAML IdP</strong></td><td>Yes (full IdP/SP)</td><td>SAML consumer only (cannot produce SAML assertions)</td></tr><tr><td><strong>OAuth 2.0/OIDC</strong></td><td>Full provider</td><td>Yes</td></tr><tr><td><strong>Customization</strong></td><td>Full source code access</td><td>Lambda triggers, limited hosted UI customization</td></tr><tr><td><strong>User limit</strong></td><td>Unlimited (hardware-bound)</td><td>40M per pool (soft limit)</td></tr><tr><td><strong>Migration path</strong></td><td>Portable (CDDL, standard protocols)</td><td>Non-trivial migration out of Cognito</td></tr><tr><td><strong>Vendor lock-in</strong></td><td>None</td><td>AWS-dependent</td></tr><tr><td><strong>Multi-cloud</strong></td><td>Yes</td><td>No</td></tr><tr><td><strong>Policy engine</strong></td><td>XACML 3.0</td><td>IAM policies (separate system)</td></tr><tr><td><strong>Passkeys</strong></td><td>Yes (OIP module)</td><td>Yes (2024)</td></tr></tbody></table>
+<p><strong>Cognito’s primary limitation</strong> is that it cannot act as a SAML Identity Provider — it can consume SAML assertions from external IdPs but cannot produce them. Organizations needing to federate as a SAML IdP with partners must look elsewhere. Cognito’s customization surface, while improved in the 2024 re-architecture (passwordless authentication, managed login branding), remains constrained compared to OpenAM’s full source code access. The vendor lock-in to AWS is absolute: there is no self-hosted option and no straightforward migration path.</p>
+<p><strong>Cognito’s advantage</strong> is zero operational overhead for teams already committed to AWS. Regional multi-AZ deployment, managed scaling, and integration with AWS IAM (via Identity Pools) eliminate infrastructure management entirely. For AWS-native applications with simple authentication requirements, Cognito is the path of least resistance.</p>
+<h3 id="54-openam-vs-ory-stack">5.4 OpenAM vs Ory Stack</h3>
+<p>The Ory stack (Hydra, Kratos, Keto, Oathkeeper) represents the architectural antithesis of OpenAM: a decomposed, headless, API-first microservices approach written in Go.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenAM (OIP 16.0.5)</th><th>Ory Stack</th></tr></thead><tbody><tr><td><strong>Architecture</strong></td><td>Monolithic WAR</td><td>Microservices (4 independent Go binaries)</td></tr><tr><td><strong>Language</strong></td><td>Java 11+</td><td>Go</td></tr><tr><td><strong>OAuth 2.0/OIDC</strong></td><td>Yes</td><td>Hydra (certified OIDC)</td></tr><tr><td><strong>Identity management</strong></td><td>Embedded (LDAP-backed)</td><td>Kratos (API-first, JSON Schema identities)</td></tr><tr><td><strong>Authorization</strong></td><td>XACML 3.0</td><td>Keto (Google Zanzibar ReBAC)</td></tr><tr><td><strong>Gateway/proxy</strong></td><td>OpenIG (separate product)</td><td>Oathkeeper (zero-trust proxy)</td></tr><tr><td><strong>UI</strong></td><td>Jato admin console, hosted login</td><td>Headless (no built-in UI; reference UIs provided)</td></tr><tr><td><strong>SAML</strong></td><td>Full IdP/SP</td><td>No SAML support</td></tr><tr><td><strong>Session model</strong></td><td>Server-side (LDAP/Cassandra)</td><td>Configurable (cookie-based, JWT)</td></tr><tr><td><strong>Managed offering</strong></td><td>None</td><td>Ory Network (SaaS)</td></tr><tr><td><strong>Operational complexity</strong></td><td>One WAR, one OpenDJ instance</td><td>4+ services, each with its own database</td></tr><tr><td><strong>GitHub stars</strong></td><td>~700</td><td>~40,000 (combined)</td></tr><tr><td><strong>License</strong></td><td>CDDL 1.0</td><td>Apache 2.0</td></tr></tbody></table>
+<p><strong>Ory’s headless approach</strong> appeals to teams building custom authentication UX. By delegating login and consent decisions to the consuming application (Hydra redirects to your login page, not its own), Ory gives complete control over the user experience. OpenAM’s hosted login page, while customizable via themes, constrains UX options.</p>
+<p><strong>Ory’s critical gap</strong> is the absence of SAML support. Hydra implements OIDC but not SAML 2.0. Organizations with SAML federation requirements — common in government, healthcare, and education — cannot use Ory as a drop-in OpenAM replacement without adding a SAML bridge.</p>
+<p><strong>Operational complexity</strong> is Ory’s trade-off. Four independent services, each requiring its own PostgreSQL/MySQL/CockroachDB database, load balancer, and monitoring, creates operational overhead that exceeds OpenAM’s single-WAR deployment. The benefit is independent scaling and faster release cycles per component, but the cost is meaningful for teams without dedicated platform engineering.</p>
+<p><strong>Keto’s Zanzibar model</strong> (relationship-based access control) is architecturally more modern than OpenAM’s XACML policy engine, offering the permission model that powers Google’s internal authorization. However, XACML’s standards compliance and tooling maturity still matter for organizations invested in XACML policy authoring.</p>
+<h3 id="55-openam-vs-zitadel">5.5 OpenAM vs Zitadel</h3>
+<p>Zitadel is a cloud-native identity platform built on event sourcing and CQRS, written in Go.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>OpenAM (OIP 16.0.5)</th><th>Zitadel (v2.x)</th></tr></thead><tbody><tr><td><strong>Architecture</strong></td><td>Monolithic WAR</td><td>Single Go binary + event-sourced CQRS</td></tr><tr><td><strong>Language</strong></td><td>Java 11+</td><td>Go</td></tr><tr><td><strong>Deployment</strong></td><td>WAR + servlet container + OpenDJ</td><td>Single binary + PostgreSQL/CockroachDB</td></tr><tr><td><strong>Audit trail</strong></td><td>Add-on module (<code dir="auto">openam-audit</code>)</td><td>Built-in (event sourcing IS the data model)</td></tr><tr><td><strong>Multi-tenancy</strong></td><td>Realms/sub-realms</td><td>Instances, Organizations, Projects (native)</td></tr><tr><td><strong>OIDC</strong></td><td>Yes</td><td>Yes</td></tr><tr><td><strong>SAML</strong></td><td>Full IdP/SP</td><td>Yes (v2.x)</td></tr><tr><td><strong>Authorization</strong></td><td>XACML 3.0</td><td>RBAC with delegated management</td></tr><tr><td><strong>Passkeys</strong></td><td>Yes</td><td>Yes (WebAuthn native)</td></tr><tr><td><strong>SCIM</strong></td><td>No</td><td>Yes (2024)</td></tr><tr><td><strong>Management API</strong></td><td>REST, ssoadm CLI</td><td>gRPC + REST, Terraform provider</td></tr><tr><td><strong>Actions/extensibility</strong></td><td>Groovy scripting, Java SPI</td><td>JavaScript Actions on auth events</td></tr><tr><td><strong>GitHub stars</strong></td><td>~700</td><td>~9,500</td></tr><tr><td><strong>License</strong></td><td>CDDL 1.0</td><td>Apache 2.0</td></tr></tbody></table>
+<p><strong>Zitadel’s event-sourced architecture</strong> is its most distinctive feature. Every state change is stored as an immutable event, making the audit trail not a bolt-on feature but the foundational data model. This provides point-in-time recovery, complete change history, and replay capability that OpenAM’s audit module cannot match. The trade-off is the complexity of event-sourced systems: eventual consistency between the event store and read projections, projection rebuild time for large tenants, and the learning curve of CQRS for operators accustomed to CRUD systems.</p>
+<p><strong>Operational simplicity</strong> favors Zitadel. A single Go binary plus a PostgreSQL or CockroachDB database is the entire deployment, compared to OpenAM’s WAR file, servlet container, and OpenDJ instance. Zitadel’s Terraform provider enables declarative infrastructure-as-code workflows that OpenAM’s LDAP-backed configuration cannot support natively.</p>
+<p><strong>Where OpenAM retains advantage.</strong> Zitadel’s authorization model is RBAC, not ABAC/XACML. Organizations needing fine-grained, attribute-based policies with environment conditions and deny-overrides must implement this logic externally when using Zitadel. OpenAM’s entitlement engine handles this natively.</p>
+<h3 id="56-migration-cost-analysis">5.6 Migration Cost Analysis</h3>
+<p>Organizations currently running OpenAM and evaluating a platform migration face effort that varies dramatically depending on the target. The following estimates assume a mid-complexity deployment: 10-20 SAML partners, 5-10 custom authentication chains, 3-5 custom <code dir="auto">AMLoginModule</code> implementations, XACML policies, and an OAuth 2.0/OIDC provider serving 20+ relying parties.</p>
+<p><strong>Migration to Keycloak (estimated 3-6 months, medium effort).</strong> Keycloak is the closest architectural analog. Realm mapping is relatively direct: OpenAM realms map to Keycloak realms, though sub-realm hierarchy may need flattening. Authentication chains must be reconstructed as Keycloak authentication flows — the JAAS control flags (REQUIRED, SUFFICIENT, OPTIONAL, REQUISITE) map approximately to Keycloak’s flow execution requirements (REQUIRED, ALTERNATIVE, CONDITIONAL, DISABLED), but complex chains with REQUISITE short-circuiting need careful redesign. SAML 2.0 metadata can be imported into Keycloak’s Identity Provider and Client configurations, though attribute mapping rules must be manually recreated. OAuth 2.0/OIDC clients migrate by re-registering each client in Keycloak with matching <code dir="auto">client_id</code>, <code dir="auto">redirect_uri</code>, and scope configurations; token format differences (opaque vs JWT, claim naming) require client-side adjustments. Custom <code dir="auto">AMLoginModule</code> implementations must be rewritten as Keycloak SPI <code dir="auto">Authenticator</code> implementations — the SPI contract is different but conceptually similar. XACML policies have no Keycloak equivalent; organizations must either adopt Keycloak’s UMA-based authorization services (less expressive), integrate an external policy engine (OPA, Cedar), or port policies to application-level RBAC. User data migration from OpenDJ to Keycloak’s database is straightforward via LDIF export and SCIM/REST import, though password hashes require hash-algorithm compatibility verification.</p>
+<p><strong>Migration to Auth0/Okta (estimated 4-8 months, high effort).</strong> The shift from self-hosted to SaaS introduces architectural constraints beyond code migration. User export from OpenDJ (LDIF) must be transformed to Auth0’s bulk import JSON format; password hashes can be imported if the hash algorithm is supported (bcrypt, PBKDF2), but some OpenAM-era hash schemes (SHA-256 with salt in a non-standard format) may require users to reset passwords on first login. SAML partner metadata must be recreated as Auth0 Enterprise Connections (SAML) or OIDC connections, with each partner requiring coordinated metadata exchange. Authentication chains must be rebuilt as Auth0 Actions (Node.js) — a fundamentally different programming model from Java JAAS modules. Social login connections are easier: Auth0’s 70+ pre-built social connections replace OpenAM’s <code dir="auto">openam-auth-oauth2</code> module with less custom code. XACML policies cannot be migrated to Auth0; authorization must move to Auth0’s RBAC, custom claims in tokens via Actions, or an external policy engine. The per-MAU pricing model must be validated against actual user volumes — organizations with millions of users may find Auth0 cost-prohibitive at scale. Okta’s workforce identity features (lifecycle management, provisioning) can replace some OpenIDM functionality, potentially simplifying the overall IAM stack.</p>
+<p><strong>Migration to Ory Stack (estimated 6-12 months, highest effort).</strong> The Ory migration demands the most effort due to a fundamentally different paradigm. OpenAM is a monolithic, UI-inclusive, Java-based platform; Ory is a decomposed, headless, Go-based microservices suite. There is no realm concept in Ory — multi-tenancy must be implemented via separate Ory deployments or Ory Network projects. Authentication chains must be completely rearchitected: Ory Kratos uses self-service flows with webhooks and JSONNET-based data mapping, not JAAS modules. Every login and registration UI screen must be built from scratch since Ory provides no built-in UI (only reference implementations). SAML federation is the critical blocker: Ory Hydra does not support SAML 2.0, so organizations with SAML requirements must add a SAML bridge (e.g., Satosa, Shibboleth) in front of Hydra, adding operational complexity. OAuth 2.0/OIDC client migration to Hydra is relatively clean — Hydra is a certified OIDC provider with standard client registration. XACML policies must be translated to Ory Keto’s Zanzibar-style relationship tuples, which is a different authorization paradigm entirely (ReBAC vs ABAC); no automated tooling exists for this conversion, and policies with complex environment conditions (IP range, time window) have no direct Keto equivalent. User data migration from OpenDJ to Kratos’s identity schema requires JSON Schema definition for each identity type and data transformation from LDAP attributes to Kratos traits.</p>
+<p><strong>Key risk across all migrations.</strong> OpenAM’s 34+ authentication modules have no single-platform equivalent. Each module represents a protocol integration (RADIUS, MSISDN, SecurID, X.509) or authentication pattern (adaptive risk scoring, device fingerprinting, QR code) that must be individually evaluated: does the target platform support it natively, via extension, via third-party integration, or not at all? Modules with no equivalent on the target platform — such as RADIUS authentication, the adaptive risk scoring engine, or the Security Token Service — require custom development or architectural workarounds. This per-module assessment is the most time-consuming component of migration planning and is frequently underestimated.</p>
+<p><strong>Migration effort summary.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>Keycloak</th><th>Auth0/Okta</th><th>Ory Stack</th></tr></thead><tbody><tr><td><strong>Estimated timeline</strong></td><td>3-6 months</td><td>4-8 months</td><td>6-12 months</td></tr><tr><td><strong>Realm/tenant mapping</strong></td><td>Direct (realm-to-realm)</td><td>Tenant-to-tenant</td><td>No realm concept; separate deployments</td></tr><tr><td><strong>Auth chain migration</strong></td><td>Moderate (flow redesign)</td><td>High (Node.js Actions rewrite)</td><td>Highest (Kratos self-service flows + custom UI)</td></tr><tr><td><strong>SAML partner migration</strong></td><td>Metadata import + manual attr mapping</td><td>Enterprise Connection recreation</td><td>Requires SAML bridge (Satosa/Shibboleth)</td></tr><tr><td><strong>OAuth2/OIDC client migration</strong></td><td>Client re-registration</td><td>Client re-registration</td><td>Hydra client registration (clean)</td></tr><tr><td><strong>XACML policy migration</strong></td><td>No equivalent (UMA or external OPA)</td><td>No equivalent (RBAC + Actions)</td><td>No equivalent (Keto ReBAC, different paradigm)</td></tr><tr><td><strong>User data migration</strong></td><td>LDIF export → SCIM import</td><td>LDIF → JSON bulk import</td><td>LDIF → Kratos identity JSON Schema</td></tr><tr><td><strong>Password hash compatibility</strong></td><td>Verify algorithm support</td><td>Partial (may force resets)</td><td>Verify algorithm support</td></tr><tr><td><strong>Custom module rewrite</strong></td><td>Keycloak SPI Authenticator</td><td>Auth0 Actions (Node.js)</td><td>Kratos webhooks + custom services</td></tr><tr><td><strong>SAML blocker</strong></td><td>No</td><td>No</td><td>Yes (no native SAML)</td></tr></tbody></table>
+<hr>
+<h2 id="6-feature-gap-analysis">6. Feature Gap Analysis</h2>
+<h3 id="what-openam-has-that-alternatives-lack">What OpenAM Has That Alternatives Lack</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Capability</th><th>OpenAM</th><th>Keycloak</th><th>Ory</th><th>Zitadel</th><th>Auth0</th></tr></thead><tbody><tr><td>XACML 3.0 policy engine</td><td>Yes</td><td>No</td><td>No</td><td>No</td><td>No</td></tr><tr><td>34+ built-in auth modules</td><td>Yes</td><td>~15 built-in</td><td>~5</td><td>~8</td><td>70+ social, fewer protocol modules</td></tr><tr><td>SAML + OIDC + OAuth2 + UMA in one</td><td>Yes</td><td>Partial (no UMA 2.0 at parity)</td><td>No SAML</td><td>Yes (no UMA)</td><td>Yes (no UMA)</td></tr><tr><td>Cassandra session store</td><td>Yes</td><td>No (Infinispan)</td><td>No</td><td>No</td><td>N/A (managed)</td></tr><tr><td>Embedded LDAP (OpenDJ)</td><td>Yes</td><td>No (external)</td><td>No</td><td>No</td><td>No</td></tr><tr><td>RADIUS server</td><td>Yes</td><td>No</td><td>No</td><td>No</td><td>No</td></tr><tr><td>Standalone STS (Security Token Service)</td><td>Yes</td><td>No</td><td>No</td><td>No</td><td>No</td></tr></tbody></table>
+<p>OpenAM’s XACML 3.0 engine is unique among open-source IAM platforms. Keycloak offers UMA 2.0-based authorization services and is exploring fine-grained authorization, but it does not implement the XACML standard. The Ory stack delegates authorization to Keto (Zanzibar model), which is architecturally distinct. No mainstream open-source IAM platform matches OpenAM’s XACML compliance.</p>
+<h3 id="what-alternatives-have-that-openam-lacks">What Alternatives Have That OpenAM Lacks</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Capability</th><th>OpenAM</th><th>Keycloak</th><th>Ory</th><th>Zitadel</th><th>Auth0</th></tr></thead><tbody><tr><td>Modern admin UI</td><td>No</td><td>Yes (React)</td><td>N/A (headless)</td><td>Yes (Angular)</td><td>Yes</td></tr><tr><td>Configuration-as-code</td><td>Limited</td><td>Realm export/import</td><td>Full YAML</td><td>Terraform provider</td><td>Terraform, Deploy CLI</td></tr><tr><td>Kubernetes Operator</td><td>No</td><td>Yes (official)</td><td>Helm charts</td><td>Helm charts</td><td>N/A (SaaS)</td></tr><tr><td>Event sourcing / audit by design</td><td>No</td><td>No</td><td>No</td><td>Yes</td><td>No</td></tr><tr><td>SCIM provisioning</td><td>No (separate OpenIDM)</td><td>Via extension</td><td>No</td><td>Yes</td><td>Yes (Enterprise)</td></tr><tr><td>Zanzibar-style ReBAC</td><td>No</td><td>No</td><td>Yes (Keto)</td><td>No</td><td>Yes (OpenFGA)</td></tr><tr><td>Visual flow editor</td><td>No</td><td>No</td><td>No</td><td>No</td><td>No (Authentik has one)</td></tr><tr><td>Passkey-first design</td><td>No</td><td>No</td><td>No</td><td>No</td><td>No (Hanko has this)</td></tr><tr><td>Native GraalVM support</td><td>No</td><td>Experimental</td><td>N/A (Go)</td><td>N/A (Go)</td><td>N/A</td></tr><tr><td>Organizations/B2B multi-tenancy</td><td>Realms</td><td>Organizations (v26)</td><td>Yes</td><td>Yes (native)</td><td>Yes (Organizations)</td></tr></tbody></table>
+<p>The most significant gaps are operational: no Kubernetes Operator, no Terraform provider, no declarative configuration model, and no modern admin UI. These gaps make OpenAM harder to deploy, manage, and automate in cloud-native environments where infrastructure-as-code is the baseline expectation.</p>
+<h3 id="the-protocol-gap-what-each-alternative-misses">The Protocol Gap: What Each Alternative Misses</h3>
+<p>One dimension not captured in simple feature matrices is protocol depth. OpenAM’s SAML 2.0 implementation has been tested against hundreds of partner IdP/SP implementations over two decades, handling edge cases in metadata exchange, artifact resolution, attribute mapping, and logout propagation that newer SAML implementations have not yet encountered. The difference between “supports SAML” and “has been battle-tested across a thousand SAML federations” is material for organizations where SAML interoperability failures translate to business disruptions.</p>
+<p>Similarly, OpenAM’s OAuth 2.0 implementation supports grant types (JWT bearer, device code) and token management patterns (CTS-backed stateful tokens, introspection, revocation) that not all alternatives implement at the same depth. Keycloak matches or exceeds this depth; Ory Hydra is a certified OIDC provider with excellent OAuth 2.0 coverage; but smaller platforms (Logto, SuperTokens, Hanko) implement a subset focused on common flows and may lack edge-case grant types.</p>
+<p>The inverse is also true. OpenAM does not implement SCIM 2.0, Zanzibar-style relationship-based authorization, event sourcing, or the modern passkey-first authentication flows that newer platforms provide. The protocol gap is bidirectional: OpenAM covers protocols of the 2005-2016 era with unmatched depth, while alternatives cover protocols and patterns of the 2020-2026 era with greater architectural alignment.</p>
+<hr>
+<h2 id="7-build-vs-buy-decision-framework">7. Build-vs-Buy Decision Framework</h2>
+<h3 id="when-openam-makes-sense">When OpenAM Makes Sense</h3>
+<ul>
+<li>
+<p><strong>Existing ForgeRock deployment migration.</strong> Organizations running ForgeRock CE 11.0.3 (which must be abandoned immediately due to unpatched critical CVEs — see <a href="../extracts/security-cve-history.md">security-cve-history extract</a>) or earlier ForgeRock versions can migrate to OIP OpenAM 16.0.5 or Wren:AM 16.0.0-M1 with relative architectural continuity. The module structure, authentication chains, and session management model are familiar.</p>
+</li>
+<li>
+<p><strong>Complex SAML federation environments.</strong> Organizations with dozens of SAML 2.0 partners, custom metadata handling, and deep SAML attribute mapping requirements benefit from OpenAM’s 20+ years of SAML maturity. Newer platforms support SAML but have not been tested across the same breadth of partner implementations.</p>
+</li>
+<li>
+<p><strong>XACML policy requirements.</strong> If the organization has invested in XACML policy authoring or requires standards-compliant ABAC, OpenAM’s entitlement engine is the only open-source option that delivers this without external policy engines.</p>
+</li>
+<li>
+<p><strong>Air-gapped or sovereign deployments.</strong> Government and defense organizations that cannot use SaaS and require complete source code auditability benefit from OpenAM’s CDDL-licensed, fully self-hosted model.</p>
+</li>
+<li>
+<p><strong>Java ecosystem alignment.</strong> For organizations whose operations teams are deeply experienced with Java, Maven, and servlet containers, OpenAM’s technology stack aligns with existing skills and tooling.</p>
+</li>
+</ul>
+<h3 id="when-alternatives-are-better">When Alternatives Are Better</h3>
+<ul>
+<li>
+<p><strong>Greenfield projects.</strong> For new deployments without legacy constraints, Keycloak is the safer open-source choice: larger community, CNCF governance, modern runtime, better documentation, and broader industry adoption. The risk-adjusted total cost of ownership is lower.</p>
+</li>
+<li>
+<p><strong>Cloud-native / Kubernetes-first.</strong> If the deployment target is Kubernetes, Keycloak’s Operator, Zitadel’s single-binary model, or Ory’s microservices architecture are architecturally better suited than OpenAM’s WAR deployment.</p>
+</li>
+<li>
+<p><strong>Developer experience priority.</strong> If developer onboarding speed and API-first design are priorities, Ory (headless, Go, clean APIs), Logto (TypeScript, beautiful default UI), or Auth0 (managed, extensive SDKs) will outperform OpenAM’s steep learning curve.</p>
+</li>
+<li>
+<p><strong>CIAM / consumer-facing.</strong> For customer identity scenarios requiring progressive profiling, social login breadth, bot detection, and managed compliance, Auth0 or AWS Cognito provide purpose-built capabilities that OpenAM lacks.</p>
+</li>
+<li>
+<p><strong>Budget for managed service.</strong> If the organization can absorb per-MAU SaaS pricing, the operational savings from Auth0, Okta, or Zitadel Cloud typically exceed the infrastructure and personnel costs of self-hosting OpenAM.</p>
+</li>
+<li>
+<p><strong>Passkey-first strategy.</strong> If passwordless authentication is the primary requirement, Hanko’s passkey-native design or Keycloak’s WebAuthn integration offer cleaner paths than OpenAM’s bolt-on WebAuthn module.</p>
+</li>
+</ul>
+<h3 id="migration-cost-considerations">Migration Cost Considerations</h3>
+<p>For organizations currently running OpenAM (any fork) and evaluating migration to alternatives, the cost dimensions include:</p>
+<ul>
+<li>
+<p><strong>Authentication chain migration.</strong> OpenAM’s JAAS-based chain model with control flags (REQUIRED, REQUISITE, SUFFICIENT, OPTIONAL) must be translated to the target platform’s authentication flow model. Keycloak uses authentication flows with conditional sub-flows; Ory Kratos uses configurable self-service flows; Zitadel uses login policies. The mapping is not one-to-one, and complex chains with conditional branching require redesign.</p>
+</li>
+<li>
+<p><strong>SAML metadata migration.</strong> Each SAML partner relationship involves metadata exchange, attribute mapping, and often custom configuration. Migrating dozens of SAML partnerships to a new IdP requires coordinated metadata updates with every partner — a project-level effort that can take months.</p>
+</li>
+<li>
+<p><strong>Policy migration.</strong> XACML policies stored in OpenDJ must be translated to the target platform’s authorization model (Keycloak’s UMA policies, OPA Rego, Cedar, or application-level RBAC). No automated translation tools exist for XACML-to-Rego or XACML-to-Cedar conversion.</p>
+</li>
+<li>
+<p><strong>Session migration.</strong> Active user sessions cannot be migrated between platforms. Any migration requires a session cutover, which either forces all users to re-authenticate simultaneously or requires a period of dual-running where both old and new systems accept sessions.</p>
+</li>
+<li>
+<p><strong>Custom module migration.</strong> Organizations with custom <code dir="auto">AMLoginModule</code> implementations must rewrite them as Keycloak SPI providers, Ory webhooks, or equivalent extension mechanisms in the target platform. The effort depends on module complexity but typically ranges from days (simple credential validation) to weeks (complex multi-step flows with external system integration).</p>
+</li>
+</ul>
+<p>These costs are nontrivial but must be weighed against the ongoing operational cost of maintaining OpenAM: the CVE patching burden, the configuration complexity, and the growing difficulty of hiring engineers with JAAS, LDAP configuration, and Jato expertise.</p>
+<hr>
+<h2 id="8-verdict">8. Verdict</h2>
+<p>OpenAM remains the most feature-complete open-source access management platform in terms of raw protocol and authentication breadth. Its XACML 3.0 policy engine, 34+ authentication modules, and combined SAML/OIDC/OAuth2/UMA support are unmatched in the open-source ecosystem. However, its monolithic WAR architecture, Jato legacy UI, LDAP-backed configuration model, CVE history (including a CISA-flagged pre-auth RCE), and small maintainer community place it at a significant disadvantage against Keycloak and cloud-native alternatives for new deployments. OpenAM’s strongest use case is brownfield: organizations migrating from ForgeRock, operating in complex SAML federation environments, or requiring XACML compliance in air-gapped settings. For greenfield projects, the risk-adjusted choice is Keycloak for self-hosted or Auth0/Zitadel Cloud for managed, unless specific OpenAM capabilities (XACML, deep SAML, RADIUS) are genuine requirements rather than checkbox items.</p>
+<hr>
+<h2 id="9-codebase-navigation-guide">9. Codebase Navigation Guide</h2>
+<p>For developers and architects examining the OIP OpenAM source tree (<code dir="auto">OpenAM/</code>), the following paths serve as entry points into the major subsystems.</p>
+<p><strong>Authentication modules</strong> — <code dir="auto">OpenAM/openam-authentication/</code>. Each authentication module lives in its own Maven submodule. For example, <code dir="auto">openam-auth-ldap/</code> contains the LDAP bind module, <code dir="auto">openam-auth-oauth2/</code> handles social login via OAuth 2.0, and <code dir="auto">openam-auth-webauthn/</code> implements FIDO2/WebAuthn passkey authentication. Each submodule contains the module implementation class (extending <code dir="auto">AMLoginModule</code>), an XML service schema definition (e.g., <code dir="auto">amAuthLDAP.xml</code>), and resource bundles for callback prompts. To add a new authentication module, create a new submodule following the pattern of an existing module, implement the <code dir="auto">init()</code>/<code dir="auto">login()</code>/<code dir="auto">commit()</code>/<code dir="auto">abort()</code>/<code dir="auto">logout()</code> lifecycle methods, and register the service schema in the OpenAM configuration store.</p>
+<p><strong>JAAS authentication chain orchestration</strong> — <code dir="auto">OpenAM/openam-core/src/main/java/com/sun/identity/authentication/</code>. This package contains the core authentication engine. Start with <code dir="auto">AuthContext.java</code> (client-facing API), follow to <code dir="auto">AMLoginContext.java</code> (chain orchestration and JAAS <code dir="auto">LoginContext</code> management), then <code dir="auto">AMAuthenticationManager.java</code> (service locator for chain and module configurations). The <code dir="auto">server/</code> subdirectory holds server-side authentication processing, <code dir="auto">spi/</code> contains the <code dir="auto">AMLoginModule</code> base class, <code dir="auto">service/</code> manages authentication service configuration, and <code dir="auto">config/</code> handles authentication chain definitions. The <code dir="auto">LoginState.java</code> class tracks stateful context across multi-step flows and is essential reading for understanding how OpenAM maintains authentication state during conversational callback exchanges.</p>
+<p><strong>OAuth 2.0 / OpenID Connect provider</strong> — <code dir="auto">OpenAM/openam-oauth2/src/main/java/org/forgerock/oauth2/core/</code>. This package implements the OAuth 2.0 authorization server. <code dir="auto">AuthorizationService.java</code> handles the <code dir="auto">/authorize</code> endpoint, <code dir="auto">AccessTokenService.java</code> handles the <code dir="auto">/token</code> endpoint, and grant type handlers (<code dir="auto">AuthorizationCodeGrantTypeHandler.java</code>, <code dir="auto">ClientCredentialsGrantTypeHandler.java</code>, etc.) implement individual grant flows. The <code dir="auto">TokenStore</code> interface defines the SPI for pluggable token persistence. OIDC-specific extensions (ID Token issuance, UserInfo endpoint, discovery) are layered on top of the OAuth 2.0 core. The <code dir="auto">ScopeValidator</code> interface enables custom scope validation logic for organizations that need to enforce business-specific scope semantics.</p>
+<p><strong>SAML 2.0 federation</strong> — <code dir="auto">OpenAM/openam-federation/openam-federation-library/</code>. This module contains the SAML 2.0 protocol implementation shared between IdP and SP roles. Metadata parsing, assertion generation and validation, artifact resolution, attribute mapping, and single logout propagation live here. The <code dir="auto">OpenFM/</code> sibling module integrates the federation library with OpenAM’s runtime (realm configuration, session bridging). The <code dir="auto">openam-idpdiscovery/</code> module implements the SAML IdP Discovery Profile for multi-IdP environments. When debugging SAML interoperability issues with partner organizations, the federation library is the starting point — particularly the assertion validation and signature verification code paths.</p>
+<p><strong>XACML 3.0 policy engine</strong> — <code dir="auto">OpenAM/openam-entitlements/src/main/java/org/forgerock/openam/entitlement/</code>. The entitlement subsystem implements the PEP/PDP architecture. The <code dir="auto">conditions/</code> package contains subject, resource, and environment condition evaluators. The <code dir="auto">service/</code> package manages policy storage and retrieval from the OpenDJ backend. The <code dir="auto">rest/</code> package exposes policy evaluation and management via REST endpoints. The <code dir="auto">indextree/</code> package implements the resource pattern matching tree that enables efficient policy lookup by URI pattern. Extension points for custom conditions live in <code dir="auto">conditions/</code> — extend <code dir="auto">EntitlementCondition</code> for new environment evaluators or <code dir="auto">SubjectImplementation</code> for custom subject matchers.</p>
+<p><strong>Cassandra session/token store</strong> — <code dir="auto">OpenAM/openam-cassandra/</code>. Three submodules: <code dir="auto">openam-cassandra-cts</code> (Core Token Service backed by Cassandra, containing <code dir="auto">TokenStorageAdapter.java</code> and <code dir="auto">ConnectionFactoryProvider.java</code>), <code dir="auto">openam-cassandra-datastore</code> (identity data store backed by Cassandra), and <code dir="auto">openam-cassandra-embedded</code> (embedded Cassandra for development/testing). The CTS module’s <code dir="auto">QueryFilterVisitor.java</code> translates OpenAM’s internal query filter DSL to CQL queries.</p>
+<p><strong>Session management</strong> — <code dir="auto">OpenAM/openam-core/src/main/java/com/iplanet/dpro/session/service/SessionService.java</code>. This is the central class for session lifecycle management. It handles session creation after authentication, session retrieval by token ID, idle timeout enforcement, maximum session time enforcement, and session destruction on logout. The <code dir="auto">InternalSession</code> class holds session state, and the <code dir="auto">SessionConstraint</code> class enforces per-user concurrent session limits. Understanding session management is critical for troubleshooting SSO issues, session timeout behavior, and CTS failover.</p>
+<p><strong>REST API endpoints</strong> — <code dir="auto">OpenAM/openam-rest/</code>. This module exposes OpenAM’s capabilities via REST. Authentication endpoints (<code dir="auto">/json/authenticate</code>), session endpoints (<code dir="auto">/json/sessions</code>), user self-service endpoints, and realm management endpoints are defined here. The REST layer delegates to the core authentication and session services, providing the programmatic interface that modern applications use instead of the Jato admin console.</p>
+<p><strong>Audit subsystem</strong> — <code dir="auto">OpenAM/openam-audit/</code>. Four submodules handle audit event capture, streaming, configuration, and REST querying. The audit framework generates structured JSON events for authentication attempts, authorization decisions, session lifecycle changes, and configuration modifications — essential for compliance reporting.</p>
+<p><strong>Distribution and packaging</strong> — <code dir="auto">OpenAM/openam-distribution/</code>. Contains the WAR packaging (<code dir="auto">openam-distribution-kit</code>), Docker image (<code dir="auto">openam-distribution-docker/</code>), admin tools (<code dir="auto">openam-distribution-ssoadmintools/</code>), and configurator tools (<code dir="auto">openam-distribution-ssoconfiguratortools/</code>). The <code dir="auto">Dockerfile</code> in <code dir="auto">openam-distribution-docker/</code> is the canonical reference for containerized deployment.</p>
+<p><strong>Quick-reference path table.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Subsystem</th><th>Path</th><th>Key Classes / Artifacts</th></tr></thead><tbody><tr><td>Auth modules</td><td><code dir="auto">openam-authentication/openam-auth-*/</code></td><td>Module class extending <code dir="auto">AMLoginModule</code>, XML service schema</td></tr><tr><td>JAAS chain engine</td><td><code dir="auto">openam-core/.../com/sun/identity/authentication/</code></td><td><code dir="auto">AuthContext</code>, <code dir="auto">AMLoginContext</code>, <code dir="auto">LoginState</code></td></tr><tr><td>Session management</td><td><code dir="auto">openam-core/.../com/iplanet/dpro/session/service/</code></td><td><code dir="auto">SessionService</code>, <code dir="auto">InternalSession</code>, <code dir="auto">SessionConstraint</code></td></tr><tr><td>OAuth 2.0 / OIDC</td><td><code dir="auto">openam-oauth2/.../org/forgerock/oauth2/core/</code></td><td><code dir="auto">AuthorizationService</code>, <code dir="auto">AccessTokenService</code>, <code dir="auto">TokenStore</code></td></tr><tr><td>SAML 2.0</td><td><code dir="auto">openam-federation/openam-federation-library/</code></td><td>Assertion builders, metadata parsers, signature validators</td></tr><tr><td>XACML policy engine</td><td><code dir="auto">openam-entitlements/.../org/forgerock/openam/entitlement/</code></td><td><code dir="auto">conditions/</code>, <code dir="auto">service/</code>, <code dir="auto">indextree/</code></td></tr><tr><td>Cassandra CTS</td><td><code dir="auto">openam-cassandra/openam-cassandra-cts/</code></td><td><code dir="auto">TokenStorageAdapter</code>, <code dir="auto">ConnectionFactoryProvider</code></td></tr><tr><td>REST API</td><td><code dir="auto">openam-rest/</code></td><td>Authentication, session, and management REST endpoints</td></tr><tr><td>Audit</td><td><code dir="auto">openam-audit/</code></td><td>Event capture, streaming, REST query</td></tr><tr><td>Docker image</td><td><code dir="auto">openam-distribution/openam-distribution-docker/</code></td><td><code dir="auto">Dockerfile</code> (Tomcat 11 + JRE 25)</td></tr></tbody></table> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-u2l5gyhi" dir="ltr"> <a href="/idp-research/openam-lineage/" rel="prev" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg> <span class="astro-u2l5gyhi"> Previous <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">The ForgeRock Story — OpenAM Lineage</span> </span> </a> <a href="/idp-research/openam-lineage/opendj/" rel="next" class="astro-u2l5gyhi"> <svg aria-hidden="true" class="astro-u2l5gyhi astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg> <span class="astro-u2l5gyhi"> Next <br class="astro-u2l5gyhi"> <span class="link-title astro-u2l5gyhi">OpenDJ Analysis</span> </span> </a> </div>   </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>
