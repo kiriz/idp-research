@@ -37,27 +37,44 @@
 }
 .sl-panel-toggle:hover { opacity: 1; }
 
-@media (min-width: 50em) {
+@media (min-width: 50rem) {
   #sl-toggle-left  { display: flex; left: 0.4rem; }
 }
-@media (min-width: 72em) {
+@media (min-width: 72rem) {
   #sl-toggle-right { display: flex; right: 0.4rem; }
 }
 
-/* Hide left sidebar + collapse its space */
-html.sl-hide-left .sidebar,
+/* ── LEFT sidebar hide ─────────────────────────────────────
+   .sidebar-pane is position:fixed — it doesn't affect flow.
+   The only layout impact is .main-frame's padding-inline-start.
+   Target that directly instead of fighting the CSS variable cascade. */
 html.sl-hide-left .sidebar-pane {
   display: none !important;
 }
-@media (min-width: 50em) {
-  html.sl-hide-left[data-has-sidebar] {
-    --sl-content-inline-start: 0 !important;
+@media (min-width: 50rem) {
+  html.sl-hide-left .main-frame {
+    padding-inline-start: 0 !important;
   }
 }
 
-/* Hide right TOC */
+/* ── RIGHT sidebar (TOC) hide ──────────────────────────────
+   .main-pane has an explicit width:calc(...) set by Starlight's
+   TwoColumnContent component. Hiding the TOC container doesn't
+   automatically expand it — must override width directly. */
 html.sl-hide-right .right-sidebar-container {
   display: none !important;
+}
+@media (min-width: 72rem) {
+  html.sl-hide-right .main-pane {
+    width: 100% !important;
+  }
+}
+
+/* ── Both hidden: expand content max-width too ─────────────
+   --sl-content-width is a max-width inside the article.
+   With both panels gone, give the text more room to breathe. */
+html.sl-hide-left.sl-hide-right {
+  --sl-content-width: 72rem !important;
 }
 
 [data-theme="dark"] {
